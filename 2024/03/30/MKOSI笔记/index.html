@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.icku.eu.org","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="mkosi是建立在dnf --installroot、debootstrap、pacstrap等工具之上的，快速构建客制化的系统镜像并进行测试的工具。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MKOSI笔记">
+<meta property="og:url" content="https://blog.icku.eu.org/2024/03/30/MKOSI%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="MA Blog">
+<meta property="og:description" content="mkosi是建立在dnf --installroot、debootstrap、pacstrap等工具之上的，快速构建客制化的系统镜像并进行测试的工具。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-03-29T23:15:56.000Z">
+<meta property="article:modified_time" content="2024-06-27T15:16:10.000Z">
+<meta property="article:author" content="Molten_Armor">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.icku.eu.org/2024/03/30/MKOSI%E7%AC%94%E8%AE%B0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.icku.eu.org/2024/03/30/MKOSI%E7%AC%94%E8%AE%B0/","path":"2024/03/30/MKOSI笔记/","title":"MKOSI笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>MKOSI笔记 | MA Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">MA Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">构建配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%90%E5%91%BD%E4%BB%A4"><span class="nav-number">3.</span> <span class="nav-text">子命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E9%80%89%E9%A1%B9"><span class="nav-number">4.</span> <span class="nav-text">命令行选项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E9%85%8D%E7%BD%AE"><span class="nav-number">5.</span> <span class="nav-text">构建配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Match-%E6%AE%B5"><span class="nav-number">5.1.</span> <span class="nav-text">[Match]段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Config-%E6%AE%B5"><span class="nav-number">5.2.</span> <span class="nav-text">[Config]段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Distribution-%E6%AE%B5"><span class="nav-number">5.3.</span> <span class="nav-text">[Distribution]段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Output-%E6%AE%B5"><span class="nav-number">5.4.</span> <span class="nav-text">[Output]段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Content-%E6%AE%B5"><span class="nav-number">5.5.</span> <span class="nav-text">[Content]段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Partitions-%E6%AE%B5"><span class="nav-number">5.6.</span> <span class="nav-text">[Partitions]段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Validation-%E6%AE%B5"><span class="nav-number">5.7.</span> <span class="nav-text">[Validation]段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Host-%E6%AE%B5"><span class="nav-number">5.8.</span> <span class="nav-text">[Host]段</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="nav-number">6.</span> <span class="nav-text">执行流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%91%E8%A1%8C%E7%89%88%E6%9C%80%E5%B0%8F%E5%8C%96%E6%9E%84%E5%BB%BA"><span class="nav-number">7.</span> <span class="nav-text">发行版最小化构建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Arch"><span class="nav-number">7.1.</span> <span class="nav-text">Arch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fedora"><span class="nav-number">7.2.</span> <span class="nav-text">Fedora</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CentOS-Rocky"><span class="nav-number">7.3.</span> <span class="nav-text">CentOS&#x2F;Rocky</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Debian"><span class="nav-number">7.4.</span> <span class="nav-text">Debian</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ubuntu"><span class="nav-number">7.5.</span> <span class="nav-text">Ubuntu</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OpenSUSE"><span class="nav-number">7.6.</span> <span class="nav-text">OpenSUSE</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B"><span class="nav-number">8.</span> <span class="nav-text">实例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E4%B8%80%E4%B8%AAFedora%E5%AE%B9%E5%99%A8%E9%95%9C%E5%83%8F"><span class="nav-number">8.1.</span> <span class="nav-text">构建一个Fedora容器镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E4%B8%80%E4%B8%AADebian%E5%8F%AF%E5%BC%95%E5%AF%BC%E7%A3%81%E7%9B%98%E9%95%9C%E5%83%8F"><span class="nav-number">8.2.</span> <span class="nav-text">构建一个Debian可引导磁盘镜像</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Molten_Armor</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.icku.eu.org/2024/03/30/MKOSI%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Molten_Armor">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MA Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="MKOSI笔记 | MA Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MKOSI笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-03-30 07:15:56" itemprop="dateCreated datePublished" datetime="2024-03-30T07:15:56+08:00">2024-03-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-06-27 23:16:10" itemprop="dateModified" datetime="2024-06-27T23:16:10+08:00">2024-06-27</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><code>mkosi</code>是建立在<code>dnf --installroot</code>、<code>debootstrap</code>、<code>pacstrap</code>等工具之上的，快速构建客制化的系统镜像并进行测试的工具。</p>
+<span id="more"></span>
+
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkosi [选项] 子命令</span><br></pre></td></tr></table></figure>
+
+<h2 id="构建配置文件"><a href="#构建配置文件" class="headerlink" title="构建配置文件"></a>构建配置文件</h2><p><code>mkosi</code>的任何命令都基于特定的规则读取配置文件，优先级顺序分别是：</p>
+<ul>
+<li>最优先：命令行选项。</li>
+<li>当前目录下的<code>mkosi.local.conf</code>配置文件。该文件仅用于本地配置，不应该共享。</li>
+<li><code>-C|--directory=</code>指定目录（默认为当前工作目录）下的<code>mkosi.conf</code>配置文件。</li>
+<li>最低优先：<code>--directory=</code>指定目录（默认为当前工作目录）下的<code>mkosi.conf.d/</code>目录内的配置文件。</li>
+</ul>
+<h2 id="子命令"><a href="#子命令" class="headerlink" title="子命令"></a>子命令</h2><p><code>mkosi</code>由多种子命令组成，这些命令其实都是一些外部工具的简易接口：</p>
+<ul>
+<li><code>summary</code>：打印配置文件中定义的配置总结，这也反映了构建时会进行的操作。</li>
+<li><code>build</code>：从配置文件中读取配置并开始构建镜像。</li>
+<li><code>shell</code>：（如果还没有构建）先构建镜像，然后调用<code>systemd-nspawn</code>Chroot到镜像内。<ul>
+<li>仅适用于<code>QCow2=no</code>的镜像。</li>
+</ul>
+</li>
+<li><code>boot</code>：（如果还没有构建）先构建镜像，然后调用<code>systemd-nspawn</code>以容器形式启动镜像。<ul>
+<li>仅适用于<code>QCow2=no</code>的镜像。</li>
+</ul>
+</li>
+<li><code>qemu</code>：（如果还没有构建）先构建镜像，然后调用<code>qemu</code>以虚拟机形式启动镜像。<ul>
+<li>仅适用于<code>disk</code>镜像。</li>
+<li><code>ssh</code>：连接到镜像对应的虚拟机。</li>
+<li><code>genkey</code>：创建SSH密钥。</li>
+</ul>
+</li>
+<li><code>serve</code>：（如果还没有构建）先构建镜像，然后调用内置的HTTP服务器在<code>8081</code>端口上暴露工作目录。</li>
+<li><code>burn 块设备</code>：（如果还没有构建）先构建镜像，然后烧录到指定的块设备上。</li>
+<li><code>journalctl</code>：获取镜像内的日志。</li>
+<li><code>coredumpctl</code>：获取镜像内的内核转储文件。</li>
+<li><code>clean</code>：清理之前的构建产物。</li>
+<li><code>bump</code>：刷新镜像版本。</li>
+<li><code>genkey</code>：生成安全启动密钥。</li>
+</ul>
+<h2 id="命令行选项"><a href="#命令行选项" class="headerlink" title="命令行选项"></a>命令行选项</h2><p>这里提到的命令行选项是和构建配置完全无关的：</p>
+<ul>
+<li><code>-f|--force</code>：进行指定操作前，不加分辨地重新构建镜像。</li>
+<li><code>-B--auto-bump</code>：执行操作后自动刷新版本号。</li>
+<li><code>-C|--directory=</code>：指定工作目录，默认为当前工作目录。</li>
+<li><code>--debug</code>：启用Debug级输出。</li>
+<li><code>--debug-shell</code>：当在镜像中执行命令失败时，启动一个额外的Debug Shell用于排错。</li>
+<li><code>--debug-workspace=</code>：执行操作后，指定的临时文件目录内容不会删除。</li>
+</ul>
+<h2 id="构建配置"><a href="#构建配置" class="headerlink" title="构建配置"></a>构建配置</h2><p>构建配置文件符合ini格式，每一行都是<code>Key=Value</code>的形式，每一个配置项都有等价的命令行选项，转换方式是<code>SomeSetting</code>到<code>some-setting</code>。</p>
+<p>具体的构建配置有：</p>
+<h3 id="Match-段"><a href="#Match-段" class="headerlink" title="[Match]段"></a><code>[Match]</code>段</h3><p>匹配主机上的特定条件。每个配置项除了使用<code>=</code>连接键值对外，还可以使用<code>=|</code>连接键值对，多个使用<code>=</code>连接键值对的配置项之间是逻辑与关系，必须全部满足；多个使用<code>=|</code>连接键值对的配置项之间是逻辑或关系，满足一个即可。</p>
+<p>可用配置项有：</p>
+<ul>
+<li><code>Distribution=</code>：主机使用的发行版。</li>
+<li><code>Release=</code>：主机的版本。</li>
+<li><code>Architecture=</code>：主机的架构。</li>
+<li><code>PathExists</code>：主机上存在指定目录。</li>
+<li><code>SystemdVersion=</code>：主机上的systemd版本。</li>
+</ul>
+<h3 id="Config-段"><a href="#Config-段" class="headerlink" title="[Config]段"></a><code>[Config]</code>段</h3><ul>
+<li><code>Include=</code>：导入指定的额外配置文件。</li>
+</ul>
+<h3 id="Distribution-段"><a href="#Distribution-段" class="headerlink" title="[Distribution]段"></a><code>[Distribution]</code>段</h3><p>发行版配置。</p>
+<ul>
+<li><code>Distribution=</code>：使用的发行版，目前支持<code>fedora,debian,ubuntu,arch,opensuse,mageia,centos,centos_epel,openmandriva,rocky,rocky_epel,alma,alma_epel,gentoo</code>。默认使用主机的发行版。</li>
+<li><code>Release=</code>：使用的版本。默认使用主机的版本。</li>
+<li><code>Architecture=</code>：使用的架构。默认使用主机的架构。</li>
+<li><code>Mirror=</code>：使用的镜像源。</li>
+<li><code>LocalMirror=</code>：在构建时使用的镜像源，但并不写入最终镜像内。</li>
+<li><code>RepositoryKeyCheck=</code>：检查镜像源密钥。</li>
+<li><code>Repositories=</code>：启用的Yum源，或是Apt源的子类。</li>
+</ul>
+<h3 id="Output-段"><a href="#Output-段" class="headerlink" title="[Output]段"></a><code>[Output]</code>段</h3><p>输出方式。</p>
+<ul>
+<li><code>Format=</code>：导出格式，<code>mkosi</code>支持非常多种镜像，包括但不仅限于：<ul>
+<li><code>gpt_ext4|gpt_ext4|gpt_xfs</code>：GPT+UEFI磁盘镜像。使用<code>systemd-repart</code>生成。需要注意，<code>mkosi</code>从来没有考虑过对MBR+Legacy BIOS的支持。</li>
+<li><code>gpt_squashfs</code>：GPT+UEFI的Hybrid CD-ROM镜像。</li>
+<li><code>plain_squashfs</code>：纯CD-ROM镜像。</li>
+<li><code>directory</code>：纯目录形式的容器根文件系统。</li>
+<li><code>tar</code>：Tar包。</li>
+<li><code>cpio</code>：CPIO包。</li>
+<li><code>Qcow2=</code>：是否使用<code>.qcow2</code>镜像，仅在磁盘镜像的情况下可用，注意，启用该配置会导致磁盘镜像无法被nspawn容器使用，也就是说无法使用<code>shell</code>和<code>boot</code>目录进入镜像。</li>
+</ul>
+</li>
+<li><code>ManifestFormat=</code>：生成镜像大纲的格式，可选<code>json</code>或<code>changelog</code>，默认不生成。</li>
+<li><code>Force=</code>：是否每次都强制重新构建。</li>
+<li><code>Output=</code>：镜像文件&#x2F;目录的前缀，默认为<code>image</code>。</li>
+<li><code>OutputDirectory=</code>：构建产生的文件的保存目录，默认为工作目录下的<code>mkosi.output/</code>。</li>
+<li><code>CompressOutput=</code>：输出镜像的压缩方式，请注意，这会导致<code>shell</code>、<code>boot</code>、<code>qemu</code>命令在该镜像上不可用。仅可用于<code>tar</code>和<code>cpio</code>镜像。</li>
+<li><code>WorkspaceDirectory=</code>：临时文件的保存目录，默认为<code>mkosi.workspace/</code>（如果存在）或<code>/var/tmp</code>。</li>
+<li><code>CacheDirectory=</code>：缓存镜像的保存目录，当启用<code>Incremental=</code>时会使用，默认使用工作目录下的<code>mkosi.cache/</code>。</li>
+<li><code>BuildDirectory=</code>：用于<code>mkosi.build</code>构建脚本进行构建的目录。</li>
+<li><code>SplitArtifacts=</code>：使用磁盘镜像时，告诉<code>systemd-repart</code>针对每个分区分别进行导出。默认情况下，导出的分区文件会以<code>镜像名.分区名</code>命名。<ul>
+<li><code>OutputSplitRoot=</code>：导出根分区镜像的名称。</li>
+<li><code>OutputSplitVerify=</code>：导出的校验分区的名称。</li>
+<li><code>OutputSplitKernel=</code>：导出的ESP分区的名称。</li>
+</ul>
+</li>
+<li><code>ImageVersion=</code>：镜像的版本号。</li>
+</ul>
+<h3 id="Content-段"><a href="#Content-段" class="headerlink" title="[Content]段"></a><code>[Content]</code>段</h3><ul>
+<li><code>Packages=</code>：包含的包，使用逗号或是换行符分隔。会使用该发行版对应的包管理器进行安装。</li>
+<li><code>BuildPackages=</code>：在Overlayfs中安装包。这样的包应当用于<code>mkosi.build</code>脚本。</li>
+<li><code>PackageDirectories=</code>：读取指定目录下的额外包并安装。</li>
+<li>（新版本）<code>WithRecommends=</code>：是否安装弱依赖，仅适用于<code>apt</code>、<code>dnf</code>和<code>zypper</code>。</li>
+<li><code>WithDocs=</code>：是否在镜像内保留文档。</li>
+<li>（新版本）<code>MakeInitrd=</code>：是否使用initramfs制作模式，即在镜像内创建<code>/init</code>和<code>/etc/initrd-release</code>文件。</li>
+<li><code>SkeletonTrees=</code>：接受逗号分隔的，冒号绝对路径对。前者是主机上的路径，后者是镜像内的路径，表示在安装软件包之前，将主机文件&#x2F;目录拷贝到镜像内。</li>
+<li><code>ExtraTrees=</code>：接受逗号分隔的，冒号绝对路径对。前者是主机上的路径，后者是镜像内的路径，表示在安装软件包之后，将主机文件&#x2F;目录拷贝到镜像内。</li>
+<li><code>RemovePackages=</code>：在构建后删除指定的包。</li>
+<li><code>RemoveFiles=</code>：在构建后删除指定的文件。</li>
+<li><code>CleanPackageMetadata=</code>：是否在构建后清理镜像内包管理器的缓存。</li>
+<li><code>Bootable=</code>：镜像是否可引导（是否安装引导程序），可选值除了布尔值还有<code>auto</code>。<ul>
+<li>（新版本）<code>Bootloader=</code>：使用的引导程序，可选<code>none</code>、<code>systemd-boot</code>或<code>grub</code>。</li>
+<li>（新版本）<code>BiosBootLoader=</code>：是否安装BIOS引导，可选<code>none</code>或<code>grub</code>，如果启用，那么会自动创建1MB的<code>biosboot</code>分区。</li>
+</ul>
+</li>
+<li><code>WithUnifiedKernelImages=</code>（新版本为<code>UnifiedKernelImages=</code>）：是否使用UKI而不是独立initramfs。</li>
+<li><code>KernelCommandLine=</code>：镜像内的内核命令行参数，默认为<code>console=ttyS0</code>。</li>
+<li><code>MachineID=</code>：设置镜像内的机器ID。</li>
+<li><code>Hostname=</code>：设置镜像内的默认主机名。</li>
+<li><code>Password=</code>（新版本为<code>RootPassword=</code>）：设置镜像内Root用户的默认密码。或者可以在工作目录下编写<code>mkosi.rootpw</code>文件。</li>
+<li><code>Autologin=</code>：是否设置Root用户自动登录。</li>
+<li><code>Ssh=</code>：是否在镜像内创建SSH套接字以允许通过<code>mkosi ssh</code>连接，使用<code>mkosi genkey</code>创建密钥。</li>
+</ul>
+<p>为了实现更多功能，还可以在构建镜像的不同过程中执行脚本：</p>
+<ul>
+<li><code>ConfigureScript=</code>：在读取配置文件后立刻执行的脚本。默认为<code>mkosi.configure</code>。</li>
+<li><code>PrepareScript=</code>：在安装软件包后立刻执行的脚本。默认为<code>mkosi.prepare</code>。</li>
+<li><code>BuildScript=</code>：在构建好根文件系统后立刻执行的脚本。默认为<code>mkosi.build</code>。<ul>
+<li><code>BuildSources=</code>：进行构建的代码树目录。</li>
+<li><code>SourceFileTransfer=</code>：源码的拷贝方式，可选<code>copy-all</code>直接拷贝所有源码；<code>copy-git-cached</code>只拷贝Git缓存的文件，Bind Mount整个代码树目录；<code>copy-git-others</code>只拷贝Git列出的其他类文件，Bind Mount整个代码树目录。</li>
+<li><code>SourceFileTransferFinal=</code>：和<code>SourceFileTransfer=</code>相同，但是仅作用于最终镜像。默认情况下，不在最终镜像中拷贝代码。</li>
+<li><code>SourceResolveSymlinks=</code>：源码是否追踪符号链接。</li>
+<li><code>SourceResolveSymlinksFinal=</code>：最终镜像中的源码是否追踪符号链接。</li>
+</ul>
+</li>
+<li><code>PostInstallationScript=</code>：在配置完Extra Tree后执行的脚本，默认为<code>mkosi.postinst</code>。</li>
+<li><code>FinalizeScript=</code>：最后执行的脚本，默认为<code>mkosi.finalize</code>。</li>
+<li><code>CleanScript=</code>：清理脚本，默认为<code>mkosi.clean</code>。</li>
+<li><code>Environment=</code>：给脚本传递的环境变量。</li>
+<li><code>EnvironmentFile=</code>：从文件给脚本传递环境变量。</li>
+<li><code>WithTests=</code>：设为假，则在执行<code>mkosi.build</code>脚本时，<code>$WITH_TESTS</code>变量为0。</li>
+<li><code>WithNetwork=</code>：在执行脚本时提供网络。</li>
+<li><code>SkipFinalPhase=</code>：跳过最终构建阶段。</li>
+</ul>
+<h3 id="Partitions-段"><a href="#Partitions-段" class="headerlink" title="[Partitions]段"></a><code>[Partitions]段</code></h3><ul>
+<li><code>RootSize=</code>：根分区大小，默认为3G。</li>
+<li><code>ESPSize=</code>：ESP大小，默认为256MB。仅在<code>Bootable=yes</code>时有效。</li>
+<li><code>SwapSize=</code>：Swap分区大小，默认为0。</li>
+<li><code>HomeSize=</code>：<code>/home</code>分区大小，默认为0。</li>
+<li><code>SrvSize=</code>：<code>/srv</code>分区大小，默认为0。</li>
+<li><code>VarSize=</code>：<code>/var</code>分区大小。默认为0。</li>
+<li><code>TmpSize=</code>：<code>/var/tmp</code>分区大小。默认为0。</li>
+<li><code>BiosSize=</code>：<code>biosboot</code>分区大小，默认为0。</li>
+<li><code>XbootldrSize=</code>：<code>XBOOTLDR</code>分区大小。默认为0。</li>
+<li><code>UsrOnly=</code>：仅仅保留<code>/usr</code>目录，很适合无状态的镜像。</li>
+</ul>
+<p>更详细的分区配置可以编写为<code>优先级-分区名.conf</code>文件，保存在<code>mkosi.repart/</code>目录下，格式为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[Partition]</span><br><span class="line">Type=分区类型</span><br><span class="line">Format=文件系统</span><br><span class="line"># 是否精简化文件系统</span><br><span class="line">Minimize=yes|no</span><br><span class="line">SizeMinBytes=最小大小</span><br><span class="line">SizeMaxBytes=最大大小</span><br></pre></td></tr></table></figure>
+
+<h3 id="Validation-段"><a href="#Validation-段" class="headerlink" title="[Validation]段"></a><code>[Validation]</code>段</h3><ul>
+<li><code>SecureBoot=</code>：是否启用安全启动。</li>
+<li><code>SecureBootKey=</code>：使用的安全启动密钥。</li>
+<li><code>SecureBootCertificate=</code>：安全启动证书。</li>
+<li><code>SecureBootCommonName=</code>：安全启动密钥的颁发者，默认为<code>mkosi of %u</code>。</li>
+<li><code>SecureBootValidDays=</code>：安全启动密钥的有效期，默认为730天。</li>
+<li><code>ReadOnly=</code>：是否设置根文件系统只读。</li>
+<li><code>Encrypt=</code>：加密策略，可选值有<code>all</code>加密所有文件系统，<code>data</code>只加密根文件系统。<ul>
+<li><code>Passphrase=</code>：LUKS加密的密钥文件，必须是600权限位。</li>
+</ul>
+</li>
+<li><code>Verity=</code>：是否创建用于完整性验证的额外分区。</li>
+<li><code>Checksum=</code>：指定镜像的校验码。</li>
+<li><code>Sign=</code>：是否用<code>gpg</code>给校验码签名。</li>
+<li><code>Key=</code>：给校验码签名的密钥。</li>
+</ul>
+<h3 id="Host-段"><a href="#Host-段" class="headerlink" title="[Host]段"></a><code>[Host]</code>段</h3><ul>
+<li><code>Incremental=</code>：渐进构建。在执行<code>mkosi.build</code>脚本前立刻提供镜像缓存，这可以显著提高构建速度。</li>
+<li><code>ExtraSearchPaths=</code>：用于搜索Qemu工具的额外目录。</li>
+<li><code>Settings=</code>：使用<code>systemd-nspawn</code>启动时，读取的<code>.nspawn</code>配置文件。</li>
+</ul>
+<p>所有虚拟机配置项都仅适用于使用<code>qemu</code>启动的虚拟机，即只适用于磁盘类型的镜像：</p>
+<ul>
+<li><code>QemuHeadless=</code>：若启用，会以Headless形式启动Qemu。默认以图形界面形式启动。<ul>
+<li>新版本下这个配置项颠倒了，使用<code>QemuGui=</code>。</li>
+</ul>
+</li>
+<li><code>QemuSmp=</code>：设置Qemu的SMP。默认为2。</li>
+<li><code>QemuMem=</code>：设置Qemu的内存。默认为2G。</li>
+<li><code>QemuKvm=</code>：是否启用KVM加速，默认为<code>auto</code>。</li>
+<li><code>QemuVsock=</code>：是否启用VSock，默认为<code>auto</code>。</li>
+<li><code>QemuBoot=</code>：使用的Qemu固件，可选<code>uefi</code>、<code>linux</code>。<ul>
+<li>新版本下改为<code>QemuFirmware=</code>：可选<code>uefi</code>、<code>bios</code>、<code>linux</code>、<code>auto</code>。</li>
+<li>新版本下可用<code>QemuKernel=</code>，指定使用的Direct Boot Kernel。</li>
+</ul>
+</li>
+<li><code>QemuArgs</code>：配置空格分隔的Qemu原生参数。</li>
+<li><code>Ephemeral=</code>：是否将镜像设为不可变，所有操作在关闭之后都会撤销。</li>
+<li><code>SshKey=</code>：使用的SSH私钥。</li>
+<li><code>SshCertificate=</code>：使用的SSH证书。</li>
+<li><code>Machine=</code>：机器名，用于SSH连接。</li>
+</ul>
+<h2 id="执行流程"><a href="#执行流程" class="headerlink" title="执行流程"></a>执行流程</h2><ol>
+<li>解析命令行选项。</li>
+<li>解析配置文件。</li>
+<li>执行<code>mkosi.configure</code>脚本。</li>
+<li>检查当前用户是不是Root，如果当前用户不是Root，则尝试设置Subuid和Subgid。</li>
+<li>隔离挂载命名空间。</li>
+<li>重新挂载各种目录。</li>
+<li>拷贝Package Manager Tree。</li>
+<li>同步软件包元信息。</li>
+<li>拷贝Base Tree。</li>
+<li>检查并尝试复用缓存镜像。</li>
+<li>拷贝一份包管理器元数据到镜像内。</li>
+<li>拷贝Skeleton Tree。</li>
+<li>安装发行版及其软件包。</li>
+<li>使用<code>final</code>参数执行<code>mkosi.prepare</code>脚本。</li>
+<li>在Overlayfs安装构建包。</li>
+<li>使用<code>build</code>参数执行<code>mkosi.prepare</code>脚本。</li>
+<li>如果配置的话，缓存该镜像。</li>
+<li>执行<code>mkosi.build</code>脚本。</li>
+<li>结束构建。</li>
+<li>拷贝构建脚本的产物到镜像内。</li>
+<li>拷贝Extra Tree到镜像内。</li>
+<li>执行<code>mkosi.postinst</code>脚本。</li>
+<li>写入配置项中配置的其他杂项文件。</li>
+<li>安装<code>systemd-boot</code>，并按需配置安全启动。</li>
+<li>执行<code>systemd-sysusers</code>。</li>
+<li>执行<code>systemd-tmpfiles</code>。</li>
+<li>执行<code>systemctl preset-all</code>。</li>
+<li>执行<code>depmod</code>。</li>
+<li>执行<code>systemd-firstboot</code>。</li>
+<li>执行<code>systemd-hwdb</code>。</li>
+<li>移除指定的软件包和文件。</li>
+<li>按需执行SELinux Relabel。</li>
+<li>执行<code>mkosi.finalize</code>脚本。</li>
+<li>生成UKI镜像。</li>
+<li>导出。</li>
+</ol>
+<h2 id="发行版最小化构建"><a href="#发行版最小化构建" class="headerlink" title="发行版最小化构建"></a>发行版最小化构建</h2><p>一些发行版的最小化构建软件包如下：</p>
+<h3 id="Arch"><a href="#Arch" class="headerlink" title="Arch"></a>Arch</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[Content]</span><br><span class="line">Packages=linux</span><br><span class="line">         systemd</span><br></pre></td></tr></table></figure>
+<h3 id="Fedora"><a href="#Fedora" class="headerlink" title="Fedora"></a>Fedora</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[Content]</span><br><span class="line">Packages=kernel</span><br><span class="line">         systemd</span><br><span class="line">         systemd-boot</span><br><span class="line">         udev</span><br><span class="line">         util-linux</span><br></pre></td></tr></table></figure>
+<h3 id="CentOS-Rocky"><a href="#CentOS-Rocky" class="headerlink" title="CentOS&#x2F;Rocky"></a>CentOS&#x2F;Rocky</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[Content]</span><br><span class="line">Packages=kernel</span><br><span class="line">         systemd</span><br><span class="line">         systemd-boot</span><br><span class="line">         udev</span><br></pre></td></tr></table></figure>
+<h3 id="Debian"><a href="#Debian" class="headerlink" title="Debian"></a>Debian</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[Content]</span><br><span class="line">Packages=linux-image-generic</span><br><span class="line">         systemd</span><br><span class="line">         systemd-boot</span><br><span class="line">         systemd-sysv</span><br><span class="line">         udev</span><br><span class="line">         dbus</span><br></pre></td></tr></table></figure>
+<h3 id="Ubuntu"><a href="#Ubuntu" class="headerlink" title="Ubuntu"></a>Ubuntu</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[Content]</span><br><span class="line">Repositories=main,universe</span><br><span class="line">Packages=linux-image-generic</span><br><span class="line">         systemd</span><br><span class="line">         systemd-sysv</span><br><span class="line">         udev</span><br><span class="line">         dbus</span><br></pre></td></tr></table></figure>
+<h3 id="OpenSUSE"><a href="#OpenSUSE" class="headerlink" title="OpenSUSE"></a>OpenSUSE</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[Content]</span><br><span class="line">Packages=kernel-default</span><br><span class="line">         systemd</span><br><span class="line">         udev</span><br></pre></td></tr></table></figure>
+
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><h3 id="构建一个Fedora容器镜像"><a href="#构建一个Fedora容器镜像" class="headerlink" title="构建一个Fedora容器镜像"></a>构建一个Fedora容器镜像</h3><p>使用命令行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkosi -d fedora -p kernel,systemd,systemd-udev,systemd-boot --format directory build</span><br></pre></td></tr></table></figure>
+<p>使用配置文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># mkosi.conf</span><br><span class="line">[Distribution]</span><br><span class="line">Distribution=fedora</span><br><span class="line"></span><br><span class="line">[Output]</span><br><span class="line">Format=directory</span><br><span class="line"></span><br><span class="line">[Content]</span><br><span class="line">Packages=kernel,systemd,systemd-udev,systemd-boot</span><br></pre></td></tr></table></figure>
+<p>然后执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkosi build</span><br></pre></td></tr></table></figure>
+<h3 id="构建一个Debian可引导磁盘镜像"><a href="#构建一个Debian可引导磁盘镜像" class="headerlink" title="构建一个Debian可引导磁盘镜像"></a>构建一个Debian可引导磁盘镜像</h3><p>使用配置文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"># mkosi.conf</span><br><span class="line">[Distribution]</span><br><span class="line">Distribution=debian</span><br><span class="line">Mirror=https://mirrors.tuna.tsinghua.edu.cn/debian</span><br><span class="line">RepositoryKeyCheck=no</span><br><span class="line"></span><br><span class="line">[Output]</span><br><span class="line">Format=gpt_ext4</span><br><span class="line">Qcow2=yes</span><br><span class="line">Output=debian-12-minimal</span><br><span class="line"></span><br><span class="line">[Content]</span><br><span class="line">Bootable=yes</span><br><span class="line">Packages=linux-image-generic</span><br><span class="line">systemd</span><br><span class="line">systemd-boot</span><br><span class="line">systemd-sysv</span><br><span class="line">udev</span><br><span class="line">dbus</span><br><span class="line">WithDocs=yes</span><br><span class="line">CleanPackageMetadata=yes</span><br><span class="line">WithUnifiedKernelImages=no</span><br><span class="line">KernelCommandLine=console=ttyS0</span><br><span class="line">Password=toor</span><br><span class="line"></span><br><span class="line">[Partitions]</span><br><span class="line">RootSize=10G</span><br><span class="line">ESPSize=200M</span><br><span class="line">BiosSize=1M</span><br><span class="line"></span><br><span class="line">[Validation]</span><br><span class="line">SecureBoot=no</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/02/04/Incus%E6%89%8B%E5%86%8C/" rel="prev" title="Incus手册">
+                  <i class="fa fa-angle-left"></i> Incus手册
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/03/31/CGroup-v1-v2%E5%85%A8%E8%A7%A3/" rel="next" title="CGroup v1 && v2全解">
+                  CGroup v1 && v2全解 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Molten_Armor</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

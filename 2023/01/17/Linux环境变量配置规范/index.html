@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.icku.eu.org","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="启动流程文件读取顺序">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux环境变量配置规范">
+<meta property="og:url" content="https://blog.icku.eu.org/2023/01/17/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%E8%A7%84%E8%8C%83/index.html">
+<meta property="og:site_name" content="MA Blog">
+<meta property="og:description" content="启动流程文件读取顺序">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-01-17T08:32:04.000Z">
+<meta property="article:modified_time" content="2024-06-27T15:16:10.000Z">
+<meta property="article:author" content="Molten_Armor">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.icku.eu.org/2023/01/17/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%E8%A7%84%E8%8C%83/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.icku.eu.org/2023/01/17/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%E8%A7%84%E8%8C%83/","path":"2023/01/17/Linux环境变量配置规范/","title":"Linux环境变量配置规范"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Linux环境变量配置规范 | MA Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">MA Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E9%A1%BA%E5%BA%8F"><span class="nav-number">1.</span> <span class="nav-text">启动流程文件读取顺序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%8E%AF%E5%A2%83-%E4%BB%A5bash%E4%B8%BA%E4%BE%8B"><span class="nav-number">1.1.</span> <span class="nav-text">命令行环境(以bash为例)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2-Display-Manager%E6%8E%A5%E7%AE%A1"><span class="nav-number">1.2.</span> <span class="nav-text">图形界面(Display Manager接管)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E5%AF%BC"><span class="nav-number">1.3.</span> <span class="nav-text">指导</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E6%83%85%E5%86%B5"><span class="nav-number">1.4.</span> <span class="nav-text">其他情况</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%A8%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%95%8C%E9%9D%A2%E6%89%A7%E8%A1%8Cstartx"><span class="nav-number">1.4.1.</span> <span class="nav-text">在命令行界面执行startx</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%90Shell%E7%BA%A7%E8%81%94"><span class="nav-number">1.4.2.</span> <span class="nav-text">子Shell级联</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%BB%88%E7%AB%AF%E6%A8%A1%E6%8B%9F%E5%99%A8"><span class="nav-number">1.4.3.</span> <span class="nav-text">图形化终端模拟器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#su"><span class="nav-number">1.4.4.</span> <span class="nav-text">su</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">2.</span> <span class="nav-text">环境变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">2.1.</span> <span class="nav-text">检查环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E5%B8%B8%E7%94%A8%E7%9A%84%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">2.2.</span> <span class="nav-text">最常用的环境变量</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Molten_Armor</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.icku.eu.org/2023/01/17/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE%E8%A7%84%E8%8C%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Molten_Armor">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MA Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Linux环境变量配置规范 | MA Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux环境变量配置规范
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-01-17 16:32:04" itemprop="dateCreated datePublished" datetime="2023-01-17T16:32:04+08:00">2023-01-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-06-27 23:16:10" itemprop="dateModified" datetime="2024-06-27T23:16:10+08:00">2024-06-27</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="启动流程文件读取顺序"><a href="#启动流程文件读取顺序" class="headerlink" title="启动流程文件读取顺序"></a>启动流程文件读取顺序</h2><span id="more"></span>
+<h3 id="命令行环境-以bash为例"><a href="#命令行环境-以bash为例" class="headerlink" title="命令行环境(以bash为例)"></a>命令行环境(以bash为例)</h3><p>登录系统时，Shell读取文件的顺序是<code>systemd init --&gt; getty --&gt; 输入账号密码 --&gt; bash login shell --&gt; /etc/profile --&gt; /etc/environment --&gt; $HOME/.bash_profile --&gt; $HOME/.bash_login --&gt;$HOME/.profile</code><br>变量从后向前迭代，<code>$HOME/.bash_profile --&gt; $HOME/.bash_login --&gt;$HOME/.profile</code>流程中，只要读到一个就不再读取其他的两个。<br>交互式启动non-login bash时，不会进行以上步骤，只会读取<code>$HOME/.bashrc</code>，但是指定<code>--login</code>选项时，会执行完整的文件读取流程。<br>很多其他Shell不遵循以上流程，例如zsh，只会读取<code>/etc/zshrc</code>和<code>$HOME/.zshrc</code></p>
+<h3 id="图形界面-Display-Manager接管"><a href="#图形界面-Display-Manager接管" class="headerlink" title="图形界面(Display Manager接管)"></a>图形界面(Display Manager接管)</h3><p>使用Display Manager的登录流程截然不同。顺序为<code>systemd init --&gt; display manager --&gt; 输入账号密码 --&gt; /etc/X11/Xsession --&gt; /etc/environment --&gt; $HOME/.xsessionrc</code><br>也就是说，图形界面登录自始至终都没有读取Shell的启动文件(<code>/etc/profile</code>和<code>$HOME/.profile</code>等等)，作为用户，应该创建<code>$HOME/.xsessionrc</code>来配置自定义环境变量。</p>
+<h3 id="指导"><a href="#指导" class="headerlink" title="指导"></a>指导</h3><p>将<strong>全局所有用户通用的环境变量</strong>，写进<code>/etc/environment</code>，它是由PAM管理的，不是Shell，通用性更好，但是此处不能使用Shell的变量展开，逻辑控制等特性，只能使用<code>变量名=值</code>的格式声明变量。除此之外的一切方法都不推荐，没有其他跨Shell配置环境变量的方法。<br>将<strong>用户的Shell设置</strong>(别名，函数，选项等等)写入<code>$HOME/.bashrc</code><br>如果使用命令行环境，将<strong>用户的环境变量</strong>写入<code>$HOME/.profile</code>，并创建<code>$HOME/.bash_profile</code>，写入以下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if [ -f ~/.profile ]; then</span><br><span class="line">    . ~/.profile</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<p>如果使用图形环境，创建并修改<code>$HOME/.xsessionrc</code>，写入以下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if [ -f ~/.profile ]; then</span><br><span class="line">    . ~/.profile</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<p>这并非最标准，但是，是最快捷的方法。</p>
+<h3 id="其他情况"><a href="#其他情况" class="headerlink" title="其他情况"></a>其他情况</h3><h4 id="在命令行界面执行startx"><a href="#在命令行界面执行startx" class="headerlink" title="在命令行界面执行startx"></a>在命令行界面执行startx</h4><p>如果通过控制台启动X，那么它会继承login shell的环境变量，而且会再读取一次上面提到过的图形界面的三个文件。</p>
+<h4 id="子Shell级联"><a href="#子Shell级联" class="headerlink" title="子Shell级联"></a>子Shell级联</h4><p>如果你在login shell中再启动一个non-login shell，如上所述，子Shell不会读取启动流程的文件。为了方便管理，往往会在<code>$HOME/.bash_profile</code>或者<code>$HOME/.profile</code>中写入以下内容以确保两者的一致</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># set -i意味着Shell是交互的(interactive)</span><br><span class="line">if [ $- == *i* ] &amp;&amp; [ -f ~/.bashrc ]; then</span><br><span class="line">    . ~/.bashrc</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<h4 id="图形化终端模拟器"><a href="#图形化终端模拟器" class="headerlink" title="图形化终端模拟器"></a>图形化终端模拟器</h4><p>图形化终端模拟器启动时和non-login shell一样，只会读取<code>$HOME/.bashrc</code><br>一些图形化终端模拟器，比如GNOME Terminal，也支持使用login shell启动。</p>
+<h4 id="su"><a href="#su" class="headerlink" title="su"></a>su</h4><p>在早期版本，su切换用户后会将PATH变量重置为<code>/etc/login.defs</code>中的<code>ENV_PATH</code>和<code>ENV_SUPATH</code>设置。但是，现在它默认不再修改PATH变量。</p>
+<h2 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h2><h3 id="检查环境变量"><a href="#检查环境变量" class="headerlink" title="检查环境变量"></a>检查环境变量</h3><p>使用<code>env</code>命令，或<code>declare -x</code>命令，或<code>export -p</code>命令检查当前的环境变量</p>
+<h3 id="最常用的环境变量"><a href="#最常用的环境变量" class="headerlink" title="最常用的环境变量"></a>最常用的环境变量</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">PATH  冒号分隔的命令搜索路径</span><br><span class="line">HOME  用户家目录</span><br><span class="line">LOGNAME  用户名</span><br><span class="line">SHELL  用户使用的Shell</span><br><span class="line">EDITOR  用户使用的编辑器</span><br><span class="line">MAIL  用户的电子邮箱位置</span><br><span class="line">PWD  当前的路径</span><br><span class="line">OLDPWD  上次cd的路径</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/01/17/%E7%BD%91%E7%BB%9C%E5%BC%95%E5%AF%BC%E8%AF%A6%E8%A7%A3/" rel="prev" title="网络引导详解">
+                  <i class="fa fa-angle-left"></i> 网络引导详解
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/01/18/Linux%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86/" rel="next" title="Linux网络管理">
+                  Linux网络管理 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Molten_Armor</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

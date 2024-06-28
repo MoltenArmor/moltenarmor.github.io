@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.icku.eu.org","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="守护进程不是服务守护进程不是服务，或者说，守护进程不完全是服务，服务意味着一个后台进程，和能够通过某种方式与后台进程进行交流与控制的另一个进程；而守护进程仅仅意味着服务的后台进程部分。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[PEP 3143] Python的标准守护进程模块">
+<meta property="og:url" content="https://blog.icku.eu.org/2023/08/05/PEP-3143-Python%E7%9A%84%E6%A0%87%E5%87%86%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E6%A8%A1%E5%9D%97/index.html">
+<meta property="og:site_name" content="MA Blog">
+<meta property="og:description" content="守护进程不是服务守护进程不是服务，或者说，守护进程不完全是服务，服务意味着一个后台进程，和能够通过某种方式与后台进程进行交流与控制的另一个进程；而守护进程仅仅意味着服务的后台进程部分。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-08-05T02:15:51.000Z">
+<meta property="article:modified_time" content="2024-06-27T15:16:10.000Z">
+<meta property="article:author" content="Molten_Armor">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.icku.eu.org/2023/08/05/PEP-3143-Python%E7%9A%84%E6%A0%87%E5%87%86%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E6%A8%A1%E5%9D%97/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.icku.eu.org/2023/08/05/PEP-3143-Python%E7%9A%84%E6%A0%87%E5%87%86%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E6%A8%A1%E5%9D%97/","path":"2023/08/05/PEP-3143-Python的标准守护进程模块/","title":"[PEP 3143] Python的标准守护进程模块"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>[PEP 3143] Python的标准守护进程模块 | MA Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">MA Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E4%B8%8D%E6%98%AF%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.</span> <span class="nav-text">守护进程不是服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%87%E5%87%86%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E5%BA%93"><span class="nav-number">2.</span> <span class="nav-text">标准守护进程库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E9%80%BB%E8%BE%91"><span class="nav-number">2.1.</span> <span class="nav-text">实现逻辑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E5%86%85%E5%AE%B9"><span class="nav-number">2.2.</span> <span class="nav-text">具体内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">2.3.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%88%E6%9E%9C"><span class="nav-number">2.4.</span> <span class="nav-text">效果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E5%8C%96%E6%A8%A1%E5%9D%97"><span class="nav-number">3.</span> <span class="nav-text">简化模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%B1%BB"><span class="nav-number">3.1.</span> <span class="nav-text">服务类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E6%9C%8D%E5%8A%A1"><span class="nav-number">3.1.1.</span> <span class="nav-text">控制服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%99%BB%E8%AE%B0%E6%97%A5%E5%BF%97"><span class="nav-number">3.1.2.</span> <span class="nav-text">登记日志</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AD%89%E5%BE%85%E4%BF%A1%E5%8F%B7"><span class="nav-number">3.1.3.</span> <span class="nav-text">等待信号</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Molten_Armor</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.icku.eu.org/2023/08/05/PEP-3143-Python%E7%9A%84%E6%A0%87%E5%87%86%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E6%A8%A1%E5%9D%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Molten_Armor">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MA Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="[PEP 3143] Python的标准守护进程模块 | MA Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [PEP 3143] Python的标准守护进程模块
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-08-05 10:15:51" itemprop="dateCreated datePublished" datetime="2023-08-05T10:15:51+08:00">2023-08-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-06-27 23:16:10" itemprop="dateModified" datetime="2024-06-27T23:16:10+08:00">2024-06-27</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="守护进程不是服务"><a href="#守护进程不是服务" class="headerlink" title="守护进程不是服务"></a>守护进程不是服务</h2><p>守护进程不是服务，或者说，<strong>守护进程不完全是服务</strong>，服务意味着一个后台进程，和能够通过某种方式与后台进程进行交流与控制的另一个进程；而<strong>守护进程仅仅意味着服务的后台进程部分</strong>。</p>
+<span id="more"></span>
+
+<h2 id="标准守护进程库"><a href="#标准守护进程库" class="headerlink" title="标准守护进程库"></a>标准守护进程库</h2><p><code>python-daemon</code>是符合 <a target="_blank" rel="noopener" href="https://www.python.org/dev/peps/pep-3143">PEP 3143</a> 标准的守护进程实现模块。</p>
+<h3 id="实现逻辑"><a href="#实现逻辑" class="headerlink" title="实现逻辑"></a>实现逻辑</h3><p>根据《UNIX环境高级编程》的记录，详细来说，要实现一个守护进程，那么要依次执行以下几步：</p>
+<ul>
+<li><strong>关闭所有已经打开的文件句柄</strong>（注：这并不代表之后守护进程不能再打开文件）。</li>
+<li>切换当前工作目录。</li>
+<li>重设自身的文检掩码。</li>
+<li>进入后台。</li>
+<li><strong>脱离进程组</strong>。</li>
+<li>关闭终端IO。</li>
+<li><strong>脱离终端，并且确保不会重新获取终端</strong>。</li>
+<li>确保正确地处理以下行为：<ul>
+<li>开机启动的情况。</li>
+<li>接收到SIGTERM信号的退出。</li>
+<li>子进程要发出SIGCLD信号。</li>
+</ul>
+</li>
+</ul>
+<p>一些守护进程工具，例如 <a target="_blank" rel="noopener" href="https://www.libslack.org/daemon/">Slack-daemon</a>，不同于 <a target="_blank" rel="noopener" href="https://www.python.org/dev/peps/pep-3143">PEP 3143</a> 仅仅实现一个单独的守护进程的目标，它们专注于实现完整的UNIX守护进程功能。参考它们的功能，对于一个守护进程来说，这些额外行为是可取的：</p>
+<ul>
+<li>设置当前的进程上下文。</li>
+<li>检测<code>initd</code>与<code>inetd</code>，并做出正确的反应。</li>
+<li>设置SUID与SGID权限，提高安全性。</li>
+<li>避免生成内核转储文件，以防止信息泄露。</li>
+<li>创建以守护进程命名的PID文件，并保存在合适的位置，以确保守护进程的唯一性（可选）。</li>
+<li>重设守护进程所属的用户和组（可选，仅用于root守护进程）。</li>
+<li>设置chroot目录（可选，仅可用于root守护进程）。</li>
+<li>捕获守护进程的标准输出和标准错误，重定向到syslog或文件（可选）。</li>
+</ul>
+<h3 id="具体内容"><a href="#具体内容" class="headerlink" title="具体内容"></a>具体内容</h3><p><code>systemd-daemon</code>是围绕一个守护进程上下文类<code>daemon.DaemonContext()</code>，与它的参数实现的：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">对象名 = daemon.DaemonContext(</span><br><span class="line">    files_preserve=[保留的文件句柄列表],</span><br><span class="line">    chroot_directory=CHROOT目录,</span><br><span class="line">    working_directory=工作目录,    <span class="comment"># 默认为/</span></span><br><span class="line">    umask=掩码,    <span class="comment"># 默认为0</span></span><br><span class="line">    pidfile=PID文件锁对象,    <span class="comment"># 几乎总要设置，PID文件会在守护进程结束时自动清理</span></span><br><span class="line">    detach_process=<span class="literal">True</span>,    <span class="comment"># 是否守护进程化，默认是True，除非你希望通过手动控制</span></span><br><span class="line">    uid=执行用户UID,    <span class="comment"># 默认是当前用户</span></span><br><span class="line">    gid=执行用户GID,    <span class="comment"># 默认是当前用户</span></span><br><span class="line">    prevent_core=<span class="literal">True</span>,    <span class="comment"># 禁止生成转储文件，防止信息泄露，默认是True</span></span><br><span class="line">    signal_map=&#123;信号: 函数&#125;,    <span class="comment"># 信号处理函数映射，默认为&#123;signal.SIGTERM: &#x27;terminate&#x27;&#125;，设为None表示无视信号，设为字符串表示DaemonContext的一个实例属性，设为其他值表示信号处理函数</span></span><br><span class="line">    stdin=<span class="literal">None</span>,    <span class="comment"># 标准输入来源，必须是流对象，至少要有w+权限</span></span><br><span class="line">    stdout=<span class="literal">None</span>,    <span class="comment"># 标准输出目标，必须是流对象，至少要有w+权限</span></span><br><span class="line">    stderr=<span class="literal">None</span>,    <span class="comment"># 标准错误目标，必须是流对象，至少要有w+权限</span></span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+<p><strong>这些参数都会被转换为实例属性，可以在之后通过实例进行修改，只需要通过<code>对象.属性 = 值</code>即可</strong>。</p>
+<p>而这个对象有以下这些方法：</p>
+<p>打开守护进程上下文，当这个方法返回时，<strong>运行中的程序就会变成守护进程，<code>is_open</code>被设为<code>True</code>（换句话说，所有进程分叉过程都交给守护进程上下文解决了，如果你希望了解具体怎么实现的，请看 <a target="_blank" rel="noopener" href="https://pagure.io/python-daemon/blob/main/f/daemon/daemon.py">python-daemon</a>）</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">对象.open() -&gt; None</span><br></pre></td></tr></table></figure>
+<p>关闭守护进程上下文，**这意味着清除PID文件，以及将<code>is_open</code>设为<code>False</code>**：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">对象.close() -&gt; None</span><br></pre></td></tr></table></figure>
+<p>返回守护进程上下文是否处于开启状态：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">对象.is_open -&gt; bool</span><br></pre></td></tr></table></figure>
+<p>守护进程接收到指定信号的操作方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">对象.terminate([信号])</span><br></pre></td></tr></table></figure>
+<p>此外，既然是上下文，它就当然实现了<code>with</code>语句：</p>
+<p>执行<code>with</code>语句时自动执行的方法，调用<code>.open()</code>方法并返回实例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">对象.__enter() -&gt; DaemonContext</span><br></pre></td></tr></table></figure>
+<p>退出<code>with</code>语句时自动执行的方法，调用<code>.close()</code>方法，如果关闭成功则返回<code>True</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">对象.__exit__() -&gt; bool</span><br></pre></td></tr></table></figure>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>要使用<code>daemon</code>模块，你还至少需要<code>lockfile</code>和<code>signal</code>模块：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import daemon</span><br><span class="line"># 用于给PID文件上锁</span><br><span class="line">import lockfile</span><br><span class="line"># 用于提供信号</span><br><span class="line">import signal</span><br></pre></td></tr></table></figure>
+<p>简单来说，你只需要把守护进程的主逻辑放到上下文中：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> daemon.DaemonContext(pidfile=lockfile.LockFile(<span class="string">&#x27;/run/xxx.pid&#x27;</span>)):</span><br><span class="line">    <span class="comment"># 接下来的内容就是会在守护进程中执行的程序</span></span><br><span class="line">    <span class="comment"># 在进入循环之前，你也可以进行一些处理，比如打开一些文件之类的</span></span><br><span class="line">    before_loop()</span><br><span class="line">    <span class="comment"># 循环不一定要写在外面，写在函数里面也可以</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="comment"># 实现一些功能...</span></span><br></pre></td></tr></table></figure>
+<p>更规范的用法是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义一个在Fork守护进程前的准备函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">before_daemon</span>():</span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义一个在守护进程进入循环之前的准备函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">before_loop</span>():</span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义主函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main_program</span>():</span><br><span class="line">    <span class="comment"># 循环不一定要写在外面，写在函数里面也可以</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        ......</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义一个退出前的清理函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">cleanup</span>():</span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义一个重载函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">reload</span>():</span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line"><span class="comment"># 先实例化一个上下文对象，注意给PID文件加锁</span></span><br><span class="line">daemon_context = daemon.DaemonContext(pidfile=lockfile.FileLock(<span class="string">&#x27;/run/xxx.pid&#x27;</span>),</span><br><span class="line">    signal_map = &#123;signal.SIGTERM: cleanup(), signal.SIGHUP: reload()&#125;    <span class="comment"># 在捕获SIGTERM信号时进行清理，在捕获SIGHUP信号时进行重载</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在这里执行进入守护进程前的处理函数</span></span><br><span class="line">before_daemon()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在这里实现守护进程中运行的程序</span></span><br><span class="line"><span class="keyword">with</span> daemon_context:</span><br><span class="line">    <span class="comment"># 在这里执行进入循环之前的处理函数，提示：和before_daemon()的主要区别在于进程环境不同</span></span><br><span class="line">    before_loop()</span><br><span class="line">    <span class="comment"># 进入主程序循环</span></span><br><span class="line">    main_program()</span><br></pre></td></tr></table></figure>
+<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p>你应该能在<code>ps xf</code>的输出中看到一个脱离终端，孤立的守护进程，进程显示的命令就是执行脚本时执行的命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PID    TTY    STAT    TIME    COMMAND</span><br><span class="line">2023    ?      S      0:00    python daemon.py</span><br></pre></td></tr></table></figure>
+
+<h2 id="简化模块"><a href="#简化模块" class="headerlink" title="简化模块"></a>简化模块</h2><p><code>systemd-daemon</code>有一个简化的<code>service</code>模块，非常易于使用。</p>
+<h3 id="服务类"><a href="#服务类" class="headerlink" title="服务类"></a>服务类</h3><p><code>service</code>模块定义了一个<code>Service</code>类，用户只需要继承这个类即可：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class MyService(service.Service):</span><br><span class="line">    def __init__(self, *args, **kwargs):</span><br><span class="line">        # 构造函数里必须先调用父类的构造函数</span><br><span class="line">        super(MyService, self).__init__(*args, **kwargs)</span><br><span class="line"></span><br><span class="line">    # 守护进程主逻辑，必须实现</span><br><span class="line">    def run(self):</span><br><span class="line">        # 主循环</span><br><span class="line">        while not self.got_sigterm():</span><br><span class="line">            ......</span><br></pre></td></tr></table></figure>
+<p>实例化时，需要提供以下参数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">对象名 = MyService(&#x27;服务名&#x27;, pid_dir=&#x27;PID文件保存目录&#x27;[, signals=[&#x27;信号列表&#x27;]])</span><br></pre></td></tr></table></figure>
+<h4 id="控制服务"><a href="#控制服务" class="headerlink" title="控制服务"></a>控制服务</h4><p>实例化服务对象后，就可以轻易的控制服务：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    my_service = MyService(&#x27;我的服务&#x27;, pid_dir=&#x27;/run&#x27;)</span><br><span class="line"></span><br><span class="line">    # 启动</span><br><span class="line">    my_service.start() -&gt; None</span><br><span class="line">    # 发送SIGTERM信号停止</span><br><span class="line">    my_service.stop([block=False]) -&gt; None</span><br><span class="line">    # 发送SIGKILL信号杀死</span><br><span class="line">    my_service.kill([block=False]) -&gt; None</span><br><span class="line">    # 检测是否运行</span><br><span class="line">    my_service.is_running() -&gt; bool</span><br><span class="line">    # 获取PID</span><br><span class="line">    my_service.get_pid() -&gt; int</span><br></pre></td></tr></table></figure>
+<p>当然，还是建议使用位置参数实现子命令进行操作。</p>
+<h4 id="登记日志"><a href="#登记日志" class="headerlink" title="登记日志"></a>登记日志</h4><p><code>service</code>模块封装了<code>syslog</code>日志处理器查找函数<code>find_syslog()</code>，可以直接使用<code>syslog</code>登记日志：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class MyService(service.Service):</span><br><span class="line">    def __init__(self, *args, **kwargs):</span><br><span class="line">        super(MyService, self).__init__(*args, **kwargs)</span><br><span class="line">        # 这个日志器对象是免费的</span><br><span class="line">        self.logger.addHandler(logging.handlers.SysLogHandler(address=find_syslog()), facility=logging.handlers.SysLogHandler.LOG_DAEMON)</span><br><span class="line">        ......</span><br><span class="line"></span><br><span class="line">    def run(self):</span><br><span class="line">        while not self.got_sigterm():</span><br><span class="line">            self.logger.info(&#x27;日志&#x27;)</span><br></pre></td></tr></table></figure>
+<h4 id="等待信号"><a href="#等待信号" class="headerlink" title="等待信号"></a>等待信号</h4><p>当<code>.start()</code>方法被调用时，服务会使用一个独立进程运行<code>run()</code>函数；当<code>.stop()</code>方法被调用时，会对<code>run()</code>进程发送SIGTERM信号，此时，<code>run()</code>进程的<code>self.got_sigterm()</code>方法会返回<code>True</code>。此外，也可以使用<code>.kill()</code>方法直接发送SIGKILL信号。</p>
+<p>另外，用户可以通过<code>.send_signal()</code>方法给守护进程发送信号，<code>run()</code>函数中，也可以使用<code>self.wait_for_signal()</code>方法等待接收其他信号，不过，这些信号必须在初始化时通过<code>signals</code>参数声明：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">class MyService(service.Service):</span><br><span class="line">    def __init__(self, *args, **kwargs):</span><br><span class="line">        super(MyService, self).__init__(*args, **kwargs)</span><br><span class="line"></span><br><span class="line">    def run(self):</span><br><span class="line">        while not self.got_sigterm():</span><br><span class="line">            ......</span><br><span class="line">            # 阻塞直到收到SIGTERM</span><br><span class="line">            self.wait_for_sigterm()</span><br><span class="line"></span><br><span class="line">        # 检测是否收到指定信号</span><br><span class="line">        while not self.got_signal(信号):</span><br><span class="line">            ......</span><br><span class="line">            # 阻塞直到收到指定信号</span><br><span class="line">            self.wait_for_signal(信号)</span><br><span class="line"></span><br><span class="line">my_service = MyService(&#x27;服务名&#x27;, pid_dir=&#x27;/run&#x27;, signals=[signal.SIGHUP])</span><br><span class="line"># 发送信号</span><br><span class="line">my_service.send_signal(信号名)</span><br><span class="line"># 清除信号行为</span><br><span class="line">my_service.clear()</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/08/03/%E4%BD%BF%E7%94%A8Python%E7%BC%96%E5%86%99systemd%E6%9C%8D%E5%8A%A1/" rel="prev" title="使用Python编写systemd服务">
+                  <i class="fa fa-angle-left"></i> 使用Python编写systemd服务
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/09/16/start-stop-daemon%E7%9A%84%E9%87%8D%E5%86%99/" rel="next" title="start-stop-daemon的重写">
+                  start-stop-daemon的重写 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Molten_Armor</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.icku.eu.org","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="目的LSB（Linux Standard Base）规范了Linux发行版中所必须包含的一系列基本内容。创造它的目的是减少不同发行版之间的不同。LSB极大的降低了在发行版间移植应用的压力，同时也降低了后期对这些程序进行维护的压力。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LSB5.0核心内容中文版">
+<meta property="og:url" content="https://blog.icku.eu.org/2023/03/06/LSB5-0%E6%A0%B8%E5%BF%83%E5%86%85%E5%AE%B9%E4%B8%AD%E6%96%87%E7%89%88/index.html">
+<meta property="og:site_name" content="MA Blog">
+<meta property="og:description" content="目的LSB（Linux Standard Base）规范了Linux发行版中所必须包含的一系列基本内容。创造它的目的是减少不同发行版之间的不同。LSB极大的降低了在发行版间移植应用的压力，同时也降低了后期对这些程序进行维护的压力。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-03-06T08:26:58.000Z">
+<meta property="article:modified_time" content="2024-06-27T15:16:10.000Z">
+<meta property="article:author" content="Molten_Armor">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.icku.eu.org/2023/03/06/LSB5-0%E6%A0%B8%E5%BF%83%E5%86%85%E5%AE%B9%E4%B8%AD%E6%96%87%E7%89%88/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.icku.eu.org/2023/03/06/LSB5-0%E6%A0%B8%E5%BF%83%E5%86%85%E5%AE%B9%E4%B8%AD%E6%96%87%E7%89%88/","path":"2023/03/06/LSB5-0核心内容中文版/","title":"LSB5.0核心内容中文版"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>LSB5.0核心内容中文版 | MA Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">MA Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E7%9A%84"><span class="nav-number">1.</span> <span class="nav-text">目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E5%85%83"><span class="nav-number">2.</span> <span class="nav-text">单元</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AE%B9"><span class="nav-number">3.</span> <span class="nav-text">内容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E8%A7%84%E8%8C%83"><span class="nav-number">3.1.</span> <span class="nav-text">命令规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E4%B8%8E%E7%BB%84%E7%9A%84%E8%A7%84%E8%8C%83"><span class="nav-number">3.2.</span> <span class="nav-text">用户与组的规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%E8%A7%84%E8%8C%83"><span class="nav-number">3.3.</span> <span class="nav-text">定时任务规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E8%84%9A%E6%9C%AC%E8%A7%84%E8%8C%83%EF%BC%88%E9%87%8D%E7%82%B9%EF%BC%89"><span class="nav-number">3.4.</span> <span class="nav-text">初始化脚本规范（重点）</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Molten_Armor</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.icku.eu.org/2023/03/06/LSB5-0%E6%A0%B8%E5%BF%83%E5%86%85%E5%AE%B9%E4%B8%AD%E6%96%87%E7%89%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Molten_Armor">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MA Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="LSB5.0核心内容中文版 | MA Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          LSB5.0核心内容中文版
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-03-06 16:26:58" itemprop="dateCreated datePublished" datetime="2023-03-06T16:26:58+08:00">2023-03-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-06-27 23:16:10" itemprop="dateModified" datetime="2024-06-27T23:16:10+08:00">2024-06-27</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><p>LSB（Linux Standard Base）规范了Linux发行版中所必须包含的一系列基本内容。创造它的目的是减少不同发行版之间的不同。LSB极大的降低了在发行版间移植应用的压力，同时也降低了后期对这些程序进行维护的压力。</p>
+<span id="more"></span>
+<p>![[lsb_concept_tools.png]]</p>
+<p>目前最新的版本是LSB 5.0。</p>
+<h2 id="单元"><a href="#单元" class="headerlink" title="单元"></a>单元</h2><p>![[lsb_elements.png]]</p>
+<p>LSB由四个顶级单元组成：模块，ELF元素，RPM标签和解释语言。模块又包括系统库和命令，我们在这里只讨论模块。<br>最新的LSB包含文件可以在 <a target="_blank" rel="noopener" href="https://www.linuxbase.org/navigator/commons/welcome.php">LSB Navigator</a> 获取，也可以在这里进行LSB的认证。</p>
+<h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><p>LSB的实现极其依赖FHS标准和GNU Coreutils。</p>
+<h3 id="命令规范"><a href="#命令规范" class="headerlink" title="命令规范"></a>命令规范</h3><p>一个符合LSB标准的系统必须包含以下基本命令：<br><strong>Shell内置命令</strong></p>
+<table>
+<thead>
+<tr>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>alias</td>
+<td>command</td>
+<td>getopts</td>
+<td>read</td>
+<td>umask</td>
+</tr>
+<tr>
+<td>bg</td>
+<td>fc</td>
+<td>hash</td>
+<td>type</td>
+<td>unalias</td>
+</tr>
+<tr>
+<td>cd</td>
+<td>fg</td>
+<td>jobs</td>
+<td>ulimit</td>
+<td>wait</td>
+</tr>
+</tbody></table>
+<p><strong>核心模块命令</strong></p>
+<table>
+<thead>
+<tr>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>[</code></td>
+<td>du</td>
+<td>install</td>
+<td>mv</td>
+<td>strings</td>
+</tr>
+<tr>
+<td>ar</td>
+<td>echo</td>
+<td>install_initd</td>
+<td>newgrp</td>
+<td>strip</td>
+</tr>
+<tr>
+<td>at</td>
+<td>ed</td>
+<td>ipcrm</td>
+<td>nice</td>
+<td>stty</td>
+</tr>
+<tr>
+<td>awk</td>
+<td>egrep</td>
+<td>ipcs</td>
+<td>nl</td>
+<td>su</td>
+</tr>
+<tr>
+<td>basename</td>
+<td>env</td>
+<td>join</td>
+<td>nohup</td>
+<td>sync</td>
+</tr>
+<tr>
+<td>batch</td>
+<td>expand</td>
+<td>kill</td>
+<td>od</td>
+<td>tail</td>
+</tr>
+<tr>
+<td>bc</td>
+<td>expr</td>
+<td>killall</td>
+<td>passwd</td>
+<td>tar</td>
+</tr>
+<tr>
+<td>cat</td>
+<td>false</td>
+<td>ln</td>
+<td>paste</td>
+<td>tee</td>
+</tr>
+<tr>
+<td>chfn</td>
+<td>fgrep</td>
+<td>locale</td>
+<td>patch</td>
+<td>test</td>
+</tr>
+<tr>
+<td>chgrp</td>
+<td>file</td>
+<td>localedef</td>
+<td>pathchk</td>
+<td>tic</td>
+</tr>
+<tr>
+<td>chmod</td>
+<td>find</td>
+<td>logger</td>
+<td>pax</td>
+<td>time</td>
+</tr>
+<tr>
+<td>chown</td>
+<td>fold</td>
+<td>logname</td>
+<td>pidof</td>
+<td>touch</td>
+</tr>
+<tr>
+<td>chsh</td>
+<td>fuser</td>
+<td>lp</td>
+<td>pr</td>
+<td>tput</td>
+</tr>
+<tr>
+<td>cksum</td>
+<td>gencat</td>
+<td>lpr</td>
+<td>printf</td>
+<td>tr</td>
+</tr>
+<tr>
+<td>cmp</td>
+<td>getconf</td>
+<td>ls</td>
+<td>ps</td>
+<td>true</td>
+</tr>
+<tr>
+<td>col</td>
+<td>gettext</td>
+<td>lsb_release</td>
+<td>pwd</td>
+<td>tsort</td>
+</tr>
+<tr>
+<td>comm</td>
+<td>grep</td>
+<td>m4</td>
+<td>remove_initd</td>
+<td>tty</td>
+</tr>
+<tr>
+<td>cp</td>
+<td>groupadd</td>
+<td>mailx</td>
+<td>renice</td>
+<td>umount</td>
+</tr>
+<tr>
+<td>cpio</td>
+<td>groupdel</td>
+<td>make</td>
+<td>rm</td>
+<td>uname</td>
+</tr>
+<tr>
+<td>crontab</td>
+<td>groupmod</td>
+<td>man</td>
+<td>rmdir</td>
+<td>unexpand</td>
+</tr>
+<tr>
+<td>csplit</td>
+<td>groups</td>
+<td>md5sum</td>
+<td>sed</td>
+<td>uniq</td>
+</tr>
+<tr>
+<td>cut</td>
+<td>gunzip</td>
+<td>mkdir</td>
+<td>sendmail</td>
+<td>useradd</td>
+</tr>
+<tr>
+<td>date</td>
+<td>gzip</td>
+<td>mkfifo</td>
+<td>seq</td>
+<td>userdel</td>
+</tr>
+<tr>
+<td>dd</td>
+<td>head</td>
+<td>mknod</td>
+<td>sh</td>
+<td>usermod</td>
+</tr>
+<tr>
+<td>df</td>
+<td>hostname</td>
+<td>mktemp</td>
+<td>shutdown</td>
+<td>wc</td>
+</tr>
+<tr>
+<td>diff</td>
+<td>iconv</td>
+<td>more</td>
+<td>sleep</td>
+<td>xargs</td>
+</tr>
+<tr>
+<td>dirname</td>
+<td>id</td>
+<td>mount</td>
+<td>sort</td>
+<td>zcat</td>
+</tr>
+<tr>
+<td>dmesg</td>
+<td>infocmp</td>
+<td>msgfmt</td>
+<td>split</td>
+<td></td>
+</tr>
+</tbody></table>
+<p><strong>桌面模块命令</strong></p>
+<table>
+<thead>
+<tr>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>fc-cache</td>
+<td>fc-match</td>
+<td>xdg-desktop-menu</td>
+<td>xdg-icon-resource</td>
+<td>xdg-open</td>
+</tr>
+<tr>
+<td>fc-list</td>
+<td>xdg-desktop-icon</td>
+<td>xdg-email</td>
+<td>xdg-mime</td>
+<td>xdg-screensaver</td>
+</tr>
+</tbody></table>
+<p><strong>图像模块命令</strong></p>
+<table>
+<thead>
+<tr>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>foomatic-rip</td>
+<td>gs</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p><strong>语言模块命令</strong></p>
+<table>
+<thead>
+<tr>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>perl</td>
+<td>python</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="用户与组的规范"><a href="#用户与组的规范" class="headerlink" title="用户与组的规范"></a>用户与组的规范</h3><p>以下这些用户在每个系统中都必须包含：</p>
+<table>
+<thead>
+<tr>
+<th>用户名</th>
+<th>组名</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>root</td>
+<td>root</td>
+<td>拥有最高权限的管理用户</td>
+</tr>
+<tr>
+<td>bin</td>
+<td>bin</td>
+<td>对旧版本的兼容性用户和组</td>
+</tr>
+<tr>
+<td>daemon</td>
+<td>daemon</td>
+<td>对旧版本的兼容性的用户和组</td>
+</tr>
+</tbody></table>
+<p>以下这些用户为可选用户：</p>
+<table>
+<thead>
+<tr>
+<th>用户名</th>
+<th>组名</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>adm</td>
+<td>adm</td>
+<td>特殊管理用户</td>
+</tr>
+<tr>
+<td>lp</td>
+<td>lp</td>
+<td>用于打印机的用户</td>
+</tr>
+<tr>
+<td>sync</td>
+<td>sync</td>
+<td>登录这个用户，系统会进行同步</td>
+</tr>
+<tr>
+<td>shutdown</td>
+<td>shutdown</td>
+<td>登录这个用户，系统会进行关机</td>
+</tr>
+<tr>
+<td>halt</td>
+<td>halt</td>
+<td>登录这个用户，系统会进行关机</td>
+</tr>
+<tr>
+<td>mail</td>
+<td>mail</td>
+<td>用于发送邮件的用户</td>
+</tr>
+<tr>
+<td>news</td>
+<td>news</td>
+<td>用于接收新闻的用户</td>
+</tr>
+<tr>
+<td>uucp</td>
+<td>uucp</td>
+<td>用于UUCP的特殊用户</td>
+</tr>
+<tr>
+<td>operator</td>
+<td>root</td>
+<td>特殊管理用户</td>
+</tr>
+<tr>
+<td>man</td>
+<td>man</td>
+<td>用于手册的用户</td>
+</tr>
+<tr>
+<td>nobody</td>
+<td>nobody</td>
+<td>用于网络存储的用户</td>
+</tr>
+</tbody></table>
+<h3 id="定时任务规范"><a href="#定时任务规范" class="headerlink" title="定时任务规范"></a>定时任务规范</h3><p>除了在FHS 3.0中规定的<code>/var/spool/cron</code>目录外，<code>crontab</code>还必须执行以下这些目录或文件中的计划任务：</p>
+<ul>
+<li><code>/etc/crontab</code></li>
+<li><code>/etc/cron.d/*</code></li>
+</ul>
+<p>任何软件包都不能直接修改这两个文件，它们只能被用户手动修改。</p>
+<p>如果一个<code>cron</code>程序还支持更宽时间的计划任务，那么这些任务应该放在以下目录：</p>
+<ul>
+<li><code>/etc/cron.hourly</code></li>
+<li><code>/etc/cron.daily</code></li>
+<li><code>/etc/cron.weekly</code></li>
+<li><code>/etc/cron.monthly</code></li>
+</ul>
+<p>顾名思义，这些文件分别会被每小时，每天，每周，每月执行一次。</p>
+<p>如果软件包要创建自己的定时任务，应当安装在<code>/etc/cron.d/cron-name</code>，内容包含以下七项：</p>
+<ol>
+<li>分，0-59</li>
+<li>时，0-23</li>
+<li>日，1-31</li>
+<li>月，1-12</li>
+<li>周，0-6</li>
+<li>用户名</li>
+<li>命令</li>
+</ol>
+<p>用户名可以省略，以表示使用系统级用户运行。任务会按照指定的时间以指定的用户执行指定的命令。</p>
+<h3 id="初始化脚本规范（重点）"><a href="#初始化脚本规范（重点）" class="headerlink" title="初始化脚本规范（重点）"></a>初始化脚本规范（重点）</h3><p><strong>主干内容</strong><br>一个想要在开机时启动的程序必须提供对应的一个或多个初始化脚本，初始化脚本可以接受以下几个参数：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>start</td>
+<td>启动服务</td>
+</tr>
+<tr>
+<td>stop</td>
+<td>停止服务</td>
+</tr>
+<tr>
+<td>restart</td>
+<td>如果服务在运行，则重启服务；否则启动服务</td>
+</tr>
+<tr>
+<td>try-restart</td>
+<td>如果服务在运行，则重启服务；否则什么也不做</td>
+</tr>
+<tr>
+<td>reload</td>
+<td>重新加载服务的配置文件，而不重新运行</td>
+</tr>
+<tr>
+<td>force-reload</td>
+<td>重新加载服务的配置文件，如果不成功，则重启服务</td>
+</tr>
+<tr>
+<td>status</td>
+<td>打印服务状态</td>
+</tr>
+</tbody></table>
+<p>初始化脚本必须至少支持start，stop，restart，force-reload和status参数，reload和try-restart参数为可选项，初始化脚本也可以自行添加其他的参数。</p>
+<p>初始化脚本必须确保在执行start或stop时的行为是可感知的，而且绝不能杀死其他不相干的进程。最好的实现办法是使用<code>/lib/lsb/init-functions</code>中提供的函数。</p>
+<p>当执行reload时，服务会重载它的配置文件，reload应当假定重载行为是成功的。</p>
+<p>restart，try-restart，reload和force-reload的行为应当是原子化的，这就是说如果一个服务知道自己重启或重载后不能工作，它应该返回错误并拒绝执行相应的命令。</p>
+<p>status命令应当在以下情况下返回对应的值：</p>
+<table>
+<thead>
+<tr>
+<th>返回值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>服务正常运行</td>
+</tr>
+<tr>
+<td>1</td>
+<td>服务已经停止，但是PID文件仍然存在</td>
+</tr>
+<tr>
+<td>2</td>
+<td>服务已经停止，但是锁文件仍然存在</td>
+</tr>
+<tr>
+<td>3</td>
+<td>服务没有运行</td>
+</tr>
+<tr>
+<td>4</td>
+<td>服务状态未知</td>
+</tr>
+</tbody></table>
+<p>对于其他的命令，如果执行成功，初始化脚本应当返回0，否则返回非0值。除了一般概念上的“执行成功”，成功的定义还应当额外包含以下几种：</p>
+<ul>
+<li>通过force-reload命令重启服务</li>
+<li>在服务正在运行的情况下执行start</li>
+<li>在服务尚未运行的情况下执行stop</li>
+<li>在服务尚未运行的情况下执行restart</li>
+<li>在服务尚未运行的情况下执行try-restart</li>
+</ul>
+<p>在执行初始化脚本遇到错误时（除了status命令），脚本不仅需要返回非零值，而且还需要打印错误信息，两者之间的对应关系如下：</p>
+<table>
+<thead>
+<tr>
+<th>返回值</th>
+<th>错误信息</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>通用或未定义的错误</td>
+</tr>
+<tr>
+<td>2</td>
+<td>不合法的参数</td>
+</tr>
+<tr>
+<td>3</td>
+<td>尚未实现的功能</td>
+</tr>
+<tr>
+<td>4</td>
+<td>用户权限不足</td>
+</tr>
+<tr>
+<td>5</td>
+<td>程序尚未安装</td>
+</tr>
+<tr>
+<td>6</td>
+<td>程序缺少配置</td>
+</tr>
+<tr>
+<td>7</td>
+<td>程序尚未运行</td>
+</tr>
+</tbody></table>
+<p>错误信息应当通过<code>log_success_msg()</code>，<code>log_failure_msg()</code>和<code>log_warning_msg()</code>函数打印，可以打印在标准输出流或标准错误流上，但是不必特别显示给用户。</p>
+<p><strong>注释内容</strong><br>初始化脚本必须通过在软件包安装时通过<code>/usr/lib/lsb/install_initd</code>程序激活，在软件包卸载之前通过<code>/usr/lib/lsb/remove_initd</code>程序卸载。<br><code>install_initd</code>和<code>remove_initd</code>程序根据脚本中的一组特殊格式的注释来判断行为，这一组注释的位置通过这两行注释确定：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">### BEGIN INIT INFO</span><br><span class="line">...</span><br><span class="line">### END INIT INFO</span><br></pre></td></tr></table></figure>
+<p>定界行的开头可以有空格，会被自动无视。任何定界行内的注释块都必须以<code>#</code>开头，以防止Shell解释器将它们解释运行。每一行的格式都像下面这样：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># 关键字: 参数1 [参数2...]</span><br></pre></td></tr></table></figure>
+<p><code>#</code>和关键字之间，<code>:</code>和参数之间都有且只有一个空格，但是有一个例外，在<code>Description</code>关键字的下一行，直到下一个关键字之前，<code>#</code>之后可以有多个空格，它们会作为上一行的延续内容，被安全的无视。<br>通过注释块被解析出来的内容会被安装工具或初始化系统使用，确保初始化脚本会按照正确的顺序运行。收集到的信息会在<code>install_initd</code>时使用，还是在运行脚本时使用，这件事是无法确定的。注释块中的信息必须包括运行等级和启动设施。<br>注释块可以使用以下关键字：</p>
+<ul>
+<li><code>Provides: 设施1 [设施2...]</code><br>初始化脚本提供的启动设施，当脚本通过start参数启动时，对应的启动设施会被认为已经启动，因而需要这些启动设施的启动脚本后续也会逐步启动。当脚本通过stop参数停止时，对应的启动设施会被认为不再存在。</li>
+<li><code>Required-Start: 设施1 [设施2...]</code><br>这个服务启动时必须依赖的启动设施。初始化系统必须确保提供这个启动设施的初始化脚本提前已经启动了。</li>
+<li><code>Required-Stop: 设施1 [设施2...]</code><br>这个服务停止时必须依赖的启动设施。初始化系统必须确保提供这个启动设施的初始化脚本还没有被停止。</li>
+<li><code>Should-Start: 设施1 [设施2...]</code><br>如果存在，应当在这个服务启动时可用的启动设施。这允许给服务设置弱依赖，如果对应的启动设施不存在，也不会导致服务启动失败。但是，服务也可能在启动后缺少功能。应用的工作不能依赖这个功能。</li>
+<li><code>Should-Stop: 设施1 [设施2...]</code><br>同理，应道在这个服务停止时可用的启动设施。</li>
+<li><code>Default-Start: 运行等级1 [运行等级2...]</code><br><code>Default-Stop: 运行等级1 [运行等级2...]</code><br>默认情况下初始化脚本应当执行start（或stop）的运行等级。两者一般是相反的，例如，如果一个脚本只能在运行等级3，4和5运行，那么就需要指定<code>Default-Start: 3 4 5</code>和<code>Default-Stop: 0 1 2 6</code>。</li>
+<li><code>Short-Description: 短描述</code><br>对初始化脚本的功能进行简短的描述，只能有一行。</li>
+<li><code>Description: 长描述</code><br>对初始化脚本的功能进行详尽的描述。可以占用多行，每行必须以<code>#</code>开头，后面必须有至少两个空格。多行注释会在遇到第一行不符合这个规则的内容时视为终止。<br>例如，以下是一个规范的初始化脚本注释块：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">### BEGIN INIT INFO</span><br><span class="line"># Provides: lsb-ourdb</span><br><span class="line"># Required-Start: $local_fs $network $remote_fs</span><br><span class="line"># Required-Stop: $local_fs $network $remote_fs</span><br><span class="line"># Default-Start:  2 3 4 5</span><br><span class="line"># Default-Stop: 0 1 6</span><br><span class="line"># Short-Description: start and stop OurDB</span><br><span class="line"># Description: OurDB is a very fast and reliable database</span><br><span class="line">#    engine used for illustrating init scripts</span><br><span class="line">### END INIT INFO</span><br></pre></td></tr></table></figure>
+注意，以上注释块仅用于需要进行安装后在开机时启动的初始化脚本。需要在运行时通过程序唤醒的初始化脚本不需要遵守这个规则。</li>
+</ul>
+<p><strong>安装初始化脚本</strong><br>初始化脚本应当放置在<code>/etc/init.d</code>，然后软链接到其他路径。<br>要安装初始化脚本，必须通过<code>/usr/lib/lsb/install_initd</code>程序实现，激活初始化脚本的行为包括根据脚本的依赖分析正确的脚本启动顺序，然后将脚本软链接到合适的run-level目录中。<br><code>install_initd</code>目录可以被认为是一个对安装过程具体实现的封装，用户不需要关心初始化脚本的具体启动时间。<br>例如：如果一个脚本的设定为<code>Default-Start: 3 4 5</code>和<code>Default-Stop: 0 1 2 6</code>，那么<code>install_initd</code>会在<code>/etc/rc3.d</code>，<code>/etc/rc4.d</code>和<code>/etc/rc5.d</code>目录下创建以<code>S</code>开头的脚本软链接，它会在启动时自动执行start参数；而且会在<code>/etc/rc0.d</code>，<code>/etc/rc1.d</code>，<code>/etc/rc2.d</code>和<code>/etc/rc6.d</code>目录下创建以<code>K</code>开头的脚本软链接，它会在停止时自动执行stop参数。<br>这样一种模式类似于System V Init的原理，但是绝不是唯一的实现方法。<br><code>install_initd</code>接受单个参数，参数应当是初始化脚本的完整路径。再次强调，初始化脚本必须安装在<code>/etc/init.d</code>目录下。<code>install_initd</code>并不会拷贝初始化脚本，只会激活它。<br>例如：<code>/usr/lib/lsb/install_initd /etc/init.d/example</code><br><code>install_initd</code>命令会在激活成功或脚本已经激活时返回0。如果初始化脚本的依赖无法满足，那么程序会返回1，初始化脚本也不会被激活。<br>当软件包被移除时，<code>/usr/lib/lsb/remove_initd</code>程序必须运行，移除对应的初始化脚本。这一行为必须执行在脚本源文件被移除之前，因为依赖信息来自于脚本源文件。因此卸载程序的pre-remove阶段必须调用<code>remove_initd</code>，以初始化脚本的完整路径作为参数。卸载脚本本身还必须承担删除脚本源文件的责任，因为<code>remove_initd</code>程序本身不会删除脚本的源文件。<br>例如：<code>/usr/lib/lsb/remove_initd /etc/init.d/example</code><br><code>remove_initd</code>命令会在卸载成功或脚本已经卸载时返回0。如果卸载初始化脚本会破坏其他脚本对启动设施的依赖，那么程序会返回1，初始化脚本也不会被卸载。安装程序此时也必须停止运行，因为<code>remove_initd</code>程序本身不会删除脚本的源文件。</p>
+<p><strong>运行等级</strong><br>脚本的运行等级通过<code>Default-Start:</code>和<code>Default-Stop:</code>关键字声明，<code>install_initd</code>程序会利用这个信息。<br>系统并不需要完全实现所有的运行等级，可以将一个运行等级定为另一个运行等级的别名，提供完全相同的功能。程序不能依赖特定的运行等级号。</p>
+<table>
+<thead>
+<tr>
+<th>运行等级号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>关机</td>
+</tr>
+<tr>
+<td>1</td>
+<td>单用户模式</td>
+</tr>
+<tr>
+<td>2</td>
+<td>多用户文字终端，离线模式</td>
+</tr>
+<tr>
+<td>3</td>
+<td>标准的多用户文字终端模式</td>
+</tr>
+<tr>
+<td>4</td>
+<td>等同于3</td>
+</tr>
+<tr>
+<td>5</td>
+<td>多用户GUI模式</td>
+</tr>
+<tr>
+<td>6</td>
+<td>重新启动</td>
+</tr>
+</tbody></table>
+<p><strong>启动设施</strong><br>启动设施用于标识初始化脚本的依赖。设施名通过<code>Provides:</code>关键字声明，以<code>$</code>开头的设施名代表着系统设施名，一般的应用不能提供以<code>$</code>开头的设施。<br>以下为系统设施及其含义：</p>
+<table>
+<thead>
+<tr>
+<th>设施名</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>$local_fs</code></td>
+<td>已挂载好本地文件系统</td>
+</tr>
+<tr>
+<td><code>$network</code></td>
+<td>已启动基本的网络支持</td>
+</tr>
+<tr>
+<td><code>$named</code></td>
+<td>DNS服务已经启动</td>
+</tr>
+<tr>
+<td><code>$portmap</code></td>
+<td>RPC服务已经启动</td>
+</tr>
+<tr>
+<td><code>$remote_fs</code></td>
+<td>已挂载好远程文件系统</td>
+</tr>
+<tr>
+<td><code>$syslog</code></td>
+<td>syslog服务已启动</td>
+</tr>
+<tr>
+<td><code>$time</code></td>
+<td>网络时间服务已启动，系统时间已经校准</td>
+</tr>
+</tbody></table>
+<p>其他非系统的设施可以被其他应用程序定义，这些设施可以用初始化脚本名本身或其变体进行命名。一般来说，使用的都是初始化脚本名本身。</p>
+<p><strong>函数库</strong><br><code>/lib/lsb/init-functions</code>文件中提供了一系列实用函数，任何规范的初始化脚本都应该通过<code>. /lib/lsb/init-functions</code>引入这些函数。此外，初始化脚本也不能设置<code>-e</code>选项，以防意外退出。<br>这个文件包含了以下这些函数：</p>
+<ul>
+<li><code>start_daemon [-f] [-n NICE等级] [-p PID文件] 路径 [参数]</code><br>以守护进程状态运行指定的程序。这个函数应当检查程序是否已经运行，如果是，那么不再创建另一个守护进程，除非提供了<code>-f</code>选项，<code>-n</code>选项用于指定NICE等级。这个函数应当在程序成功启动或已经在运行时返回0，否则返回非0值。</li>
+<li><code>killproc [-p PID文件] 路径 [信号]</code><br>这个函数用于停止程序。如果指定了信号，那么会通过指定的信号杀死程序，否则会连续发送一个<code>SIGTERM</code>信号和一个<code>SIGKILL</code>以确保程序被杀死。如果程序被停止，那么PID文件也应该被移除；如果程序已经被停止，但是仍然可以找到PID文件，那么就直接移除PID文件。这个函数应当在程序成功停止或已经停止时返回0，否则返回非0值。如果指定了信号，那么这个函数应当仅在程序成功停止返回0。</li>
+<li><code>pidofproc [-p PID文件] 路径</code><br>这个函数应当返回某个守护进程的一个或多个进程的标识符。只有运行中的进程的标识符应当被返回。多个标识符通过一个空格分隔。这个函数应当在程序在正常运行时返回0，否则返回非0值。</li>
+<li><code>log_success_msg 信息</code><br>这个函数用于在日志文件中写入成功信息，信息不限格式，但是不能长于60个字符，信息也可能被写入标准输出。</li>
+<li><code>log_failure_msg 信息</code><br>这个函数用于在日志文件中写入失败信息，信息不限格式，但是不能长于60个字符，信息也可能被写入标准输出。</li>
+<li><code>log_warning_msg 信息</code><br>这个函数用于在日志文件中写入警告信息，信息不限格式，但是不能长于60个字符，信息也可能被写入标准输出。</li>
+</ul>
+<p><code>start_daemon</code>，<code>killproc</code>和<code>pidofproc</code>函数应当使用以下算法确定程序的状态和进程标识符：</p>
+<ol>
+<li>如果指定了<code>-p PID文件</code>选项，而且PID文件确实存在，那么读取PID文件的开头第一行。如果这一行包含以空格为分隔符的一个或多个数字，那么使用这些数字作为进程标识符；如果PID文件并不存在，那么函数应当假定程序并没有运行。</li>
+<li>如果没有指定<code>-p PID文件</code>选项，那么读取<code>/var/run/文件名.pid</code>文件的开头第一行。如果这一行包含以空格为分隔符的一个或多个数字，那么使用这些数字作为进程标识符。当然，也可以使用一些其他的方法确定进程标识符，但是，仅限于没有指定<code>-p PID文件</code>选项的情况下才能使用这些方法。</li>
+</ol>
+<p>确定程序状态的方法尚不确定，但是应当适用于非二进制程序。<br>当一个程序停止时，它应当删除自己的PID文件，多个进程的标识符在PID文件中以单个空格为分隔符进行显示，可以通过<code>pidofproc</code>函数获取。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/02/18/Dialog%E4%B8%8EWhiptail/" rel="prev" title="Dialog与Whiptail">
+                  <i class="fa fa-angle-left"></i> Dialog与Whiptail
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/03/09/%E6%88%91%E7%9A%84Linux%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/" rel="next" title="我的Linux学习之路">
+                  我的Linux学习之路 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Molten_Armor</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

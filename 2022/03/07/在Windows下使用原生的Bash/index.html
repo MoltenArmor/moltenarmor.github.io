@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.icku.eu.org","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="与Cygwin，Msys2不同，这套方案是完全基于Win32的，而不是经过任何兼容层的Linux环境。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在Windows下使用原生的Bash">
+<meta property="og:url" content="https://blog.icku.eu.org/2022/03/07/%E5%9C%A8Windows%E4%B8%8B%E4%BD%BF%E7%94%A8%E5%8E%9F%E7%94%9F%E7%9A%84Bash/index.html">
+<meta property="og:site_name" content="MA Blog">
+<meta property="og:description" content="与Cygwin，Msys2不同，这套方案是完全基于Win32的，而不是经过任何兼容层的Linux环境。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-03-07T06:38:55.000Z">
+<meta property="article:modified_time" content="2024-06-27T15:16:10.000Z">
+<meta property="article:author" content="Molten_Armor">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.icku.eu.org/2022/03/07/%E5%9C%A8Windows%E4%B8%8B%E4%BD%BF%E7%94%A8%E5%8E%9F%E7%94%9F%E7%9A%84Bash/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.icku.eu.org/2022/03/07/%E5%9C%A8Windows%E4%B8%8B%E4%BD%BF%E7%94%A8%E5%8E%9F%E7%94%9F%E7%9A%84Bash/","path":"2022/03/07/在Windows下使用原生的Bash/","title":"在Windows下使用原生的Bash"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>在Windows下使用原生的Bash | MA Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">MA Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%AE%89%E8%A3%85busybox-w32"><span class="nav-number">1.</span> <span class="nav-text">1. 安装busybox-w32</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E5%AE%89%E8%A3%85Coreutils"><span class="nav-number">2.</span> <span class="nav-text">2. 安装Coreutils</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E5%AE%89%E8%A3%85Clink"><span class="nav-number">3.</span> <span class="nav-text">3. 安装Clink</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E9%85%8D%E7%BD%AEsudo"><span class="nav-number">4.</span> <span class="nav-text">4. 配置sudo</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E5%AE%89%E8%A3%85vim"><span class="nav-number">5.</span> <span class="nav-text">5. 安装vim</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-%E5%AE%89%E8%A3%85nano"><span class="nav-number">6.</span> <span class="nav-text">6. 安装nano</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-%E5%AE%89%E8%A3%85git"><span class="nav-number">7.</span> <span class="nav-text">7. 安装git</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-%E4%B8%8D%E9%9C%80%E8%A6%81shift%EF%BC%8C%E5%8F%B3%E9%94%AE%E6%89%93%E5%BC%80cmd"><span class="nav-number">8.</span> <span class="nav-text">8. 不需要shift，右键打开cmd</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-SSH"><span class="nav-number">9.</span> <span class="nav-text">9. SSH</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%99%84%EF%BC%9A%E5%85%B6%E4%BB%96%E8%8E%B7%E5%BE%97%E6%9C%80%E9%AB%98%E6%9D%83%E9%99%90SYSTEM%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">10.</span> <span class="nav-text">附：其他获得最高权限SYSTEM的方法</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Molten_Armor</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.icku.eu.org/2022/03/07/%E5%9C%A8Windows%E4%B8%8B%E4%BD%BF%E7%94%A8%E5%8E%9F%E7%94%9F%E7%9A%84Bash/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Molten_Armor">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MA Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="在Windows下使用原生的Bash | MA Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          在Windows下使用原生的Bash
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-03-07 14:38:55" itemprop="dateCreated datePublished" datetime="2022-03-07T14:38:55+08:00">2022-03-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-06-27 23:16:10" itemprop="dateModified" datetime="2024-06-27T23:16:10+08:00">2024-06-27</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><strong>与Cygwin，Msys2不同，这套方案是完全基于Win32的，而不是经过任何兼容层的Linux环境。</strong></p>
+<span id="more"></span>
+<h1 id="1-安装busybox-w32"><a href="#1-安装busybox-w32" class="headerlink" title="1. 安装busybox-w32"></a>1. 安装busybox-w32</h1><p>busybox-w32是在win32下编译的原生busybox套件，它包含了大部分常用的命令和一个ash shell。<br>在 <a target="_blank" rel="noopener" href="https://frippery.org/busybox/">busybox-w32 (frippery.org)</a> 下载二进制包，重命名为<code>busybox.exe</code>，然后创建以下的自动配置批处理文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">@echo off</span><br><span class="line">bcdedit &gt;nul</span><br><span class="line">if &#x27;%errorlevel%&#x27; NEQ &#x27;0&#x27; (goto UACPrompt) else (goto UACAdmin)</span><br><span class="line">:UACPrompt</span><br><span class="line">%1 start &quot;&quot; mshta vbscript:createobject(&quot;shell.application&quot;).shellexecute(&quot;&quot;&quot;%~0&quot;&quot;&quot;,&quot;::&quot;,,&quot;runas&quot;,1)(window.close)&amp;exit</span><br><span class="line">exit /B</span><br><span class="line">:UACAdmin</span><br><span class="line">cd /d &quot;%~dp0&quot;</span><br><span class="line"></span><br><span class="line">if not exist C:\Busybox md C:\Busybox</span><br><span class="line"></span><br><span class="line">for /f %%a in (&#x27;busybox --list&#x27;) do (</span><br><span class="line">	echo.正在添加指令 %%a</span><br><span class="line">	copy busybox.exe C:\Busybox\%%a.exe 1&gt;nul 2&gt;nul</span><br><span class="line">)</span><br><span class="line">echo.</span><br><span class="line">::wmic ENVIRONMENT where &quot;name=&#x27;path&#x27; and username=&#x27;&lt;system&gt;&#x27;&quot; set VariableValue=&quot;C:\Busybox;%path%&quot;</span><br><span class="line">setx /m &quot;Path&quot; &quot;%path%;C:\Busybox&quot;</span><br><span class="line">echo.</span><br><span class="line">pause</span><br></pre></td></tr></table></figure>
+<p>将<code>busybox.exe</code>和批处理文件放在同一个目录下，然后运行脚本进行安装即可。<br>建议在安装之后将Busybox目录加入Defender白名单，并在gpedit.msc中找到<strong>计算机配置-管理模板-Windows组件-应用程序兼容性</strong>，点击右边的“关闭应用程序兼容性助理”，启用。这有助于提高性能。<br>你也可以执行<code>busybox --install [-s] C:\Busybox|-u</code>进行安装，这种安装方式默认使用硬链接，更节省存储空间，你还可以使用-s选项以使用软链接。如果在后面使用-u参数而不是路径的话，会在<code>%USERPROFILE%</code>目录下进行安装，不建议这么做。<br>这种方式安装之后想要卸载时，使用<code>busybox --uninstall -n C:\Busybox</code>列出将会卸载的链接，使用<code>busybox --uninstall C:\Busybox</code>确定卸载。<br>注：新版本的Busybox在编译时启用了Unix通配符支持，如果有特殊需求，请下载2020-5-30之前的no-glob版本。</p>
+<h1 id="2-安装Coreutils"><a href="#2-安装Coreutils" class="headerlink" title="2. 安装Coreutils"></a>2. 安装Coreutils</h1><p>Coreutils是GNU的命令行核心工具组，现在有一个用Rust重写的跨平台版本，发行于 <a target="_blank" rel="noopener" href="https://github.com/uutils/coreutils">uutils&#x2F;coreutils</a>。<br>下载二进制包，重命名为<code>coreutils.exe</code>，然后创建以下的自动配置Shell脚本：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line"></span><br><span class="line">if [ &quot;$(id -u)&quot; -ne 0 ]</span><br><span class="line">then</span><br><span class="line">    echo &quot;Please run as Admin!&quot;</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">if [ ! -d &quot;C:/Coreutils&quot; ]</span><br><span class="line">then</span><br><span class="line">    mkdir &quot;C:/Coreutils&quot;</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">for i in $(./coreutils.exe --help | grep &quot;defined functions&quot; -A 20 | grep -v &quot;defined functions&quot; | sed &#x27;s/,//g&#x27;)</span><br><span class="line">do</span><br><span class="line">    cp coreutils.exe &quot;C:/Coreutils/$&#123;i&#125;.exe&quot;</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<p>将<code>coreutils.exe</code>和脚本放在同一个目录下，然后通过<code>bash</code>解释运行脚本进行安装，安装完成后执行<code>wmic ENVIRONMENT where &quot;name=&#39;path&#39; and username=&#39;&lt;system&gt;&#39;&quot; set VariableValue=&quot;C:\Coreutils;%path%&quot;</code>命令即可。<br>建议在安装之后将Coreutils目录加入Defender白名单。</p>
+<h1 id="3-安装Clink"><a href="#3-安装Clink" class="headerlink" title="3. 安装Clink"></a>3. 安装Clink</h1><p>Clink是对Win CMD的扩展，实现自动补全等readline功能。<br>原版的Clink只更新到了0.4.9，链接为 <a target="_blank" rel="noopener" href="https://mridgers.github.io/clink/">Clink (mridgers)</a><br>新作者接手后的版本在 <a target="_blank" rel="noopener" href="https://chrisant996.github.io/clink/">Clink (chrisant996)</a><br>下载setup版本，安装后会自动配置，数据文件保存于</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\Documents and Settings\&lt;username&gt;\Local Settings\Application Data    # (XP)</span><br><span class="line">C:\Users\&lt;username&gt;\AppData\Local    # (Vista以上)</span><br></pre></td></tr></table></figure>
+<p>若下载portable版本，则需要在手动配置环境变量后运行<br><code>clink autorun install [-a]    # -a表示为所有用户安装，需要管理员权限</code><br>即可自动完成配置。<br>输入<code>clink autorun show</code>以确认安装情况。<br>相应的，卸载即为<br><code>clink autorun uninstall [-a]    # -a表示为所有用户卸载，需要管理员权限</code><br>要进行自定义配置，修改<code>%userprofile%\clink_inputrc</code>或<code>%userprofile%\.inputrc</code>或（便携版）当前目录下的<code>default_inputrc</code>即可。例如Vi键位配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">set keymap vi</span><br><span class="line"></span><br><span class="line">set editing-mode vi</span><br><span class="line">C-l: clear-screen</span><br><span class="line"></span><br><span class="line">M-h: backward-char</span><br><span class="line">M-k: history-search-backward</span><br><span class="line">M-j: history-search-forward</span><br><span class="line">M-l: forward-char</span><br></pre></td></tr></table></figure>
+<p>如果想在运行Clink之前加载其他的配置文件，执行<code>clink autorun set &quot;配置文件路径&quot;</code>，然后重新install。</p>
+<p><strong>如果安装了Python的话，还可以安装xonsh</strong><br><code>pip install xonsh[full]</code></p>
+<h1 id="4-配置sudo"><a href="#4-配置sudo" class="headerlink" title="4. 配置sudo"></a>4. 配置sudo</h1><p>Gsudo是一个在Windows下实现sudo的项目<a target="_blank" rel="noopener" href="https://github.com/gerardog/gsudo">gsudo: A Sudo for Windows</a><br>下载二进制包后将文件加入环境变量即可。<br><code>-s</code> 以SYSTEM身份(最高权限)启动<br>也可以用scoop，choco等工具直接安装。</p>
+<h1 id="5-安装vim"><a href="#5-安装vim" class="headerlink" title="5. 安装vim"></a>5. 安装vim</h1><p>Busybox内置的只有vi，Win32版本的vim在 <a target="_blank" rel="noopener" href="https://github.com/k-takata/vim-win32-installer">k-takata&#x2F;vim-win32-installer</a> 或 <a target="_blank" rel="noopener" href="https://github.com/vim/vim-win32-installer">vim&#x2F;vim-win32-installer</a> 下载<br>当然，也可以<code>pip install pyvim</code>安装pyvim使用</p>
+<h1 id="6-安装nano"><a href="#6-安装nano" class="headerlink" title="6. 安装nano"></a>6. 安装nano</h1><p>vim并不太好用，安装nano只需在 <a target="_blank" rel="noopener" href="https://www.nano-editor.org/dist/win32-support/">win32-support (nano-editor.org)</a> 或 <a target="_blank" rel="noopener" href="https://github.com/lhmouse/nano-win">GNU nano text editor for Windows</a> 下载git版二进制包后配置环境变量即可。<br>配置文件.nanorc存放于</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">%ALLUSERSPROFILE%</span><br><span class="line">%USERPROFILE%</span><br></pre></td></tr></table></figure>
+<p>micro编辑器也有Win原生版，在 <a target="_blank" rel="noopener" href="https://github.com/zyedidia/micro">micro: A modern and intuitive terminal-based text editor</a> 和 <a target="_blank" rel="noopener" href="https://github.com/yi0322/micro-help-chinese">micro-help-chinese: Micro 编辑器中文版帮助文档</a></p>
+<h1 id="7-安装git"><a href="#7-安装git" class="headerlink" title="7. 安装git"></a>7. 安装git</h1><p>在 <a target="_blank" rel="noopener" href="https://npm.taobao.org/mirrors/git-for-windows/">git-for-windows</a> 下载<strong>MinGit-busybox</strong>版本，然后</p>
+<ol>
+<li>在环境变量中设置<code>GITDIR=git目录路径</code></li>
+<li>PATH变量添加<code>%GITDIR%\cmd</code></li>
+</ol>
+<p>即可使用busybox版本的最小化git<br>但是，busybox版本有至少四个问题：</p>
+<ol>
+<li>缺少稳定性测试</li>
+<li>不能查看帮助文本</li>
+<li>bash功能不完整，交互式命令不可用</li>
+<li>可能有乱码(busybox-w32使用GBK编码)</li>
+</ol>
+<p>如果无法接受，请使用PortableGit，安装方法相同</p>
+<h1 id="8-不需要shift，右键打开cmd"><a href="#8-不需要shift，右键打开cmd" class="headerlink" title="8. 不需要shift，右键打开cmd"></a>8. 不需要shift，右键打开cmd</h1><p>将以下内容写入reg文件，导入。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">Windows Registry Editor Version 5.00</span><br><span class="line"></span><br><span class="line">[HKEY_CLASSES_ROOT\Directory\shell\OpenCmdHere]</span><br><span class="line">@=&quot;在此处打开命令窗口&quot;</span><br><span class="line">&quot;Icon&quot;=&quot;cmd.exe&quot;</span><br><span class="line"></span><br><span class="line">[HKEY_CLASSES_ROOT\Directory\shell\OpenCmdHere\command]</span><br><span class="line">@=&quot;cmd.exe /s /k pushd \&quot;%V\&quot;&quot;</span><br><span class="line"></span><br><span class="line">[HKEY_CLASSES_ROOT\Directory\Background\shell\OpenCmdHere]</span><br><span class="line">@=&quot;在此处打开命令窗口&quot;</span><br><span class="line">&quot;Icon&quot;=&quot;cmd.exe&quot;</span><br><span class="line"></span><br><span class="line">[HKEY_CLASSES_ROOT\Directory\Background\shell\OpenCmdHere\command]</span><br><span class="line">@=&quot;cmd.exe /s /k pushd \&quot;%V\&quot;&quot;</span><br><span class="line"></span><br><span class="line">[HKEY_CLASSES_ROOT\Drive\shell\OpenCmdHere]</span><br><span class="line">@=&quot;在此处打开命令窗口&quot;</span><br><span class="line">&quot;Icon&quot;=&quot;cmd.exe&quot;</span><br><span class="line"></span><br><span class="line">[HKEY_CLASSES_ROOT\Drive\shell\OpenCmdHere\command]</span><br><span class="line">@=&quot;cmd.exe /s /k pushd \&quot;%V\&quot;&quot;</span><br><span class="line"></span><br><span class="line">[HKEY_CLASSES_ROOT\LibraryFolder\background\shell\OpenCmdHere]</span><br><span class="line">@=&quot;在此处打开命令窗口&quot;</span><br><span class="line">&quot;Icon&quot;=&quot;cmd.exe&quot;</span><br><span class="line"></span><br><span class="line">[HKEY_CLASSES_ROOT\LibraryFolder\background\shell\OpenCmdHere\command]</span><br><span class="line">@=&quot;cmd.exe /s /k pushd \&quot;%V\&quot;&quot;</span><br></pre></td></tr></table></figure>
+<h1 id="9-SSH"><a href="#9-SSH" class="headerlink" title="9. SSH"></a>9. SSH</h1><p><a target="_blank" rel="noopener" href="https://github.com/PowerShell/Win32-OpenSSH">PowerShell&#x2F;Win32-OpenSSH: Win32 port of OpenSSH</a><br>下载二进制包或msi包安装，放在C:\Program Files\中。<br>解压后，配置环境变量。<br>Powershell开放安全策略<code>set-executionpolicy remotesigned</code><br>安装sshd服务<code>.\install-sshd.ps1</code><br>开启sshd服务<code>net start sshd</code></p>
+<h1 id="附：其他获得最高权限SYSTEM的方法"><a href="#附：其他获得最高权限SYSTEM的方法" class="headerlink" title="附：其他获得最高权限SYSTEM的方法"></a>附：其他获得最高权限SYSTEM的方法</h1><ol>
+<li>万能工具Nircmd<br>下载地址 <a target="_blank" rel="noopener" href="https://www.nirsoft.net/utils/nircmd.html">NirCmd - Windows command line tool</a><br>配置环境变量后<br><code>nircmd.exe elevatecmd runassystem 命令</code></li>
+<li>下载RunAsSystem<br>在 <a target="_blank" rel="noopener" href="https://www.uwe-sieber.de/misc_tools_e.html">Tools for Windows</a><br>下载RunAsSystem后写入环境变量使用即可。</li>
+<li>下载psexec<br>在 <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/sysinternals/downloads/psexec">https://docs.microsoft.com/en-us/sysinternals/downloads/psexec</a> 下载后配置环境变量<br><code>psexec -sid 命令</code></li>
+<li>使用Nsudo <a target="_blank" rel="noopener" href="https://github.com/M2Team/NSudo">M2Team&#x2F;NSudo: Series of System Administration Tools</a></li>
+<li>PowerRun <a target="_blank" rel="noopener" href="https://www.sordum.org/9416/powerrun-v1-6-run-with-highest-privileges/">PowerRun v1.6 (Run with highest privileges)</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/10/16/sh%E5%BA%93%E7%BF%BB%E8%AF%91/" rel="next" title="Python sh库完整翻译">
+                  Python sh库完整翻译 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Molten_Armor</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

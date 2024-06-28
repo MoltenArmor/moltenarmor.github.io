@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.icku.eu.org","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="本地使用篇工作区：前git状态暂存区：add后的状态，列入git管理内容仓库区：commit后的状态，被git归档远程仓库：push后的状态，作为远程备份存在">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git手记">
+<meta property="og:url" content="https://blog.icku.eu.org/2023/01/02/Git%E6%89%8B%E8%AE%B0/index.html">
+<meta property="og:site_name" content="MA Blog">
+<meta property="og:description" content="本地使用篇工作区：前git状态暂存区：add后的状态，列入git管理内容仓库区：commit后的状态，被git归档远程仓库：push后的状态，作为远程备份存在">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-01-01T23:06:19.000Z">
+<meta property="article:modified_time" content="2024-06-27T15:16:10.000Z">
+<meta property="article:author" content="Molten_Armor">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.icku.eu.org/2023/01/02/Git%E6%89%8B%E8%AE%B0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.icku.eu.org/2023/01/02/Git%E6%89%8B%E8%AE%B0/","path":"2023/01/02/Git手记/","title":"Git手记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Git手记 | MA Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">MA Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E4%BD%BF%E7%94%A8%E7%AF%87"><span class="nav-number">1.</span> <span class="nav-text">本地使用篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E6%93%8D%E4%BD%9C"><span class="nav-number">1.2.</span> <span class="nav-text">初始操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%8D%E5%8E%9F%E6%93%8D%E4%BD%9C"><span class="nav-number">1.3.</span> <span class="nav-text">复原操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%87%E7%AD%BE%E6%93%8D%E4%BD%9C"><span class="nav-number">1.4.</span> <span class="nav-text">标签操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%94%AF%E6%93%8D%E4%BD%9C"><span class="nav-number">1.5.</span> <span class="nav-text">分支操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9C"><span class="nav-number">1.6.</span> <span class="nav-text">远程操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%82%E9%A1%B9"><span class="nav-number">1.7.</span> <span class="nav-text">杂项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ignore%E6%96%87%E4%BB%B6"><span class="nav-number">1.7.1.</span> <span class="nav-text">ignore文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%80%9Cloose-object%E2%80%9D%E9%94%99%E8%AF%AF"><span class="nav-number">1.7.2.</span> <span class="nav-text">“loose object”错误</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%80%9CAuto-packing-the-repository-for-optimum-performance%E2%80%9D"><span class="nav-number">1.7.3.</span> <span class="nav-text">“Auto packing the repository for optimum performance”</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA%E7%AF%87"><span class="nav-number">2.</span> <span class="nav-text">服务器搭建篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9C%80%E6%B1%82%E5%AF%B9%E6%AF%94%E5%88%86%E6%9E%90%EF%BC%9A"><span class="nav-number">2.1.</span> <span class="nav-text">需求对比分析：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%AD%E5%BB%BA%E6%B5%81%E7%A8%8B"><span class="nav-number">2.2.</span> <span class="nav-text">搭建流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Git"><span class="nav-number">2.2.1.</span> <span class="nav-text">Git</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Gitea"><span class="nav-number">2.2.2.</span> <span class="nav-text">Gitea</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%AC%E6%9C%BA%E6%90%AD%E5%BB%BA"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">本机搭建</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Gitlab"><span class="nav-number">2.2.3.</span> <span class="nav-text">Gitlab</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%AC%E6%9C%BA%E6%90%AD%E5%BB%BA-1"><span class="nav-number">2.2.3.1.</span> <span class="nav-text">本机搭建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Docker%E6%90%AD%E5%BB%BA"><span class="nav-number">2.2.3.2.</span> <span class="nav-text">Docker搭建</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SVN"><span class="nav-number">2.2.4.</span> <span class="nav-text">SVN</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Docker%E6%90%AD%E5%BB%BA-1"><span class="nav-number">2.2.4.1.</span> <span class="nav-text">Docker搭建</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Molten_Armor</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.icku.eu.org/2023/01/02/Git%E6%89%8B%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Molten_Armor">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MA Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Git手记 | MA Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Git手记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-01-02 07:06:19" itemprop="dateCreated datePublished" datetime="2023-01-02T07:06:19+08:00">2023-01-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-06-27 23:16:10" itemprop="dateModified" datetime="2024-06-27T23:16:10+08:00">2024-06-27</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="本地使用篇"><a href="#本地使用篇" class="headerlink" title="本地使用篇"></a>本地使用篇</h1><p>工作区：前git状态<br>暂存区：add后的状态，列入git管理内容<br>仓库区：commit后的状态，被git归档<br>远程仓库：push后的状态，作为远程备份存在</p>
+<span id="more"></span>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>设置用户信息，这会作为提交代码时的信息<br><code>git config --global user.name [名字]</code><br><code>git config --global user.email xxx@xxx</code><br>不带global，只影响当前仓库，带global，影响全局默认配置。<br>消除路径转义（解决乱码）<br><code>git config --global core.quotepath false</code><br>设置默认主版本号名<br><code>git config --global init.defaultbranch 版本号名</code><br>pull时默认使用rebase模式<br><code>git config --global pull.rebase true</code><br>切换分支时，自动进行rebase(旧分支除外)<br><code>git config --global branch.autosetuprebase always</code><br><strong>以下配置内容，需要保证全局变量中可以找到对应的程序</strong><br>设置文本编辑器<br><code>git config --global core.editor xxx</code><br>设置差异分析工具<br><code>git config --global merge.tool vimdiff</code><br>Gnome用Meld，Qt用Kompare&#x2F;Kdiff3<br>自动修改换行符实现跨平台兼容<br><code>git config --global core.autocrlf true|input</code><br>设置默认push模式<br><code>git config --global push.default matching|simple</code><br>matching 推送所有有对应的远程分支的本地分支<br>simple 只推送当前分支<br>设置忽略文件<br><code>git config --global core.excludesfile /path-to-file</code><br>缓存&#x2F;永久保存&#x2F;不缓存push账号密码<br>缓存账号密码，–timeout指定过期时间，默认900秒也就是15分钟<br><code>git config --global credential.helper cache [--timeout 900]</code><br>以文件形式长期保存账号密码，–file指定保存路径，默认<code>~/.git-credentials</code>或<code>%userprofile%/.git-credentials</code><br><code>git config --global credential.helper store [--file /path-to-file]</code><br>不缓存账号密码<br><code>git config --unset credential.helper</code><br>查看配置信息<br><code>git config --list</code><br>直接修改配置<br><code>git config --global -e</code><br>也可以去查看<code>~/.gitconfig</code>或<code>%userprofile%/.gitconfig</code><br>解决中文乱码：在配置文件中加入以下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[gui]</span><br><span class="line">    encoding = utf-8</span><br><span class="line">[i18n]</span><br><span class="line">    commitencoding = utf-8  </span><br><span class="line">[svn]</span><br><span class="line">    pathnameencoding = utf-8</span><br></pre></td></tr></table></figure>
+<h2 id="初始操作"><a href="#初始操作" class="headerlink" title="初始操作"></a>初始操作</h2><p>创建仓库<br><code>git init [--bare]</code><br>选项：–bare 裸仓库，即不创建.git文件夹<br>添加文件<br><code>git add</code><br>剔除文件<br><code>git rm</code><br>移动文件<br><code>git mv</code><br>提交文件<br><code>git commit -m &quot;信息&quot; [-a]</code><br>-a 无视文件修改状态，也就是说修改了的文件不需要再次add直接上传<br>查看commit日志<br><code>git log</code><br>查看操作日志<br><code>git reflog</code><br>以列表形式显示文件更新记录<br><code>git blame 文件名</code><br>查看仓库信息<br><code>git status</code><br>查看暂存区文件列表<br><code>git ls-files</code><br>比较暂存区与工作区的文件差异<br><code>git diff</code><br>比较暂存区和最后一次提交的文件差异<br><code>git diff --cached</code></p>
+<h2 id="复原操作"><a href="#复原操作" class="headerlink" title="复原操作"></a>复原操作</h2><p>HEAD表示当前版本，<code>HEAD^</code>，<code>HEAD~1</code>表示上一个版本，以此类推<br>将暂存区复位到指定commit前的状态，不包括add, rm，不修改工作区文件，n&#x3D;1时相当于撤销最后一次commit<br><code>git reset HEAD~n --soft</code><br>将暂存区复位到指定commit前的状态，包括add, rm，但不修改工作区文件<br><code>git reset HEAD~n [--mixed]</code><br>彻底重置当前状态，还原add过的工作区文件到选定的commit状态<br><code>git reset --hard HEAD~n</code><br>撤销工作区文件修改，恢复到暂存区状态<br><code>git checkout 文件名</code><br>和<code>reset --hard HEAD 文件名</code>类似，但是不会修改当前分支，而是会作为新的commit提交<br>暂停当前工作<br><code>git stash</code><br>恢复之前一次工作<br><code>git stash pop</code></p>
+<h2 id="标签操作"><a href="#标签操作" class="headerlink" title="标签操作"></a>标签操作</h2><p>标签，给当前状态的HEAD起个正式的版本号或名字<br><code>git tag -a &quot;标签名&quot; [-m &quot;信息&quot;]</code><br>上传指定版本，标签必须单独push，push代码时不会影响标签<br><code>git push 仓库名 标签名</code><br>显示所有的标签，必须push上游后才能显示<br><code>git tag</code><br>删除本地标签，这不会影响远程标签<br><code>git tag -d &quot;标签名&quot;</code><br>删除远程标签，这不会影响本地标签<br><code>git push 仓库名 --delete 标签名</code></p>
+<h2 id="分支操作"><a href="#分支操作" class="headerlink" title="分支操作"></a>分支操作</h2><p>查看所有分支<br><code>git branch [--show-current]</code><br>创建一个分支<br><code>git branch &quot;分支名&quot;</code><br>创建一个和之前分支无关的全新分支<br><code>git checkout --orphan 分支名</code><br>切换当前分支<br><code>git checkout [-b] 分支名</code><br>带-b选项时，若不存在则先创建分支<br>删除已合并分支<br><code>git branch -d 分支名</code><br>强制删除分支<br><code>git branch -D 分支名</code><br>删除前请先退出分支<br>重命名分支<br><code>git branch -m [旧分支名] 新分支名</code><br>合并分支，将分支2合并到分支1，中途有冲突需要手动处理<br><code>git merge [分支名1] 分支名2 [--ff-only] [--no-ff] [--squash] [-m &quot;合并信息&quot;]</code><br>缺省分支1为当前分支<br>fast-forward是指在没有冲突的条件下直接省略commit进行合并<br><code>--ff-only</code>表示仅当符合fast-forward条件时才merge<br><code>--no-ff</code>表示完全不使用fast-forward<br><code>--squash</code>表示把分支的commit历史压缩到一次<br>打开处理工具解决merge冲突<br><code>git mergetool</code><br>分支变基，将分支1完全转换为分支2，中途有冲突需要手动处理<br><code>git rebase [分支名1] 分支名2</code><br>缺省分支1为当前分支<br><strong>原则</strong><br>下游分支更新上游分支内容的时候使用<code>rebase</code><br>上游分支合并下游分支内容的时候使用<code>merge</code><br><strong>冲突</strong><br>出现冲突时，会提示发生冲突的文件，需要手动编辑对应文件进行处理</p>
+<h2 id="远程操作"><a href="#远程操作" class="headerlink" title="远程操作"></a>远程操作</h2><p>以下链接均用长链接<br>显示远程仓库服务器<br><code>git remote -v</code><br>添加一个远程仓库<br><code>git remote add 仓库名 ssh://git@remote-server:port/path-to-project</code><br>克隆一个远程仓库<br><code>git clone ssh://git@remote-server:port/path-to-project</code><br>远程仓库若没有特别设置，仓库名默认为<code>origin</code><br>重设远程仓库<br><code>git remote set-url 仓库名 ssh://git@remote-server:port/path-to-project</code><br>上传内容到远程<br><code>git push [--set-upstream|-u] 仓库名 [分支名:]远程分支名</code><br><code>git push [-f]    # 已设置默认上游</code><br>设置上游联系(一键push)<br><code>git branch --set-upstream-to 仓库名/远程分支名</code><br>取消上游联系<br><code>git branch --unset-branch</code><br>显示远程仓库名<br><code>git remote show</code><br>显示远程仓库分支状况<br><code>git ls-remote</code><br>显示远程仓库详细情况<br><code>git remote show 仓库名</code><br>获取远程仓库更新<br><code>git fetch 仓库名 远程分支名:本地分支名</code><br><code>git fetch [--all]    # 已设置默认上游</code><br>拉取远程仓库内容(并自动合并本地更改)<br><code>git pull 仓库名 远程分支名:本地分支名</code><br><code>git pull    # 已设置默认上游</code><br>相当于先<code>fetch</code>再<code>merge</code><br>建议使用这一条命令更新<strong>不同分支</strong>的内容<br>拉取远程仓库内容(并自动变基本地分支，不会产生merge点)<br><code>git pull --rebase 仓库名 远程分支名:本地分支名</code><br><code>git pull --rebase    # 已设置默认上游</code><br>相当于先<code>fetch</code>再<code>rebase</code><br>建议使用这一条命令更新<strong>当前分支</strong>的内容<br>列出所有远程分支<br><code>git branch -r</code><br>列出分支映射信息<br><code>git branch -vv</code><br>删除远程分支<br><code>git push --delete 仓库名 远程分支名</code></p>
+<h2 id="杂项"><a href="#杂项" class="headerlink" title="杂项"></a>杂项</h2><h3 id="ignore文件"><a href="#ignore文件" class="headerlink" title="ignore文件"></a>ignore文件</h3><p>在工作区创建<code>.gitignore</code>文件并配置，可以设置Git排除某些文件。该文件遵从通配符而不是正则表达式。<br>创建后执行<code>git config core.excludesfile /path-to-file</code><br><code>git check-ignore -v file</code>可以检测文件是否被排除</p>
+<h3 id="“loose-object”错误"><a href="#“loose-object”错误" class="headerlink" title="“loose object”错误"></a>“loose object”错误</h3><p>先删除出错的object文件夹，然后<code>git fsck --full</code>，最后查看<code>git reflog</code>。</p>
+<h3 id="“Auto-packing-the-repository-for-optimum-performance”"><a href="#“Auto-packing-the-repository-for-optimum-performance”" class="headerlink" title="“Auto packing the repository for optimum performance”"></a>“Auto packing the repository for optimum performance”</h3><p>Git会定期将对象打包为二进制文件以节省空间并提高传输效率。<br>用户可以执行<code>git gc</code>命令以手动进行这一行为。</p>
+<h1 id="服务器搭建篇"><a href="#服务器搭建篇" class="headerlink" title="服务器搭建篇"></a>服务器搭建篇</h1><h2 id="需求对比分析："><a href="#需求对比分析：" class="headerlink" title="需求对比分析："></a>需求对比分析：</h2><p>裸Git：直接使用Git创建仓库，依赖项最少，但功能最少，也最不直观，只支持SSH协议。<br>Github：使用最广泛的平台，免费提供基本服务，但是，代码托管服务不免费。每月 7 美金可以购买 5 个私有仓库，支持SSH和HTTP。<br>Gitea：轻量级的Git托管服务器，完全开源免费，支持SSH和HTTP。<br>Gitlab：提供完整的Git服务和CI&#x2F;CD服务，有企业版和社区版两种，社区版可以免费离线使用，支持SSH和HTTP。</p>
+<h2 id="搭建流程"><a href="#搭建流程" class="headerlink" title="搭建流程"></a>搭建流程</h2><h3 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h3><ol>
+<li>安装Git<br><code>apt install git[-core][-all]</code><br><code>yum install git[-core][-all]</code></li>
+<li>安全起见，创建一个独立的git组和用户<br><code>groupadd git</code><br><code>useradd git -m -g git -s /usr/bin/git-shell</code><br><code>passwd git</code></li>
+<li><strong>可选</strong>，创建ssh密钥，实现免密push<br>在<strong>本地主机</strong>执行<code>ssh-keygen -t rsa</code>，然后将<code>id_rsa.pub</code>文件内容传入<code>/home/git/.ssh/authorized_keys</code></li>
+<li>创建一个工作目录，在目录中初始化仓库<br><code>mkdir /srv/work.git</code> 按照标准目录位置<br><code>git init --bare</code></li>
+<li>在<strong>本地仓库</strong>新建一个git工作目录，将目录所有权交给git用户，然后初始化仓库<br><code>chown git:git -R /srv/work.git</code><br><strong>必须保证目录所有权是git用户！！！否则会出现unpack错误！！！</strong><br><code>git init</code></li>
+<li>添加文件到仓库中，每次添加都要这么做<br><code>git add ./...</code><br>修改文件后要确认，输入<code>git commit -m &quot;信息内容&quot; -a</code></li>
+<li>添加远程服务器<br><code>git remote add [仓库名] ssh://git@remote-server:port/path-to-project</code><br><strong>注：port即为ssh端口号</strong></li>
+<li>推送更改<br><code>git push [仓库名] [分支名]</code><br>也可以先设置分支的上游关联<code>git branch --set-upstream-to &quot;仓库名&quot;/&quot;远程分支名&quot;</code><br>然后就可以使用<code>git push</code>一键push了</li>
+<li>附录<br>要提交修改，先<code>git commit -m &quot;信息内容&quot; -a</code>再<code>git push 仓库名 master</code><br>要克隆项目，只需<code>git clone ssh://git@remote-server:port/path-to-project</code><br>方便起见，可以先在服务器创建仓库，然后本地clone空仓库，这样会自动设置上游。</li>
+</ol>
+<h3 id="Gitea"><a href="#Gitea" class="headerlink" title="Gitea"></a>Gitea</h3><p>一个轻量级的Git托管服务器，是Gogs的一个Fork，目的是通过社区提供更多功能，没有自带CI&#x2F;CD功能，但是可以通过插件实现。<br>和Gogs大量重合，可以无缝迁移。</p>
+<h4 id="本机搭建"><a href="#本机搭建" class="headerlink" title="本机搭建"></a>本机搭建</h4><p><strong>安装Git和SQLite(也可以用MySQL和PostgreSQL)</strong><br><code>apt install git[-core][-all] sqlite3</code><br><code>yum install git[-core][-all] sqlite</code></p>
+<p><strong>安全起见，创建一个独立的git组和用户</strong><br><code>groupadd git</code><br><code>useradd git -m -g git -s /usr/bin/git-shell</code><br><code>passwd git</code></p>
+<p><strong>安装</strong><br>在<a target="_blank" rel="noopener" href="https://dl.gitea.io/gitea">gitea | Gitea</a>或<a target="_blank" rel="noopener" href="https://github.com/go-gitea/gitea">go-gitea&#x2F;gitea</a>下载最新版二进制程序<br>程序默认没有执行权限，<code>chmod a+x gitea</code>赋予执行权限<br>然后移动至标准目录<code>mv gitea /usr/local/bin/</code></p>
+<p><strong>创建目录</strong><br>创建配置文件目录，并修改权限<br><code>mkdir /etc/gitea</code><br><code>chown -R git:git /etc/gitea</code><br>创建资料文件目录，并修改权限<br><code>mkdir /var/lib/gitea</code><br><code>mkdir /var/lib/gitea/custom</code><br><code>mkdir /var/lib/gitea/data</code><br><code>chown -R git:git /var/lib/gitea</code><br>创建日志文件目录<br><code>mkdir /var/log/gitea</code><br><code>chown -R git:git /var/log/gitea</code><br>可选：禁止一般用户对日志文件目录的读权限<br><code>chmod -R o-wrx /var/log/gitea</code></p>
+<p><strong>配置服务</strong><br>创建<code>/etc/systemd/system/gitea.service</code>，一个模板如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=Gitea (Git with a cup of tea)</span><br><span class="line">After=syslog.target</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line"># 别忘了添加数据库服务依赖，当然如果使用SQLite的话就不需要了</span><br><span class="line"># MySQL</span><br><span class="line"># Wants=mysql.service</span><br><span class="line"># After=mysql.service</span><br><span class="line"></span><br><span class="line"># PostgreSQL</span><br><span class="line"># Wants=postgresql.service</span><br><span class="line"># After=postgresql.service</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line"># 如果你的仓库中文件数量巨大，导致出现500错误，请设置这一行取消限制</span><br><span class="line"># LimitNOFILE=524288:524288</span><br><span class="line">RestartSec=2s</span><br><span class="line">Type=simple</span><br><span class="line">User=git</span><br><span class="line">Group=git</span><br><span class="line">WorkingDirectory=/var/lib/gitea/</span><br><span class="line">ExecStart=/usr/local/bin/gitea web --config /etc/gitea/app.ini</span><br><span class="line">Restart=always</span><br><span class="line">Environment=USER=git HOME=/home/git GITEA_WORK_DIR=/var/lib/gitea</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+<p>之后，使用<code>systemctl enable --now gitea.service</code>启动服务</p>
+<p><strong>Gitea初始化安装</strong><br>如图所示<br>注意，域名应设置为与本机直接绑定的域名，如果没有请设为缺省值<code>localhost</code><br>如果设置了反向代理，URL应设置为<code>协议://实际访问域名或IP:实际访问端口/</code><br>![[gitea.png]]</p>
+<p><strong>基本配置到这里就结束了，以下为一些按需进行的自定义配置</strong></p>
+<p><strong>离线模式</strong><br>如果你想禁用一切外部CDN，仅使用本地主机，请修改<code>/etc/gitea/app.ini</code>，在<code>[server]</code>段修改以下内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[server]</span><br><span class="line">OFFLINE_MODE = true    # 不使用CDN加载头像和资源文件</span><br></pre></td></tr></table></figure>
+
+<p><strong>设置SSH</strong><br>如果你对SSH进行了反向代理，或者不想使用SSH，请修改<code>/etc/gitea/app.ini</code>，在<code>[server]</code>段修改以下内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[server]</span><br><span class="line">SSH_DOMAIN = example.com    # 请设置为实际访问的域名或IP</span><br><span class="line">...</span><br><span class="line">DISABLE_SSH = false    # 设为true可以彻底禁止SSH</span><br><span class="line">SSH_PORT = 22    # 请设置为实际访问的SSH端口</span><br></pre></td></tr></table></figure>
+
+<p><strong>添加SSH公钥</strong><br>进入<code>头像-&gt;设置-&gt;SSH/GPG密钥-&gt;增加密钥</code>，将公钥文件<code>*.pub</code>的内容拷贝进下方内容栏，设置名称后保存。</p>
+<p><strong>重新设置数据库</strong><br>修改<code>/etc/gitea/app.ini</code>，在<code>[database]</code>段修改以下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[database]</span><br><span class="line">DB_TYPE = sqlite3    # 数据库类型，可选sqlite3, mysql, postgresql</span><br><span class="line">HOST = 127.0.0.1:5432    # 数据库服务器Socket</span><br><span class="line">NAME = gitea    # 数据库的库名</span><br><span class="line">USER = gitea    # 数据库用户名</span><br><span class="line">PASSWD =    # 数据库密码</span><br><span class="line">SSL_MODE = disable    # MySQL或PostgreSQL数据库是否启用SSL模式</span><br><span class="line">CHARSET = utf8mb4    # 仅当数据库为MySQL时有效，设置字符编码，可选uft8或utf8mb4</span><br><span class="line">PATH = data/gitea.db    # SQLite数据文件保存路径</span><br></pre></td></tr></table></figure>
+
+<p><strong>设置HTTPS</strong><br>修改<code>/etc/gitea/app.ini</code>，在<code>[server]</code>段添加以下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[server]</span><br><span class="line">PROTOCOL  = https</span><br><span class="line">ROOT_URL  = https://localhost:3000/    # 协议部分改为https</span><br><span class="line">HTTP_PORT = 3000</span><br><span class="line">CERT_FILE = 证书路径</span><br><span class="line">KEY_FILE  = 私钥路径</span><br><span class="line"></span><br><span class="line"># 设置HTTP重定向</span><br><span class="line">REDIRECT_OTHER_PORT = true</span><br><span class="line">PORT_TO_REDIRECT = 3080</span><br></pre></td></tr></table></figure>
+<p>如果你使用ACME，还要在<code>[server]</code>段添加以下内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[server]</span><br><span class="line"># 配置ACME</span><br><span class="line">ENABLE_ACME = true</span><br><span class="line">ACME_ACCEPTTOS = true</span><br><span class="line"># ACME提供商网站，留空默认使用Let&#x27;s Encrypt</span><br><span class="line">;ACME_URL = https://ca.example.com/acme/acme/directory</span><br><span class="line">;ACME_CA_ROOT = /path/to/root_ca.crt</span><br><span class="line">ACME_DIRECTORY = https</span><br><span class="line">ACME_EMAIL = email@example.com</span><br></pre></td></tr></table></figure>
+<p>然后，在<code>[session]</code>段添加以下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[session]</span><br><span class="line">PROVIDER = memory|file    # 绘画临时文件保存在内存或文件中</span><br><span class="line">PROVIDER_CONFIG = data/sessions    # 如果保存在文件中，那么指定保存目录</span><br><span class="line">COOKIE_SECURE = true    # 强制使用HTTPS进行会话控制</span><br><span class="line">GC_INTERVAL_TIME = 86400    # 会话遗忘失效的时间</span><br></pre></td></tr></table></figure>
+
+<p><strong>设置注册</strong><br>修改<code>/etc/gitea/app.ini</code>，在<code>[service]</code>段修改以下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[service]</span><br><span class="line">REGISTER_EMAIL_CONFIRM = false    # 注册时需要邮箱验证</span><br><span class="line">DISABLE_REGISTRATION = false    # 完全禁用注册，只能通过管理员手动添加用户</span><br><span class="line">ENABLE_CAPTCHA = false    # 注册时需要RECAPTCHA验证码</span><br><span class="line">REQUIRE_SIGNIN_VIEW = false    # 所有页面都必须登录后才可以访问</span><br><span class="line">DEFAULT_KEEP_EMAIL_PRIVATE = false    # 默认将新注册用户的邮箱地址设为私密</span><br><span class="line">DEFAULT_ALLOW_CREATE_ORGANIZATION = true    # 默认允许新用户创建组织</span><br><span class="line">DEFAULT_ENABLE_TIMETRACKING = true    # 默认允许仓库进行时间记录</span><br></pre></td></tr></table></figure>
+
+<p><strong>设置仓库</strong><br>修改<code>/etc/gitea/app.ini</code>，在<code>[repository]</code>段添加以下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ROOT = /path    # 设置存放git项目的根目录</span><br><span class="line">SRIPT_TYPE = bash|sh    # 服务器使用的Shell</span><br><span class="line">ANSI_CHARSET = utf-8    # 默认字符编码</span><br><span class="line">FORCE_PRIVATE = false    # 强制所有git项目都是私密的</span><br><span class="line">MAX_CREATION_LIMIT = -1    # 每个用户创建的git项目最大数量，-1表示无限制</span><br></pre></td></tr></table></figure>
+
+<p><strong>设置头像</strong><br>修改<code>/etc/gitea/app.ini</code>，在<code>[picture]</code>段添加以下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">DISABLE_GRAVATAR = true    # 完全禁用在线头像，只使用本地头像</span><br><span class="line">GRAVATAR_SOURCE = gravatar    # 在线头像来源，可以是提供方名例如gravatar，duoshuo，也可以填链接如https://dn-qiniu-avatar.qbox.me/avatar/</span><br><span class="line">ENABLE_FEDERATED_AVATAR = false    # 启用Libravatar头像联盟支持</span><br><span class="line">AVATAR_UPLOAD_PATH = data/avatars    # 本地用户头像文件存储路径</span><br><span class="line">AVATAR_MAX_WIDTH = 4096    # 头像最大宽度，单位像素</span><br><span class="line">AVATAR_MAX_HEIGHT = 3072    # 头像最大高度，单位像素</span><br><span class="line">AVATAR_MAX_FILE_SIZE = 1048576    # 头像最大文件大小，单位Mb</span><br><span class="line">REPOSITORY_AVATAR_UPLOAD_PATH = data/repo-avatars    # 本地仓库头像文件存储路径</span><br><span class="line">REPOSITORY_AVATAR_FALLBACK = none|random|image    # 找不到仓库头像时的处理方式，分别为不显示头像，随机生成头像和使用指定头像</span><br><span class="line">REPOSITORY_AVATAR_FALLBACK_IMAGE = data/repo-avatars/default.png    # 指定找不到仓库头像时使用的头像</span><br></pre></td></tr></table></figure>
+
+<p><strong>设置附件</strong><br>修改<code>/etc/gitea/app.ini</code>，在<code>[attachment]</code>段添加以下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[attachment]</span><br><span class="line">ENABLED = true    # 是否允许用户在issue和request中上传附件</span><br><span class="line">ALLOWED_TYPES = */*    # 允许上传的附件类型，可以使用MIME格式，也可以指定后缀，用逗号分隔。默认为*/*即允许所有类型</span><br><span class="line">MAX_SIZE = 4    # 附件最大文件大小，单位MB</span><br><span class="line">MAX_FILES = 5    # 单词最大上传附件数量</span><br><span class="line">PATH = data/attachments    # 附件存储路径</span><br></pre></td></tr></table></figure>
+
+<p><strong>设置日志</strong><br>修改<code>/etc/gitea/app.ini</code>，在<code>[log]</code>段添加以下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ROOT_PATH = /var/log/gitea    # 日志文件的保存目录</span><br><span class="line">MODE = console|file    # 日志文件的记录模式，默认为console即输出到终端，设置为file表示保存到文件</span><br><span class="line">LEVEL = info    # 日志的记录等级，可选trace, debug, info, warn, error, critical, fatal, none</span><br><span class="line">ENABLE_SSH_LOG = false    # 记录SSH日志，会一并记录到默认日志中</span><br><span class="line">ENABLE_XORM_LOG = true    # 记录XORM日志，会一并记录到默认日志中</span><br><span class="line">DISABLE_ROUTER_LOG = false    # 不记录路由日志</span><br><span class="line">ROUTER = console|file    # 路由日志的记录模式，默认为console</span><br><span class="line">ENABLE_ACCESS_LOG = false    # 记录访问日志，格式为NCSA</span><br><span class="line">ACCESS = console|file    # 访问日志的记录模式，默认为file</span><br></pre></td></tr></table></figure>
+<p>在<code>[database]</code>段修改以下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[database]</span><br><span class="line">LOG_SQL = false    # 记录SQL语句日志</span><br></pre></td></tr></table></figure>
+
+<p><strong>设置定时任务</strong><br>修改<code>/etc/gitea/app.ini</code>，在<code>[cron]</code>段添加以下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[cron]</span><br><span class="line">ENABLED = true    # 是否运行定期任务</span><br><span class="line">RUN_AT_START = true    # 是否启动时运行一次</span><br></pre></td></tr></table></figure>
+
+<p><strong>重新设置LFS</strong><br>修改<code>/etc/gitea/app.ini</code>，在<code>[server]</code>段修改以下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[server]</span><br><span class="line">LFS_START_SERVER = true    # 启用LFS</span><br></pre></td></tr></table></figure>
+<p>在<code>[lfs]</code>段添加以下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[lfs]</span><br><span class="line">PATH = data/lfs    # 存放LFS文件的路径，留空不启用LFS</span><br></pre></td></tr></table></figure>
+
+<p><strong>Nginx反向代理</strong><br>创建Nginx site文件，写入以下内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name [域名];</span><br><span class="line">    proxy_set_header Host $host;</span><br><span class="line">    proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        proxy_pass http://127.0.0.1:3000;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>邮件通知</strong><br>修改<code>/etc/gitea/app.ini</code>，在<code>[mailer]</code>段添加以下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[mailer]</span><br><span class="line">ENABLED = true</span><br><span class="line">HOST = SMTP服务器IP:端口</span><br><span class="line">FROM = 发送邮箱</span><br><span class="line">USER = SMTP用户</span><br><span class="line">PASSWD = SMTP密码</span><br></pre></td></tr></table></figure>
+<p>然后，可以在<code>[service]</code>段修改以下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[service]</span><br><span class="line">ENABLE_NOTIFY_MAIL = false    # 启用提醒邮件，会在创建工单等行为时发送</span><br></pre></td></tr></table></figure>
+
+<p><strong>配置fail2ban</strong><br>创建日志过滤配置文件<code>/etc/fail2ban/filter.d/gitea.conf</code>，写入以下内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[Definition]</span><br><span class="line">failregex =  .*(Failed authentication attempt|invalid credentials|Attempted access of unknown user).* from &lt;HOST&gt;</span><br><span class="line">ignoreregex =</span><br></pre></td></tr></table></figure>
+<p>创建监狱服务配置文件<code>/etc/fail2ban/jail.d/gitea.conf</code>，写入以下内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[gitea]</span><br><span class="line">enabled = true</span><br><span class="line">filter = gitea</span><br><span class="line">logpath = /var/lib/gitea/log/gitea.log</span><br><span class="line">maxretry = 10</span><br><span class="line">findtime = 3600</span><br><span class="line">bantime = 900</span><br><span class="line">action = iptables-allports</span><br></pre></td></tr></table></figure>
+
+<p><strong>重新安装</strong><br>修改<code>/etc/gitea/app.ini</code>，在<code>[security]</code>段修改以下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[security]</span><br><span class="line">INSTALL_LOCK = false</span><br></pre></td></tr></table></figure>
+<p>重启服务后，会重新出现安装页面</p>
+<h3 id="Gitlab"><a href="#Gitlab" class="headerlink" title="Gitlab"></a>Gitlab</h3><p>Gitlab有友好的网页控制台和图形化操作功能，官方提供了企业版（付费）和社区版（免费），搭建可以使用本机安装或Docker。</p>
+<h4 id="本机搭建-1"><a href="#本机搭建-1" class="headerlink" title="本机搭建"></a>本机搭建</h4><ol>
+<li>首先去<a target="_blank" rel="noopener" href="https://packages.gitlab.com/gitlab/">gitlab - Repositories</a><br>下载对应的软件包。</li>
+<li>安装后修改&#x2F;etc&#x2F;gitlab&#x2F;gitlab.rb，本地配置把external_url改为<code>IP:port</code>或<code>URL:port</code>，设置Gitlab接收请求的IP或域名。内置的Nginx服务器默认监听0.0.0.0:80，修改<code>nginx[&#39;listen_addresses&#39;]</code>和<code>nginx[&#39;listen_port&#39;]</code>可以改变。如果不使用内置的Nginx，可以修改<code>web_server[&#39;external_users&#39;]</code>设置外部服务器用户。设置<code>nginx[&#39;redirect_http_to_https&#39;]</code>以确保HTTP访问重定向至HTTPS</li>
+<li>如果有防火墙，注意配置对应端口开放</li>
+<li>执行<code>gitlab-ctl reconfigure</code>应用配置</li>
+<li>启动Gitlab<code>gitlab-ctl start</code></li>
+<li>初次启动需要等待较长时间，期间显示502为正常现象</li>
+</ol>
+<h4 id="Docker搭建"><a href="#Docker搭建" class="headerlink" title="Docker搭建"></a>Docker搭建</h4><ol>
+<li>拉取Gitlab的CE版镜像<code>docker pull gitlab/gitlab-ce</code></li>
+<li>运行以下命令启动Gitlab容器<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">docker run --detach \</span><br><span class="line">  -p 辅助端口:443 主要端口:80 辅助端口:22 \</span><br><span class="line">  --name gitlab \</span><br><span class="line">  --restart always \</span><br><span class="line">  --volume /var/opt/gitlab/config:/etc/gitlab \</span><br><span class="line">  --volume /var/opt/gitlab/logs:/var/log/gitlab \</span><br><span class="line">  --volume /var/opt/gitlab/data:/var/opt/gitlab \</span><br><span class="line">  gitlab/gitlab-ce:latest</span><br></pre></td></tr></table></figure></li>
+<li>如果有防火墙，需要配置相应的端口开放</li>
+<li>访问本机IP+端口</li>
+</ol>
+<h3 id="SVN"><a href="#SVN" class="headerlink" title="SVN"></a>SVN</h3><p>使用SVNAdmin 2.0。</p>
+<h4 id="Docker搭建-1"><a href="#Docker搭建-1" class="headerlink" title="Docker搭建"></a>Docker搭建</h4><ol>
+<li>拉取镜像<code>docker pull witersencom/svnadmin</code></li>
+<li>启动临时容器<code>docker run -d --name temp --privileged witersencom/svnadmin:2.4.3 /usr/sbin/init</code></li>
+<li>拷贝配置文件<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd /home/</span><br><span class="line">docker cp svnadmintemp:/home/svnadmin ./</span><br><span class="line">docker cp svnadmintemp:/etc/httpd/conf.d ./svnadmin/</span><br><span class="line">docker cp svnadmintemp:/etc/sasl2 ./svnadmin/</span><br></pre></td></tr></table></figure></li>
+<li>删除临时容器<code>docker rm -f temp</code></li>
+<li>正式启动容器<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 80:80 -p 3690:3690 \</span><br><span class="line">-v /home/svnadmin/:/home/svnadmin/ \</span><br><span class="line">-v /home/svnadmin/conf.d/:/etc/httpd/conf.d/ \</span><br><span class="line">-v /home/svnadmin/sasl2/:/etc/sasl2/ \</span><br><span class="line">--privileged \</span><br><span class="line">--name svnadmin \</span><br><span class="line">witersencom/svnadmin</span><br></pre></td></tr></table></figure></li>
+<li>进行文件授权<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it svnadmin bash</span><br><span class="line">chown -R apache:apache /home/svnadmin</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/12/14/ntfy%E9%80%9A%E7%9F%A5%E6%9C%8D%E5%8A%A1%E5%99%A8/" rel="prev" title="ntfy通知服务器">
+                  <i class="fa fa-angle-left"></i> ntfy通知服务器
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/01/17/%E7%BD%91%E7%BB%9C%E5%BC%95%E5%AF%BC%E8%AF%A6%E8%A7%A3/" rel="next" title="网络引导详解">
+                  网络引导详解 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Molten_Armor</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

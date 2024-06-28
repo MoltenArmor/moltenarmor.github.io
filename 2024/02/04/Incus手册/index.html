@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.icku.eu.org","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="什么是Incus2023年7月5日，Canonical宣布全面接管LXD。原先的LXD工作组对此相当不满，因此Fork并重新制作了移除掉所有Canonical相关内容的Incus。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Incus手册">
+<meta property="og:url" content="https://blog.icku.eu.org/2024/02/04/Incus%E6%89%8B%E5%86%8C/index.html">
+<meta property="og:site_name" content="MA Blog">
+<meta property="og:description" content="什么是Incus2023年7月5日，Canonical宣布全面接管LXD。原先的LXD工作组对此相当不满，因此Fork并重新制作了移除掉所有Canonical相关内容的Incus。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.icku.eu.org/images/vm-sc-ac.jpeg">
+<meta property="article:published_time" content="2024-02-04T01:26:55.000Z">
+<meta property="article:modified_time" content="2024-06-27T15:16:10.000Z">
+<meta property="article:author" content="Molten_Armor">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.icku.eu.org/images/vm-sc-ac.jpeg">
+
+
+<link rel="canonical" href="https://blog.icku.eu.org/2024/02/04/Incus%E6%89%8B%E5%86%8C/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.icku.eu.org/2024/02/04/Incus%E6%89%8B%E5%86%8C/","path":"2024/02/04/Incus手册/","title":"Incus手册"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Incus手册 | MA Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">MA Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFIncus"><span class="nav-number">1.</span> <span class="nav-text">什么是Incus</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84"><span class="nav-number">2.</span> <span class="nav-text">架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">3.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">4.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C"><span class="nav-number">5.</span> <span class="nav-text">网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A3%80%E5%AF%9F%E7%BD%91%E7%BB%9C"><span class="nav-number">5.1.</span> <span class="nav-text">检察网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%BD%91%E7%BB%9C"><span class="nav-number">5.2.</span> <span class="nav-text">创建网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A5%E5%85%A5%E7%BD%91%E7%BB%9C"><span class="nav-number">5.3.</span> <span class="nav-text">接入网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%BE%91%E7%BD%91%E7%BB%9C"><span class="nav-number">5.4.</span> <span class="nav-text">编辑网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ACL"><span class="nav-number">5.5.</span> <span class="nav-text">ACL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84"><span class="nav-number">5.6.</span> <span class="nav-text">端口映射</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%98%E5%82%A8"><span class="nav-number">6.</span> <span class="nav-text">存储</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A3%80%E5%AF%9F%E5%AD%98%E5%82%A8%E6%B1%A0"><span class="nav-number">6.1.</span> <span class="nav-text">检察存储池</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%AD%98%E5%82%A8%E6%B1%A0"><span class="nav-number">6.2.</span> <span class="nav-text">创建存储池</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%BE%91%E5%AD%98%E5%82%A8%E6%B1%A0"><span class="nav-number">6.3.</span> <span class="nav-text">编辑存储池</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%AD%98%E5%82%A8%E6%B1%A0"><span class="nav-number">6.4.</span> <span class="nav-text">使用存储池</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%AD%98%E5%82%A8%E5%8D%B7"><span class="nav-number">6.5.</span> <span class="nav-text">创建存储卷</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E5%AD%98%E5%82%A8%E5%8D%B7"><span class="nav-number">6.6.</span> <span class="nav-text">设置存储卷</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%82%E8%BD%BD%E5%AD%98%E5%82%A8%E5%8D%B7"><span class="nav-number">6.7.</span> <span class="nav-text">挂载存储卷</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AEIO%E9%99%90%E5%88%B6"><span class="nav-number">6.8.</span> <span class="nav-text">设置IO限制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8B%B7%E8%B4%9D-%E7%A7%BB%E5%8A%A8%E5%AD%98%E5%82%A8%E5%8D%B7"><span class="nav-number">6.9.</span> <span class="nav-text">拷贝&#x2F;移动存储卷</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%87%E4%BB%BD%E5%8D%B7"><span class="nav-number">6.10.</span> <span class="nav-text">备份卷</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#REST-API"><span class="nav-number">7.</span> <span class="nav-text">REST API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%86%E7%BE%A4"><span class="nav-number">8.</span> <span class="nav-text">集群</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-number">8.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E9%9B%86%E7%BE%A4"><span class="nav-number">8.2.</span> <span class="nav-text">建立集群</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A0%E5%85%A5%E9%9B%86%E7%BE%A4"><span class="nav-number">8.3.</span> <span class="nav-text">加入集群</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8A%82%E7%82%B9%E7%BB%84"><span class="nav-number">8.4.</span> <span class="nav-text">节点组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%95%9C%E5%83%8F%E5%AD%98%E5%82%A8"><span class="nav-number">8.5.</span> <span class="nav-text">镜像存储</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B%E5%AD%98%E5%82%A8"><span class="nav-number">8.6.</span> <span class="nav-text">实例存储</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%92%E7%A9%BA-%E9%9A%94%E7%A6%BB"><span class="nav-number">8.7.</span> <span class="nav-text">排空&#x2F;隔离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E8%8A%82%E7%82%B9"><span class="nav-number">8.8.</span> <span class="nav-text">删除节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%81%BE%E9%9A%BE%E6%81%A2%E5%A4%8D"><span class="nav-number">8.9.</span> <span class="nav-text">灾难恢复</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E8%AE%BEIP"><span class="nav-number">8.10.</span> <span class="nav-text">重设IP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%95%9C%E5%83%8F"><span class="nav-number">9.</span> <span class="nav-text">镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E9%95%9C%E5%83%8F%E6%BA%90"><span class="nav-number">9.1.</span> <span class="nav-text">配置镜像源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E9%95%9C%E5%83%8F"><span class="nav-number">9.2.</span> <span class="nav-text">下载镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%BC%E5%87%BA%E4%B8%8E%E5%AF%BC%E5%85%A5%E9%95%9C%E5%83%8F"><span class="nav-number">9.3.</span> <span class="nav-text">导出与导入镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%95%9C%E5%83%8FProfile"><span class="nav-number">9.4.</span> <span class="nav-text">镜像Profile</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B"><span class="nav-number">10.</span> <span class="nav-text">实例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%AE%9E%E4%BE%8B"><span class="nav-number">10.1.</span> <span class="nav-text">创建实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E4%B8%8E%E6%A3%80%E6%9F%A5%E5%AE%9E%E4%BE%8B"><span class="nav-number">10.2.</span> <span class="nav-text">控制与检查实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E7%89%B9%E6%9D%83%E5%AE%B9%E5%99%A8"><span class="nav-number">10.3.</span> <span class="nav-text">无特权容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%AE%9E%E4%BE%8B"><span class="nav-number">10.4.</span> <span class="nav-text">配置实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%AB%E7%85%A7%E4%B8%8E%E5%A4%87%E4%BB%BD"><span class="nav-number">10.5.</span> <span class="nav-text">快照与备份</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%BB%84%EF%BC%88Profile%EF%BC%89"><span class="nav-number">10.6.</span> <span class="nav-text">配置组（Profile）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4"><span class="nav-number">10.7.</span> <span class="nav-text">执行命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E5%85%A5%E7%BB%88%E7%AB%AF"><span class="nav-number">10.8.</span> <span class="nav-text">进入终端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E5%AE%9E%E4%BE%8B%E4%B8%AD%E6%96%87%E4%BB%B6"><span class="nav-number">10.9.</span> <span class="nav-text">获取实例中文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%81%E7%A7%BB"><span class="nav-number">10.10.</span> <span class="nav-text">迁移</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%EF%BC%88Project%EF%BC%89"><span class="nav-number">11.</span> <span class="nav-text">项目（Project）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="nav-number">11.1.</span> <span class="nav-text">创建项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E9%A1%B9%E7%9B%AE"><span class="nav-number">11.2.</span> <span class="nav-text">配置项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%87%E6%8D%A2%E9%A1%B9%E7%9B%AE"><span class="nav-number">11.3.</span> <span class="nav-text">切换项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E7%89%B9%E5%AE%9A%E9%A1%B9%E7%9B%AE"><span class="nav-number">11.4.</span> <span class="nav-text">用户特定项目</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Molten_Armor</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.icku.eu.org/2024/02/04/Incus%E6%89%8B%E5%86%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Molten_Armor">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MA Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Incus手册 | MA Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Incus手册
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-02-04 09:26:55" itemprop="dateCreated datePublished" datetime="2024-02-04T09:26:55+08:00">2024-02-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-06-27 23:16:10" itemprop="dateModified" datetime="2024-06-27T23:16:10+08:00">2024-06-27</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="什么是Incus"><a href="#什么是Incus" class="headerlink" title="什么是Incus"></a>什么是Incus</h2><p>2023年7月5日，Canonical宣布全面接管LXD。原先的LXD工作组对此相当不满，因此Fork并重新制作了移除掉所有Canonical相关内容的Incus。</p>
+<span id="more"></span>
+
+<p>抛开这些历史问题不谈，Incus的本质是：</p>
+<p><strong>一套为容器和虚拟机提供统一的集群化管理接口的系统</strong>。</p>
+<h2 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h2><p>Incus由三个部分组成：</p>
+<ul>
+<li>服务端：即<code>incusd</code>，提供基于UNIX套接字或REST API的接口供客户端访问。</li>
+<li>客户端：即<code>incus</code>，提供访问服务端进行集群管理的功能。</li>
+<li>镜像仓库：提供容器镜像或虚拟机磁盘的下载仓库，即<code>https://images.linuxcontainers.org</code>。</li>
+</ul>
+<p>Incus管理的对象包括虚拟机和系统容器（相对于应用容器而言，即LXC），它们的区别如下表：</p>
+<table>
+<thead>
+<tr>
+<th>虚拟机</th>
+<th>系统容器</th>
+<th>应用容器</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>使用独立内核</td>
+<td>使用宿主机内核</td>
+<td>使用宿主机内核</td>
+</tr>
+<tr>
+<td>使用了硬件虚拟化功能（Intel VT-X或AMD-V）</td>
+<td>只使用内核功能</td>
+<td>只使用内核功能</td>
+</tr>
+<tr>
+<td>使用资源最多</td>
+<td>使用资源较少</td>
+<td>使用资源较少</td>
+</tr>
+<tr>
+<td>有完整的引导过程，因此启动较慢</td>
+<td>只有用户空间的Init过程，启动较快</td>
+<td>完全没有引导和Init过程，启动最快</td>
+</tr>
+<tr>
+<td>典型代表是Qemu-KVM</td>
+<td>典型代表是LXC</td>
+<td>典型代表是Docker</td>
+</tr>
+</tbody></table>
+<p><img src="/images/vm-sc-ac.jpeg" alt="vm-sc-ac.jpeg"></p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>目前Incus服务端仅在Debian 13+的官方源中进行提供：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install incus</span><br></pre></td></tr></table></figure>
+<p>客户端不限平台，二进制程序可以在Github页面直接下载。</p>
+<p>安装Incus后，被添加到<code>incus-admin</code>附加组的用户有权对其进行管理。</p>
+<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><p>执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus admin init</span><br></pre></td></tr></table></figure>
+<p>命令进行初始化，初始化过程包括以下几个问题：</p>
+<ol>
+<li>是否启用集群模式？默认为否。<ul>
+<li>如果选择是，那么会询问使用的IP、以及是否加入已存在的集群。</li>
+<li>如果选择加入已存在的集群，那么会要求提供集群Token。</li>
+<li>如果选择不加入，那么会询问新建的集群名称。</li>
+</ul>
+</li>
+<li>是否创建一个存储池？默认为是。<ul>
+<li>存储池默认名称为<code>default</code>。使用<code>dir</code>存储引擎（无法修改）。</li>
+</ul>
+</li>
+<li>是否自动创建网桥？默认为是。<ul>
+<li>自动创建的网桥是一个三层交换机（路由器）。用户可以手动提供IPv4&#x2F;IPv6使用的子网，也可以让Incus自动选择一个子网。</li>
+<li>如果选择是，还会要求提供网桥的设备名称，默认为<code>lxcbr0</code>。</li>
+<li>如果选择否，那么会要求用户选择一个已存在的网桥或网络接口。可以创建一个二层网桥，或是使用一个物理接口，不过如果是物理接口的话，会被Incus占用，不能再被宿主机使用。</li>
+</ul>
+</li>
+<li>是否在网络上暴露该服务器（即启用REST API）？默认为否。</li>
+<li>是否定期更新镜像？默认为是。</li>
+<li>是否打印一个Preseed自动化YAML？默认为否。</li>
+</ol>
+<p>除了手动初始化，还有三种自动初始化方式：</p>
+<ul>
+<li><code>--minimal</code>：全部使用默认选项，自动化初始化。</li>
+<li><code>--auto</code>：从命令行选项获取配置，自动化初始化。可用配置有：<ul>
+<li><code>--network-address</code>：绑定的IP。</li>
+<li><code>--network-port</code>：绑定的端口号，默认为8443。</li>
+<li><code>--storage-backend=dir|lvm|btrfs|zfs|ceph</code>：使用的存储引擎。</li>
+<li><code>--storage-create-device=/dev/设备</code>：使用<code>device</code>引擎并指定设备存储。</li>
+<li><code>--storage-create-loop=大小</code>：使用<code>loop</code>引擎并指定大小。</li>
+<li><code>--storage-pool=&#39;名称&#39;</code>：指定存储池名称。</li>
+</ul>
+</li>
+<li><code>--preseed</code>：从标准输入获取Preseed YAML配置文件，自动化初始化。</li>
+</ul>
+<h2 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h2><h3 id="检察网络"><a href="#检察网络" class="headerlink" title="检察网络"></a>检察网络</h3><p>列出可用网络：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus network list</span><br></pre></td></tr></table></figure>
+<p>检查网络：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus network show|info 网络名</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建网络"><a href="#创建网络" class="headerlink" title="创建网络"></a>创建网络</h3><p>Incus可以创建一个用于虚拟机&#x2F;容器的网络：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus network create 网络名称 [参数=值] --type=bridge|ovn|macvlan|sriov|physical [--target=节点]</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>bridge</code>：使用一个三层交换机进行路由的网络。</li>
+<li><code>ovn</code>：使用OVN网络。</li>
+<li><code>macvlan</code>：在网卡上创建MACVLan设备。</li>
+<li><code>sriov</code>：使用支持SR-IOV的网卡。</li>
+<li><code>physical</code>：直接使用物理网卡，注意这会导致该网卡在宿主机上不可用。</li>
+</ul>
+<p><code>bridge</code>和<code>ovn</code>常用参数有：</p>
+<ul>
+<li><code>ipv4.address</code>：子网的CIDR，默认为<code>auto</code>。</li>
+<li><code>ipv4.dhcp</code>：是否启用DHCP，默认为<code>true</code>。</li>
+<li><code>ipv6.address</code>：子网的CIDR，默认为<code>auto</code>。</li>
+<li><code>ipv6.dhcp</code>：是否启用DHCP，默认为<code>true</code>。</li>
+</ul>
+<p><code>macvlan</code>、<code>sriov</code>和<code>physical</code>参数有：</p>
+<ul>
+<li><code>parent</code>：使用的父网卡。</li>
+</ul>
+<p>在集群中创建网络时，需要在每个节点上都执行一次创建命令，最后再不带<code>--target</code>选项执行一次创建命令。</p>
+<h3 id="接入网络"><a href="#接入网络" class="headerlink" title="接入网络"></a>接入网络</h3><p>执行以下命令将虚拟机&#x2F;容器实例接入网络：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus network attach 网络名 实例名 实例中的接口名</span><br></pre></td></tr></table></figure>
+<p>实际上这是这条命令的别名：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus config device add 实例名 实例中的接口名 nic network=网络名</span><br></pre></td></tr></table></figure>
+
+<p>实际上，Incus也支持让实例直接接入接口：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus config device add 实例名 实例中的接口名 nic nictype=bridged|macvlan|sriov|physical|routed parent=接口名</span><br></pre></td></tr></table></figure>
+<p>这种方式不是推荐方式，唯一实用的场景是手动创建一个二层网桥并使用<code>bridged</code>模式让实例接入。</p>
+<h3 id="编辑网络"><a href="#编辑网络" class="headerlink" title="编辑网络"></a>编辑网络</h3><p>要在创建后修改网络配置，执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus network set 网络名 参数=值</span><br></pre></td></tr></table></figure>
+<p>或是执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus network edit 网络名</span><br></pre></td></tr></table></figure>
+<p>直接编辑YAML配置。</p>
+<h3 id="ACL"><a href="#ACL" class="headerlink" title="ACL"></a>ACL</h3><p>Incus支持对网络创建ACL规则。首先创建一个ACL配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus network acl create ACL配置名 [参数=值]</span><br></pre></td></tr></table></figure>
+<p>可用参数有：</p>
+<ul>
+<li><code>description</code>：描述。</li>
+<li><code>ingress</code>：入站规则列表。</li>
+<li><code>egress</code>：出站规则列表。</li>
+</ul>
+<p>然后在ACL配置中添加规则：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus network acl rule add ACL配置名 ingress|egress [参数=值]</span><br></pre></td></tr></table></figure>
+<p>可用参数有：</p>
+<ul>
+<li><code>action=allow|reject|drop</code>：必须参数，针对特定数据包的操作。</li>
+<li><code>state=enabled|disabled|logged</code>：规则状态。<code>logged</code>表示登记模式。</li>
+<li><code>description</code>：描述。</li>
+<li><code>source</code>：匹配源地址，可以是CIDR，也可以是IP范围。特殊的值<code>@internal</code>表示内网通信，<code>@external</code>表示外网通信。</li>
+<li><code>destination</code>：匹配目标地址，可以是CIDR，也可以是IP范围。</li>
+<li><code>protocol=icmp4|icmp6|tcp|udp</code>：网络协议。</li>
+<li><code>source_port</code>：仅支持<code>tcp|udp</code>协议，匹配源端口号。</li>
+<li><code>destination_port</code>：仅支持<code>tcp|udp</code>协议，匹配目标端口号。</li>
+<li><code>icmp_type</code>：仅支持<code>icmp4|icmp6</code>协议，匹配ICMP类型号。</li>
+<li><code>icmp_code</code>：仅支持<code>icmp4|icmp6</code>协议，匹配ICMP状态码。</li>
+</ul>
+<p>要编辑一个ACL配置，执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus network acl edit ACL配置名</span><br></pre></td></tr></table></figure>
+
+<p>要查看ACL日志，执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus network acl show-log ACL配置名</span><br></pre></td></tr></table></figure>
+
+<p>要分配ACL，执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus network set 网络名 security.acls=ACL配置名</span><br></pre></td></tr></table></figure>
+<p>或是仅对实例生效：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus config device set 实例名 实例中的网络接口 security.acls=ACL配置名</span><br></pre></td></tr></table></figure>
+
+<p>配置了ACL的网络&#x2F;接口的默认行为是阻止所有的出入站数据包，要修改这一行为，执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus network set 网络名 security.acks.default.ingress|egress.action=allow</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus config device set 实例名 实例中的网络接口 security.acls.default.ingress|egress.action=allow</span><br></pre></td></tr></table></figure>
+
+<h3 id="端口映射"><a href="#端口映射" class="headerlink" title="端口映射"></a>端口映射</h3><p>Incus可以方便地配置端口映射，先添加监听的IP：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus network forward create 网络名 监听IP [参数=值]</span><br></pre></td></tr></table></figure>
+<p>可用参数有：</p>
+<ul>
+<li><code>description</code>：描述。</li>
+<li><code>ports</code>：端口列表。</li>
+</ul>
+<p>然后即可添加映射端口：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus network forward port add 网络名 监听IP tcp|udp 监听端口 目标IP [参数=值]</span><br></pre></td></tr></table></figure>
+<p>其他参数如下：</p>
+<ul>
+<li><code>target_port</code>：目标端口，默认和监听端口一致。</li>
+<li><code>description</code>：描述。</li>
+</ul>
+<p>编辑执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus network forward edit 网络名 监听IP</span><br></pre></td></tr></table></figure>
+
+<h2 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h2><p>Incus将存储使用池式管理。支持以下几类存储引擎：</p>
+<table>
+<thead>
+<tr>
+<th>存储特性</th>
+<th>目录</th>
+<th>BTRFS</th>
+<th>LVM</th>
+<th>ZFS</th>
+<th>CEPH RBD</th>
+<th>CEPHFS</th>
+<th>CEPH OBJ</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>宿主机共享</td>
+<td>是</td>
+<td>是</td>
+<td>否</td>
+<td>是</td>
+<td>否</td>
+<td>否</td>
+<td>否</td>
+</tr>
+<tr>
+<td>独立磁盘</td>
+<td>否</td>
+<td>是</td>
+<td>是</td>
+<td>是</td>
+<td>否</td>
+<td>否</td>
+<td>否</td>
+</tr>
+<tr>
+<td>回环设备</td>
+<td>否</td>
+<td>是</td>
+<td>是</td>
+<td>是</td>
+<td>是</td>
+<td>否</td>
+<td>否</td>
+</tr>
+<tr>
+<td>远程存储</td>
+<td>否</td>
+<td>否</td>
+<td>否</td>
+<td>否</td>
+<td>是</td>
+<td>是</td>
+<td>是</td>
+</tr>
+<tr>
+<td>写入优化</td>
+<td>否</td>
+<td>是</td>
+<td>是</td>
+<td>是</td>
+<td>是</td>
+<td>否</td>
+<td>否</td>
+</tr>
+<tr>
+<td>克隆</td>
+<td>否</td>
+<td>是</td>
+<td>是</td>
+<td>是</td>
+<td>是</td>
+<td>是</td>
+<td>否</td>
+</tr>
+<tr>
+<td>快照</td>
+<td>是</td>
+<td>是</td>
+<td>是</td>
+<td>否</td>
+<td>是</td>
+<td>是</td>
+<td>是</td>
+</tr>
+<tr>
+<td>配额</td>
+<td>是（Ext4或Xfs）</td>
+<td>是</td>
+<td>是</td>
+<td>是</td>
+<td>是</td>
+<td>是</td>
+<td>是</td>
+</tr>
+</tbody></table>
+<h3 id="检察存储池"><a href="#检察存储池" class="headerlink" title="检察存储池"></a>检察存储池</h3><p>列出可用存储池：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus storage list</span><br></pre></td></tr></table></figure>
+<p>检查存储池：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus storage show|info 池名</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建存储池"><a href="#创建存储池" class="headerlink" title="创建存储池"></a>创建存储池</h3><p>执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus storage create 池名 存储引擎 [参数=值]</span><br></pre></td></tr></table></figure>
+
+<p><code>dir</code>引擎可用参数有：</p>
+<ul>
+<li><code>source=目录位置</code>：指定目录位置。</li>
+</ul>
+<p><code>btrfs</code>引擎可用参数有：</p>
+<ul>
+<li><code>size=</code>：大小。</li>
+<li><code>source=/dev/sdX</code>：指定建立了Btrfs文件系统的块设备。</li>
+</ul>
+<p><code>lvm</code>引擎可用参数有：</p>
+<ul>
+<li><code>size=</code>：大小。</li>
+<li><code>source=/dev/sdX lvm.vg_name=VG名</code>：在指定块设备上创建VG并使用。</li>
+<li><code>source=VG名</code>：指定使用的VG。</li>
+<li><code>lvm.thinpool_name=</code>：创建一个指定名称的Thinpool。</li>
+</ul>
+<p><code>zfs</code>引擎可用参数有：</p>
+<ul>
+<li><code>size=</code>：大小。</li>
+<li><code>source=/dev/sdX zfs.pool_name=ZPool名</code>：在指定块设备上创建ZPool并使用。</li>
+<li><code>source=ZPool名</code>：指定使用的ZPool。</li>
+<li><code>source=ZPool名/Dataset名 volume.zfs.block.mode=yes</code>：指定使用的Dataset。</li>
+</ul>
+<p><code>ceph</code>（Ceph RBD）可用的参数有：</p>
+<ul>
+<li><code>ceph.cluster_name=</code>：使用的Ceph集群名。</li>
+<li><code>ceph.osd.pool_name=</code>：使用的Ceph池名。</li>
+<li><code>source=OSD名</code>：使用现有的Ceph OSD池。</li>
+</ul>
+<p><code>cephfs</code>引擎可用参数有：</p>
+<ul>
+<li><code>source=文件系统名[/目录]</code>：指定使用的CephFS文件系统。</li>
+<li><code>cephfs.create_missing=true</code>：自动创建不存在的目录。</li>
+</ul>
+<p><code>cephobject</code>引擎可用参数有：</p>
+<ul>
+<li><code>cephobject.radosgw.endpoint=</code>：指定Ceph Object的HTTP入点。</li>
+</ul>
+<p>在集群中创建存储池时，需要在每个节点上都执行一次创建命令，最后再不带<code>--target</code>选项执行一次创建命令。</p>
+<h3 id="编辑存储池"><a href="#编辑存储池" class="headerlink" title="编辑存储池"></a>编辑存储池</h3><p>要在创建后修改存储池配置，执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus storage set 池名 参数=值</span><br></pre></td></tr></table></figure>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus storage set 池名 size=大小</span><br></pre></td></tr></table></figure>
+<p>或是执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus storage edit 池名</span><br></pre></td></tr></table></figure>
+<p>直接编辑YAML配置。</p>
+<h3 id="使用存储池"><a href="#使用存储池" class="headerlink" title="使用存储池"></a>使用存储池</h3><p>很简单，在启动实例时使用<code>--storage=池名</code>选项指定即可。如果没有指定，那么使用当前的Profile的配置。</p>
+<p>要移动实例，执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus move 实例名 --storage 池名</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建存储卷"><a href="#创建存储卷" class="headerlink" title="创建存储卷"></a>创建存储卷</h3><p>Incus在创建实例时会自动创建所需的卷，在移除实例时会自动删除，因此一般情况下，存储卷不需要手动创建，创建的命令为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus storage volume create 池名 卷名 [--type=filesystem|block] [参数=值]</span><br></pre></td></tr></table></figure>
+<p>可用类型有两种：</p>
+<ul>
+<li><code>filesystem</code>：存储容器和容器镜像。不能挂载在虚拟机中。</li>
+<li><code>block</code>：存储虚拟机的虚拟磁盘。不能挂载在容器中。</li>
+</ul>
+<p>可用参数有：</p>
+<ul>
+<li><code>size</code>：大小。</li>
+</ul>
+<p>此外，还有一种特殊的类型<code>iso</code>，也就是可挂载的ISO镜像卷，不过这种卷的创建方式是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus storage volume import 池名 ISO路径 卷名 --type=iso</span><br></pre></td></tr></table></figure>
+<p>这种卷只能是只读的。</p>
+<p>要设置卷的用途（备份或镜像），执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus config set storage.backups_volme|storage.images_volume 池名/卷名</span><br></pre></td></tr></table></figure>
+
+<p>查看存储卷：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus storage volume list 池名</span><br></pre></td></tr></table></figure>
+
+<h3 id="设置存储卷"><a href="#设置存储卷" class="headerlink" title="设置存储卷"></a>设置存储卷</h3><p>要在创建后修改存储卷配置，执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus storage set 池名 卷名 参数=值</span><br></pre></td></tr></table></figure>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus storage set 池名 卷名 size=大小</span><br></pre></td></tr></table></figure>
+<p>或是执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus storage edit 池名 卷名</span><br></pre></td></tr></table></figure>
+<p>直接编辑YAML配置。</p>
+<h3 id="挂载存储卷"><a href="#挂载存储卷" class="headerlink" title="挂载存储卷"></a>挂载存储卷</h3><p>对于<code>filesystem</code>卷：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus storage volume attach 池名 卷名 容器实例名 挂载路径</span><br></pre></td></tr></table></figure>
+<p>对于<code>block</code>卷：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus storage volume attach 池名 卷名 虚拟机实例名</span><br></pre></td></tr></table></figure>
+<p>此外，也可以把卷作为一个设备挂载：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus storage volume attach 池名 卷名 实例名 设备名 [挂载路径] [参数=值]</span><br></pre></td></tr></table></figure>
+<p>这条命令实际上是个别名：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus config device add 实例名 设备名 disk pool=池名 source=卷名 [path=路径] [参数=值]</span><br></pre></td></tr></table></figure>
+
+<h3 id="设置IO限制"><a href="#设置IO限制" class="headerlink" title="设置IO限制"></a>设置IO限制</h3><p>在把卷作为设备挂载时，可以通过参数设置IO限制，在本质上，这是通过Cgroup实现的：</p>
+<ul>
+<li><code>boot.priority</code>：设备的引导优先级，用于虚拟机。</li>
+<li><code>io.bus=nvme|virtio-blk|virtio-scsi</code>：设备的接口。</li>
+<li><code>io.cache=none|writeback|unsafe</code>：设备的写入缓存。</li>
+<li><code>limits.max</code>：最大读写速度限制。</li>
+<li><code>limits.read</code>：最大读速度限制。</li>
+<li><code>limits.write</code>：最大写入速度限制。</li>
+</ul>
+<h3 id="拷贝-移动存储卷"><a href="#拷贝-移动存储卷" class="headerlink" title="拷贝&#x2F;移动存储卷"></a>拷贝&#x2F;移动存储卷</h3><p>也就是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus storage volume copy|move 池名/卷名 池名/卷名</span><br></pre></td></tr></table></figure>
+<p>不过，要在集群节点之间移动的话，还要加上：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus storage volume copy|move 池名/卷名 池名/卷名 --target 节点 --destination-target 节点</span><br></pre></td></tr></table></figure>
+<p>还可以在Incus集群间移动：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus storage volume copy|move 主机名:池名/卷名 主机名:池名/卷名</span><br></pre></td></tr></table></figure>
+
+<h3 id="备份卷"><a href="#备份卷" class="headerlink" title="备份卷"></a>备份卷</h3><p>创建一个快照：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus storage volume snapshot 池名 卷名 [快照名]</span><br></pre></td></tr></table></figure>
+<p>检查快照：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus storage volume show|info 池名 卷名</span><br></pre></td></tr></table></figure>
+<p>编辑快照：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus storage volume edit 池名 卷名/快照名</span><br></pre></td></tr></table></figure>
+<p>删除快照：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus storage volume delete 池名 卷名/快照名</span><br></pre></td></tr></table></figure>
+<p>还可以设置定时快照：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus storage volume set 池名 卷名 snapshots.schedule &#x27;分 时 日 月 年&#x27;|@daily</span><br></pre></td></tr></table></figure>
+<p>恢复快照：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus storage volume restore 池名 卷名 快照名</span><br></pre></td></tr></table></figure>
+<p>还可以从快照构建一个新的卷：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus storage volume copy 池名/卷名/快照名 池名/卷名/快照名</span><br></pre></td></tr></table></figure>
+<p>导出备份：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus storage volume export 池名 卷名 [文件路径]</span><br></pre></td></tr></table></figure>
+<p>可用选项如下：</p>
+<ul>
+<li><code>--compression=gzip|bzip2|none</code>：压缩方式。</li>
+<li><code>--optimized-storage</code>：仅用于<code>zfs</code>和<code>btrfs</code>，启用优化存储方式。</li>
+<li><code>--volume-only</code>：仅备份卷，不备份快照。</li>
+</ul>
+<p>恢复备份：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus storage volume import 池名 文件路径 [卷名]</span><br></pre></td></tr></table></figure>
+
+<h2 id="REST-API"><a href="#REST-API" class="headerlink" title="REST API"></a>REST API</h2><p>Incus支持使用REST API的方式进行远程使用。在服务端上执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus config set core.https_address :8443|IP|URL</span><br></pre></td></tr></table></figure>
+<p>以设置REST API监听地址。然后在客户端执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus remote add 名称 IP|URL</span><br></pre></td></tr></table></figure>
+<p>以添加，再执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus remote switch 名称</span><br></pre></td></tr></table></figure>
+<p>表明当前使用。</p>
+<p>客户端和服务端之间可以使用证书认证：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus config add-certificate 文件路径 --protocol=incus</span><br></pre></td></tr></table></figure>
+
+<p>还可以使用PKI模式，具体步骤为：</p>
+<ol>
+<li>把CA证书上传到服务端的<code>/var/lib/incus</code>目录。</li>
+<li>把CA证书上传到客户端的<code>~/.config/incus</code>目录。</li>
+<li>把CA签名的证书上传到客户端和服务端。</li>
+<li>重启服务端。</li>
+</ol>
+<h2 id="集群"><a href="#集群" class="headerlink" title="集群"></a>集群</h2><p>Incus支持以集群方式运作，集群内部使用CowSQL分布式数据库存储元信息，并且使用木筏算法选举。集群最少需要三个节点以实现高可用。</p>
+<p>查看集群信息：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus query /1.0/cluster</span><br></pre></td></tr></table></figure>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>Incus集群中的每个节点要么是Voter节点，要么是Stand-by节点。Voter节点会参与分布式数据库选主，默认情况下，一个集群中只有三个节点是Voter，其他都是Standby节点。当有一个Voter节点离线时，一个Standby节点会立刻升级为Voter节点并顶替。这些相关配置项分别有：</p>
+<ul>
+<li><code>cluster.max_voters</code>：最大Voter节点数。</li>
+<li><code>cluster.max_standby</code>：最大Standby节点数。</li>
+<li><code>cluster.offline_threshold</code>：认为离线的响应延迟。</li>
+</ul>
+<h3 id="建立集群"><a href="#建立集群" class="headerlink" title="建立集群"></a>建立集群</h3><p>在第一台Incus服务器上执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus admin init</span><br></pre></td></tr></table></figure>
+<p>然后在：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Would you like to use Incus clustering?</span><br></pre></td></tr></table></figure>
+<p>选择<code>yes</code>，设置该服务器的IP即可。这个IP之后可以执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus config set cluster.https_adddress=IP|URL</span><br></pre></td></tr></table></figure>
+<p>进行重设。</p>
+<p>完成后执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus cluster list</span><br></pre></td></tr></table></figure>
+<p>即可检查集群情况。</p>
+<h3 id="加入集群"><a href="#加入集群" class="headerlink" title="加入集群"></a>加入集群</h3><p>在集群服务器上执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus cluster add 成员名</span><br></pre></td></tr></table></figure>
+<p>然后在新的服务器上执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus admin init</span><br></pre></td></tr></table></figure>
+<p>然后在：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Would you like to use Incus clustering?</span><br></pre></td></tr></table></figure>
+<p>选择<code>yes</code>，在：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Are you joining an existing cluster?</span><br></pre></td></tr></table></figure>
+<p>也选择<code>yes</code>，加入集群并输入Token即可。</p>
+<p>执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus cluster show|info 节点名</span><br></pre></td></tr></table></figure>
+<p>以查看信息。</p>
+<p>节点证书位于<code>/var/lib/incus/cluster.crt</code>。</p>
+<h3 id="节点组"><a href="#节点组" class="headerlink" title="节点组"></a>节点组</h3><p>一部分节点可以组成节点组方便管理，执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus cluster group create 组名</span><br></pre></td></tr></table></figure>
+<p>以创建节点组。</p>
+<p>设置节点所在组：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus cluster group assign 节点名 default,组名</span><br></pre></td></tr></table></figure>
+<p>该命令会覆盖默认组，所以可以带上<code>default</code>防止覆盖。</p>
+<p>将节点添加组：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus cluster group add 节点名 组名</span><br></pre></td></tr></table></figure>
+
+<p>节点组可以在<code>--target</code>选项中使用<code>@组名</code>调用。</p>
+<h3 id="镜像存储"><a href="#镜像存储" class="headerlink" title="镜像存储"></a>镜像存储</h3><p>默认情况下Incus会在每个节点上保存一份镜像的拷贝，这一行为可以通过：</p>
+<ul>
+<li><code>cluster.image_minimal_replica</code>：镜像最小副本数，设为<code>-1</code>表示节点数。</li>
+</ul>
+<p>修改。</p>
+<h3 id="实例存储"><a href="#实例存储" class="headerlink" title="实例存储"></a>实例存储</h3><p>新建实例时，Incus默认会尝试保存在当前实例数量最少的那个节点上。不过，也可以使用<code>--target</code>选项指定节点。<code>scheduler.instance</code>可以修改默认操作。</p>
+<ul>
+<li>如果<code>scheduler.instance=all</code>，那么使用默认逻辑。</li>
+<li>如果<code>scheduler.instance=manual</code>，那么该节点必须被手动指定使用。</li>
+<li>如果<code>scheduler.instance=group</code>，那么该节点在用户选择同组节点时可能会被使用。</li>
+</ul>
+<p>执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus cluster set 节点名 scheduler.instance all|manual|group</span><br></pre></td></tr></table></figure>
+<p>以设置。</p>
+<p>要移动实例，执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus move 实例名 --target 节点名</span><br></pre></td></tr></table></figure>
+<h3 id="排空-隔离"><a href="#排空-隔离" class="headerlink" title="排空&#x2F;隔离"></a>排空&#x2F;隔离</h3><p>有时候我们会希望排空&#x2F;隔离一个节点（比如升级），此时执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus cluster evacuate 节点名</span><br></pre></td></tr></table></figure>
+<p>即可，要恢复，执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus cluster restore 节点名</span><br></pre></td></tr></table></figure>
+<p>此外，对于离线节点还可以自动排空，只需要设置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus cluster set 节点名 cluster.healing_threshold=秒数</span><br></pre></td></tr></table></figure>
+<h3 id="删除节点"><a href="#删除节点" class="headerlink" title="删除节点"></a>删除节点</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus cluster remove 节点名 [--force]</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>--force</code>用于移除离线节点。</li>
+</ul>
+<h3 id="灾难恢复"><a href="#灾难恢复" class="headerlink" title="灾难恢复"></a>灾难恢复</h3><p>有时候你会非常不幸的同时损失多个节点，此时Incus集群会处于不可用状态，要恢复，执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus admin cluster list-database</span><br></pre></td></tr></table></figure>
+<p>查看可用的节点。连接一个节点，执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop incus.service incus.socket</span><br></pre></td></tr></table></figure>
+<p>停止服务，然后执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus admin cluster recover-from-quorum-loss</span><br></pre></td></tr></table></figure>
+<p>恢复数据。最后再启动服务。</p>
+<h3 id="重设IP"><a href="#重设IP" class="headerlink" title="重设IP"></a>重设IP</h3><p>当集群中有节点IP发生变化时，必须执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus admin cluster edit</span><br></pre></td></tr></table></figure>
+<p>重新设置。</p>
+<h2 id="镜像"><a href="#镜像" class="headerlink" title="镜像"></a>镜像</h2><h3 id="配置镜像源"><a href="#配置镜像源" class="headerlink" title="配置镜像源"></a>配置镜像源</h3><p>Incus会从<code>https://images.linuxcontainers.org</code>拉取镜像，不过这一配置可以进行修改：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus remote set-url images https://xxx</span><br></pre></td></tr></table></figure>
+<p>或者添加：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus remote add 名称 https://xxx --protocol=simplestreams --public</span><br></pre></td></tr></table></figure>
+<p>需要注意的是，Incus只接受HTTPS。</p>
+<p>查看远程源中的镜像：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus image list 源名称:[镜像名] [版本号] [architecture=架构] </span><br></pre></td></tr></table></figure>
+
+<p>镜像默认会自动更新，要禁用这一行为，执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus config set images.auto_update_interval=0</span><br></pre></td></tr></table></figure>
+
+<h3 id="下载镜像"><a href="#下载镜像" class="headerlink" title="下载镜像"></a>下载镜像</h3><p>在Incus中，本地镜像实际上也是一个源，名为<code>local:</code>，因此要“下载镜像”实际上就是把镜像拷贝到<code>local:</code>源：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus image copy 源名称:镜像名/版本 local: [--vm] [--alias=名称] [--copy-aliases] [--auto-update]</span><br></pre></td></tr></table></figure>
+<p>如果没有使用<code>--alias</code>或是<code>--copy-alias</code>选项，那么镜像将没有名称，只能使用ID（指纹）指定，很麻烦。</p>
+<p>检查镜像信息：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus image show|info 镜像名|ID</span><br></pre></td></tr></table></figure>
+<p>给镜像设置别名：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus image alias list|create|delete 别名 镜像ID</span><br></pre></td></tr></table></figure>
+<p>重设别名：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus image alias rename 别名 新别名</span><br></pre></td></tr></table></figure>
+
+<h3 id="导出与导入镜像"><a href="#导出与导入镜像" class="headerlink" title="导出与导入镜像"></a>导出与导入镜像</h3><p>导出镜像，即把镜像到出到文件中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus image export 源名:镜像名 [目录] [--vm]</span><br></pre></td></tr></table></figure>
+<p>从文件中导入镜像：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus image import 镜像文件路径</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus image import 源数据Tar包路径 根文件系统Tar包路径</span><br></pre></td></tr></table></figure>
+<p>从实例或快照中发布镜像：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus publish 实例名[/快照名] [源名:]</span><br></pre></td></tr></table></figure>
+
+<h3 id="镜像Profile"><a href="#镜像Profile" class="headerlink" title="镜像Profile"></a>镜像Profile</h3><p>从镜像创建实例时，会自动按顺序使用Profile，这些Profile可以执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus image edit 镜像名</span><br></pre></td></tr></table></figure>
+<p>进行修改。</p>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><p>实例，即一个VM或容器，是Incus的中心。Incus使用一致的接口创建VM和容器，但是底层技术是不一样的：</p>
+<ul>
+<li>容器使用<code>liblxc</code>实现。</li>
+<li>虚拟机使用<code>qemu-kvm</code>实现，附带一个<code>incus-agent</code>虚拟机代理辅助工作。</li>
+</ul>
+<h3 id="创建实例"><a href="#创建实例" class="headerlink" title="创建实例"></a>创建实例</h3><p>创建一个实例的命令为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus create|launch|init [镜像服务器:]镜像名 实例名 [--vm] [其他选项]</span><br></pre></td></tr></table></figure>
+<p>如果没有指定镜像服务器，那么默认使用<code>local:</code>，即本地镜像。</p>
+<p>可用的其他选项包括：</p>
+<ul>
+<li><code>-e|--ephemeral</code>：临时模式，停止容器时抹除任何操作。</li>
+<li><code>-p|--profile 配置名</code>：指定使用的配置组。<ul>
+<li><code>--no-profile</code>：不适应任何配置组。这意味着必须手动配置容器。</li>
+</ul>
+</li>
+<li><code>-c|--config 配置=值</code>：手动设置配置项。</li>
+<li><code>-n|--network 网络名</code>：指定使用的Incus网络。</li>
+<li><code>-s|--storage 池名</code>：指定使用的Incus存储池。</li>
+<li><code>--target 节点</code>：指定使用的集群节点。</li>
+<li><code>-d|--device 设备,配置=值</code>：指定一些虚拟设备配置。例如设置根文件系统大小<code>--device root,size=</code>。</li>
+<li><code>--empty</code>：什么也不做，新建一个空实例。</li>
+</ul>
+<p>要从ISO引导VM，首先需要创建一个ISO镜像的存储卷：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus storage volume import 池名 ISO文件路径 卷名 --type=iso</span><br></pre></td></tr></table></figure>
+<p>然后在虚拟机中添加设备：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus config device add 实例名 设备名 disk pool=池名 source=卷名 boot.priority=0</span><br></pre></td></tr></table></figure>
+<p>安装完成后移除卷：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus storage volume detach 池名 卷名 实例名</span><br></pre></td></tr></table></figure>
+
+<h3 id="控制与检查实例"><a href="#控制与检查实例" class="headerlink" title="控制与检查实例"></a>控制与检查实例</h3><p>所有的Incus实例接口都支持命令行和REST两种方式。</p>
+<p>列出实例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">incus list [匹配词=值]</span><br><span class="line"></span><br><span class="line">incus query /1.0/instances?filter=[匹配词+eq+值]</span><br></pre></td></tr></table></figure>
+<p>可用匹配词包括：</p>
+<ul>
+<li><code>type=container|vm</code>：类型。</li>
+<li><code>status=running|stopped</code>：状态。</li>
+<li><code>location=节点名</code>：所在节点。</li>
+<li><code>系统类型.*</code>：系统类型。</li>
+</ul>
+<p>查看实例信息：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">incus info 实例名 [--show-log]</span><br><span class="line"></span><br><span class="line">incus query /1.0/instances/实例名</span><br></pre></td></tr></table></figure>
+
+<p>启动实例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">incus start 实例名 [--console]</span><br><span class="line"></span><br><span class="line">incus query --request PUT /1.0/instances/实例名/state --data &#x27;&#123;&quot;action&quot;: &quot;start&quot;&#125;&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>停止实例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">incus stop 实例名</span><br><span class="line"></span><br><span class="line">incus query --request PUT /1.0/instances/实例名/state --data &#x27;&#123;&quot;action&quot;: &quot;stop&quot;&#125;&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>删除实例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">incus delete 实例名</span><br><span class="line"></span><br><span class="line">incus query --request DELETE /1.0/instances/实例名</span><br></pre></td></tr></table></figure>
+
+<p>重建实例（保留配置，删除并重新创建）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">incus rebuild [镜像名] 实例名 [--empty]</span><br><span class="line"></span><br><span class="line">incus query --request POST /1.0/instances/实例名/rebuild --data &#x27;&#123;&quot;source&quot;: &#123;&quot;alias&quot;:&quot;镜像名&quot;,&quot;server&quot;:&quot;服务器URL&quot;, protocol:&quot;simplestreams&quot;&#125;&#125;&#x27;</span><br><span class="line"></span><br><span class="line">incus query --request POST /1.0/instances/实例名/rebuild --data &#x27;&#123;&quot;source&quot;: &#123;&quot;type&quot;:&quot;none&quot;&#125;&#125;&#x27;</span><br></pre></td></tr></table></figure>
+
+<h3 id="无特权容器"><a href="#无特权容器" class="headerlink" title="无特权容器"></a>无特权容器</h3><p>Incus默认以无特权方式运行容器，因此必须确保Root用户有合适的SubUID和SubGID。SubUID和SubGID的范围中至少要有65536个值，否则启动容器时会<strong>立刻失败</strong>。</p>
+<p>默认情况下，在安装Incus时，会给Root用户创建1000000-1000000000的SubUID和SubGID，这在一般情况下足够了。</p>
+<p>在创建容器时，Incus会随机抽取一段UID（以下文字中省略GID）并对容器中的UID进行映射，因为抽取的UID是随机的，所以不同的容器映射的目标UID有可能重合，这在一般情况下没什么问题，不过如果用户对安全性很敏感，可以给容器设置配置项<code>security.idmap.isolated=true</code>，这可以确保容器映射的目标UID是唯一的。</p>
+<p>此外，用户也可以手动设置UID映射，只需要给容器设置以下两个配置项：</p>
+<ul>
+<li><code>security.idmap.base</code>：映射的目标UID起点。</li>
+<li><code>security.idmap.size</code>：映射的UID数量。</li>
+</ul>
+<p>如果用户不希望使用无特权容器（例如嵌套容器环境下），那么可以通过给容器或Profile中设置该配置项关闭：</p>
+<ul>
+<li><code>security.privileged=true</code></li>
+</ul>
+<h3 id="配置实例"><a href="#配置实例" class="headerlink" title="配置实例"></a>配置实例</h3><p>查看实例配置，执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">incus config show 实例名 [--expanded]</span><br><span class="line"></span><br><span class="line">incus query /1.0/instances/实例名</span><br></pre></td></tr></table></figure>
+<p>配置实例的命令为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">incus config set 实例名 配置项=值</span><br><span class="line"></span><br><span class="line">incus query --request PATCH /1.0/instances/实例名 --data &#x27;&#123;&quot;config&quot;: &#123;&quot;配置项&quot;:&quot;值&quot;&#125;&#125;&#x27;</span><br></pre></td></tr></table></figure>
+<p>可用的配置项包括：</p>
+<ul>
+<li><code>boot.autostart</code>：随<code>incusd</code>守护进程启动。</li>
+<li><code>limits.cpu</code>：可用的CPU。</li>
+<li><code>limits.cpu.priority</code>：CPU占用优先级。</li>
+<li><code>limits.disk.priority</code>：IO优先级。</li>
+<li><code>limits.memory</code>：内存使用数，默认为1GiB。</li>
+<li><code>limits.memory.enforce=soft|hard</code>：内存限制性质。</li>
+<li><code>limits.memory.swap</code>：可用的交换空间数。</li>
+<li><code>security.protection.delete</code>：禁止实例被删除。默认禁用。</li>
+<li><code>security.guestapi</code>：是否在实例内提供<code>/dev/incus</code>接口。默认启用。</li>
+</ul>
+<p>用于容器的增强功能：</p>
+<ul>
+<li><code>security.privileged</code>：是否运行特权容器，默认禁用。</li>
+<li><code>security.idmap.base</code>：用于非特权容器，ID映射的起点。默认为0，表示随机选择。</li>
+<li><code>security.idmap.size</code>：用于非特权容器，ID映射的数量。</li>
+<li><code>security.idmap.isolated</code>：用于非特权容器，ID映射是否严格独立。默认禁用。</li>
+<li><code>security.nesting</code>：是否允许容器嵌套，默认禁用。</li>
+<li><code>security.protection.shift</code>：禁止容器ID映射被调整，默认禁用。</li>
+</ul>
+<p>用于虚拟机的增强功能：</p>
+<ul>
+<li><code>security.agent.metrics</code>：是否启用指标采集。默认启用。</li>
+<li><code>security.csm</code>：是否启用Legacy BIOS支持，默认禁用。</li>
+<li><code>security.secureboot</code>：是否启用安全引导，默认启用。</li>
+<li><code>security.sev</code>：是否启用AMD安全虚拟化技术。默认禁用。</li>
+<li><code>security.sev.policy.es</code>：是否启用AMD安全虚拟化加密。默认禁用。</li>
+</ul>
+<p>要给实例添加设备，执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">incus config device add 实例名 设备名 设备类型 [设备选项=值]</span><br><span class="line"></span><br><span class="line">incus query --request PATCH /1.0/instances/实例名 --data &#x27;&#123;&quot;devices&quot;: &#123;&quot;设备名&quot;: &#123;&quot;type&quot;:&quot;设备类型&quot;,&quot;设备选项&quot;:&quot;值&quot;&#125;&#125;&#125;&#x27;</span><br></pre></td></tr></table></figure>
+<p>可用的设备类型及其选项有：</p>
+<ul>
+<li><code>nic</code>：网络接口。<ul>
+<li><code>network=</code>：实际使用的Incus网络。</li>
+<li><code>nictype=</code>：直接接入的网络接口类型，不太常用。</li>
+</ul>
+</li>
+<li><code>disk</code>：磁盘。<ul>
+<li><code>pool=</code>：使用的存储池。使用<code>source=</code>指定池名。</li>
+<li><code>source=</code>：宿主机上的目录映射。</li>
+<li><code>source=ceph:池名/卷名 ceph.user_name=用户名 ceph.cluster_name=集群名</code>：使用Ceph RBD。</li>
+<li><code>source=cephfs:FS名/路径 ceph.user_name=用户名 ceph.cluster_name=集群名</code>：使用Ceph FS。</li>
+<li><code>source=ISO文件路径</code>：使用ISO镜像。</li>
+<li><code>boot.priority</code>：设备的引导优先级，用于虚拟机。</li>
+<li><code>io.bus=nvme|virtio-blk|virtio-scsi</code>：设备的接口。</li>
+<li><code>io.cache=none|writeback|unsafe</code>：设备的写入缓存。</li>
+<li><code>limits.max</code>：最大读写速度限制。</li>
+<li><code>limits.read</code>：最大读速度限制。</li>
+<li><code>limits.write</code>：最大写入速度限制。</li>
+</ul>
+</li>
+<li><code>unix-char</code>：字符设备。<ul>
+<li><code>source</code>：设备路径。</li>
+<li><code>path</code>：容器内的位置。</li>
+<li><code>uid</code>：所属的用户。</li>
+<li><code>gid</code>：所属的用户组。</li>
+<li><code>mode</code>：权限位，默认为<code>0660</code>。</li>
+<li><code>required</code>：是否必要。</li>
+</ul>
+</li>
+<li><code>unix-block</code>：块设备。<ul>
+<li><code>source</code>：设备路径。</li>
+<li><code>path</code>：容器内的位置。</li>
+<li><code>uid</code>：所属的用户。</li>
+<li><code>gid</code>：所属的用户组。</li>
+<li><code>mode</code>：权限位，默认为<code>0660</code>。</li>
+<li><code>required</code>：是否必要。</li>
+</ul>
+</li>
+<li><code>unix-hotplug</code>：热插拔设备。<ul>
+<li><code>uid</code>：所属的用户。</li>
+<li><code>gid</code>：所属的用户组。</li>
+<li><code>mode</code>：权限位，默认为<code>0660</code>。</li>
+<li><code>required</code>：是否必要。</li>
+<li><code>productid</code>：设备ID。</li>
+<li><code>vendorid</code>：设备制造商ID。</li>
+</ul>
+</li>
+<li><code>usb</code>：USB设备。<ul>
+<li><code>uid</code>：所属的用户。</li>
+<li><code>gid</code>：所属的用户组。</li>
+<li><code>mode</code>：权限位，默认为<code>0660</code>。</li>
+<li><code>required</code>：是否必要。</li>
+<li><code>productid</code>：USB设备ID。</li>
+<li><code>vendorid</code>：USB制造商ID。</li>
+</ul>
+</li>
+<li><code>gpu</code>：GPU设备。<ul>
+<li><code>gputype=physical</code>：物理显卡直通，可用于容器。<ul>
+<li><code>id</code>：设备DRM ID。</li>
+<li><code>pci</code>：设备PCI地址。</li>
+<li><code>productid</code>：设备ID。</li>
+<li><code>vendorid</code>：设备制造商ID。</li>
+<li><code>uid</code>：所属的用户。</li>
+<li><code>gid</code>：所属的用户组。</li>
+<li><code>mode</code>：权限位，默认为<code>0660</code>。</li>
+</ul>
+</li>
+<li><code>gputype=mdev</code>：虚拟机的虚拟显卡。<ul>
+<li><code>id</code>：设备DRM ID。</li>
+<li><code>mdev</code>：使用的虚拟显卡类型。</li>
+<li><code>pci</code>：设备PCI地址。</li>
+<li><code>productid</code>：设备ID。</li>
+<li><code>vendorid</code>：设备制造商ID。</li>
+</ul>
+</li>
+<li><code>gputype=mig</code>：用于容器的NVIDIA MIG单元。<ul>
+<li><code>id</code>：设备DRM ID。</li>
+<li><code>mig.ci</code>：MIG的计算实例ID。</li>
+<li><code>mig.gi</code>：MIG的GPU实例ID。</li>
+<li><code>mig.uuid</code>：MIG的设备UUID。</li>
+<li><code>pci</code>：设备PCI地址。</li>
+<li><code>productid</code>：设备ID。</li>
+<li><code>vendorid</code>：设备制造商ID。</li>
+</ul>
+</li>
+<li><code>gputype=sriov</code>：用于虚拟机的SRIOV。<ul>
+<li><code>id</code>：设备DRM ID。</li>
+<li><code>pci</code>：设备PCI地址。</li>
+<li><code>productid</code>：设备ID。</li>
+<li><code>vendorid</code>：设备制造商ID。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>infiniband</code>：IB网卡。<ul>
+<li><code>nictype=physical</code>：物理的IB网卡。<ul>
+<li><code>parent</code>：父网卡。</li>
+<li><code>hwaddr</code>：MAC地址。</li>
+<li><code>mtu</code>：MTU。</li>
+<li><code>name</code>：名称。</li>
+</ul>
+</li>
+<li><code>nictype=sriov</code>：SRIOV分配的网卡。<ul>
+<li><code>parent</code>：父网卡。</li>
+<li><code>hwaddr</code>：MAC地址。</li>
+<li><code>mtu</code>：MTU。</li>
+<li><code>name</code>：名称。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>tpm</code>：TPM。<ul>
+<li><code>path</code>：路径，一般为<code>/dev/tpmX</code>。</li>
+<li><code>pathrm</code>：资源管理器路径，一般为<code>/dev/tpmrmX</code>。</li>
+</ul>
+</li>
+<li><code>pci</code>：PCI设备。<ul>
+<li><code>address</code>：PCI地址。</li>
+</ul>
+</li>
+</ul>
+<p>编辑实例配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">incus config edit 实例名</span><br><span class="line"></span><br><span class="line">incus query --request PUT /1.0/instances/实例名 --data &#x27;配置&#x27;</span><br></pre></td></tr></table></figure>
+
+<h3 id="快照与备份"><a href="#快照与备份" class="headerlink" title="快照与备份"></a>快照与备份</h3><p>快照的实际实现原理随着存储引擎而变化，有些支持CoW的存储引擎支持优化的快照实现方式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus snapshot create 实例名 [快照名] [--reuse]</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>--reuse</code>：覆盖原先已存在的快照。</li>
+<li><code>--stateful</code>：保存VM当前的运行状态。</li>
+</ul>
+<p>删除快照：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus delete 实例名/快照名</span><br></pre></td></tr></table></figure>
+
+<p>查看快照信息：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus info 实例名/快照名</span><br></pre></td></tr></table></figure>
+
+<p>查看快照配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus config show 实例名/快照名</span><br></pre></td></tr></table></figure>
+
+<p>编辑快照配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus config edit 实例名/快照名</span><br></pre></td></tr></table></figure>
+
+<p>还可以设置定时快照：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus snapshot set 实例名 snapshots.schedule &#x27;Cron日程&#x27;|@daily</span><br></pre></td></tr></table></figure>
+
+<p>恢复快照：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus snapshot restore 实例名 快照名</span><br></pre></td></tr></table></figure>
+
+<p>导出实例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus export 实例名 [文件路径]</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>--compression=gzip|bzip2|none</code>：压缩方式。</li>
+<li><code>--optimized-storage</code>：仅用于<code>zfs</code>和<code>btrfs</code>，启用优化存储方式。</li>
+<li><code>--instance-only</code>：仅备份实例，不备份快照。</li>
+</ul>
+<p>从文件恢复实例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus import 文件路径 [实例名]</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置组（Profile）"><a href="#配置组（Profile）" class="headerlink" title="配置组（Profile）"></a>配置组（Profile）</h3><p>配置组保存了一系列的实例配置，它可以用于创建实例时复用。不过在创建实例时，命令行选项总是会覆盖配置组中的选项。Incus初始化时，会创建一个默认Profile，名为<code>default</code>。</p>
+<p>列出可用配置组：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus profile list</span><br></pre></td></tr></table></figure>
+
+<p>查看配置组：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus profile show 配置名</span><br></pre></td></tr></table></figure>
+
+<p>创建一个配置组：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus profile create 配置名</span><br></pre></td></tr></table></figure>
+
+<p>编辑配置组可以使用配置实例一样的方式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">incus profile set 配置名 配置=值</span><br><span class="line"></span><br><span class="line">incus profile device add 配置名 设备名 配置=名</span><br></pre></td></tr></table></figure>
+
+<p>不过，更合理的方法是直接编辑：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus profile edit 配置名</span><br></pre></td></tr></table></figure>
+
+<p>在创建实例时可以使用一个配置组：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus launch 镜像名 实例名 --profile 配置名</span><br></pre></td></tr></table></figure>
+
+<p>也可以给已创建的实例添加配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus profile add|remove 实例名 配置名</span><br></pre></td></tr></table></figure>
+
+<h3 id="执行命令"><a href="#执行命令" class="headerlink" title="执行命令"></a>执行命令</h3><p>在实例中执行一条命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus exec 实例名 -- 命令</span><br></pre></td></tr></table></figure>
+<ul>
+<li>和Docker不一样，Incus<strong>不需要手动分配伪终端</strong>，它有能力在需要的情况下（运行Shell）自动分配。不过，如果希望强制使用非交互模式，也是可以的，只需要添加<code>--force-noninteractive</code>选项。</li>
+<li>默认情况下，Incus使用<code>root</code>用户和组运行命令，工作目录为<code>/root</code>，这些行为可以通过<code>--user</code>、<code>--group</code>和<code>--cwd</code>选项修改。</li>
+<li>使用<code>--env ENV=VALUE</code>选项设置环境变量。</li>
+</ul>
+<p>要持久化设置环境变量，执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus config set 实例名 environment.ENV=VALUE</span><br></pre></td></tr></table></figure>
+
+<h3 id="进入终端"><a href="#进入终端" class="headerlink" title="进入终端"></a>进入终端</h3><p>Incus可以连接到实例的<code>/dev/console</code>设备上以获取交互式终端：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus console 实例名 [--show-log]</span><br></pre></td></tr></table></figure>
+<p>对于虚拟机，尤其是没有安装<code>incus-agent</code>的虚拟机，可以使用对Agent没有要求的SPICE协议进行连接，不过，这需要系统上安装<code>virt-viewer</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus console 实例名 --type=vga</span><br></pre></td></tr></table></figure>
+<p>创建实例时可以自动进入终端：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus init 镜像名 实例名 --console</span><br></pre></td></tr></table></figure>
+
+<h3 id="获取实例中文件"><a href="#获取实例中文件" class="headerlink" title="获取实例中文件"></a>获取实例中文件</h3><p>Incus通过一些手段，实现了直接编辑实例中的文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus file edit 实例名/文件路径</span><br></pre></td></tr></table></figure>
+<p>注意，你不能用这种方式<strong>创建</strong>文件。</p>
+<p>也可以删除实例中的文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus file delete 实例名/文件路径</span><br></pre></td></tr></table></figure>
+
+<p>还可以获取实例中的文件到宿主机：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus file pull [-r] 实例名/文件路径 宿主机文件路径</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果宿主机文件路径是<code>-</code>，那么会直接打印文件内容（拷贝到标准输出）。</li>
+<li><code>-r</code>表示递归拷贝。</li>
+</ul>
+<p>上传宿主机文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus file push [-r] 宿主机文件路径 实例名/文件路径</span><br></pre></td></tr></table></figure>
+
+<p>映射宿主机目录：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus file mount 实例名/路径 宿主机路径</span><br></pre></td></tr></table></figure>
+
+<p>配置SFTP服务器：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus file mount 实例名 [--listen 地址:端口]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>默认情况下，地址为<code>127.0.0.1</code>，端口号随机生成。</li>
+</ul>
+<p>这样就可以使用<code>sshfs</code>连接了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sshfs 用户名@地址:/路径 本地路径 -p 端口号</span><br></pre></td></tr></table></figure>
+
+<h3 id="迁移"><a href="#迁移" class="headerlink" title="迁移"></a>迁移</h3><p>实例可以在节点间迁移。执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus copy 实例名 目标主机:实例名</span><br></pre></td></tr></table></figure>
+
+<h2 id="项目（Project）"><a href="#项目（Project）" class="headerlink" title="项目（Project）"></a>项目（Project）</h2><p>项目是一组相互关联的实例的合集。项目可以包含一系列的镜像、网络和存储。</p>
+<p>Incus初始化时会附带一个<code>default</code>项目。</p>
+<h3 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus project create 项目名 --config 配置项=值</span><br></pre></td></tr></table></figure>
+<p>查看项目：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus project list</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置项目"><a href="#配置项目" class="headerlink" title="配置项目"></a>配置项目</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus project set 项目名 配置项=值</span><br></pre></td></tr></table></figure>
+<p>可用配置项有：</p>
+<ul>
+<li><code>features.images</code>：是否允许存储镜像。</li>
+<li><code>features.networks</code>：是否允许存储网络。</li>
+<li><code>features.storage.buckets</code>：是否允许Bucket存储。</li>
+<li><code>features.storage.volumes</code>：是否允许存储卷。</li>
+<li><code>features.profiles</code>：是否允许存储Profile。</li>
+<li><code>limits.containers</code>：容器数量。</li>
+<li><code>limits.virtual-machines</code>：VM数量。</li>
+<li><code>limits.instances</code>：实例数量。</li>
+<li><code>limits.cpu</code>：CPU限制。</li>
+<li><code>limits.memory</code>：内存限制。</li>
+<li><code>limits.disk</code>：存储限制。</li>
+<li><code>limits.networks</code>：网络限制。</li>
+<li><code>limits.processes</code>：进程限制。</li>
+<li><code>restricted</code>：是否启用限制。</li>
+<li><code>restricted.backups</code>：限制使用备份。</li>
+<li><code>restricted.containers.privilege</code>：限制使用特权容器。</li>
+<li><code>restricted.containers.nesting</code>：限制容器嵌套。</li>
+</ul>
+<p>编辑项目配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus project edit 项目名</span><br></pre></td></tr></table></figure>
+
+<h3 id="切换项目"><a href="#切换项目" class="headerlink" title="切换项目"></a>切换项目</h3><p>配置完成后，可以切换项目：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus project switch 项目名</span><br></pre></td></tr></table></figure>
+<p>或者，可以在Project间移动实例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus move 实例名 新实例名 --project 项目名 --target-project 项目名</span><br></pre></td></tr></table></figure>
+
+<h3 id="用户特定项目"><a href="#用户特定项目" class="headerlink" title="用户特定项目"></a>用户特定项目</h3><p>要将项目绑定到一个用户，执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus config trust add --projects 项目名 --restricted</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">incus config trust add-certificate 证书路径 --projects 项目名 --restricted</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/01/03/%E7%8E%B0%E4%BB%A3%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E7%9A%84%E8%B0%AC%E8%AF%AF/" rel="prev" title="现代守护进程的谬误">
+                  <i class="fa fa-angle-left"></i> 现代守护进程的谬误
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/03/30/MKOSI%E7%AC%94%E8%AE%B0/" rel="next" title="MKOSI笔记">
+                  MKOSI笔记 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Molten_Armor</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

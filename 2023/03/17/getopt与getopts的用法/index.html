@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.icku.eu.org","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="前言先说结论：不推荐使用。更方便的配置选项的方式是使用Python的argparse库，比这种方式要舒适得多。如果你一定要用Shell脚本配置选项，那么请做好受苦的准备——往下看吧。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="getopt与getopts的用法">
+<meta property="og:url" content="https://blog.icku.eu.org/2023/03/17/getopt%E4%B8%8Egetopts%E7%9A%84%E7%94%A8%E6%B3%95/index.html">
+<meta property="og:site_name" content="MA Blog">
+<meta property="og:description" content="前言先说结论：不推荐使用。更方便的配置选项的方式是使用Python的argparse库，比这种方式要舒适得多。如果你一定要用Shell脚本配置选项，那么请做好受苦的准备——往下看吧。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-03-16T23:32:26.000Z">
+<meta property="article:modified_time" content="2024-06-27T15:16:10.000Z">
+<meta property="article:author" content="Molten_Armor">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.icku.eu.org/2023/03/17/getopt%E4%B8%8Egetopts%E7%9A%84%E7%94%A8%E6%B3%95/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.icku.eu.org/2023/03/17/getopt%E4%B8%8Egetopts%E7%9A%84%E7%94%A8%E6%B3%95/","path":"2023/03/17/getopt与getopts的用法/","title":"getopt与getopts的用法"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>getopt与getopts的用法 | MA Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">MA Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9F%AD%E9%80%89%E9%A1%B9"><span class="nav-number">2.</span> <span class="nav-text">短选项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%95%BF%E9%80%89%E9%A1%B9"><span class="nav-number">3.</span> <span class="nav-text">长选项</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Molten_Armor</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.icku.eu.org/2023/03/17/getopt%E4%B8%8Egetopts%E7%9A%84%E7%94%A8%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Molten_Armor">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MA Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="getopt与getopts的用法 | MA Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          getopt与getopts的用法
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-03-17 07:32:26" itemprop="dateCreated datePublished" datetime="2023-03-17T07:32:26+08:00">2023-03-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-06-27 23:16:10" itemprop="dateModified" datetime="2024-06-27T23:16:10+08:00">2024-06-27</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>先说结论：不推荐使用。更方便的配置选项的方式是使用Python的argparse库，比这种方式要舒适得多。如果你一定要用Shell脚本配置选项，那么请做好受苦的准备——往下看吧。</p>
+<span id="more"></span>
+<h3 id="短选项"><a href="#短选项" class="headerlink" title="短选项"></a>短选项</h3><p>使用<code>getopts</code>命令设置脚本的短选项。这是一个 POSIX 标准命令。<br><code>getopts</code>的语法为：<br><code>getopts &quot;[:]选项列表&quot; 选项名变量 [参数列表]</code></p>
+<p>参数列表不需要明确指定，默认使用<code>$@</code>。<br>选项均为短选项，列表<strong>没有分隔符，所有选项全部连在一起写出</strong>。如果一个选项后带<code>:</code>符号，则意味着这个选项需要接受参数。<br>每次执行<code>getopts</code>时，它都会<strong>获取命令行中给出的下一个选项及其参数</strong>（在本质上，这是通过<code>$OPTIND</code>变量的值分析的），将选项的字符保存在<code>$选项名变量</code>中，将选项或选项的参数的位置保存在<code>$OPTIND</code>变量中（<strong>对于有参选项来说，是参数的位置，对于无参选项来说，就是选项本身的位置</strong>），将选项的参数值保存在<code>$OPTARG</code>变量中（<strong>对于无参选项来说，这个变量总是会被置空</strong>）。</p>
+<p><strong>如果一个选项是有参选项，那么千万不能在使用时忘记给出参数</strong>，否则会导致非常恶性的 BUG（选项会将下一个选项视为参数），<strong>只有当有参选项位于末尾时，<code>getopts</code>才会检测到参数缺失的情况</strong>。</p>
+<p>开头的<code>:</code>意味着关闭错误回显，在没有关闭错误回显的情况下，如果用户的行为不合法（位于末尾的缺少参数的选项，或者并不存在于列表中的选项），那么<code>getopts</code>会给出警告，但是这不会影响脚本的执行；如果关闭了错误回显，那么<code>getopts</code>就不会给出警告，而且还会改变某些行为。<br>无论是否关闭了错误回显，在遇到不存在于列表中的选项时，<code>getopts</code>都会将<code>$选项名变量</code>设为<code>?</code>，并将选项视为无参选项，选项位置保存在<code>$OPTIND</code>变量中，将<code>$OPTARG</code>变量置空；**但是如果关闭了错误回显，<code>getopts</code>还会将选项名赋给<code>$OPTARG</code>**。</p>
+<p>再次强调，<strong>如果一个选项缺少参数，那么只有在这个选项位于末尾时<code>getopts</code>才能检测到参数缺失的情况</strong>。如果没有关闭错误回显，那么对于缺失参数的选项，<code>getopts</code>会将<code>$选项名变量</code>设为<code>?</code>，并将选项位置保存在<code>$OPTIND</code>变量中，将<code>$OPTARG</code>变量置空；如果关闭了错误回显，那么<code>getopts</code>会将<code>$选项名变量</code>设为<code>:</code>，并将选项位置保存在<code>$OPTIND</code>变量中，将<code>$OPTARG</code>变量置空。</p>
+<p>当<code>getopts</code>已经遍历完命令行中给出的选项时，如果再次执行<code>getopts</code>，那么<code>getopts</code>会将<code>$选项名变量</code>设为<code>?</code>，对<code>$OPTIND</code>变量不进行任何操作（保留最后一个选项或选项参数的位置），将<code>$OPTARG</code>变量置空，<strong>然后返回一个非零的值</strong>。</p>
+<p>为了方便使用，<code>getopts</code>段一般放在脚本的开头位置，而且会结合上一条特性，使用<code>while</code>循环和<code>case</code>条件判断简化遍历提取选项的过程：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">while (getopts &quot;选项列表&quot; OPTNAME)    # 遍历并提取所有的选项</span><br><span class="line">do</span><br><span class="line">    case $OPTNAME in</span><br><span class="line">    选项1)</span><br><span class="line">        echo $OPTARG    # 获取了选项1的参数</span><br><span class="line">        ;;</span><br><span class="line">    选项2)</span><br><span class="line">        echo $OPTIND    # 获取了选项2或选项2参数的位置</span><br><span class="line">        ;;</span><br><span class="line">    ?)</span><br><span class="line">        echo &quot;Unknown action&quot;    # 不存在的选项</span><br><span class="line">        exit 3</span><br><span class="line">        ;;</span><br><span class="line">    esac</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line"># 循环结束后，$OPTIND等于最后一个选项或选项参数的位置</span><br><span class="line">shift $((OPTIND-1))</span><br></pre></td></tr></table></figure>
+<p><code>shift $((OPTIND-1))</code>在此处的作用是移除所有的选项及其参数，将位置参数重新复位到<code>$1</code>的位置。这一步操作是一定要有的，否则<code>$1</code>指向的是第一个选项，换句话说，第一个选项会被误认为是第一个位置参数。<br>切记位置参数在使用<code>getopts</code>时只能放在所有的选项和选项参数之后，否则<code>getopts</code>会不起作用（无法设置任何选项）。</p>
+<h3 id="长选项"><a href="#长选项" class="headerlink" title="长选项"></a>长选项</h3><p>使用<code>getopt</code>命令设置脚本的长选项，注意这不是一个 POSIX 标准命令，它来自于<code>utils-linux</code>软件包。<br><code>getopt</code>的语法为：<br><code>getopt -o 短选项列表 -l 长选项列表 参数列表</code><br>它还支持以下选项：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-a  允许长选项使用单横线开头</span><br><span class="line">-n  指定当前程序名称，一般设为$0</span><br><span class="line">-q  禁止错误输出</span><br><span class="line">-Q  禁止普通输出</span><br></pre></td></tr></table></figure>
+
+<p>参数列表必须明确指定，一般使用<code>$@</code>。<br>短选项列表<strong>没有分隔符，所有选项全部连在一起写出</strong>。长选项列表以<code>,</code>作为分隔符。<br>如果一个选项后带<code>:</code>符号，表示这个选项是有参选项，需要接受参数；如果一个选项后带<code>::</code>符号，表示这个选项是可选参数选项，参数可以省略，省略的参数会被置空。</p>
+<p><code>getopt</code>会对命令行中给出的选项和参数进行整理，整理成如下形式：<br><code>选项与选项参数 -- 位置参数</code></p>
+<p>选项与选项参数按在命令行中给出的选项顺序排列。<br>排列后，脚本应当先使用<code>set --</code>命令重设位置参数，然后通过<code>$1</code>变量按顺序遍历选项名及其类型。<br>如果是无参选项，那么获取后应当执行<code>shift</code>偏移一位，将选项移除。如果是有参选项或参数可选选项，那么获取后应当执行<code>shift 2</code>偏移两位，将选项及其参数移除。<br>最后，在检测到<code>--</code>时，执行<code>shift</code>偏移一位并结束选项遍历。<br>这个过程通常要用到<code>while</code>循环和<code>case</code>条件判断：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">eval set -- $(getopt -o 短选项列表 -l 长选项列表 &quot;$@&quot;)</span><br><span class="line"></span><br><span class="line">while true</span><br><span class="line">do</span><br><span class="line">    case &quot;$1&quot; in</span><br><span class="line">    选项1)</span><br><span class="line">        echo &quot;$1&quot;    # 获取选项1</span><br><span class="line">        shift</span><br><span class="line">        ;;</span><br><span class="line">    选项2)</span><br><span class="line">        echo &quot;$2&quot;    # 获取选项2的参数</span><br><span class="line">        shift 2</span><br><span class="line">        ;;</span><br><span class="line">    --)</span><br><span class="line">        shift</span><br><span class="line">        break    # 结束遍历</span><br><span class="line">        ;;</span><br><span class="line">    esac</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line"># 剩下的都是位置参数</span><br><span class="line">echo &quot;$@&quot;</span><br></pre></td></tr></table></figure>
+<p>对于<code>getopt</code>来说，位置参数的位置较为松散，可以放在所有的选项之前，也可以放在所有的选项之后。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/03/09/%E6%88%91%E7%9A%84Linux%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/" rel="prev" title="我的Linux学习之路">
+                  <i class="fa fa-angle-left"></i> 我的Linux学习之路
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/04/03/%E4%BD%BF%E7%94%A8LVM-2%E5%88%9B%E5%BB%BA%E8%BD%AFRAID/" rel="next" title="使用LVM 2创建软RAID">
+                  使用LVM 2创建软RAID <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Molten_Armor</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

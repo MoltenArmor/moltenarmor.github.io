@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.icku.eu.org","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Gooey将（几乎）任何Python3控制台程序转换为GUI程序，仅需（最少）一行代码。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Gooey库入门">
+<meta property="og:url" content="https://blog.icku.eu.org/2022/12/14/Gooey%E5%BA%93%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="MA Blog">
+<meta property="og:description" content="Gooey将（几乎）任何Python3控制台程序转换为GUI程序，仅需（最少）一行代码。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-12-13T23:30:52.000Z">
+<meta property="article:modified_time" content="2024-06-27T15:16:10.000Z">
+<meta property="article:author" content="Molten_Armor">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.icku.eu.org/2022/12/14/Gooey%E5%BA%93%E5%85%A5%E9%97%A8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.icku.eu.org/2022/12/14/Gooey%E5%BA%93%E5%85%A5%E9%97%A8/","path":"2022/12/14/Gooey库入门/","title":"Gooey库入门"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Gooey库入门 | MA Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">MA Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Gooey"><span class="nav-number">1.</span> <span class="nav-text">Gooey</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E4%BB%AC%E5%85%88%E4%BB%8EArgparse%E5%BC%80%E5%A7%8B"><span class="nav-number">1.1.</span> <span class="nav-text">我们先从Argparse开始</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">1.1.1.</span> <span class="nav-text">使用方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#add-argument%E7%9A%84%E4%B8%80%E4%BA%9B%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0"><span class="nav-number">1.1.2.</span> <span class="nav-text">add_argument的一些设置参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B"><span class="nav-number">1.2.</span> <span class="nav-text">快速开始</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97"><span class="nav-number">1.2.1.</span> <span class="nav-text">安装指南</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95"><span class="nav-number">1.2.2.</span> <span class="nav-text">基本用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-number">1.2.3.</span> <span class="nav-text">原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Mappings"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">Mappings:</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GooeyParser"><span class="nav-number">1.2.4.</span> <span class="nav-text">GooeyParser</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BD%E9%99%85%E5%8C%96"><span class="nav-number">1.2.5.</span> <span class="nav-text">国际化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.2.6.</span> <span class="nav-text">全局设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%B7%E5%BC%8F"><span class="nav-number">1.2.7.</span> <span class="nav-text">自定义样式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.2.8.</span> <span class="nav-text">执行模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AB%98%E7%BA%A7%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.2.9.</span> <span class="nav-text">高级模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.2.10.</span> <span class="nav-text">基础模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E9%80%89%E9%A1%B9%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.2.11.</span> <span class="nav-text">无选项模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AA%97%E5%8F%A3%E8%8F%9C%E5%8D%95"><span class="nav-number">1.2.12.</span> <span class="nav-text">窗口菜单</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9B%BE%E6%A0%87"><span class="nav-number">1.3.</span> <span class="nav-text">自定义图标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93%E5%8C%85"><span class="nav-number">1.4.</span> <span class="nav-text">打包</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Molten_Armor</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.icku.eu.org/2022/12/14/Gooey%E5%BA%93%E5%85%A5%E9%97%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Molten_Armor">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MA Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Gooey库入门 | MA Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Gooey库入门
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-12-14 07:30:52" itemprop="dateCreated datePublished" datetime="2022-12-14T07:30:52+08:00">2022-12-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-06-27 23:16:10" itemprop="dateModified" datetime="2024-06-27T23:16:10+08:00">2024-06-27</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="Gooey"><a href="#Gooey" class="headerlink" title="Gooey"></a>Gooey</h1><p>将（几乎）任何Python3控制台程序转换为GUI程序，仅需（最少）一行代码。</p>
+<span id="more"></span>
+<p>Gooey使用方法与Argparse库极其相似，是Argparse库的直接替代。</p>
+<h2 id="我们先从Argparse开始"><a href="#我们先从Argparse开始" class="headerlink" title="我们先从Argparse开始"></a>我们先从Argparse开始</h2><p>Argparse库是用来给Python脚本传入<strong>位置参数</strong>和<strong>选项</strong>的库(就像Shell脚本一样)<br>就像这样<code>python test.py -option arg1 arg2</code></p>
+<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><p>库名：<code>argparse</code><br>创建一个传参容器对象parser1<br><code>parser1 = argparse.ArgumentParser()</code><br>添加一个位置参数，其<strong>名字</strong>为a，<strong>属性</strong>为整数<br><code>parser1.add_argument(&quot;a&quot;, type=int)</code><br>创建参数对象，每个参数都是它的一个属性<br><code>args = parser1.parse_args()</code><br>调用a参数<br><code>print(args.a)</code><br>Argparse库的优势在于，如果调用脚本时没有使用参数，那么会有详细的回显提示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">error: the following arguments are required: a</span><br></pre></td></tr></table></figure>
+<p>它还会自动添加–help内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">usage: mycode.py [-h] a</span><br><span class="line"></span><br><span class="line">positional arguments:</span><br><span class="line">    a</span><br><span class="line"></span><br><span class="line">optional arguments:</span><br><span class="line">    -h, --help show this help message and exit</span><br></pre></td></tr></table></figure>
+<p>你也可以手动在实例化函数的参数中添加脚本描述，扩充help内容<br><code>parser1 = argparse.ArgumentParser(description=&#39;a test script&#39;)</code><br><code>parser1.add_argument(&quot;a&quot;, type=int, help=&quot;this is arg 1&quot;)</code></p>
+<h3 id="add-argument的一些设置参数"><a href="#add-argument的一些设置参数" class="headerlink" title="add_argument的一些设置参数"></a>add_argument的一些设置参数</h3><ol>
+<li>name&#x3D;””<br>就是位置参数的名字，位于第一位时可以省略<code>name=</code></li>
+<li>nargs&#x3D;num<br>参数的数量，超过1个时，多个参数组成参数列表。特殊的值包括<code>*</code>任意个，<code>?</code>0或1个，<code>+</code>至少1个。</li>
+<li>type&#x3D;int|bool|string|float|…<br>参数的数据类型，不解释。</li>
+<li>help&#x3D;””<br>有关参数的提示内容，不解释。</li>
+<li>action&#x3D;””<br>参数的动作，会在解析到参数时进行触发，一共有六种：<br><code>store</code>保存参数值，可能会先将参数值转换成另一个数据类型。若没有显式指定动作，则默认为该动作。<br><code>store_const</code>保存一个被定义为参数规格一部分的值，而不是一个来自参数解析而来的值。这通常用于实现非布尔值的命令行标记。<br><code>store_ture/store_false</code>保存相应的布尔值。这两个动作被用于实现布尔开关。<br><code>append</code>将值保存到一个列表中。若参数重复出现，则保存多个值。<br><code>append_const</code>将一个定义在参数规格中的值保存到一个列表中。<br><code>version</code>打印关于程序的版本信息，然后退出。</li>
+<li>default&#x3D;<br>参数的默认值，不解释。</li>
+</ol>
+<h2 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a>快速开始</h2><h3 id="安装指南"><a href="#安装指南" class="headerlink" title="安装指南"></a>安装指南</h3><p>最简单的安装方法就是通过<code>pip</code><br><code>pip install Gooey</code><br>或者你也可以把Gooey项目clone到本地<br><code>git clone https://github.com/chriskiehl/Gooey.git</code><br>然后运行 <code>setup.py</code><br><code>python setup.py install</code></p>
+<h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><p>通过用一个简单的装饰器就可以将Gooey附到任何一个使用<code>argparse</code>传参的函数上（通常是main函数），然后Gooey就可以将你所有需要用到的参数可视化为文本框、选择框甚至是文件选择框。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> gooey <span class="keyword">import</span> Gooey</span><br><span class="line"></span><br><span class="line"><span class="meta">@Gooey      &lt;---就这么简单!</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    parser = ArgumentParser(...)</span><br><span class="line">    <span class="comment"># 剩下的代码</span></span><br></pre></td></tr></table></figure>
+<p>可以在装饰器中传参以配置不同的风格和功能。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 一些选项</span></span><br><span class="line"><span class="meta">@Gooey(<span class="params">advanced=Boolean,          <span class="comment"># 设置是否显示高级选项</span></span></span></span><br><span class="line"><span class="params"><span class="meta">       language=language_string,  <span class="comment"># 可通过json文件配置语言</span></span></span></span><br><span class="line"><span class="params"><span class="meta">       auto_start=<span class="literal">True</span>,           <span class="comment"># 跳过所有选项页面并立刻执行程序</span></span></span></span><br><span class="line"><span class="params"><span class="meta">       target=executable_cmd,     <span class="comment"># 显式设置子进程可执行文件的参数</span></span></span></span><br><span class="line"><span class="params"><span class="meta">       program_name=<span class="string">&#x27;name&#x27;</span>,       <span class="comment"># 默认程序名</span></span></span></span><br><span class="line"><span class="params"><span class="meta">       program_description,       <span class="comment"># 默认程序描述</span></span></span></span><br><span class="line"><span class="params"><span class="meta">       default_size=(<span class="params"><span class="number">610</span>, <span class="number">530</span></span>),   <span class="comment"># 默认窗口尺寸</span></span></span></span><br><span class="line"><span class="params"><span class="meta">       dump_build_config=<span class="literal">False</span>,   <span class="comment"># 备份Gooey配置json文件</span></span></span></span><br><span class="line"><span class="params"><span class="meta">       load_build_config=<span class="literal">None</span>,    <span class="comment"># 加载一个Gooey配置json文件</span></span></span></span><br><span class="line"><span class="params"><span class="meta"></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">  parser = ArgumentParser(...)</span><br><span class="line">  <span class="comment"># 剩下的代码</span></span><br></pre></td></tr></table></figure>
+<p>Gooey会尽最大可能自动选择合适的控件来呈现GUI，但是如果想要手动调节，也是可以的。你可以用<code>GooeyParser</code>函数替代<code>ArgumentParser</code>函数进行实例化，然后手动添加元素</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from gooey import Gooey, GooeyParser</span><br><span class="line"></span><br><span class="line">@Gooey</span><br><span class="line">def main():</span><br><span class="line">    parser = GooeyParser(description=&quot;测试程序!&quot;) </span><br><span class="line">    parser.add_argument(&#x27;Filename&#x27;, widget=&quot;FileChooser&quot;)</span><br><span class="line">    parser.add_argument(&#x27;Date&#x27;, widget=&quot;DateChooser&quot;)</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>Gooey可以通过装饰器的方式附在任何使用了<code>argparse</code>库的函数上。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Gooey</span><br><span class="line">def my_run_func():</span><br><span class="line">    parser = ArgumentParser(...)</span><br><span class="line">    # 剩下的代码...</span><br></pre></td></tr></table></figure>
+<p>在运行时，它会将<code>add_argument</code>函数中的所有参数传递给<code>ArgumentParser</code>，然后进行解包并根据指定的<code>action</code>分配控件，最后在执行<code>parse_args</code>函数时自动组成GUI。</p>
+<h4 id="Mappings"><a href="#Mappings" class="headerlink" title="Mappings:"></a>Mappings:</h4><p>Gooey尽最大可能根据提供的信息进行控件的映射，目前对应关系如下：</p>
+<p>| Parser Action | 对应控件 |<br>| - | - | - |<br>| store  |  TextCtrl&#x2F;TextField |<br>| store_const | CheckBox |<br>| store_true | CheckBox |<br>| store_false | CheckBox |<br>| version | CheckBox |<br>| append | TextCtrl&#x2F;TextField |<br>| count | DropDown |<br>| Mutually Exclusive Group | RadioGroup |<br>| choice | DropDown |</p>
+<p>当没有提供可以参考的参数时，由于默认<code>action</code>为<code>store</code>，所以程序默认使用文本输入框控件<code>TextCtrl</code>。</p>
+<h3 id="GooeyParser"><a href="#GooeyParser" class="headerlink" title="GooeyParser"></a>GooeyParser</h3><p>如果默认的映射关系不能满足你的需求，你也可以手动设置控件，只需要将<code>ArgumentParser</code>函数替换为<code>GooeyParser</code>，两者之间唯一的区别是后者能让你手动指定控件类型。<br><code>GooeyParser</code>函数允许你给实例设置额外的参数<code>widget</code>以指定控件类型。除此之外，你不需要修改任何<code>argparse</code>相关的代码！<br><strong>示例</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from argparse import ArgumentParser</span><br><span class="line">...</span><br><span class="line">    </span><br><span class="line">def main(): </span><br><span class="line">    parser = ArgumentParser(description=&quot;测试程序&quot;)</span><br><span class="line">    parser.add_argument(&quot;name&quot;, help=&quot;this is help&quot;, action=&quot;store&quot;)</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+<p>按照这段代码，Gooey会生成一个普通的文本框。</p>
+<p>有以下几个值得注意的点：</p>
+<ol>
+<li>Python脚本文件名对应的就是程序名。</li>
+<li>description参数值会显示在标题上。</li>
+<li>name和help会显示在对应的交互控件旁边，一般是上方。</li>
+</ol>
+<p>如果你使用<code>GooeyParser</code>并提供了<code>widget</code>参数的值为<code>FileChooser</code>，那么你可以显示一个更加友好的文件选择控件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> from gooey import GooeyParser</span><br><span class="line"> ....</span><br><span class="line">    </span><br><span class="line">def main(): </span><br><span class="line">    parser = GooeyParser(description=&quot;测试程序&quot;)</span><br><span class="line">    parser.add_argument(&quot;name&quot;, help=&quot;this is help&quot;, action=&quot;store&quot;, widget=&quot;FileChooser&quot;)</span><br></pre></td></tr></table></figure>
+
+<p><strong>自定义增强控件</strong></p>
+<table>
+<thead>
+<tr>
+<th>控件名</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DirChooser</td>
+<td>目录选择</td>
+</tr>
+<tr>
+<td>FileChooser</td>
+<td>文件选择</td>
+</tr>
+<tr>
+<td>MultiFileChooser</td>
+<td>多文件选择</td>
+</tr>
+<tr>
+<td>FileSaver</td>
+<td>文件保存</td>
+</tr>
+<tr>
+<td>MultiFileSaver</td>
+<td>多文件保存</td>
+</tr>
+<tr>
+<td>DateChooser&#x2F;TimeChooser</td>
+<td>日期&#x2F;时间选择</td>
+</tr>
+<tr>
+<td>PasswordField</td>
+<td>密码输入</td>
+</tr>
+<tr>
+<td>Listbox</td>
+<td>列表选择</td>
+</tr>
+<tr>
+<td>BlockCheckbox</td>
+<td>带有文字描述内容的复选框，使用gooey_options.checkbox_label指定文字内容</td>
+</tr>
+<tr>
+<td>ColourChooser</td>
+<td>选色器</td>
+</tr>
+<tr>
+<td>FilterableDropdown</td>
+<td>可输入式下拉列表</td>
+</tr>
+<tr>
+<td>IntegerField</td>
+<td>数字选择</td>
+</tr>
+<tr>
+<td>DecimalField</td>
+<td>小数选择</td>
+</tr>
+<tr>
+<td>Slider</td>
+<td>滑动条</td>
+</tr>
+</tbody></table>
+<h3 id="国际化"><a href="#国际化" class="headerlink" title="国际化"></a>国际化</h3><p>Gooey支持国际化设置，只需要在<code>@Gooey</code>装饰器中加上一个参数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@Gooey(language=&#x27;russian&#x27;)</span><br><span class="line">def main(): </span><br><span class="line">    ... </span><br></pre></td></tr></table></figure>
+<p>所有程序文本都记录在外部的<code>json</code>文件中，所以要添加新的语言支持，只需要将一些键值对添加到<code>gooey/languages/</code>目录下。</p>
+<h3 id="全局设置"><a href="#全局设置" class="headerlink" title="全局设置"></a>全局设置</h3><p>要设置Gooey的外观和功能，只需要向装饰器中传入一些参数即可：</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Summary</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>encoding</td>
+<td>字符的编码(默认:’utf-8’)</td>
+</tr>
+<tr>
+<td>advanced</td>
+<td>显示完整的选项菜单</td>
+</tr>
+<tr>
+<td>auto_start</td>
+<td>跳过所有选项立刻执行程序</td>
+</tr>
+<tr>
+<td>language</td>
+<td>从<code>gooey/languages</code>目录中选择一种语言</td>
+</tr>
+<tr>
+<td>target</td>
+<td>Gooey的调用程序，默认使用Python</td>
+</tr>
+<tr>
+<td>suppress_gooey_flag</td>
+<td>如果修改<code>target</code>的话应当开启以防Gooey注入额外的参数</td>
+</tr>
+<tr>
+<td>program_name</td>
+<td>程序名，默认使用从<code>sys.argv[0]</code>获得的文件名</td>
+</tr>
+<tr>
+<td>program_description</td>
+<td>设置程序描述，默认使用<code>ArgumentParser</code>中的描述</td>
+</tr>
+<tr>
+<td>default_size</td>
+<td>默认窗口尺寸</td>
+</tr>
+<tr>
+<td>fullscreen</td>
+<td>全屏启动Gooey</td>
+</tr>
+<tr>
+<td>dump_build_config</td>
+<td>保存选项到<code>json</code>文件</td>
+</tr>
+<tr>
+<td>load_build_config</td>
+<td>加载<code>json</code>选项文件</td>
+</tr>
+<tr>
+<td>image_dir</td>
+<td>自定义图标&#x2F;图片路径</td>
+</tr>
+<tr>
+<td>language_dir</td>
+<td>语言文件路径</td>
+</tr>
+<tr>
+<td>disable_stop_button</td>
+<td>运行时禁用<code>Stop</code>按钮</td>
+</tr>
+<tr>
+<td>show_stop_warning</td>
+<td>运行被用户中止时发送警告</td>
+</tr>
+<tr>
+<td>force_stop_is_error</td>
+<td>显示成功&#x2F;失败提示后立刻退出</td>
+</tr>
+<tr>
+<td>show_success_modal</td>
+<td>成功后是否显示总结回显</td>
+</tr>
+<tr>
+<td>show_failure_modal</td>
+<td>失败后是否显示总结回显</td>
+</tr>
+<tr>
+<td>show_restart_button</td>
+<td>是否显示<code>Restart</code>按钮</td>
+</tr>
+<tr>
+<td>run_validators</td>
+<td>Gooey执行程序前是否认证</td>
+</tr>
+<tr>
+<td>use_cmd_args</td>
+<td>将所有运行时提供的位置参数替换为Gooey选项中的默认值</td>
+</tr>
+<tr>
+<td>return_to_config</td>
+<td>设为真，Gooey会在成功执行后回到选项页面</td>
+</tr>
+<tr>
+<td>disable_progress_bar_animation</td>
+<td>禁用进度条</td>
+</tr>
+<tr>
+<td>show_time_remaining</td>
+<td>禁用剩余时间显示</td>
+</tr>
+<tr>
+<td>hide_time_remaining_on_complete</td>
+<td>完成后禁用剩余时间显示</td>
+</tr>
+<tr>
+<td>requires_shell</td>
+<td>运行程序时是否需要命令行位置参数</td>
+</tr>
+<tr>
+<td>shutdown_signal</td>
+<td>按下<code>Stop</code>按钮时发送的终止信号</td>
+</tr>
+<tr>
+<td>navigation</td>
+<td>设置Gooey显示风格，可选项:TABBED, SIDEBAR</td>
+</tr>
+<tr>
+<td>sidebar_title</td>
+<td>使用<code>SIDEBAR</code>时，设置边栏标题，默认为”Actions”</td>
+</tr>
+<tr>
+<td>show_sidebar</td>
+<td>使用<code>SIDEBAR</code>时，是否显示边栏</td>
+</tr>
+<tr>
+<td>header_height</td>
+<td>标题高度</td>
+</tr>
+<tr>
+<td>header_show_title</td>
+<td>是否显示标题</td>
+</tr>
+<tr>
+<td>header_show_subtitle</td>
+<td>是否显示子标题</td>
+</tr>
+<tr>
+<td>terminal_font_family</td>
+<td>字体名称</td>
+</tr>
+<tr>
+<td>terminal_font_weight</td>
+<td>字体粗细(<code>constants.FONTWEIGHT_NORMAL</code>, <code>constants.FONTWEIGHT_XXX</code>)</td>
+</tr>
+<tr>
+<td>terminal_font_size</td>
+<td>字体大小</td>
+</tr>
+<tr>
+<td>menus</td>
+<td>显示自定义菜单</td>
+</tr>
+<tr>
+<td>clear_before_run</td>
+<td>执行前清理上一次的输入内容</td>
+</tr>
+</tbody></table>
+<h3 id="自定义样式"><a href="#自定义样式" class="headerlink" title="自定义样式"></a>自定义样式</h3><p>以下四个参数可以用于设置不同的样式</p>
+<table>
+<thead>
+<tr>
+<th><code>show_sidebar=True</code></th>
+<th><code>show_sidebar=False</code></th>
+<th><code>navigation=&#39;TABBED&#39;</code></th>
+<th><code>tabbed_groups=True</code></th>
+</tr>
+</thead>
+</table>
+<p><strong>组合输入</strong><br>默认搭配<code>argparse</code>使用Gooey时，输入被分为位置参数和选项参数。但是这并不总是用户想要的划分方式。你可以使用<code>add_argument_group()</code>函数将任意输出搭配为一个组合对象。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">parser = ArgumentParser()</span><br><span class="line">search_group = parser.add_argument_group(</span><br><span class="line">    &quot;选项&quot;, </span><br><span class="line">    help=&quot;设置选项&quot;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>你也可以把其它参数加入组合中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">search_group.add_argument(</span><br><span class="line">    &#x27;--query&#x27;, </span><br><span class="line">    help=&#x27;设置内容&#x27;</span><br><span class="line">) </span><br></pre></td></tr></table></figure>
+<p>这些参数会在UI中组合出现</p>
+<h3 id="执行模式"><a href="#执行模式" class="headerlink" title="执行模式"></a>执行模式</h3><p>Gooey有一系列的呈现模式。</p>
+<h3 id="高级模式"><a href="#高级模式" class="headerlink" title="高级模式"></a>高级模式</h3><p>默认的显示模式是“完整”或者说“高级”模式。这种模式下分为两种布局，由Gooey转换的命令决定。<br>第一种布局为平铺布局，这种布局符合大部分CLI程序(比如Curl, FFMPEG)的逻辑，一般情况下这种布局就可以了。<br>另一种布局是行布局。这种布局适合有多种子工具，每种都有自己的参数和选项的程序(比如Git)。这种布局会在某个位置(边栏或选项卡)显示可选操作，主界面显示给当前操作提供的参数。这种布局很适合同时提供多种功能的小程序。<br>每一种布局都会把传参容器作为独立的GUI组件呈现出来。</p>
+<p><strong>设置布局风格</strong><br>布局风格由是否存在<code>subparser</code>决定，所以，如果你想使用行布局，首先确保使用<code>advanced</code>模式，然后在<code>argparse</code>代码中添加一个<code>subparser</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@gooey(advanced=True)</span><br><span class="line">def main():</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+<h3 id="基础模式"><a href="#基础模式" class="headerlink" title="基础模式"></a>基础模式</h3><p>这种模式尤其适合习惯于终端程序的用户。<br>只需要将<code>@Gooey</code>装饰器的<code>advanced</code>参数设为<code>False</code>即可</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@gooey(advanced=False)</span><br><span class="line">def main():</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+<h3 id="无选项模式"><a href="#无选项模式" class="headerlink" title="无选项模式"></a>无选项模式</h3><p>这种模式不提供让用户输入选项的界面，直接进入显示结果的界面并开始执行程序，适用于一部分直接执行的脚本。<br>启用这一模式，在<code>@Gooey</code>装饰器中设置<code>auto_start=True</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Gooey(<span class="params">auto_start=<span class="literal">True</span></span>) </span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span> (): </span><br><span class="line">    ... </span><br></pre></td></tr></table></figure>
+<h3 id="窗口菜单"><a href="#窗口菜单" class="headerlink" title="窗口菜单"></a>窗口菜单</h3><p>你可以给Gooey添加一个自定义的菜单。<br>菜单在<code>@Gooey</code>装饰器中作为一组映射列表给出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Gooey(menu=[&#123;&#125;, &#123;&#125;, ...])</span><br></pre></td></tr></table></figure>
+<p>每组映射由两对键值对组成：</p>
+<ol>
+<li><code>name</code>菜单组的名字</li>
+<li><code>items</code>菜单组中每个项目的内容</li>
+</ol>
+<p>你可以设置任意数量的菜单组，它们都会作为列表传给<code>@Gooey</code>装饰器的<code>menu</code>参数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@Gooey(menu=[&#123;&#x27;name&#x27;: &#x27;File&#x27;, &#x27;items: []&#125;,</span><br><span class="line">             &#123;&#x27;name&#x27;: &#x27;Tools&#x27;, &#x27;items&#x27;: []&#125;,</span><br><span class="line">             &#123;&#x27;name&#x27;: &#x27;Help&#x27;, &#x27;items&#x27;: []&#125;])</span><br></pre></td></tr></table></figure>
+<p>菜单组中的项目也是键值对的映射列表。它们的键由其<code>type</code>决定，但是有两个键必须设置。</p>
+<ol>
+<li><code>type</code>设置点击菜单项的行为，同时也决定它的其它键</li>
+<li><code>menuTitle</code>此菜单项的名字</li>
+</ol>
+<p>目前支持四种菜单项类型：</p>
+<ul>
+<li>AboutDialog </li>
+<li>MessageDialog</li>
+<li>Link</li>
+<li>HtmlDialog</li>
+</ul>
+<p><strong>AboutDialog</strong><br>是程序的关于对话框。它会显示程序的信息，包括名字，版本和许可证等等。</p>
+<p>可选的内容：</p>
+<ul>
+<li><code>name</code></li>
+<li><code>description</code></li>
+<li><code>version</code></li>
+<li><code>copyright</code></li>
+<li><code>license</code></li>
+<li><code>website</code></li>
+<li><code>developer</code></li>
+</ul>
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &#x27;type&#x27;: &#x27;AboutDialog&#x27;,</span><br><span class="line">    &#x27;menuTitle&#x27;: &#x27;About&#x27;,</span><br><span class="line">    &#x27;name&#x27;: &#x27;Gooey Layout Demo&#x27;,</span><br><span class="line">    &#x27;description&#x27;: &#x27;An example of Gooey\&#x27;s layout flexibility&#x27;,</span><br><span class="line">    &#x27;version&#x27;: &#x27;1.2.1&#x27;,</span><br><span class="line">    &#x27;copyright&#x27;: &#x27;2018&#x27;,</span><br><span class="line">    &#x27;website&#x27;: &#x27;https://github.com/chriskiehl/Gooey&#x27;,</span><br><span class="line">    &#x27;developer&#x27;: &#x27;http://chriskiehl.com/&#x27;,</span><br><span class="line">    &#x27;license&#x27;: &#x27;MIT&#x27;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>MessageDialog</strong><br>是通用的信息对话框，你可以通过此对话框显示任何种类的信息，比如警告。</p>
+<p>内容：</p>
+<ul>
+<li><code>message</code>必须，信息的内容</li>
+<li><code>caption</code>可选，信息的标题</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">&#x27;type&#x27;</span>: <span class="string">&#x27;MessageDialog&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;menuTitle&#x27;</span>: <span class="string">&#x27;Information&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;message&#x27;</span>: <span class="string">&#x27;Hey, here is some cool info for ya!&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;caption&#x27;</span>: <span class="string">&#x27;Stuff you should know&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Link</strong><br>用于将用户带去外部的网站，这一选项会唤出默认浏览器。</p>
+<p>内容：</p>
+<ul>
+<li><code>url</code>完整的URL</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">&#x27;type&#x27;</span>: <span class="string">&#x27;Link&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;menuTitle&#x27;</span>: <span class="string">&#x27;Visit Out Site&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;url&#x27;</span>: <span class="string">&#x27;http://www.example.com&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>HtmlDialog</strong><br>用户可以拷贝的，HTML格式的信息对话框。</p>
+<p>内容：</p>
+<ul>
+<li><code>caption</code>可选，对话框的标题</li>
+<li><code>html</code>必须，在对话框中显示的HTML内容</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">&#x27;type&#x27;</span>: <span class="string">&#x27;HtmlDialog&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;menuTitle&#x27;</span>: <span class="string">&#x27;Fancy Dialog!&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;caption&#x27;</span>: <span class="string">&#x27;Demo of the HtmlDialog&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;html&#x27;</span>: <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    &lt;body bgcolor=&quot;white&quot;&gt;</span></span><br><span class="line"><span class="string">        &lt;img src=/path/to/your/image.png&quot; /&gt; </span></span><br><span class="line"><span class="string">        &lt;h1&gt;Hello world!&lt;/h1&gt; </span></span><br><span class="line"><span class="string">        &lt;p&gt;&lt;font color=&quot;red&quot;&gt;Lorem ipsum dolor sit amet, consectetur&lt;/font&gt;&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;/body&gt;</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>一个完整的示例</strong><br>两个菜单组，各自带有不同的菜单项：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Gooey(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="meta">    program_name=<span class="string">&#x27;Advanced Layout Groups&#x27;</span>,</span></span></span><br><span class="line"><span class="params"><span class="meta">    menu=[&#123;</span></span></span><br><span class="line"><span class="params"><span class="meta">        <span class="string">&#x27;name&#x27;</span>: <span class="string">&#x27;File&#x27;</span>,</span></span></span><br><span class="line"><span class="params"><span class="meta">        <span class="string">&#x27;items&#x27;</span>: [&#123;</span></span></span><br><span class="line"><span class="params"><span class="meta">                <span class="string">&#x27;type&#x27;</span>: <span class="string">&#x27;AboutDialog&#x27;</span>,</span></span></span><br><span class="line"><span class="params"><span class="meta">                <span class="string">&#x27;menuTitle&#x27;</span>: <span class="string">&#x27;About&#x27;</span>,</span></span></span><br><span class="line"><span class="params"><span class="meta">                <span class="string">&#x27;name&#x27;</span>: <span class="string">&#x27;Gooey Layout Demo&#x27;</span>,</span></span></span><br><span class="line"><span class="params"><span class="meta">                <span class="string">&#x27;description&#x27;</span>: <span class="string">&#x27;An example of Gooey\&#x27;s layout flexibility&#x27;</span>,</span></span></span><br><span class="line"><span class="params"><span class="meta">                <span class="string">&#x27;version&#x27;</span>: <span class="string">&#x27;1.2.1&#x27;</span>,</span></span></span><br><span class="line"><span class="params"><span class="meta">                <span class="string">&#x27;copyright&#x27;</span>: <span class="string">&#x27;2018&#x27;</span>,</span></span></span><br><span class="line"><span class="params"><span class="meta">                <span class="string">&#x27;website&#x27;</span>: <span class="string">&#x27;https://github.com/chriskiehl/Gooey&#x27;</span>,</span></span></span><br><span class="line"><span class="params"><span class="meta">                <span class="string">&#x27;developer&#x27;</span>: <span class="string">&#x27;http://chriskiehl.com/&#x27;</span>,</span></span></span><br><span class="line"><span class="params"><span class="meta">                <span class="string">&#x27;license&#x27;</span>: <span class="string">&#x27;MIT&#x27;</span></span></span></span><br><span class="line"><span class="params"><span class="meta">            &#125;, &#123;</span></span></span><br><span class="line"><span class="params"><span class="meta">                <span class="string">&#x27;type&#x27;</span>: <span class="string">&#x27;MessageDialog&#x27;</span>,</span></span></span><br><span class="line"><span class="params"><span class="meta">                <span class="string">&#x27;menuTitle&#x27;</span>: <span class="string">&#x27;Information&#x27;</span>,</span></span></span><br><span class="line"><span class="params"><span class="meta">                <span class="string">&#x27;caption&#x27;</span>: <span class="string">&#x27;My Message&#x27;</span>,</span></span></span><br><span class="line"><span class="params"><span class="meta">                <span class="string">&#x27;message&#x27;</span>: <span class="string">&#x27;I am demoing an informational dialog!&#x27;</span></span></span></span><br><span class="line"><span class="params"><span class="meta">            &#125;, &#123;</span></span></span><br><span class="line"><span class="params"><span class="meta">                <span class="string">&#x27;type&#x27;</span>: <span class="string">&#x27;Link&#x27;</span>,</span></span></span><br><span class="line"><span class="params"><span class="meta">                <span class="string">&#x27;menuTitle&#x27;</span>: <span class="string">&#x27;Visit Our Site&#x27;</span>,</span></span></span><br><span class="line"><span class="params"><span class="meta">                <span class="string">&#x27;url&#x27;</span>: <span class="string">&#x27;https://github.com/chriskiehl/Gooey&#x27;</span></span></span></span><br><span class="line"><span class="params"><span class="meta">            &#125;]</span></span></span><br><span class="line"><span class="params"><span class="meta">        &#125;,&#123;</span></span></span><br><span class="line"><span class="params"><span class="meta">        <span class="string">&#x27;name&#x27;</span>: <span class="string">&#x27;Help&#x27;</span>,</span></span></span><br><span class="line"><span class="params"><span class="meta">        <span class="string">&#x27;items&#x27;</span>: [&#123;</span></span></span><br><span class="line"><span class="params"><span class="meta">            <span class="string">&#x27;type&#x27;</span>: <span class="string">&#x27;Link&#x27;</span>,</span></span></span><br><span class="line"><span class="params"><span class="meta">            <span class="string">&#x27;menuTitle&#x27;</span>: <span class="string">&#x27;Documentation&#x27;</span>,</span></span></span><br><span class="line"><span class="params"><span class="meta">            <span class="string">&#x27;url&#x27;</span>: <span class="string">&#x27;https://www.readthedocs.com/foo&#x27;</span></span></span></span><br><span class="line"><span class="params"><span class="meta">        &#125;]</span></span></span><br><span class="line"><span class="params"><span class="meta">    &#125;]</span></span></span><br><span class="line"><span class="params"><span class="meta"></span>)</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="自定义图标"><a href="#自定义图标" class="headerlink" title="自定义图标"></a>自定义图标</h2><p>Gooey默认自带了六个图标。但是你也可以用自己的图片&#x2F;图标对其进行替换，只需要告诉Gooey在初始化时搜索的路径即可。<br>给<code>@Gooey</code>装饰器指定<code>image_dir</code>参数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@Gooey(program_name=&#x27;自定义图标测试&#x27;, image_dir=&#x27;/path/to/my/image/directory&#x27;)</span><br><span class="line">def main():</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+<p>Gooey会根据文件名自动发现图片并进行替换。比如，举例来说，要替换程序图标，只需要在图片目录下添加一个名为<code>config_icon.png</code>的文件即可。<br>以下为可以覆盖的文件名：</p>
+<ul>
+<li>program_icon.png</li>
+<li>success_icon.png</li>
+<li>running_icon.png</li>
+<li>loading_icon.gif</li>
+<li>config_icon.png</li>
+<li>error_icon.png</li>
+</ul>
+<h2 id="打包"><a href="#打包" class="headerlink" title="打包"></a>打包</h2><p>打包Gooey项目也很简单。<br>一种简单的办法是下载这个<a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/chriskiehl/Gooey/master/docs/packaging/build-win.spec">build.spec</a>文件并放到程序目录下，然后编辑文件内容，修改<code>APPPNAME</code>和<code>name</code>这两项以对应你的项目，然后修改<code>pathex</code>项以指定程序的根目录，然后执行<code>pyinstaller -F --windowed build.spec</code>，就可以进行打包了。<br>你也可以看看<a target="_blank" rel="noopener" href="https://github.com/chriskiehl/Gooey/blob/master/docs/packaging/Packaging-Gooey.md">详细教程</a>. </p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/11/29/%E7%AE%80%E5%8D%95%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2/" rel="prev" title="简单文件共享服务部署">
+                  <i class="fa fa-angle-left"></i> 简单文件共享服务部署
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/12/14/ntfy%E9%80%9A%E7%9F%A5%E6%9C%8D%E5%8A%A1%E5%99%A8/" rel="next" title="ntfy通知服务器">
+                  ntfy通知服务器 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Molten_Armor</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
