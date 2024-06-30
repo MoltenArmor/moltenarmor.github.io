@@ -267,7 +267,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-06-27 23:16:10" itemprop="dateModified" datetime="2024-06-27T23:16:10+08:00">2024-06-27</time>
+      <time title="修改时间：2024-06-30 16:32:58" itemprop="dateModified" datetime="2024-06-30T16:32:58+08:00">2024-06-30</time>
     </span>
 
   
@@ -281,13 +281,14 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>systemd 将过去那些系统管理员通过数不尽的汗水积累起来的 Shell 与链接的奇技淫巧，通过精巧而复杂的设计与高超的编程技巧粗暴的切割成了数个类似于 ini 文件语法的单元文件与一个健壮的依赖模型。这种操作上的简化主义与大一统式的集中管理不能不说是一种进步。</p>
-<p>不说别的，传统的经验和所谓的”UNIX哲学”就算再宝贵，也实在谈不上是什么不可逾越的大山。就凭 systemd 抹平了一大波软件包和发行版之间五花八门的脚本实现来说，它就功不可没，更不用说它深入结合cgroup实现的服务沙箱化运行了。</p>
-<p>所以，老头子和精神上的老头子们，该放下的就放下吧，该去搜索一下”怎么写 systemd 服务”了。</p>
-<p>以下是 systemd 服务单元与 openrc 启动脚本的比较：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># systemd service</span><br><span class="line">[Unit]</span><br><span class="line">Name=Service-Name</span><br><span class="line">Description=&quot;A cool service&quot;</span><br><span class="line">After=rsyslog.service</span><br><span class="line">Requires=networking.service</span><br><span class="line">Wants=ssh.service</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">ExecStartPre=/opt/pre_script.sh</span><br><span class="line">ExecStart=/bin/foo</span><br><span class="line">PIDFile=/run/foo.pid</span><br><span class="line">KillSignal=SIGTERM</span><br><span class="line">ExecStopPost=/opt/post_script.sh</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">#!/sbin/openrc-run</span><br><span class="line"></span><br><span class="line">name=Service-Name</span><br><span class="line">description=&quot;A cool service&quot;</span><br><span class="line"></span><br><span class="line">depend() &#123;</span><br><span class="line">    after rsyslog</span><br><span class="line">    need network</span><br><span class="line">    want ssh</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">start_pre() &#123;</span><br><span class="line">    :</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">command=/bin/foo</span><br><span class="line">pidfile=/run/foo.pid</span><br><span class="line">stopsig=SIGTERM</span><br><span class="line"></span><br><span class="line">stop_post() &#123;</span><br><span class="line">    :</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/05/21/%E6%88%91%E5%AF%B9systemd%E7%9A%84%E7%9C%8B%E6%B3%95/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
