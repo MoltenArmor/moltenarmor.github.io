@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.icku.eu.org","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="DocOptdocopt模块的思路和argparse不同，它认为，一个程序的命令行参数和选项应当通过文档自动实现，开发者的任务仅仅只是写出文档而已。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docopt&#x2F;Docopt-ng简单上手">
+<meta property="og:url" content="https://blog.icku.eu.org/2024/07/12/Docopt-Docopt-ng%E7%AE%80%E5%8D%95%E4%B8%8A%E6%89%8B/index.html">
+<meta property="og:site_name" content="MA Blog">
+<meta property="og:description" content="DocOptdocopt模块的思路和argparse不同，它认为，一个程序的命令行参数和选项应当通过文档自动实现，开发者的任务仅仅只是写出文档而已。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-07-12T07:31:43.000Z">
+<meta property="article:modified_time" content="2024-07-12T07:32:55.807Z">
+<meta property="article:author" content="Molten_Armor">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.icku.eu.org/2024/07/12/Docopt-Docopt-ng%E7%AE%80%E5%8D%95%E4%B8%8A%E6%89%8B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.icku.eu.org/2024/07/12/Docopt-Docopt-ng%E7%AE%80%E5%8D%95%E4%B8%8A%E6%89%8B/","path":"2024/07/12/Docopt-Docopt-ng简单上手/","title":"Docopt/Docopt-ng简单上手"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Docopt/Docopt-ng简单上手 | MA Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">MA Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#DocOpt"><span class="nav-number">1.</span> <span class="nav-text">DocOpt</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9"><span class="nav-number">1.2.</span> <span class="nav-text">模块内容</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%96%87%E6%A1%A3"><span class="nav-number">1.2.1.</span> <span class="nav-text">文档</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90"><span class="nav-number">1.2.2.</span> <span class="nav-text">解析</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0"><span class="nav-number">1.2.3.</span> <span class="nav-text">命令行参数</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%B8%8D%E5%AE%9A%E9%87%8F%E5%8F%82%E6%95%B0"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">不定量参数</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%80%89%E9%A1%B9"><span class="nav-number">1.2.4.</span> <span class="nav-text">选项</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%BB%98%E8%AE%A4%E5%80%BC"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">默认值</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%8F%AF%E9%80%89"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">可选</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%80%89%E9%A1%B9%E7%BB%88%E7%BB%93%E7%AC%A6"><span class="nav-number">1.2.5.</span> <span class="nav-text">选项终结符</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A0%87%E5%87%86%E8%BE%93%E5%85%A5%E7%AC%A6"><span class="nav-number">1.2.6.</span> <span class="nav-text">标准输入符</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AD%90%E5%91%BD%E4%BB%A4"><span class="nav-number">1.2.7.</span> <span class="nav-text">子命令</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%86%E7%BB%84"><span class="nav-number">1.2.8.</span> <span class="nav-text">分组</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BA%92%E6%96%A5"><span class="nav-number">1.2.9.</span> <span class="nav-text">互斥</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%B8%8D%E5%AE%9A%E9%87%8F%E9%80%89%E9%A1%B9"><span class="nav-number">1.2.9.1.</span> <span class="nav-text">不定量选项</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">1.2.10.</span> <span class="nav-text">其他</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Molten_Armor</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/MoltenArmor" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;MoltenArmor" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:kwokjuy@163.com" title="E-Mail → mailto:kwokjuy@163.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.icku.eu.org/2024/07/12/Docopt-Docopt-ng%E7%AE%80%E5%8D%95%E4%B8%8A%E6%89%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Molten_Armor">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MA Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Docopt/Docopt-ng简单上手 | MA Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Docopt/Docopt-ng简单上手
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-07-12 15:31:43 / 修改时间：15:32:55" itemprop="dateCreated datePublished" datetime="2024-07-12T15:31:43+08:00">2024-07-12</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="DocOpt"><a href="#DocOpt" class="headerlink" title="DocOpt"></a>DocOpt</h3><p><code>docopt</code>模块的思路和<code>argparse</code>不同，它认为，<strong>一个程序的命令行参数和选项应当通过文档自动实现，开发者的任务仅仅只是写出文档而已</strong>。</p>
+<span id="more"></span>
+
+<p>注：DocOpt的思想是通用的，它有多种语言的解析器实现，包括Ruby、Cpp、Golang、Julia和一个用于Shell的二进制解析程序。</p>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>现在的Docopt由Jazzband维护，名为<code>docopt-ng</code>，要进行安装，执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install docopt-ng</span><br></pre></td></tr></table></figure>
+<p>传统版本的<code>docopt</code>已经停止维护，但是在大部分发行版仓库中仍然包含：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Debian</span><br><span class="line">apt install python3-docopt</span><br><span class="line"></span><br><span class="line"># RHEL</span><br><span class="line">yum install python3-docopt</span><br></pre></td></tr></table></figure>
+<h4 id="模块内容"><a href="#模块内容" class="headerlink" title="模块内容"></a>模块内容</h4><h5 id="文档"><a href="#文档" class="headerlink" title="文档"></a>文档</h5><p>“文档”的定义是任意一串遵循BNF范式的Docstring，比如说，你可以自己定义：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docstr = &#x27;&#x27;&#x27;</span><br><span class="line">......</span><br><span class="line">&#x27;&#x27;&#x27;</span><br></pre></td></tr></table></figure>
+<p>你也可以直接写在<code>__doc__</code>范围内：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">......</span><br><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">import ...</span><br></pre></td></tr></table></figure>
+<p><code>Usage:</code>标识了开始解析的部分，文档中至少需要包含这一部分：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">Usage:</span><br><span class="line">    &#123;&#125;</span><br><span class="line">&#x27;&#x27;&#x27;.format(sys.argv[0])</span><br></pre></td></tr></table></figure>
+<p>程序名实际上可以任取，不过为了方便也可以直接使用<code>sys.argv[0]</code>。</p>
+<h5 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h5><p>使用<code>docopt.docopt(Str[, argv=[&#39;参数&#39;]])</code>函数进行解析并返回<strong>参数解析字典</strong>，<code>argv=</code>表示默认传入的参数值列表。</p>
+<p>解析字典中，针对不同类型的选项和参数的保存方式如下：</p>
+<ul>
+<li>单个参数：以参数名为键，值为字符串。</li>
+<li>单个无参选项：以选项名为键，值为布尔值。</li>
+<li>单个有参选项：以选项名为键，值为字符串。</li>
+<li>不定量参数：以参数名为键，值为字符串列表。</li>
+<li>不定量无参选项：以选项名为键，值为整数（选项出现次数）。</li>
+<li>不定量有参选项：以选项名为键，值为字符串列表。</li>
+</ul>
+<h5 id="命令行参数"><a href="#命令行参数" class="headerlink" title="命令行参数"></a>命令行参数</h5><p>使用<code>&lt; &gt;</code>包裹起来的部分，或完全是大写字母的部分，会被解析为命令行参数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">Usage:</span><br><span class="line">    &#123;&#125; &lt;pos_arg&gt;</span><br><span class="line">&#x27;&#x27;&#x27;.format(sys.argv[0])</span><br><span class="line"></span><br><span class="line">import docopt</span><br><span class="line">args: dict = docopt.docopt(docstr)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">Usage:</span><br><span class="line">    &#123;&#125; POS_ARG</span><br><span class="line">&#x27;&#x27;&#x27;.format(sys.argv[0])</span><br><span class="line"></span><br><span class="line">import docopt</span><br><span class="line">args: dict = docopt.docopt(docstr)</span><br></pre></td></tr></table></figure>
+<p>然后，就可以通过<code>args</code>字典调用命令行参数，键名就是带有<code>&lt; &gt;</code>的命令行参数名：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">args[&#x27;&lt;pos_arg&gt;&#x27;]</span><br></pre></td></tr></table></figure>
+<p>（<code>docopt-ng</code>）也可以使用点引用方式调用命令行参数，不过此时，键名中的<code>&lt; &gt;</code>则需要省略：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">args.pos_arg</span><br></pre></td></tr></table></figure>
+<h6 id="不定量参数"><a href="#不定量参数" class="headerlink" title="不定量参数"></a>不定量参数</h6><p>有时候，重复的参数数量并不确定，这时候可以使用<code>...</code>来标识：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">Usage:</span><br><span class="line">    # 一个或任意多</span><br><span class="line">    &#123;0&#125; &lt;pos_arg&gt;...</span><br><span class="line">    # 零个或任意多</span><br><span class="line">    &#123;0&#125; [&lt;pos_arg&gt;...]</span><br><span class="line">&#x27;&#x27;&#x27;.format(sys.argv[0])</span><br></pre></td></tr></table></figure>
+<p>这样的参数，在字典中对应的值是一个列表。</p>
+<h5 id="选项"><a href="#选项" class="headerlink" title="选项"></a>选项</h5><p><code>-</code>或<code>--</code>开头的部分都会被解析为选项，短选项和长选项都支持：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">Usage:</span><br><span class="line">    &#123;&#125; -o &lt;opt_arg&gt;</span><br><span class="line">&#x27;&#x27;&#x27;.format(sys.argv[0])</span><br></pre></td></tr></table></figure>
+<p>需要注意的是，选项参数<strong>使用选项名作为字典的键进行调用，而不是使用选项参数名</strong>，字典的键内不会去掉选项名前面的<code>--</code>或<code>-</code>，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">args[&#x27;-o&#x27;]</span><br></pre></td></tr></table></figure>
+<p>（<code>docopt-ng</code>）也可以使用点引用方式调用选项参数，不过此时，键名中的<code>-</code>则需要省略：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">args.o</span><br></pre></td></tr></table></figure>
+
+<p>为了方便用户，你还应该把选项（及其长选项）拉出来单独写一段<code>Options:</code>文档：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">Usage:</span><br><span class="line">    &#123;&#125; -o &lt;opt_arg&gt;</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">    -o, --option &lt;opt_arg&gt;  指定选项参数</span><br><span class="line">&#x27;&#x27;&#x27;.format(sys.argv[0])</span><br></pre></td></tr></table></figure>
+<ul>
+<li>每行选项声明内容的开头都必须是<code>-</code>，选项部分不能重复。</li>
+<li>在原则上，短选项是唯一的。短选项之间是不能存在别名关系的。</li>
+<li>在选项和选项之间，使用<code>,</code>或者空格进行分隔都是可以的。</li>
+<li>选项参数可以使用<code>&lt; &gt;</code>包裹起来，或是完全使用大写字母。</li>
+<li>长选项和选项参数之间可以用空格隔开，也可以使用<code>=</code>连接。</li>
+<li>在选项和选项描述之间至少要有两个空格。</li>
+<li>如果给出了至少一个长选项，那么<code>docopt</code>会使用<strong>最后一个长选项名</strong>作为字典键保存选项参数。</li>
+<li>选项参数可以使用<strong>全大写</strong>的形式进行标识，也可以使用和之前所说的一致的<code>&lt;var&gt;</code>形式。</li>
+</ul>
+<p><code>docopt</code>实际上并不关心选项参数名（因为它不使用选项参数名保存参数值，而是直接使用选项名），因此用户在<code>Options:</code>段中给出的选项参数名并不必须要与<code>Usage:</code>段中一致：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Usage:</span><br><span class="line">    &#123;&#125; -o &lt;arg&gt;</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">    -o, --option &lt;opt_arg&gt;  指定选项参数</span><br><span class="line">&#x27;&#x27;&#x27;.format(sys.argv[0])</span><br></pre></td></tr></table></figure>
+<p>但是，选项的类型（是否有参）必须在<code>Usage:</code>段和<code>Options:</code>段中保持一致，也就是说，两个地方必须要么都有选项参数名，要么都没有。</p>
+<h6 id="默认值"><a href="#默认值" class="headerlink" title="默认值"></a>默认值</h6><p>如果要设置选项的默认值，在<code>Options:</code>段的选项解释内容中添加<code>[default: 值]</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">Usage:</span><br><span class="line">    &#123;&#125; -o &lt;opt_arg&gt;</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">    -o, --option &lt;opt_arg&gt;  指定选项参数 [default: 0]</span><br><span class="line">&#x27;&#x27;&#x27;.format(sys.argv[0])</span><br></pre></td></tr></table></figure>
+<p>注意，<code>default:</code>设置的默认值总是字符串类型。</p>
+<p>在没有设置的情况下：</p>
+<ul>
+<li>定长参数（选项参数或命令行参数）的默认值是<code>None</code>。</li>
+<li>不定长参数（选项参数或命令行参数）的默认值是<code>[]</code>（空列表）。</li>
+<li>无参选项的默认值是<code>False</code>。</li>
+<li>子命令的默认值是<code>False</code>。</li>
+</ul>
+<h6 id="可选"><a href="#可选" class="headerlink" title="可选"></a>可选</h6><p>大部分选项在使用时都应该是可选的，使用<code>[]</code>括起来就可以将选项解析为可选选项：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">Usage:</span><br><span class="line">    &#123;&#125; [-o &lt;opt_arg&gt;]</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">    -o, --option &lt;opt_arg&gt;  指定选项参数</span><br><span class="line">&#x27;&#x27;&#x27;.format(sys.argv[0])</span><br></pre></td></tr></table></figure>
+<p>如果你的<strong>所有选项都是可选的</strong>，那么你可以干脆地使用<code>[options]</code>替代：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">Usage:</span><br><span class="line">    &#123;&#125; [options]</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">    -o, --option &lt;opt_arg&gt;  指定选项参数</span><br><span class="line">&#x27;&#x27;&#x27;.format(sys.argv[0])</span><br></pre></td></tr></table></figure>
+<p>当然，如果只有部分选项不是可选的，也可以把它们单独列出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">Usage:</span><br><span class="line">    &#123;&#125; -o &lt;opt_arg&gt; [options]</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">    -o, --option &lt;opt_arg&gt;  指定选项参数</span><br><span class="line">&#x27;&#x27;&#x27;.format(sys.argv[0])</span><br></pre></td></tr></table></figure>
+<p><code>[options]</code>会自动排除掉所有在<code>Usage</code>中已经出现的选项。</p>
+<h5 id="选项终结符"><a href="#选项终结符" class="headerlink" title="选项终结符"></a>选项终结符</h5><p>GNU风格的<code>--</code>选项终结符也可以被解析，只需要在选项和参数之间，或者子命令和参数之间添加<code>[--]</code>即可。这种方式的主要目的是，在某些特殊的情况下传递开头为<code>-</code>的命令行参数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">Usage:</span><br><span class="line">    &#123;&#125; -o &lt;opt_arg&gt; [--] &lt;pos_arg&gt;</span><br><span class="line">    &#123;&#125; sub [--] [&lt;pos_arg&gt;...]</span><br><span class="line">&#x27;&#x27;&#x27;.format(sys.argv[0])</span><br></pre></td></tr></table></figure>
+<p>当然，就算你不写<code>[--]</code>，<code>docopt</code>也是接受用户的<code>--</code>的，只是写出会更清晰。</p>
+<h5 id="标准输入符"><a href="#标准输入符" class="headerlink" title="标准输入符"></a>标准输入符</h5><p>有时候脚本接受来自标准输入的输入，此时只需要将<code>[-]</code>设为参数即可：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">Usage:</span><br><span class="line">    &#123;&#125; [-]</span><br><span class="line">    &#123;&#125; -o [-]</span><br><span class="line">&#x27;&#x27;&#x27;.format(sys.argv[0])</span><br></pre></td></tr></table></figure>
+<h5 id="子命令"><a href="#子命令" class="headerlink" title="子命令"></a>子命令</h5><p>既没有被<code>&lt; &gt;</code>括起来或完全由大写字母组成，也不是以<code>-</code>或<code>--</code>开头的部分，会被解析为子命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">Usage:</span><br><span class="line">    &#123;&#125; sub</span><br><span class="line">&#x27;&#x27;&#x27;.format(sys.argv[0])</span><br></pre></td></tr></table></figure>
+<p>如果你觉得一行<code>Usage</code>不足以说明所有的子命令，那么也是可以分开写的：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">Usage:</span><br><span class="line">    &#123;0&#125; sub1</span><br><span class="line">    &#123;0&#125; sub2</span><br><span class="line">&#x27;&#x27;&#x27;.format(sys.argv[0])</span><br></pre></td></tr></table></figure>
+<p>如果在一个子命令的<code>Usage</code>中使用了<code>[options]</code>，那么<code>[options]</code>会自动排除掉所有在<code>Usage</code>中已经出现了的选项，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Usage:</span><br><span class="line">	# 不包含-t</span><br><span class="line">    &#123;0&#125; sub1 [options]</span><br><span class="line">    &#123;0&#125; sub2 -t</span><br><span class="line">&#x27;&#x27;&#x27;.format(sys.argv[0])</span><br></pre></td></tr></table></figure>
+<p>多个子命令可以分别编写<code>Options:</code>段：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sub1 Options:</span><br><span class="line">	...</span><br><span class="line"></span><br><span class="line">sub2 Options:</span><br><span class="line">	...</span><br></pre></td></tr></table></figure>
+<p>但是，DocOpt并不会对不同的<code>Options:</code>段进行区分，这样做的效果和单独定义一个整体的<code>Options:</code>段没有区别，只是方便用户理解。</p>
+<h5 id="分组"><a href="#分组" class="headerlink" title="分组"></a>分组</h5><p>有时候我们会希望两个参数或选项要么都出现，要么都不出现，这时候使用<code>()</code>将其结合成组就好了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">Usage:</span><br><span class="line">    &#123;&#125; [(&lt;arg1&gt; &lt;arg2&gt;)]</span><br></pre></td></tr></table></figure>
+<h5 id="互斥"><a href="#互斥" class="headerlink" title="互斥"></a>互斥</h5><p>有时候，多个选项或子命令之间的关系是互斥的，只需要有一个就好，对于这种关系，使用<code>(A | B)</code>就可以：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">Usage:</span><br><span class="line">    &#123;&#125; (start | stop)</span><br><span class="line">&#x27;&#x27;&#x27;.format(sys.argv[0])</span><br></pre></td></tr></table></figure>
+<p>当然，用<code>[A | B]</code>括起来，可以允许任何一个选项都不存在：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">Usage:</span><br><span class="line">    &#123;&#125; [--yes | --no]</span><br><span class="line">&#x27;&#x27;&#x27;.format(sys.argv[0])</span><br></pre></td></tr></table></figure>
+<p>这种情况在逻辑上不适用于接受参数的选项。</p>
+<h6 id="不定量选项"><a href="#不定量选项" class="headerlink" title="不定量选项"></a>不定量选项</h6><p>对于部分选项，我们可能会希望允许其多次出现。这可能是因为我们希望一个无参选项可以重复出现以提高强度，或是希望一个有参选项可以重复出现以多次追加选项参数，这同样可以通过分组和<code>...</code>不定量标识符的方式实现。</p>
+<p>例如，对于计数型无参选项：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Usage:</span><br><span class="line">    &#123;&#125; [-c...]</span><br><span class="line">&#x27;&#x27;&#x27;.format(sys.argv[0])</span><br></pre></td></tr></table></figure>
+
+<p>对于允许重复出现的有参选项：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Usage:</span><br><span class="line">    &#123;&#125; (-c &lt;opt_arg&gt;)...</span><br><span class="line">&#x27;&#x27;&#x27;.format(sys.argv[0])</span><br></pre></td></tr></table></figure>
+<p>你也可以允许它一次都不出现：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Usage:</span><br><span class="line">    &#123;&#125; [(-c &lt;opt_arg&gt;)...]</span><br><span class="line">&#x27;&#x27;&#x27;.format(sys.argv[0])</span><br></pre></td></tr></table></figure>
+<ul>
+<li>注意，这里使用分组的方式将选项与其选项参数放进一个组内，如果不这么做，那么仅仅意味着选项参数是不定量的。</li>
+</ul>
+<h5 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h5><p><code>docopt.docopt()</code>函数在解析文档时，默认会自动生成<code>-h</code>、<code>--help</code>和<code>--version</code>（可选）选项的行为。这一行为可以通过一些参数进行修改。</p>
+<p><code>docopt.docopt()</code>函数接受的其他参数：</p>
+<ul>
+<li><code>argv: list[str] | str</code>：解析的命令行部分，默认为<code>None</code>。</li>
+<li><code>help: bool</code>或<code>default_help: bool</code>（<code>docopt-ng</code>）：是否自动生成<code>-h</code>和<code>--help</code>选项的帮助文档。</li>
+<li><code>version: str</code>：版本号，可以用于自动生成在<code>Options:</code>段内定义的<code>--version</code>选项的行为。</li>
+<li><code>options_first: bool</code>：只允许选项位于参数之前。即传统命令行选项的行为。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/06/23/10%E5%B9%B4%E5%90%8E%E7%9A%84systemd/" rel="prev" title="10年后的systemd">
+                  <i class="fa fa-angle-left"></i> 10年后的systemd
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Molten_Armor</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
