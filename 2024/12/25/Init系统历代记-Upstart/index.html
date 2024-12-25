@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.icku.eu.org","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Upstart是Canonical开发的，事件驱动的init系统。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Init系统历代记-Upstart">
+<meta property="og:url" content="https://blog.icku.eu.org/2024/12/25/Init%E7%B3%BB%E7%BB%9F%E5%8E%86%E4%BB%A3%E8%AE%B0-Upstart/index.html">
+<meta property="og:site_name" content="MA Blog">
+<meta property="og:description" content="Upstart是Canonical开发的，事件驱动的init系统。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-12-25T15:52:22.000Z">
+<meta property="article:modified_time" content="2024-12-25T15:53:05.959Z">
+<meta property="article:author" content="Molten_Armor">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.icku.eu.org/2024/12/25/Init%E7%B3%BB%E7%BB%9F%E5%8E%86%E4%BB%A3%E8%AE%B0-Upstart/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.icku.eu.org/2024/12/25/Init%E7%B3%BB%E7%BB%9F%E5%8E%86%E4%BB%A3%E8%AE%B0-Upstart/","path":"2024/12/25/Init系统历代记-Upstart/","title":"Init系统历代记-Upstart"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Init系统历代记-Upstart | MA Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">MA Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.</span> <span class="nav-text">设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Job"><span class="nav-number">1.1.</span> <span class="nav-text">Job</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Event"><span class="nav-number">1.2.</span> <span class="nav-text">Event</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E7%AD%89%E7%BA%A7"><span class="nav-number">2.</span> <span class="nav-text">运行等级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Upstart%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">Upstart的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%A1%E5%BC%82%E7%9A%84%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">3.1.</span> <span class="nav-text">诡异的逻辑运算符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%BE%E4%BB%A5%E7%90%86%E8%A7%A3%E7%9A%84Ptrace"><span class="nav-number">3.2.</span> <span class="nav-text">难以理解的Ptrace</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E5%BD%BB%E5%BA%95%E7%9A%84%E5%B9%B6%E8%A1%8C%E5%8C%96"><span class="nav-number">3.3.</span> <span class="nav-text">不彻底的并行化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Molten_Armor</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/MoltenArmor" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;MoltenArmor" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:kwokjuy@163.com" title="E-Mail → mailto:kwokjuy@163.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.icku.eu.org/2024/12/25/Init%E7%B3%BB%E7%BB%9F%E5%8E%86%E4%BB%A3%E8%AE%B0-Upstart/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Molten_Armor">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MA Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Init系统历代记-Upstart | MA Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Init系统历代记-Upstart
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-12-25 23:52:22 / 修改时间：23:53:05" itemprop="dateCreated datePublished" datetime="2024-12-25T23:52:22+08:00">2024-12-25</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Upstart是Canonical开发的，事件驱动的init系统。</p>
+<span id="more"></span>
+
+<p>Upstart是为了解决SysV init系统的一些固有问题而诞生的，在Upstart的开发者看来，SysV init至少有以下问题：</p>
+<ol>
+<li>面向服务器场景设计，建立在硬件不变的基础上。</li>
+<li>（在当时）不支持并行，性能低下。</li>
+<li>Init脚本的资源开销较大。</li>
+</ol>
+<p>而这些问题源于其根本上的限制：</p>
+<blockquote>
+<p>……（SysV init）没有意识到现代Linux的动态性本质，针对每一个可能的硬件Event，如果希望进行处理，那么就必须要有一个独立的守护进程对其进行轮询监听。</p>
+</blockquote>
+<p>因此，Upstart的想法是：</p>
+<blockquote>
+<p><strong>在条件满足时，启动服务。服务（也就是Job）本身只需要描述它在启动时需要的条件，以及在启动时执行的程序</strong>。</p>
+</blockquote>
+<h2 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h2><p>在本质上，Upstart是一个Event引擎，它通过“事件”（Event）来编排“作业”（Job）：它创建Event，处理Event触发的结果，并根据需要启动和停止进程。</p>
+<p>Upstart使用了<a target="_blank" rel="noopener" href="https://launchpad.net/libnih">LibNIH</a>，这是一个“针对Init环境优化”的C库。这一举动在Canonical员工自己眼里是“以性能为核心考量”的结果，但是在社区眼里，NIH是一种很不受待见的行为。</p>
+<p>Upstart的开发者认为，Bare-metal服务器的用户空间初始化速度并不重要，因为它们的瓶颈不在这里，而在RAID阵列联机耗费的时间。但是，考虑云场景，用户空间初始化的速度就会变成重中之重，因为它直接影响新实例的部署时间，而部署新服务的速度越快，客户体验就越好。</p>
+<p>他们还认为，Event是一个“相当抽象的概念”，所以它们很适合做构建高级结构的高度灵活的基本单元。更重要的是，由于Event概念是动态的，所以“系统理所当然地可以为无数可能的系统行为和故障模式配置响应机制”，例如在发生故障的事件时，可以主动触发某些Job以进行处理，从而有可能实现“自愈”的逻辑。</p>
+<p>从这些论述中，不难看出Upstart的两个核心概念是Event和Job。</p>
+<h3 id="Job"><a href="#Job" class="headerlink" title="Job"></a>Job</h3><p>Job是Upstart的一个工作单元，可以是启动一个持续运行的载荷进程，也可以是执行一组批处理命令。每个Job都会监听一个或多个Event，一旦Event发生，Upstart就触发该Job的执行。</p>
+<p>按生命周期分，Job分为两类：</p>
+<ul>
+<li>Task Job：单次运行的短生命周期Job，它在执行完毕后便会退出。</li>
+<li>Service Job：长期运行的长生命周期Job，它不应该主动退出。</li>
+</ul>
+<p>此外，还有一些非用户可操控的隐藏Job，Upstart将其称为Abstract Job，这些Job纯供Upstart内部使用。</p>
+<p>每个Job都是一个状态机，Job内部实际上保存了两种状态：当前状态（<code>state</code>）和目标状态（<code>goal</code>），<code>goal</code>实际上只有<code>stop</code>和<code>start</code>，<code>state</code>则更为细化，其原因在于，在Job的<code>state</code>即将发生变化时，Upstart就会发出对应的Event，Upstart实际上通过这种手段创造了更多用户可用的Event，以提高灵活性。具体状态名称，可参考下图：</p>
+<p>![[upstart-states.png]]</p>
+<p>Upstart在历史上的一大贡献是将会话管理的功能集成到了Init系统内部，按照作用域区分，Upstart的Job也可以分为两类：</p>
+<ul>
+<li>系统级别的系统Job。其定义文件保存在<code>/etc/init/*.conf</code>。</li>
+<li>用户级别的会话Job。其定义文件保存在（主要是）<code>$HOME/.init/*.conf</code>。</li>
+</ul>
+<p>Job定义文件中包含多个段落（Stanza），其中最关键的配置项无非就四个：</p>
+<ul>
+<li><code>start on EVENT</code>：监听指定的Event，在出现时启动当前Job。</li>
+<li><code>stop on EVENT</code>：监听指定的Event，在出现时停止当前Job。</li>
+<li><code>exec 路径</code>：执行程序。</li>
+<li><code>script ... end script</code>：使用<code>/bin/sh</code>执行内联的脚本段。</li>
+</ul>
+<h3 id="Event"><a href="#Event" class="headerlink" title="Event"></a>Event</h3><p>顾名思义，Event 就是一个Event。Event在 Upstart 中以广播消息的形式存在。一旦某个Event发生了，Upstart 就向<strong>整个系统</strong>创建并发送一个消息。<strong>没有任何手段阻止Event消息被 Upstart 的其它部分知晓</strong>，也就是说，Event一旦发生，整个 Upstart 系统中所有工作和其它的Event都会得到通知。</p>
+<p>根据对Event发布者的影响，Event 可以分为三类：</p>
+<ul>
+<li>Signal：异步的非阻塞Event，不会导致发布者阻塞。<ul>
+<li>这意味着Event的发布者不关心任何订阅者，也不关心Event是否被消费。</li>
+<li>通过<code>initctl emit --no-wait Event名</code>发送，或是Upstart内部发送。</li>
+</ul>
+</li>
+<li>Method：同步的阻塞Event，发布者发送后会阻塞等待Event结果是否成功。<ul>
+<li>这意味着Event的发布者会等待Event触发的Job执行完成，并收集其执行结果。</li>
+<li>通过<code>initctl emit Event名</code>发送，或是Upstart内部发送。</li>
+</ul>
+</li>
+<li>Hook：阻塞Event，但是发布者只关心Event是否完成，不关心Event是否成功。<ul>
+<li>Upstart内部发送。</li>
+</ul>
+</li>
+</ul>
+<p>每一个Job的运行都由其监听的Event发生而触发的，Upstart在系统启动之初会发出<code>startup</code>Event，该Event随之触发大量Job执行，这些Job又会使 Upstart 发出更多Event，通过这种树状发散的方式使得系统达到工作状态。<strong>而工作状态不过就是一组运行中的Job的集合</strong>。</p>
+<p>Upstart并不主动适应外部的事件概念，恰恰相反，它期望自己成为系统中所有类型的事件的唯一总代理，其他服务产生的事件应当通过某种方式接入Upstart，由Upstart代为管理，这样的组件叫做Bridge。Upstart实现了很多Bridge，例如将D-Bus事件转换为Upstart事件的<code>upstart-dbus-bridge</code>，将Udev事件转换为Upstart事件的<code>upstart-udev-bridge</code>，这无疑给自己增加了工作量。</p>
+<h2 id="运行等级"><a href="#运行等级" class="headerlink" title="运行等级"></a>运行等级</h2><p>Upstart兼容SysV init的运行等级概念，并重新实现了<code>telinit</code>和<code>runlevel</code>工具。</p>
+<p>和SysV init相同，Upstart在系统启动&#x2F;停止过程中会设置<code>$RUNLEVEL</code>和<code>$PREVLEVEL</code>变量。在使用<code>telinit</code>命令切换运行等级时，会触发<code>runlevel 目标运行等级 原运行等级</code>事件。</p>
+<p>Upstart是怎么兼容SysV init风格的init脚本的呢？以CentOS 6为例，在<code>/etc/init/</code>下的Job定义文件中，有一个<code>rcS.conf</code>，它的启动条件是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">start on startup</span><br></pre></td></tr></table></figure>
+<p>也就是说该Job会在系统启动的早期就被Upstart发出的<code>startup</code>事件触发启动。而它会执行这条命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exec telinit $runlevel</span><br></pre></td></tr></table></figure>
+<p>我们知道，<code>telinit</code>命令会触发<code>runlevel 目标运行等级 原运行等级</code>事件。因此，<code>rc.conf</code>这个Job：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">start on runlevel [0123456]</span><br></pre></td></tr></table></figure>
+<p>就会被触发启动，从而执行<code>rc</code>脚本：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exec /etc/rc.d/rc $RUNLEVEL</span><br></pre></td></tr></table></figure>
+<p>并由<code>rc</code>脚本按照传统方法执行init脚本。</p>
+<h2 id="Upstart的问题"><a href="#Upstart的问题" class="headerlink" title="Upstart的问题"></a>Upstart的问题</h2><h3 id="诡异的逻辑运算符"><a href="#诡异的逻辑运算符" class="headerlink" title="诡异的逻辑运算符"></a>诡异的逻辑运算符</h3><p>Job没有排序保证。也就是说，多个监听某个Event的Job可能按照任意顺序被启动。<strong>Upstart在设计上就没有考虑过对这种情况的兼容</strong>，官方对用户推荐的解决方案，也仅仅只是执行<code>sleep</code>通过时间进行排序。</p>
+<p>Job监听的Event之间可以使用逻辑运算符（<code>and</code>和<code>or</code>）连接，也可以使用小括号表示优先级。但是由于<strong>监听行为并不是一个静态的行为</strong>，<strong>Upstart的逻辑运算符实际上并不完全符合我们的直觉</strong>。</p>
+<p><a target="_blank" rel="noopener" href="https://askubuntu.com/questions/408547/upstart-service-not-starting-when-a-service-it-depends-on-starts">举例</a>来说：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">start on (started A and started B)</span><br><span class="line">stop on (stopping A or stopping B)</span><br></pre></td></tr></table></figure>
+<p>这样一个Job C会收到在A启动和B启动这两个Event后启动，在用户停止了A以后，C也会因收到<code>stopping A</code>这个Event而停止。但是，如果此时再启动A，那么C并不会被再次启动。这是因为，对于Upstart来说，Event是没有时效性的，也不存在重放机制。Upstart只是按照用户的设定监听并等待<code>and</code>的两侧Event。</p>
+<p>另一个例子是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">start on started A and (started B or started C)</span><br></pre></td></tr></table></figure>
+<p>如果C启动了，那么Job将不会再监听和B或C有关的任何Event，仅仅只等待A启动的Event。</p>
+<p>其根本原因在于，<strong>在逻辑运算符一侧的Event被消费后，该侧条件会立刻被Upstart计算和抛弃</strong>。对于<code>and</code>来说，如果一侧的Event发生，那么该侧Event会立刻被抛弃并不再被监听，等待另一侧的Event发生才会通过逻辑检测。</p>
+<h3 id="难以理解的Ptrace"><a href="#难以理解的Ptrace" class="headerlink" title="难以理解的Ptrace"></a>难以理解的Ptrace</h3><p>Upstart使用Ptrace来追踪进程，它暴露给用户设定追踪进程行为的指令是<code>expect</code>，这个配置项接受的值在普通用户看来根本就无法理解：</p>
+<ul>
+<li><code>fork</code>：Fork一次创建主进程的服务。</li>
+<li><code>daemon</code>：Fork两次创建主进程的服务。</li>
+</ul>
+<p>这也就是说，如果用户希望自行创建一个Job定义文件，那么他就必须理解进程Fork的含义，并且还需要用下面这个麻烦的办法来确定主进程到底是通过几次Fork被创建出来的：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">strace -o strace.log -fFv /usr/bin/myapp --arg foo --hello wibble &amp;</span><br><span class="line">killall strace</span><br><span class="line">egrep &quot;\&lt;(fork|clone)\&gt;\(&quot; /tmp/strace.log | wc | awk &#x27;&#123;print $1&#125;&#x27;</span><br></pre></td></tr></table></figure>
+<p>这<a target="_blank" rel="noopener" href="https://blueprints.launchpad.net/ubuntu/+spec/foundations-q-upstart-overcome-ptrace-limitations">导致了很多不满</a>。</p>
+<h3 id="不彻底的并行化"><a href="#不彻底的并行化" class="headerlink" title="不彻底的并行化"></a>不彻底的并行化</h3><p>Upstart的并行化根本就是不彻底的，并行化的程度完全取决于用户将init脚本转换为Upstart Job的意愿——转换的多，并行化程度就高；转换的少，并行化程度就很低，因为通过<code>rc</code>脚本启动的init脚本总是串行的（在没有接入<code>startpar</code>的情况下）。参考CentOS 6，大部分系统守护进程和批处理脚本仍然是通过init脚本实现的。</p>
+<h2 id="结"><a href="#结" class="headerlink" title="结"></a>结</h2><p>回顾Upstart短暂的寿命（2006-2014），我们可以看出它更多地是一个承上启下的作品，它存在着很多不成熟的技术幻想和不彻底的变革。这自然有一部分Canonical和Upstart本身的问题，但更多的是时代的局限性——那时人们的一个工作重心，就是尽可能保持对传统init脚本的渐进改动。而只要这种守旧的思想还存在，彻底的并行化就无法实现。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/12/21/%E4%B8%80%E8%B5%B7%E5%88%B6%E4%BD%9CUSR%E4%B8%8D%E5%8F%AF%E5%8F%98%E7%B3%BB%E7%BB%9F/" rel="prev" title="一起制作USR不可变系统">
+                  <i class="fa fa-angle-left"></i> 一起制作USR不可变系统
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Molten_Armor</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
