@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.icku.eu.org","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="通过systemd 257以后提供的systemd-import-generator组件，我们现在终于可以完全依赖UEFI HTTP Boot协议实现完整的新时代网络启动了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="systemd的新时代网络启动">
+<meta property="og:url" content="https://blog.icku.eu.org/2025/09/27/systemd%E7%9A%84%E6%96%B0%E6%97%B6%E4%BB%A3%E7%BD%91%E7%BB%9C%E5%90%AF%E5%8A%A8/index.html">
+<meta property="og:site_name" content="MA Blog">
+<meta property="og:description" content="通过systemd 257以后提供的systemd-import-generator组件，我们现在终于可以完全依赖UEFI HTTP Boot协议实现完整的新时代网络启动了。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.icku.eu.org/images/systemd-http-boot.png">
+<meta property="og:image" content="https://blog.icku.eu.org/images/EFI-HTTPBOOT1.png">
+<meta property="og:image" content="https://blog.icku.eu.org/images/EFI-HTTPBOOT2.png">
+<meta property="og:image" content="https://blog.icku.eu.org/images/EFI-HTTPBOOT3.png">
+<meta property="og:image" content="https://blog.icku.eu.org/images/EFI-HTTPBOOT4.png">
+<meta property="article:published_time" content="2025-09-27T13:34:42.000Z">
+<meta property="article:modified_time" content="2025-09-27T13:38:06.481Z">
+<meta property="article:author" content="Molten_Armor">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.icku.eu.org/images/systemd-http-boot.png">
+
+
+<link rel="canonical" href="https://blog.icku.eu.org/2025/09/27/systemd%E7%9A%84%E6%96%B0%E6%97%B6%E4%BB%A3%E7%BD%91%E7%BB%9C%E5%90%AF%E5%8A%A8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.icku.eu.org/2025/09/27/systemd%E7%9A%84%E6%96%B0%E6%97%B6%E4%BB%A3%E7%BD%91%E7%BB%9C%E5%90%AF%E5%8A%A8/","path":"2025/09/27/systemd的新时代网络启动/","title":"systemd的新时代网络启动"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>systemd的新时代网络启动 | MA Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">MA Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFUEFI-HTTP-Boot%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">什么是UEFI HTTP Boot？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%99%E6%98%AF%E6%80%8E%E4%B9%88%E5%81%9A%E5%88%B0%E7%9A%84%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">这是怎么做到的？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E8%B7%B5"><span class="nav-number">3.</span> <span class="nav-text">实践</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F"><span class="nav-number">3.1.</span> <span class="nav-text">构建镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NetESP"><span class="nav-number">3.1.1.</span> <span class="nav-text">NetESP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Rootfs"><span class="nav-number">3.1.2.</span> <span class="nav-text">Rootfs</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UEFI-HTTP-Boot"><span class="nav-number">3.2.</span> <span class="nav-text">UEFI HTTP Boot</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#systemd-boot"><span class="nav-number">3.3.</span> <span class="nav-text">systemd-boot</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E6%A0%B8%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0%E4%B8%8Esystemd-import-generator"><span class="nav-number">3.4.</span> <span class="nav-text">内核命令行参数与systemd-import-generator</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%EF%BC%81"><span class="nav-number">3.5.</span> <span class="nav-text">启动！</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Molten_Armor</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/MoltenArmor" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;MoltenArmor" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:kwokjuy@163.com" title="E-Mail → mailto:kwokjuy@163.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.icku.eu.org/2025/09/27/systemd%E7%9A%84%E6%96%B0%E6%97%B6%E4%BB%A3%E7%BD%91%E7%BB%9C%E5%90%AF%E5%8A%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Molten_Armor">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MA Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="systemd的新时代网络启动 | MA Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          systemd的新时代网络启动
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2025-09-27 21:34:42 / 修改时间：21:38:06" itemprop="dateCreated datePublished" datetime="2025-09-27T21:34:42+08:00">2025-09-27</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>通过systemd 257以后提供的<a target="_blank" rel="noopener" href="https://www.freedesktop.org/software/systemd/man/devel/systemd-import-generator.html"><code>systemd-import-generator</code></a>组件，我们现在终于可以完全依赖UEFI HTTP Boot协议实现完整的新时代网络启动了。</p>
+<span id="more"></span>
+
+<h1 id="什么是UEFI-HTTP-Boot？"><a href="#什么是UEFI-HTTP-Boot？" class="headerlink" title="什么是UEFI HTTP Boot？"></a>什么是UEFI HTTP Boot？</h1><p><a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/docs/ROOTFS_DISCOVERY.md">UEFI HTTP Boot</a>是一种网络启动技术，它支持通过两种方式：</p>
+<ol>
+<li>固件配置：在固件的<code>HTTP Boot Configuration</code>页面直接配置地址。</li>
+<li>DHCP服务器响应：将Option 60配置为<code>&quot;HTTPClient&quot;</code>，然后通过Option 67配置文件URL。</li>
+</ol>
+<p>使主机的UEFI固件在引导时从一个指定的HTTP URL下载：</p>
+<ol>
+<li>一个<strong>UEFI PE程序</strong>并加载。</li>
+<li>一个<strong>Raw Disk镜像</strong>并加载其中的回退引导项<code>/EFI/BOOT/BOOTX64.EFI</code>。</li>
+</ol>
+<p>systemd组很欣赏这一网络启动技术，并试图将其集成到用户空间以实现更加精简的，全链路的网络启动。</p>
+<h1 id="这是怎么做到的？"><a href="#这是怎么做到的？" class="headerlink" title="这是怎么做到的？"></a>这是怎么做到的？</h1><p>这是通过以下几个技术实现的：</p>
+<ul>
+<li>EDK2的UEFI HTTP Boot：实现从UEFI固件层从HTTP服务器下载并加载EFI PE二进制程序。</li>
+<li><code>systemd-boot</code>：经过更新后，SDBoot现在支持在Type 1引导项中设置<code>uki-url</code>配置项，这一配置项会使SDBoot利用UEFI HTTP Boot的协议栈，从HTTP服务器拉取链式加载的UKI。</li>
+<li><code>systemd-import-generator</code>：systemd 257的新组件，其功能是可以根据内核命令行参数的配置，从HTTP服务器拉取各种DDI（<a target="_blank" rel="noopener" href="https://uapi-group.org/specifications/specs/discoverable_disk_image/">Discoverable Disk Image</a>，主要是根文件系统镜像和USR文件系统镜像）镜像。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/systemd/mkosi"><code>mkosi</code></a>：用于轻松地构建所有这些镜像（NetESP镜像、根文件系统镜像等等）。</li>
+</ul>
+<p>由此可见，藉由这些组件的搭配组合，我们的网络启动链路是一个高度可自定义化的过程，我们可以自由决定<strong>我们的启动过程在哪种程度上是“网络化”的</strong>。</p>
+<p>主要的思考点有：</p>
+<p><img src="/images/systemd-http-boot.png" alt="systemd-http-boot.png"></p>
+<ol>
+<li>是否使用UEFI HTTP Boot？<br> a. 是。<br> b. 否，使用本地ESP。</li>
+<li>UEFI HTTP Boot提供什么？<br> a. 提供一个只有ESP的磁盘镜像，ESP中包含<code>systemd-boot</code>及其引导项。<br> b. 提供PE程序，PE程序是UKI。<br> c. 提供PE程序，PE程序是USI，启动。</li>
+<li>（接2a）systemd-boot做什么？<br> a. 通过<code>uki-url</code>拉取远程UKI。<br> b. 通过<code>uki-url</code>拉取USI，启动。<br> c. 加载（磁盘镜像或本地）的ESP中的UKI。</li>
+<li>（接2b，或接3a，或接3c）UKI中做什么？<br> a. 通过<code>ip=dhcp rd.systemd.pull=XXX root=XXX</code>从远程拉取根文件系统镜像，启动。<br> b. 通过<code>ip=dhcp rd.systemd.pull=XXX mount.usr=XXX</code>从远程拉取USR镜像，释放根文件系统，启动。</li>
+</ol>
+<h1 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h1><p>以标准的1a -&gt; 2a -&gt; 3a -&gt; 4a为例。</p>
+<h2 id="构建镜像"><a href="#构建镜像" class="headerlink" title="构建镜像"></a>构建镜像</h2><p>你可以从这里快速获取我的镜像模板：<a target="_blank" rel="noopener" href="https://github.com/MoltenArmor/mkosi-templates">MoltenArmor&#x2F;mkosi-template</a>。</p>
+<p>镜像构建配置项的含义可以从这里参考：<a target="_blank" rel="noopener" href="https://github.com/systemd/mkosi/blob/main/mkosi/resources/man/mkosi.1.md">mkosi&#x2F;mkosi&#x2F;resources&#x2F;man&#x2F;mkosi.1.md</a>。</p>
+<h3 id="NetESP"><a href="#NetESP" class="headerlink" title="NetESP"></a>NetESP</h3><p><code>mkosi.conf</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[Distribution]</span><br><span class="line">Distribution=debian</span><br><span class="line"></span><br><span class="line">[Content]</span><br><span class="line"># 只安装systemd-boot，而不安装UKI</span><br><span class="line">Bootable=no</span><br><span class="line">Packages=</span><br><span class="line">    systemd-boot</span><br><span class="line">    systemd-boot-efi</span><br><span class="line"></span><br><span class="line">[Output]</span><br><span class="line">Format=esp</span><br><span class="line">ImageVersion=</span><br><span class="line">Output=unbootable-netesp</span><br></pre></td></tr></table></figure>
+<p><code>mkosi.extra/efi/loader/loader.conf</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">timeout 5</span><br></pre></td></tr></table></figure>
+<p><code>mkosi.extra/efi/loader/entries/10-netboot.conf</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">title NetBoot</span><br><span class="line">architecture x64</span><br><span class="line">uki-url http://ServerURL</span><br></pre></td></tr></table></figure>
+<p>随后执行构建：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkosi build</span><br></pre></td></tr></table></figure>
+
+<h3 id="Rootfs"><a href="#Rootfs" class="headerlink" title="Rootfs"></a>Rootfs</h3><p>根文件系统怎样都好，只需要确保构建产品格式为Disk，按照你的个性化构建即可，如果你实在懒得客制化，使用这条命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkosi --include mkosi-vm --distribution debian --format disk build</span><br></pre></td></tr></table></figure>
+
+<h2 id="UEFI-HTTP-Boot"><a href="#UEFI-HTTP-Boot" class="headerlink" title="UEFI HTTP Boot"></a>UEFI HTTP Boot</h2><p>如前所述，UEFI HTTP Boot有两种配置方式：</p>
+<ol>
+<li>在UEFI固件配置中手动配置选择。</li>
+<li>使用DHCP服务器传递特定报文。</li>
+</ol>
+<p>第一种自不必说，在自动化场景中可能显得不够实用，我们主要讨论第二种情况。我们选择<code>systemd-networkd</code>作为DHCP服务器实现，如果是内网唯一的DHCP服务器，那么配置如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[Match]</span><br><span class="line">Name=enp?s?</span><br><span class="line"></span><br><span class="line">[Network]</span><br><span class="line">Address=192.168.1.1/24</span><br><span class="line">Gateway=网关路由器IP</span><br><span class="line">DHCPServer=yes</span><br><span class="line"></span><br><span class="line">[DHCPServer]</span><br><span class="line">PoolOffset=0</span><br><span class="line">PoolSize=254</span><br><span class="line">DNS=114.114.114.114</span><br><span class="line">SendOption=60:string:HTTPClient</span><br><span class="line">SendOption=67:string:http://XXX/netesp.raw</span><br></pre></td></tr></table></figure>
+<p>如果不是内网唯一的DHCP服务器，那么：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[Match]</span><br><span class="line">Name=enp?s?</span><br><span class="line"></span><br><span class="line">[Network]</span><br><span class="line">Address=192.168.1.1/24</span><br><span class="line">Gateway=网关路由器IP</span><br><span class="line">DHCPServer=yes</span><br><span class="line"></span><br><span class="line">[DHCPServer]</span><br><span class="line">PoolOffset=254</span><br><span class="line">PoolSize=1</span><br><span class="line">EmitDNS=no</span><br><span class="line">EmitRouter=no</span><br><span class="line">SendOption=60:string:HTTPClient</span><br><span class="line">SendOption=67:string:http://XXX/netesp.raw</span><br></pre></td></tr></table></figure>
+
+<h2 id="systemd-boot"><a href="#systemd-boot" class="headerlink" title="systemd-boot"></a><code>systemd-boot</code></h2><p>通过HTTP服务器提供的Raw Disk镜像只能包含一个ESP分区（其他分区就算包含也会被忽略），ESP中必须在<code>/EFI/BOOT/BOOTX64.EFI</code>位置安装<code>systemd-boot</code>，并在<code>/loader/entries/</code>目录下配置它的引导项，指定提供UKI的服务器：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">title NetBoot</span><br><span class="line">architecture x64</span><br><span class="line">uki-url http://AnotherServer/YYY.efi</span><br></pre></td></tr></table></figure>
+
+<p>HTTP服务器可以选择Busybox、Python或任意一个实现。</p>
+<h2 id="内核命令行参数与systemd-import-generator"><a href="#内核命令行参数与systemd-import-generator" class="headerlink" title="内核命令行参数与systemd-import-generator"></a>内核命令行参数与<code>systemd-import-generator</code></h2><p>我们需要进行配置，以使得UKI的Initrd中的<code>systemd-importd</code>会自动拉取Rootfs，并将其加载到内存中，用于之后的启动过程。因此内核命令行参数需要配置<code>systemd-importd</code>的行为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip=dhcp rd.systemd.pull=raw,machine,verify=no,blockdev:rootdisk:http://XXX/rootfs.raw root=dissect rd.systemd.mask=systemd-repart.service systemd.mask=systemd-repart.service</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>ip=dhcp</code>：触发Initrd中的<code>systemd-networkd</code>配置网络。</li>
+<li><code>rd.systemd.pull=</code>：触发Initrd中的<code>saystemd-importd</code>拉取镜像。</li>
+<li><code>root=dissect</code>：自动解析镜像中的根文件系统并进行挂载。</li>
+<li><code>rd.systemd.mask=systemd-repart.service systemd.mask=systemd-repart.service</code>：镜像是不可变的，<code>systemd-repart</code>无力进行重新分区，如果不Mask掉会启动失败。</li>
+</ul>
+<p>这样在启动时，<code>systemd-importd</code>就会导入<code>rootfs.raw</code>，并使systemd从<code>rootfs.raw</code>启动。</p>
+<h2 id="启动！"><a href="#启动！" class="headerlink" title="启动！"></a>启动！</h2><p>接前文，如果希望手动配置UEFI固件，进入EFI固件后，进入Device Manager -&gt; Network Device List，然后选择HTTP Boot Configuration，选择HTTP服务器提供的文件的URL。</p>
+<p><img src="/images/EFI-HTTPBOOT1.png" alt="EFI-HTTPBOOT1.png"></p>
+<p><img src="/images/EFI-HTTPBOOT2.png" alt="EFI-HTTPBOOT2.png"></p>
+<p>接着就可以在EFI Boot Manager找到引导项了。</p>
+<p><img src="/images/EFI-HTTPBOOT3.png" alt="EFI-HTTPBOOT3.png"></p>
+<p>随后系统启动，会拉取镜像并启动<code>systemd-boot</code>，选择网络启动的引导项，即可启动系统：</p>
+<p><img src="/images/EFI-HTTPBOOT4.png" alt="EFI-HTTPBOOT4.png"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/02/19/%E8%B0%A2%E8%B0%A2%E4%BD%A0-%E4%BC%A6%E7%BA%B3%E7%89%B9/" rel="prev" title="谢谢你-伦纳特">
+                  <i class="fa fa-angle-left"></i> 谢谢你-伦纳特
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Molten_Armor</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
