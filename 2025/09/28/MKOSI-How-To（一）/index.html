@@ -20,27 +20,27 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"blog.icku.eu.org","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="这是一个 Bash 特性，但是有希望在未来加入 POSIX 标准。">
+    <meta name="description" content="这是一系列MKOSI镜像构建器由浅入深的新手教程文本，我们会以一个客制化的Arch Linux发行版为例子，详细讲解MKOSI的使用方法。让我们开始构建镜像吧！">
 <meta property="og:type" content="article">
-<meta property="og:title" content="bash的转义字符扩展">
-<meta property="og:url" content="https://blog.icku.eu.org/2023/04/13/bash%E7%9A%84%E8%BD%AC%E4%B9%89%E5%AD%97%E7%AC%A6%E6%89%A9%E5%B1%95/index.html">
+<meta property="og:title" content="MKOSI How To（一）">
+<meta property="og:url" content="https://blog.icku.eu.org/2025/09/28/MKOSI-How-To%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
 <meta property="og:site_name" content="MA Blog">
-<meta property="og:description" content="这是一个 Bash 特性，但是有希望在未来加入 POSIX 标准。">
+<meta property="og:description" content="这是一系列MKOSI镜像构建器由浅入深的新手教程文本，我们会以一个客制化的Arch Linux发行版为例子，详细讲解MKOSI的使用方法。让我们开始构建镜像吧！">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-04-12T20:47:20.000Z">
-<meta property="article:modified_time" content="2024-06-27T15:16:10.000Z">
+<meta property="article:published_time" content="2025-09-28T08:36:09.000Z">
+<meta property="article:modified_time" content="2025-09-28T08:36:59.643Z">
 <meta property="article:author" content="Molten_Armor">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://blog.icku.eu.org/2023/04/13/bash%E7%9A%84%E8%BD%AC%E4%B9%89%E5%AD%97%E7%AC%A6%E6%89%A9%E5%B1%95/">
+<link rel="canonical" href="https://blog.icku.eu.org/2025/09/28/MKOSI-How-To%EF%BC%88%E4%B8%80%EF%BC%89/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.icku.eu.org/2023/04/13/bash%E7%9A%84%E8%BD%AC%E4%B9%89%E5%AD%97%E7%AC%A6%E6%89%A9%E5%B1%95/","path":"2023/04/13/bash的转义字符扩展/","title":"bash的转义字符扩展"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.icku.eu.org/2025/09/28/MKOSI-How-To%EF%BC%88%E4%B8%80%EF%BC%89/","path":"2025/09/28/MKOSI-How-To（一）/","title":"MKOSI How To（一）"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>bash的转义字符扩展 | MA Blog</title>
+<title>MKOSI How To（一） | MA Blog</title>
   
 
 
@@ -92,7 +92,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -105,6 +105,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFMKOSI%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">什么是MKOSI？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%99%E4%B8%9C%E8%A5%BF%E6%98%AF%E6%80%8E%E4%B9%88%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F%E7%9A%84%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">这东西是怎么构建镜像的？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%88%91%E8%AF%A5%E6%80%8E%E4%B9%88%E5%AE%89%E8%A3%85%E5%AE%83%E5%91%A2%EF%BC%9F"><span class="nav-number">3.</span> <span class="nav-text">我该怎么安装它呢？</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -153,7 +154,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://blog.icku.eu.org/2023/04/13/bash%E7%9A%84%E8%BD%AC%E4%B9%89%E5%AD%97%E7%AC%A6%E6%89%A9%E5%B1%95/">
+    <link itemprop="mainEntityOfPage" href="https://blog.icku.eu.org/2025/09/28/MKOSI-How-To%EF%BC%88%E4%B8%80%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -166,12 +167,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="bash的转义字符扩展 | MA Blog">
+      <meta itemprop="name" content="MKOSI How To（一） | MA Blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          bash的转义字符扩展
+          MKOSI How To（一）
         </h1>
 
         <div class="post-meta-container">
@@ -181,15 +182,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2023-04-13 04:47:20" itemprop="dateCreated datePublished" datetime="2023-04-13T04:47:20+08:00">2023-04-13</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-06-27 23:16:10" itemprop="dateModified" datetime="2024-06-27T23:16:10+08:00">2024-06-27</time>
+      <time title="创建时间：2025-09-28 16:36:09 / 修改时间：16:36:59" itemprop="dateCreated datePublished" datetime="2025-09-28T16:36:09+08:00">2025-09-28</time>
     </span>
 
   
@@ -201,10 +196,34 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>这是一个 Bash 特性，但是有希望在未来加入 POSIX 标准。</p>
+    <div class="post-body" itemprop="articleBody"><p>这是一系列<a target="_blank" rel="noopener" href="https://github.com/systemd/mkosi">MKOSI镜像构建器</a>由浅入深的新手教程文本，我们会以一个客制化的Arch Linux发行版为例子，详细讲解MKOSI的使用方法。让我们开始构建镜像吧！</p>
 <span id="more"></span>
-<p>将字符串用<code>$&#39;&#39;</code>（注意，必须是单引号）符号括起来，可以使 Shell 解析并展开字符串中的 ANSI 转义字符。<br>具体来说，包括以下几种：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">\a  响铃</span><br><span class="line">\b  退格</span><br><span class="line">\e  回车</span><br><span class="line">\E  回车</span><br><span class="line">\f  换页</span><br><span class="line">\n  换行</span><br><span class="line">\r  回到行首</span><br><span class="line">\t  水平制表符</span><br><span class="line">\v  垂直制表符</span><br><span class="line">\\  单纯的反斜杠</span><br><span class="line">\&#x27;  单纯的单引号</span><br><span class="line">\&quot;  单纯的双引号</span><br><span class="line">\?  单纯的问号</span><br><span class="line">\nnn  使用八进制表示的ASCII八位字符，最多三位</span><br><span class="line">\xHH  使用十六进制表示的ASCII八位字符，最多两位</span><br><span class="line">\uHHHH  使用十六进制表示的Unicode字符，最多四位</span><br><span class="line">\UHHHHHHHH  使用十六进制表示的Unicode字符，最多八位</span><br><span class="line">\cx  Ctrl+X字符</span><br></pre></td></tr></table></figure>
+
+<h1 id="什么是MKOSI？"><a href="#什么是MKOSI？" class="headerlink" title="什么是MKOSI？"></a>什么是MKOSI？</h1><p>根据<a target="_blank" rel="noopener" href="https://mkosi.systemd.io/">官方</a>的说法，MKOSI是一个“客制化镜像构建器”，虽然话是这么说，但是实际上，MKOSI是一个和systemd生态高度相关的，以及围绕systemd的镜像生态编写的Linux发行版镜像构建器。</p>
+<p>之所以这么说，是因为，<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/tree/main/mkosi">MKOSI本身就是systemd高度依赖的CI基础设施</a>，MKOSI的核心开发成员本身也是systemd的核心开发成员，MKOSI的Feature开发很大程度上也由systemd的开发进程直接控制，尤其是<a target="_blank" rel="noopener" href="https://uapi-group.org/specifications/specs/discoverable_disk_image/">DDI（Discoverable Disk Image）格式</a>的支持。</p>
+<p>如前所述，和大家熟知的OCI镜像构建器不同，MKOSI是围绕DDI格式设计的（虽然确实也支持OCI的产品格式），简单来说，DDI是一类自包含的磁盘镜像，它自身包含了自己的一切元数据和校验信息，而不需要外部文件。</p>
+<p>如果抛开这些设计思路和政治问题不谈，从技术本质上说，MKOSI就是各种发行版的包管理器的Wrapper（Debian的<code>apt</code>、Fedora的<code>dnf</code>、Arch的<code>pacman</code>、SUSE的<code>zypper</code>）。</p>
+<h1 id="这东西是怎么构建镜像的？"><a href="#这东西是怎么构建镜像的？" class="headerlink" title="这东西是怎么构建镜像的？"></a>这东西是怎么构建镜像的？</h1><p>这就需要先讲一些基本知识了。</p>
+<p>Linux发行版的本质，是三个部分的组合体：</p>
+<ol>
+<li>一系列用于设定文件系统基准点的基础文件（Base Files，或称为Base Rootfs）。</li>
+<li>一组能让系统基本可用（这在现代语境下，通常指的是，可以作为容器根文件系统从<code>init</code>启动）的核心包集合（Essential Packages）。</li>
+<li>以及用于执行包安装的包管理器（Package Manager）。</li>
+</ol>
+<p>如此说来，构建一个发行版镜像的过程，用最简单的话来说，无非也就是三步：</p>
+<ol>
+<li>释放出Base Files，构建基本根文件系统框架。</li>
+<li>调用包管理器，下载发行版的核心包集合，并安装到目标根文件系统中。</li>
+<li>将根文件系统转换为目标格式（打包为Tar？整理为磁盘镜像？或是直接保持目录形式产出？）。</li>
+</ol>
+<p>当然，实际情况要比这复杂一些。</p>
+<h1 id="我该怎么安装它呢？"><a href="#我该怎么安装它呢？" class="headerlink" title="我该怎么安装它呢？"></a>我该怎么安装它呢？</h1><p>这简单。大部分发行版的包仓库中已经对MKOSI进行了打包，所以你应该可以使用<code>mkosi</code>这个包名称直接安装：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">apt install mkosi</span><br><span class="line"></span><br><span class="line">dnf install mkosi</span><br><span class="line"></span><br><span class="line">pacman -Sy mkosi</span><br></pre></td></tr></table></figure>
+
+<p>但是，MKOSI目前处于高速迭代的过程中，因此我更建议你去使用Git主线的版本。要安装一个Python应用程序，一个值得推荐的工具是<code>pipx</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipx install git+https://github.com/systemd/mkosi.git</span><br></pre></td></tr></table></figure>
+
+<p>就这么简单。</p>
 
     </div>
 
@@ -218,13 +237,13 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2023/04/03/%E4%BD%BF%E7%94%A8LVM-2%E5%88%9B%E5%BB%BA%E8%BD%AFRAID/" rel="prev" title="使用LVM 2创建软RAID">
-                  <i class="fa fa-angle-left"></i> 使用LVM 2创建软RAID
+                <a href="/2025/09/27/systemd%E7%9A%84%E6%96%B0%E6%97%B6%E4%BB%A3%E7%BD%91%E7%BB%9C%E5%90%AF%E5%8A%A8/" rel="prev" title="systemd的新时代网络启动">
+                  <i class="fa fa-angle-left"></i> systemd的新时代网络启动
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2023/04/29/LXC%E5%AE%B9%E5%99%A8%E7%AE%80%E6%98%8E%E6%95%99%E7%A8%8B/" rel="next" title="LXC容器简明教程">
-                  LXC容器简明教程 <i class="fa fa-angle-right"></i>
+                <a href="/2025/09/28/MKOSI-How-To%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="next" title="MKOSI How To（二）">
+                  MKOSI How To（二） <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>
