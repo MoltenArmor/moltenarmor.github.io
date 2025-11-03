@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.icku.eu.org","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="我想指定构建的发行版的版本和镜像站！虽然对Arch用户可能没有意义，但是你可以通过[Distribution]段内的Release&#x3D;配置项来指定使用的版本号： 123[Distribution]Distribution&#x3D;debianRelease&#x3D;forky 而对于Arch这类滚动发行版，你也可以使用Snapshot&#x3D;配置项来指定使用某一天的快照来构建高度可复现的镜像： 123[Distrib">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MKOSI-How-To（三）">
+<meta property="og:url" content="https://blog.icku.eu.org/2025/11/03/MKOSI-How-To%EF%BC%88%E4%B8%89%EF%BC%89/index.html">
+<meta property="og:site_name" content="MA Blog">
+<meta property="og:description" content="我想指定构建的发行版的版本和镜像站！虽然对Arch用户可能没有意义，但是你可以通过[Distribution]段内的Release&#x3D;配置项来指定使用的版本号： 123[Distribution]Distribution&#x3D;debianRelease&#x3D;forky 而对于Arch这类滚动发行版，你也可以使用Snapshot&#x3D;配置项来指定使用某一天的快照来构建高度可复现的镜像： 123[Distrib">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-11-03T11:23:34.000Z">
+<meta property="article:modified_time" content="2025-11-03T11:24:27.388Z">
+<meta property="article:author" content="Molten_Armor">
+<meta property="article:tag" content="mkosi">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.icku.eu.org/2025/11/03/MKOSI-How-To%EF%BC%88%E4%B8%89%EF%BC%89/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.icku.eu.org/2025/11/03/MKOSI-How-To%EF%BC%88%E4%B8%89%EF%BC%89/","path":"2025/11/03/MKOSI-How-To（三）/","title":"MKOSI-How-To（三）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>MKOSI-How-To（三） | MA Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">MA Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%88%91%E6%83%B3%E6%8C%87%E5%AE%9A%E6%9E%84%E5%BB%BA%E7%9A%84%E5%8F%91%E8%A1%8C%E7%89%88%E7%9A%84%E7%89%88%E6%9C%AC%E5%92%8C%E9%95%9C%E5%83%8F%E7%AB%99%EF%BC%81"><span class="nav-number">1.</span> <span class="nav-text">我想指定构建的发行版的版本和镜像站！</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%88%91%E7%9A%84Root%E7%94%A8%E6%88%B7%E6%B2%A1%E6%9C%89%E5%AF%86%E7%A0%81-Shell%E4%B8%8D%E5%AF%B9-%E7%B3%BB%E7%BB%9F%E8%AF%AD%E8%A8%80%E4%B8%8D%E5%AF%B9%EF%BC%81"><span class="nav-number">2.</span> <span class="nav-text">我的Root用户没有密码 &#x2F; Shell不对 &#x2F; 系统语言不对！</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%88%91%E8%BF%98%E6%83%B3%E6%B7%BB%E5%8A%A0%E6%88%91%E8%87%AA%E5%B7%B1%E7%9A%84%E6%96%87%E4%BB%B6-%E6%89%A7%E8%A1%8C%E6%88%91%E8%87%AA%E5%B7%B1%E7%9A%84%E7%89%B9%E6%AE%8A%E5%88%9D%E5%A7%8B%E5%8C%96%E9%80%BB%E8%BE%91%EF%BC%81"><span class="nav-number">3.</span> <span class="nav-text">我还想添加我自己的文件 &#x2F; 执行我自己的特殊初始化逻辑！</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E7%9C%9F%E6%85%A2%EF%BC%8C%E6%B2%A1%E6%9C%89%E7%BC%93%E5%AD%98%E5%8A%9F%E8%83%BD%E5%90%97%EF%BC%9F"><span class="nav-number">4.</span> <span class="nav-text">构建真慢，没有缓存功能吗？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%88%91%E6%83%B3%E8%A6%81%E4%B8%80%E4%B8%AA%E5%8F%AF%E4%BB%A5%E5%90%AF%E5%8A%A8%E7%9A%84VM%E9%95%9C%E5%83%8F"><span class="nav-number">5.</span> <span class="nav-text">我想要一个可以启动的VM镜像</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Molten_Armor</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.icku.eu.org/2025/11/03/MKOSI-How-To%EF%BC%88%E4%B8%89%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Molten_Armor">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MA Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="MKOSI-How-To（三） | MA Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MKOSI-How-To（三）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2025-11-03 19:23:34 / 修改时间：19:24:27" itemprop="dateCreated datePublished" datetime="2025-11-03T19:23:34+08:00">2025-11-03</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><span id="more"></span>
+
+<h1 id="我想指定构建的发行版的版本和镜像站！"><a href="#我想指定构建的发行版的版本和镜像站！" class="headerlink" title="我想指定构建的发行版的版本和镜像站！"></a>我想指定构建的发行版的版本和镜像站！</h1><p>虽然对Arch用户可能没有意义，但是你可以通过<code>[Distribution]</code>段内的<code>Release=</code>配置项来指定使用的版本号：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[Distribution]</span><br><span class="line">Distribution=debian</span><br><span class="line">Release=forky</span><br></pre></td></tr></table></figure>
+<p>而对于Arch这类滚动发行版，你也可以使用<code>Snapshot=</code>配置项来指定使用某一天的快照来构建高度可复现的镜像：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[Distribution]</span><br><span class="line">Distribution=arch</span><br><span class="line">Snapshot=20250927</span><br></pre></td></tr></table></figure>
+
+<p>要使用镜像站，你只需要设置<code>Mirror=</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[Distribution]</span><br><span class="line">Distribution=arch</span><br><span class="line">Mirror=http://mirrors.ustc.edu.cn/archlinux/</span><br></pre></td></tr></table></figure>
+
+<h1 id="我的Root用户没有密码-Shell不对-系统语言不对！"><a href="#我的Root用户没有密码-Shell不对-系统语言不对！" class="headerlink" title="我的Root用户没有密码 &#x2F; Shell不对 &#x2F; 系统语言不对！"></a>我的Root用户没有密码 &#x2F; Shell不对 &#x2F; 系统语言不对！</h1><p>这些本质上都是同一个问题。如前所说，在我们构建镜像时，<code>systemd-firstboot</code>会被触发，对镜像内进行初始化。你可以手动为<code>systemd-firstboot</code>提供参数，这样镜像的具体初始化细节就由你控制了。可配置的参数有这些，它们都位于<code>[Content]</code>段：</p>
+<ul>
+<li><code>MachineID=</code>：设置镜像内的机器ID，默认为<code>random</code>，你也可以使用<code>mkosi.machine-id</code>文件保存。</li>
+<li><code>Locale=</code>：镜像内的语言。</li>
+<li><code>Keymap=</code>：镜像内的Keymap。</li>
+<li><code>Hostname=</code>：设置镜像内的默认主机名。</li>
+<li><code>RootShell=</code>：Root用户的默认Shell。</li>
+<li><code>RootPassword=</code>：设置镜像内Root用户的默认密码，你也可以使用<code>mkosi.rootpw</code>文件保存密码，这个文件还可以是一个可以执行的Shell脚本，使用其输出作为密码。。</li>
+</ul>
+<h1 id="我还想添加我自己的文件-执行我自己的特殊初始化逻辑！"><a href="#我还想添加我自己的文件-执行我自己的特殊初始化逻辑！" class="headerlink" title="我还想添加我自己的文件 &#x2F; 执行我自己的特殊初始化逻辑！"></a>我还想添加我自己的文件 &#x2F; 执行我自己的特殊初始化逻辑！</h1><p>这完全是可以做到的。如前面所说，MKOSI为镜像构建过程中提供了多种挂钩点。我们只需要创建对应的脚本或文件，便可以在对应的时刻执行操作。</p>
+<p>对于添加文件，我们有这些选择：</p>
+<ul>
+<li><code>mkosi.sandbox/</code>或<code>SandboxTrees=</code>指定的目录：在<strong>开始构建前</strong>，往构建的沙盒环境中添加的文件。在设计上，这是为了让我们添加自己的包管理器配置，从而配置自定义的镜像源。例如，Debian的自定义镜像源可以放在<code>mkosi.sandbox/etc/apt/sources.list</code>。</li>
+<li><code>BaseTrees=</code>指定的目录：在构建时使用的<strong>基础根文件系统（Base Files）</strong>，默认情况下，MKOSI会使用内部的逻辑获取Base Files，除非你相当确定需要自己定制这一部分极早期的逻辑，否则不要轻易尝试提供，这很可能会导致你的镜像无法构建。</li>
+<li><code>mkosi.skeleton/</code>或<code>SkeletonTrees=</code>指定的目录：在构建时，安装软件包之前先拷贝到镜像中的文件。</li>
+<li><code>mkosi.extra/</code>或<code>ExtraTrees=</code>指定的目录：在构建时，安装软件包之后再拷贝到镜像中的文件。</li>
+<li><code>RemoveFiles=</code>：在构建时，安装软件包之后删除镜像内的文件。</li>
+</ul>
+<p>对于自定义逻辑，我们可以使用钩子脚本，所有这些钩子脚本，默认情况下都是在宿主系统环境执行的，添加<code>.chroot</code>后缀可以使它们在镜像环境内执行：</p>
+<ul>
+<li><code>mkosi.postinst[.chroot]</code>：在安装软件包之后，执行<code>systemd-firstboot</code>等初始化操作之前执行。</li>
+<li><code>mkosi.finalize[.chroot]</code>：在执行<code>systemd-firstboot</code>等初始化操作之后执行。</li>
+<li><code>mkosi.postoutput</code>：不支持<code>.chroot</code>后缀，在镜像产品已经导出后执行。</li>
+</ul>
+<p>脚本内还有一大批可以使用的环境变量，它们保存了可能用到的大部分路径，例如：</p>
+<ul>
+<li><code>$ARCHITECTURE</code>：镜像的架构。</li>
+<li><code>$DISTRIBUTION</code>：镜像的发行版。</li>
+<li><code>$BUILDROOT</code>：当前正在构建的镜像的根目录。</li>
+<li><code>$SRCDIR</code>：启动<code>mkosi</code>的路径。</li>
+<li><code>$OUTPUTDIR</code>：镜像构建产物的保存目录。</li>
+</ul>
+<p>你可以在这里找到具体列表：<a target="_blank" rel="noopener" href="https://github.com/systemd/mkosi/blob/main/mkosi/resources/man/mkosi.1.md">MKOSI文档</a>。</p>
+<h1 id="构建真慢，没有缓存功能吗？"><a href="#构建真慢，没有缓存功能吗？" class="headerlink" title="构建真慢，没有缓存功能吗？"></a>构建真慢，没有缓存功能吗？</h1><p>有的！而且你还可以选择性配置两种缓存：</p>
+<ul>
+<li>包管理器缓存：在构建时使用<code>-i</code>选项，或是在配置中指定<code>Incremental=yes</code>配置项，然后创建<code>mkosi.cache/</code>目录，或是在配置中指定<code>CacheDirectory=</code>配置项即可。</li>
+<li>镜像本身的缓存：创建<code>mkosi.pkgcache/</code>目录，或是在配置中指定<code>PackageCacheDirectory=</code>配置项即可。</li>
+</ul>
+<h1 id="我想要一个可以启动的VM镜像"><a href="#我想要一个可以启动的VM镜像" class="headerlink" title="我想要一个可以启动的VM镜像"></a>我想要一个可以启动的VM镜像</h1><p>对于一个VM来说，你通常会希望使用一个裸磁盘镜像（Raw Disk Image，虽然你完全可以通过<code>virtiofsd</code>直接使用目录作为根文件系统），而且希望这个镜像中包含ESP分区和必要的引导程序。</p>
+<p>转换为MKOSI的语言，即为以下这些配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[Distribution]</span><br><span class="line">Distribution=arch</span><br><span class="line"></span><br><span class="line">[Output]</span><br><span class="line"># 构建一个Raw Disk镜像</span><br><span class="line">Format=disk</span><br><span class="line"></span><br><span class="line">[Content]</span><br><span class="line"># 可引导镜像</span><br><span class="line">Bootable=yes</span><br><span class="line">Packages=systemd</span><br><span class="line">    bash</span><br><span class="line">    coreutils</span><br><span class="line">    util-linux</span><br><span class="line">    # 你需要这些额外的软件包以构建可引导镜像</span><br><span class="line">    # 引导程序，Arch的systemd-boot已经包含在systemd包内了</span><br><span class="line">    # 如果是其他发行版，你需要明确安装</span><br><span class="line">    #systemd-boot</span><br><span class="line">    # Linux内核</span><br><span class="line">    linux</span><br></pre></td></tr></table></figure>
+
+<p>接着，你就可以使用Qemu直接启动这个镜像进行Debug了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkosi vm</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/mkosi/" rel="tag"># mkosi</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/11/01/Python%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B/" rel="prev" title="Python守护进程">
+                  <i class="fa fa-angle-left"></i> Python守护进程
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/11/03/MKOSI-How-To%EF%BC%88%E5%9B%9B%EF%BC%89/" rel="next" title="MKOSI-How-To（四）">
+                  MKOSI-How-To（四） <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Molten_Armor</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
