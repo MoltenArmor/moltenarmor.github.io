@@ -27,7 +27,7 @@
 <meta property="og:description" content="systemd 将过去那些系统管理员通过数不尽的汗水积累起来的 Shell 与链接的奇技淫巧，通过精巧而复杂的设计与高超的编程技巧粗暴的切割成了数个.desktop文件语法的单元文件与一个健壮的作业引擎。这种操作上的简化主义与大一统式的集中管理怎么能说不是一种进步呢？">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-05-21T08:42:08.000Z">
-<meta property="article:modified_time" content="2025-10-01T14:12:53.629Z">
+<meta property="article:modified_time" content="2026-02-28T06:22:18.043Z">
 <meta property="article:author" content="Kwok &quot;Molten_Armor&quot; Guy">
 <meta property="article:tag" content="linux">
 <meta property="article:tag" content="systemd">
@@ -197,7 +197,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-10-01 22:12:53" itemprop="dateModified" datetime="2025-10-01T22:12:53+08:00">2025-10-01</time>
+      <time title="修改时间：2026-02-28 14:22:18" itemprop="dateModified" datetime="2026-02-28T14:22:18+08:00">2026-02-28</time>
     </span>
 
   
@@ -214,6 +214,16 @@
 
 <p>不说别的，传统的经验和所谓的“UNIX哲学”就算再宝贵，也实在谈不上是什么不可逾越的大山。现代软件项目不可避免地走向复杂，胶水、经验、约定这些东西总会在某个时间节点崩溃。解决这一问题的更好方案只能是从一开始就用整体主义的方式进行设计，以强耦合 + 硬规范的暴力手段进行规范：有就是有，没有就是没有。</p>
 <p>就凭 systemd 抹平了一大波软件包和发行版之间五花八门的脚本实现来说，它就功不可没。无论屏幕前的各位观众有多恨它，都请记住：systemd 的成功本身是建立在抛弃它的一部分最初愿景的基础之上的。迄今为止，仍然没有一个发行版的用法符合 systemd 原本的设计（纯粹事件驱动模型）。就凭这一点我们就可以断言：systemd 既可以说是过于激进，也可以说是还不够激进，这个观点完全取决于你的立场。</p>
+<p>（2026年补）</p>
+<p>我受够了。</p>
+<p>很多遗老意识不到，所谓的UNIX哲学和POSIX，在现代系统Plumbing层早就变成了一个空壳。现代Linux和它们不能说毫无关系，但基本上也属于没什么瓜葛了。</p>
+<p>Linux内核在过去二十年里引入了cgroups、namespaces、seccomp、eBPF、overlayfs、dm-verity……这些东西在UNIX的世界里一个都不存在。而systemd是Linux内核功能的忠实用户空间代理者——内核生态有什么能力，用户空间就暴露什么接口（.path对应inotify，.slice对应cgroup，.timer对应timerfd，ProtectSystem&#x3D;对应namespaces，以此类推）。它不是在”膨胀”，它是在<strong>追踪内核的能力边界</strong>。</p>
+<p>所以那些针对systemd的攻击和辱骂，最终在无意识层面也是被代理的——systemd替内核和整个生态挡了刀。这些怨恨要落实的最终目标是两个地方：</p>
+<p>第一个是Linux内核本身。 内核功能的迭代已经远远超出了这些遗老的认知边界。他们本质上是在埋怨：Linux内核的进化怎么不顾及我们十年前、二十年前对UNIX和POSIX的理解了？但他们看不见内核——内核的变化是底层的、渐进的、对用户不可见的。cgroups从v1演进到v2，99%的人根本不知道。他们能看见的变化源头是systemd，所以火力全部倾泻在了代理人身上。</p>
+<p>第二个是Linux发行版生态的复杂现实。 systemd的适配目标是所有（或大部分）Linux发行版的实际交集。这些遗老不明白，现在的Linux发行版不是一个社区，而是一大群社区——Debian、Fedora、Arch、openSUSE、Gentoo、Alpine、NixOS……每一个都有自己的约束、自己的用户、自己的政治。协调成本极其复杂。不是一个先验的标准文档决定了现实应该长什么样，而是现实本身——各发行版实际在做什么——决定了既成的（De facto）标准。systemd是彻底的现实主义者：Poettering八年前就说过，”我只关心现实中实际实现了什么（What’s actually implemented IRL），而不是某个被一些人视为圣经、但实际上充其量只被当作弱指导性建议来使用的标准。”</p>
+<p>那些最响亮的噪音——在GitHub issue里引用OpenBSD的hier(7)来论证systemd”违反标准”的、在Reddit上喊”UNIX哲学万岁”的——归根结底，说到底是只有一半的人跟上了一个现实：现代Linux已经脱胎换骨，和那个老不死的UNIX分道扬镳了。所谓的UNIX&#x2F;POSIX文化，在系统Plumbing层早已名存实亡，脱离了现代工程事实。而systemd，作为把这个分道扬镳在用户空间彻底显性化、毫不妥协地放到明面上的代理人，承受了最大的挡刀。</p>
+<p>而这些遗老最深层的愤怒，甚至可能根本与技术无关。”UNIX哲学”对他们来说不只是一套技术原则——它是职业身份，是二十年积累的知识体系的价值锚点。当Poettering说”POSIX只是Weak guidelines at best”时，被否定的不是一个标准文档，被否定的是他们整个职业生涯的知识根基。所以反应才如此激烈——这不是技术辩论，这是存在性焦虑。</p>
+<p>但这终究是死人和未死之人的区别。 工程和工业的迭代车轮不会停下来照顾任何人的”技术尊严”。UNIX已经完成了它的历史使命。Linux从它身上继承了该继承的东西，然后走上了自己的路。这条路已经走了二十年，不会回头。</p>
 
     </div>
 
