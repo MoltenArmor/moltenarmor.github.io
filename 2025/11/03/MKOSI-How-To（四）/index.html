@@ -23,13 +23,15 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="MKOSI-How-To（四）">
 <meta property="og:url" content="https://blog.icku.eu.org/2025/11/03/MKOSI-How-To%EF%BC%88%E5%9B%9B%EF%BC%89/index.html">
-<meta property="og:site_name" content="Void of the Real">
+<meta property="og:site_name" content="Mokumesei Manor">
 <meta property="og:description" content="构建Disk镜像的进阶配置">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-11-03T11:23:37.000Z">
-<meta property="article:modified_time" content="2025-11-03T11:27:28.220Z">
+<meta property="article:modified_time" content="2026-06-11T14:15:42.923Z">
 <meta property="article:author" content="Kwok &quot;Molten_Armor&quot; Guy">
-<meta property="article:tag" content="mkosi">
+<meta property="article:tag" content="MKOSI">
+<meta property="article:tag" content="镜像构建">
+<meta property="article:tag" content="系列教程">
 <meta name="twitter:card" content="summary">
 
 
@@ -40,7 +42,7 @@
 <script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.icku.eu.org/2025/11/03/MKOSI-How-To%EF%BC%88%E5%9B%9B%EF%BC%89/","path":"2025/11/03/MKOSI-How-To（四）/","title":"MKOSI-How-To（四）"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>MKOSI-How-To（四） | Void of the Real</title>
+<title>MKOSI-How-To（四） | Mokumesei Manor</title>
   
 
 
@@ -70,7 +72,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <p class="site-title">Void of the Real</p>
+      <p class="site-title">Mokumesei Manor</p>
       <i class="logo-line"></i>
     </a>
   </div>
@@ -118,12 +120,16 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">40</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">52</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
@@ -166,12 +172,12 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Void of the Real">
+      <meta itemprop="name" content="Mokumesei Manor">
       <meta itemprop="description" content="Just another blog about Linux, systemd, and something more.">
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="MKOSI-How-To（四） | Void of the Real">
+      <meta itemprop="name" content="MKOSI-How-To（四） | Mokumesei Manor">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
@@ -186,9 +192,32 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2025-11-03 19:23:37 / 修改时间：19:27:28" itemprop="dateCreated datePublished" datetime="2025-11-03T19:23:37+08:00">2025-11-03</time>
+      <time title="创建时间：2025-11-03 19:23:37" itemprop="dateCreated datePublished" datetime="2025-11-03T19:23:37+08:00">2025-11-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-06-11 22:15:42" itemprop="dateModified" datetime="2026-06-11T22:15:42+08:00">2026-06-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AE%B9%E5%99%A8%E4%B8%8E%E9%95%9C%E5%83%8F/" itemprop="url" rel="index"><span itemprop="name">容器与镜像</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AE%B9%E5%99%A8%E4%B8%8E%E9%95%9C%E5%83%8F/MKOSI/" itemprop="url" rel="index"><span itemprop="name">MKOSI</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AE%B9%E5%99%A8%E4%B8%8E%E9%95%9C%E5%83%8F/MKOSI/MKOSI-How-To/" itemprop="url" rel="index"><span itemprop="name">MKOSI-How-To</span></a>
+        </span>
     </span>
 
   
@@ -231,7 +260,6 @@
 
 <p>或者，如果你想使用自己提供的Initrd，也可以进行设置：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[Content]</span><br><span class="line">Initrds=xxx</span><br></pre></td></tr></table></figure>
-
     </div>
 
     
@@ -240,7 +268,9 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/mkosi/" rel="tag"># mkosi</a>
+              <a href="/tags/MKOSI/" rel="tag"># MKOSI</a>
+              <a href="/tags/%E9%95%9C%E5%83%8F%E6%9E%84%E5%BB%BA/" rel="tag"># 镜像构建</a>
+              <a href="/tags/%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B/" rel="tag"># 系列教程</a>
           </div>
 
         

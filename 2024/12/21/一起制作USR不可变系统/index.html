@@ -23,7 +23,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="一起制作USR不可变系统">
 <meta property="og:url" content="https://blog.icku.eu.org/2024/12/21/%E4%B8%80%E8%B5%B7%E5%88%B6%E4%BD%9CUSR%E4%B8%8D%E5%8F%AF%E5%8F%98%E7%B3%BB%E7%BB%9F/index.html">
-<meta property="og:site_name" content="Void of the Real">
+<meta property="og:site_name" content="Mokumesei Manor">
 <meta property="og:description" content="本文是我在制作自己的USR不可变系统时的一些记录。你可以访问MoltenArmor&#x2F;not-so-immutable-os查看我的系统源码。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://blog.icku.eu.org/images/not-so-immutable-os1.png">
@@ -39,13 +39,11 @@
 <meta property="og:image" content="https://blog.icku.eu.org/images/not-so-immutable-os11.png">
 <meta property="og:image" content="https://blog.icku.eu.org/images/not-so-immutable-os12.png">
 <meta property="article:published_time" content="2024-12-21T08:36:41.000Z">
-<meta property="article:modified_time" content="2025-10-01T14:12:53.628Z">
+<meta property="article:modified_time" content="2026-06-11T14:15:42.927Z">
 <meta property="article:author" content="Kwok &quot;Molten_Armor&quot; Guy">
-<meta property="article:tag" content="linux">
 <meta property="article:tag" content="systemd">
-<meta property="article:tag" content="operating_system">
-<meta property="article:tag" content="system">
-<meta property="article:tag" content="computer">
+<meta property="article:tag" content="不可变系统">
+<meta property="article:tag" content="mkosi">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://blog.icku.eu.org/images/not-so-immutable-os1.png">
 
@@ -57,7 +55,7 @@
 <script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.icku.eu.org/2024/12/21/%E4%B8%80%E8%B5%B7%E5%88%B6%E4%BD%9CUSR%E4%B8%8D%E5%8F%AF%E5%8F%98%E7%B3%BB%E7%BB%9F/","path":"2024/12/21/一起制作USR不可变系统/","title":"一起制作USR不可变系统"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>一起制作USR不可变系统 | Void of the Real</title>
+<title>一起制作USR不可变系统 | Mokumesei Manor</title>
   
 
 
@@ -87,7 +85,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <p class="site-title">Void of the Real</p>
+      <p class="site-title">Mokumesei Manor</p>
       <i class="logo-line"></i>
     </a>
   </div>
@@ -122,7 +120,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFUSR%E4%B8%8D%E5%8F%AF%E5%8F%98%E7%B3%BB%E7%BB%9F%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">什么是USR不可变系统？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E8%BF%99%E4%B9%88%E5%81%9A%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">为什么要这么做？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7"><span class="nav-number">3.</span> <span class="nav-text">工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E4%BD%93%E8%AE%BE%E8%AE%A1"><span class="nav-number">4.</span> <span class="nav-text">整体设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%8C%BA%E8%AE%BE%E8%AE%A1"><span class="nav-number">5.</span> <span class="nav-text">分区设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E9%95%9C%E5%83%8F"><span class="nav-number">6.</span> <span class="nav-text">扩展镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%88%E5%B7%B2%E5%BA%9F%E5%BC%83%EF%BC%89%E5%8F%AF%E5%86%99%E7%9A%84-etc"><span class="nav-number">6.0.1.</span> <span class="nav-text">（已废弃）可写的&#x2F;etc&#x2F;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%A7%A3%E9%94%81%E7%9A%84-etc"><span class="nav-number">6.0.2.</span> <span class="nav-text">动态解锁的&#x2F;etc&#x2F;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83"><span class="nav-number">6.0.3.</span> <span class="nav-text">测试环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%9D%E7%95%99%E8%BD%AF%E4%BB%B6%E5%8C%85%E5%85%83%E6%95%B0%E6%8D%AE"><span class="nav-number">6.0.4.</span> <span class="nav-text">保留软件包元数据</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E6%96%87%E4%BB%B6%E9%87%8A%E6%94%BE"><span class="nav-number">7.</span> <span class="nav-text">系统文件释放</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E6%9B%B4%E6%96%B0"><span class="nav-number">8.</span> <span class="nav-text">系统更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B1%89%E5%8C%96"><span class="nav-number">9.</span> <span class="nav-text">汉化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%82%E8%AE%B0"><span class="nav-number">10.</span> <span class="nav-text">杂记</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E5%A4%8Dregulatory-db"><span class="nav-number">10.1.</span> <span class="nav-text">修复regulatory.db</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%95%9C%E5%83%8F%E5%8F%A3%E5%91%B3"><span class="nav-number">11.</span> <span class="nav-text">镜像口味</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Live%E7%B3%BB%E7%BB%9F"><span class="nav-number">12.</span> <span class="nav-text">Live系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Debug%E6%A8%A1%E5%BC%8F"><span class="nav-number">13.</span> <span class="nav-text">Debug模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#STM%E6%9C%8D%E5%8A%A1%E7%AB%AF"><span class="nav-number">14.</span> <span class="nav-text">STM服务端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%91%E6%8F%B4%E6%A8%A1%E5%BC%8F"><span class="nav-number">15.</span> <span class="nav-text">救援模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Initrd%E6%96%AD%E7%82%B9"><span class="nav-number">16.</span> <span class="nav-text">Initrd断点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BA%E5%8E%82%E5%8C%96"><span class="nav-number">17.</span> <span class="nav-text">出厂化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E6%88%AA%E5%9B%BE"><span class="nav-number">18.</span> <span class="nav-text">一些截图</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFUSR%E4%B8%8D%E5%8F%AF%E5%8F%98%E7%B3%BB%E7%BB%9F%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">什么是USR不可变系统？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E8%BF%99%E4%B9%88%E5%81%9A%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">为什么要这么做？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7"><span class="nav-number">3.</span> <span class="nav-text">工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E4%BD%93%E8%AE%BE%E8%AE%A1"><span class="nav-number">4.</span> <span class="nav-text">整体设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%8C%BA%E8%AE%BE%E8%AE%A1"><span class="nav-number">5.</span> <span class="nav-text">分区设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E9%95%9C%E5%83%8F"><span class="nav-number">6.</span> <span class="nav-text">扩展镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%88%E5%B7%B2%E5%BA%9F%E5%BC%83%EF%BC%89%E5%8F%AF%E5%86%99%E7%9A%84-etc"><span class="nav-number">6.0.1.</span> <span class="nav-text">（已废弃）可写的&#x2F;etc&#x2F;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%A7%A3%E9%94%81%E7%9A%84-etc"><span class="nav-number">6.0.2.</span> <span class="nav-text">动态解锁的&#x2F;etc&#x2F;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83"><span class="nav-number">6.0.3.</span> <span class="nav-text">测试环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Drop-in%E5%BC%8F%E6%96%B0%E5%A2%9E%E7%94%A8%E6%88%B7"><span class="nav-number">6.0.4.</span> <span class="nav-text">Drop-in式新增用户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%9D%E7%95%99%E8%BD%AF%E4%BB%B6%E5%8C%85%E5%85%83%E6%95%B0%E6%8D%AE"><span class="nav-number">6.0.5.</span> <span class="nav-text">保留软件包元数据</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E6%96%87%E4%BB%B6%E9%87%8A%E6%94%BE"><span class="nav-number">7.</span> <span class="nav-text">系统文件释放</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E6%9B%B4%E6%96%B0"><span class="nav-number">8.</span> <span class="nav-text">系统更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B1%89%E5%8C%96"><span class="nav-number">9.</span> <span class="nav-text">汉化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83-1"><span class="nav-number">10.</span> <span class="nav-text">测试环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%97%85%E6%AF%92%E5%BC%8F%E5%AE%89%E8%A3%85"><span class="nav-number">11.</span> <span class="nav-text">病毒式安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%82%E8%AE%B0"><span class="nav-number">12.</span> <span class="nav-text">杂记</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E6%94%AF%E6%8C%81%E6%89%A9%E5%B1%95%E9%95%9C%E5%83%8F%E7%9A%84%E7%BB%84%E4%BB%B6"><span class="nav-number">12.1.</span> <span class="nav-text">不支持扩展镜像的组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E5%A4%8Dregulatory-db"><span class="nav-number">12.2.</span> <span class="nav-text">修复regulatory.db</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E5%A4%8D%E7%A7%BB%E5%8A%A8%E7%B3%BB%E7%BB%9F"><span class="nav-number">12.3.</span> <span class="nav-text">修复移动系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E6%A0%87%E4%B8%A2%E5%A4%B1"><span class="nav-number">12.4.</span> <span class="nav-text">图标丢失</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%95%9C%E5%83%8F%E5%8F%A3%E5%91%B3"><span class="nav-number">13.</span> <span class="nav-text">镜像口味</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Live%E7%B3%BB%E7%BB%9F"><span class="nav-number">14.</span> <span class="nav-text">Live系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Debug%E6%A8%A1%E5%BC%8F"><span class="nav-number">15.</span> <span class="nav-text">Debug模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#STM%E6%9C%8D%E5%8A%A1%E7%AB%AF"><span class="nav-number">16.</span> <span class="nav-text">STM服务端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%91%E6%8F%B4%E6%A8%A1%E5%BC%8F"><span class="nav-number">17.</span> <span class="nav-text">救援模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Initrd%E6%96%AD%E7%82%B9"><span class="nav-number">18.</span> <span class="nav-text">Initrd断点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BA%E5%8E%82%E5%8C%96"><span class="nav-number">19.</span> <span class="nav-text">出厂化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E6%88%AA%E5%9B%BE"><span class="nav-number">20.</span> <span class="nav-text">一些截图</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -135,12 +133,16 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">40</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">52</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
@@ -183,12 +185,12 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Void of the Real">
+      <meta itemprop="name" content="Mokumesei Manor">
       <meta itemprop="description" content="Just another blog about Linux, systemd, and something more.">
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="一起制作USR不可变系统 | Void of the Real">
+      <meta itemprop="name" content="一起制作USR不可变系统 | Mokumesei Manor">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
@@ -211,7 +213,20 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-10-01 22:12:53" itemprop="dateModified" datetime="2025-10-01T22:12:53+08:00">2025-10-01</time>
+      <time title="修改时间：2026-06-11 22:15:42" itemprop="dateModified" datetime="2026-06-11T22:15:42+08:00">2026-06-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/USR%E4%B8%8D%E5%8F%AF%E5%8F%98%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">USR不可变系统</span></a>
+        </span>
     </span>
 
   
@@ -232,7 +247,7 @@
 <p>在日后的管理中，你还需要反复地使用<code>apt</code>安装软件包，这些软件包都有着复杂的<code>postinst</code>脚本和相互依赖关系，如果稍有不慎破坏了依赖链，你的整个系统可能都会受到影响。除此之外，如果之后你移除了软件包，那么包管理器并不会移除<code>/etc/</code>下你编写的配置文件，这些文件日积月累会变成不计其数的脏数据。而且，在系统更新后，<code>/etc/</code>下还会出现两份，甚至更多的旧版本配置归档（<code>.dpkg-old</code>），更是让情况火上浇油。尤其是在日后系统有大型更新，涉及到大量软件包变化的情况下，除了重新安装，似乎并没有什么更好的办法了。</p>
 <p>这套模式已经出现并且被使用了数十年，但是这并不代表它没有问题，恰恰相反，它有很多毛病。</p>
 <p>为什么要使用Installer程序呢？很早之前就有人使用块设备镜像的方式进行系统备份了，那么它既然可以用于备份，难道不可以用于安装吗？现在不就有这样的系统构建工具<code>mkosi</code>吗？我们只要构建出一个磁盘镜像，直接烧录（二进制写入）到磁盘中，不就得到了一个完整的操作系统吗？</p>
-<p>为什么要我们手动进行配置呢？systemd不是已经提供了<code>systemd-tmpfiles</code>、<code>systemd-sysusers</code>、<code>systemd-firstboot</code>等组件，来让系统在启动时达到合适的状态吗？我们不仅不需要手动修改任何文件，而且甚至不需要编写复杂的Shell脚本，只需要提供合适的这些systemd组件的配置，就可以让系统在启动时就达到我们期望的状态。而所有这些配置文件都可以被封装在<code>/usr</code>中，在第一次启动时被systemd读取。没有听懂吗？换句话说：只要我们在<code>/usr</code>中封装好这些组件的配置和一些必要的文件，那么<code>/</code>下的其他层次结构，例如<code>/etc/</code>，完全可以在我们第一次启动时，从<code>/usr</code>中被“释放”或者说“生成”出来。</p>
+<p>为什么要我们手动进行配置呢？systemd不是已经提供了<code>systemd-tmpfiles</code>、<code>systemd-sysusers</code>、<code>systemd-userdbd</code>、<code>systemd-firstboot</code>等组件，来让系统在启动时达到合适的状态吗？我们不仅不需要手动修改任何文件，而且甚至不需要编写复杂的Shell脚本，只需要提供合适的这些systemd组件的配置，就可以让系统在启动时就达到我们期望的状态。而所有这些配置文件都可以被封装在<code>/usr</code>中，在第一次启动时被systemd读取。没有听懂吗？换句话说：只要我们在<code>/usr</code>中封装好这些组件的配置和一些必要的文件，那么<code>/</code>下的其他层次结构，例如<code>/etc/</code>，完全可以在我们第一次启动时，从<code>/usr</code>中被“释放”或者说“生成”出来。</p>
 <ul>
 <li>同时，这也意味着，系统存在“出厂状态”这一概念了：其他层次结构尚未从<code>/usr</code>中被释放出来的状态。如此一来，我们就完全可以在任何时候对操作系统进行“恢复出厂状态”了。</li>
 </ul>
@@ -268,48 +283,76 @@
 </blockquote>
 <p>我们之前已经提到过了A&#x2F;B更新的思路，但是这具体是怎么实现的呢？我们知道，GPT分区表是支持保存分区PARTLABEL，并通过PARTLABEL定位分区的。因此，我们完全可以将版本号作为分区的PARTLABEL，以此确定分区版本，同时，我们将<code>root=PARTLABEL=XXX</code>的内核命令行参数封装到版本对应的UKI中，这样，系统在启动时，只要使用某个版本的UKI，那么启动时，就一定会使用对应版本的<code>/usr</code>分区：</p>
 <p><code>mkosi.conf</code>中需要：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[Content]</span><br><span class="line">KernelCommandLine=rw mount.usr=PARTLABEL=%i_%v</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[Content]</span><br><span class="line">KernelCommandLine=rw mount.usr=PARTLABEL=%i_%v    # %i是Image ID，%v是版本字符串，如果使用Verity</span><br></pre></td></tr></table></figure>
+<p>（2026补充）在systemd v259以后，你可以使用<code>mount.usr=dissect</code>了，它会使用<code>systemd-gpt-auto-generator</code>的逻辑，自动挂载<strong>最新</strong>版本的USR分区（不用再和过去一样，只能僵硬地硬编码一一对应的版本了，不过如果你喜欢，也可以继续使用<code>mount.usr=PARTLABEL=</code>）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[Content]</span><br><span class="line">KernelCommandLine=rw mount.usr=dissect</span><br></pre></td></tr></table></figure>
 
 <p><code>mkosi.images/base/mkosi.extra/usr/lib/repart.d/usr-verA.conf</code>：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[Partition]</span><br><span class="line">Type=usr</span><br><span class="line">Label=%M_%A    # 初始版本号</span><br><span class="line">SizeMinBytes=5G</span><br><span class="line">SizeMaxBytes=20G</span><br><span class="line">Weight=2000</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[Partition]</span><br><span class="line">Type=usr</span><br><span class="line">Label=%M_%A    # 初始版本号，%M是Image ID，%A是版本字符串</span><br><span class="line">SizeMinBytes=5G</span><br><span class="line">SizeMaxBytes=20G</span><br><span class="line">Weight=2000</span><br></pre></td></tr></table></figure>
 
-<p><code>mkosi.images/base/mkosi.extra/usr/lib/repart.d/usr-verA.conf</code>：</p>
+<p><code>mkosi.images/base/mkosi.extra/usr/lib/repart.d/usr-verB.conf</code>：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[Partition]</span><br><span class="line">Type=usr</span><br><span class="line">Label=_empty    # 该分区初始情况下不存储任何版本的USR数据，所以初始情况下Label设为_empty就好</span><br><span class="line">SizeMinBytes=5G</span><br><span class="line">SizeMaxBytes=20G</span><br><span class="line">Weight=2000</span><br></pre></td></tr></table></figure>
 
 <h2 id="扩展镜像"><a href="#扩展镜像" class="headerlink" title="扩展镜像"></a>扩展镜像</h2><p>为了日后的扩展性，我们需要构建扩展镜像。</p>
 <p>如前所述，要构建扩展镜像，我们首先需要确定获取增量文件的基础镜像，也就是最小化的<code>/usr</code>，然后再获取相对于该镜像的增量，构建另一个Sysext镜像，这意味着我们需要用到<code>mkosi</code>的子镜像功能<code>mkosi.images/</code>。</p>
 <p>我们将基础系统镜像保存为<code>mkosi.images/base/</code>，这里包含了最小化、可引导的系统构建配置。同时，我们将这样一个镜像的构建格式设为文件系统目录：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[Build]</span><br><span class="line">Format=directory</span><br></pre></td></tr></table></figure>
-<p>这样，在构建时，该镜像就会被构建为<code>mkosi.output/base/</code>目录树，我们就可以通过将其设为之后希望构建的Sysext镜像的<code>BaseTrees=</code>来获取增量了，例如我们的<code>mkosi.images/incus/mkosi.conf</code>：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[Config]</span><br><span class="line"># 需要依赖Base镜像</span><br><span class="line">Dependencies=base</span><br><span class="line"></span><br><span class="line">[Output]</span><br><span class="line">Format=sysext</span><br><span class="line">Overlay=yes    # 该配置启用增量获取</span><br><span class="line"></span><br><span class="line">[Content]</span><br><span class="line">Bootable=no    # 该镜像是扩展镜像，不需要可引导</span><br><span class="line">BaseTrees=%O/base    # 获取增量的相对目录树</span><br><span class="line">Packages=...    # 安装的软件包</span><br></pre></td></tr></table></figure>
 
+<p>这样，在构建时，该镜像就会被构建为<code>mkosi.output/base/</code>目录树，我们就可以通过将其设为之后希望构建的Sysext镜像的<code>BaseTrees=</code>来获取增量了，例如我们的<code>mkosi.images/incus/mkosi.conf</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[Assert]</span><br><span class="line"># 需要依赖Base镜像</span><br><span class="line">PathExists=%O/base</span><br><span class="line"></span><br><span class="line">[Output]</span><br><span class="line">Format=sysext</span><br><span class="line">Overlay=yes    # 该配置启用增量获取</span><br><span class="line"></span><br><span class="line">[Content]</span><br><span class="line">Bootable=no    # 该镜像是扩展镜像，不需要可引导</span><br><span class="line">BaseTrees=%O/base    # 获取增量的相对目录树</span><br><span class="line">Packages=...    # 安装的软件包</span><br></pre></td></tr></table></figure>
+
+<p>注意：MKOSI在构建时，如果发现镜像列表中有至少一个镜像具有<code>BaseTrees=</code>配置，那么就会导致缓存失效，判定元数据需要同步，进而<strong>强制清除列表中所有镜像的缓存</strong>（<code>mkosi.cache/</code>）。因此在构建扩展镜像时，务必<strong>只指定最终的目标镜像</strong>（如 <code>mkosi --dependency sysext-xxx build</code>）。否则会导致基座镜像的缓存被误删，导致每次都重新构建。</p>
 <p>在使用时，我们只需要先执行：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">importctl import-raw --class=sysext xxx.raw</span><br></pre></td></tr></table></figure>
 <p>倒入扩展镜像，然后执行：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemd-sysext merge</span><br></pre></td></tr></table></figure>
 <p>即可接入扩展镜像。</p>
-<p>值得注意的是，<code>systemd-sysext</code>在接入扩展镜像后，并不会触发执行<code>systemd-tmpfiles</code>、<code>systemd-sysusers</code>和<code>systemd-update-done.service</code>，因此，你需要手动执行：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">systemd-tmpfiles --create</span><br><span class="line"></span><br><span class="line">systemd-sysusers</span><br><span class="line"></span><br><span class="line">cp -rpn /usr/share/factory/ /</span><br></pre></td></tr></table></figure>
+<p>值得注意的是，<code>systemd-sysext</code>在接入扩展镜像后，并不会触发执行<code>systemd-tmpfiles</code>和<code>systemd-update-done.service</code>，因此，你需要手动执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemd-tmpfiles --create</span><br><span class="line"></span><br><span class="line">unlock-etc -d cp -rpn /usr/share/factory/ /</span><br></pre></td></tr></table></figure>
 
-<p>此外，在系统初始化时，<code>systemd-sysext</code>接入的镜像中的服务并不会被启动，因此你需要额外在启动后执行：</p>
+<p><del>此外，在系统初始化时，<code>systemd-sysext</code>接入的镜像中的服务并不会被启动（没有被引入初始事务），因此你需要额外在启动后执行</del>：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl --no-block default</span><br></pre></td></tr></table></figure>
-<p>你可以将这条命令写入<code>/etc/rc.local</code>，以确保在系统进入默认Target时自动执行。</p>
+<p><del>你可以将这条命令写入<code>/etc/rc.local</code>，以确保在系统进入默认Target时自动执行</del>。</p>
+<p>（预计V260上线）现在，Sysext镜像会被Initrd中的<code>systemd-sysext-sysroot.service</code>直接合并到根文件系统中，因此在初始事务中也会加载镜像中新增的服务，需要<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/pull/39410">PR #39410</a>。</p>
 <p>相似的，对于包含了<code>/etc/</code>目录下的配置文件的软件包，我们还需要构建一个Confext镜像：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[Config]</span><br><span class="line"># 需要依赖Base镜像</span><br><span class="line">Dependencies=base</span><br><span class="line"></span><br><span class="line">[Output]</span><br><span class="line">Format=confext</span><br><span class="line">Overlay=yes    # 该配置启用增量获取</span><br><span class="line"></span><br><span class="line">[Content]</span><br><span class="line">Bootable=no    # 该镜像是扩展镜像，不需要可引导</span><br><span class="line">BaseTrees=%O/base    # 获取增量的相对目录树</span><br><span class="line">Packages=...    # 安装的软件包，和Sysext相同</span><br></pre></td></tr></table></figure>
 <ul>
 <li>可以考虑为Sysext镜像添加对该Confext镜像的依赖关系。</li>
 </ul>
+<p>（2026补充）你可以创建一个既可以当作Sysext用，又可以当作Confext用的镜像，只需要包含这样一个<code>mkosi.repart/10-root.conf</code>分区配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[Partition]</span><br><span class="line">Type=root</span><br><span class="line">Format=erofs</span><br><span class="line">CopyFiles=/usr/</span><br><span class="line">CopyFiles=/opt/</span><br><span class="line">CopyFiles=/etc/</span><br><span class="line">Minimize=best</span><br></pre></td></tr></table></figure>
+<p>以及这样一个&#96;&#96;mkosi.postinst.chroot&#96;脚本：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line">set -eu</span><br><span class="line"></span><br><span class="line">EXT_IMAGE_ID=&quot;$&#123;IMAGE_ID&#125;&quot;</span><br><span class="line"></span><br><span class="line">if [ -f /usr/lib/os-release ]; then</span><br><span class="line">    . /usr/lib/os-release</span><br><span class="line">else</span><br><span class="line">    ID=&quot;_any&quot;</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">is_empty() &#123;</span><br><span class="line">    for d in &quot;$@&quot;; do</span><br><span class="line">        if [ -d &quot;$&#123;d&#125;&quot; ] &amp;&amp; [ -n &quot;$(ls -A &quot;$&#123;d&#125;&quot; 2&gt; /dev/null)&quot; ]; then</span><br><span class="line">            return 1</span><br><span class="line">        fi</span><br><span class="line">    done</span><br><span class="line">    return 0</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">SYSEXT_RELOAD=</span><br><span class="line">! is_empty /usr/lib/systemd/system /usr/lib/systemd/user \</span><br><span class="line">    &amp;&amp; SYSEXT_RELOAD=&quot;EXTENSION_RELOAD_MANAGER=1&quot;</span><br><span class="line"></span><br><span class="line">CONFEXT_RELOAD=</span><br><span class="line">! is_empty /etc/systemd/system /etc/systemd/user \</span><br><span class="line">    &amp;&amp; CONFEXT_RELOAD=&quot;EXTENSION_RELOAD_MANAGER=1&quot;</span><br><span class="line"></span><br><span class="line">mkdir -p /usr/lib/extension-release.d</span><br><span class="line"></span><br><span class="line">cat &gt; &quot;/usr/lib/extension-release.d/extension-release.$&#123;EXT_IMAGE_ID&#125;&quot; &lt;&lt; EOF</span><br><span class="line">ID=$&#123;ID&#125;</span><br><span class="line">SYSEXT_ID=$&#123;IMAGE_ID&#125;</span><br><span class="line">SYSEXT_SCOPE=$&#123;SYSEXT_SCOPE:-initrd system portable&#125;</span><br><span class="line">$&#123;SYSEXT_RELOAD:+&quot;$&#123;SYSEXT_RELOAD&#125;&quot;</span><br><span class="line">&#125;ARCHITECTURE=$&#123;ARCHITECTURE&#125;</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">mkdir -p /etc/extension-release.d</span><br><span class="line"></span><br><span class="line">cat &gt; &quot;/etc/extension-release.d/extension-release.$&#123;EXT_IMAGE_ID&#125;&quot; &lt;&lt; EOF</span><br><span class="line">ID=$&#123;ID&#125;</span><br><span class="line">$&#123;VERSION_ID:+VERSION_ID=&quot;$&#123;VERSION_ID&#125;&quot;</span><br><span class="line">&#125;CONFEXT_ID=$&#123;IMAGE_ID&#125;</span><br><span class="line">CONFEXT_SCOPE=$&#123;CONFEXT_SCOPE:-initrd system portable&#125;</span><br><span class="line">$&#123;CONFEXT_RELOAD:+&quot;$&#123;CONFEXT_RELOAD&#125;&quot;</span><br><span class="line">&#125;ARCHITECTURE=$&#123;ARCHITECTURE&#125;</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">SYSTEMD_TMPFILES_FORCE_SUBVOL=0 \</span><br><span class="line">    systemd-tmpfiles \</span><br><span class="line">    --boot \</span><br><span class="line">    --create \</span><br><span class="line">    --remove \</span><br><span class="line">    --prefix=/etc || &#123;</span><br><span class="line">        RET=&quot;$&#123;?&#125;&quot;</span><br><span class="line">        test &quot;$&#123;RET&#125;&quot; -eq 65 ||</span><br><span class="line">        test &quot;$&#123;RET&#125;&quot; -eq 73</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">systemctl preset-all</span><br><span class="line"></span><br><span class="line">systemctl --global preset-all</span><br></pre></td></tr></table></figure>
+<p>并在配置中这样写：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[Config]</span><br><span class="line">Dependencies=base</span><br><span class="line"></span><br><span class="line">[Output]</span><br><span class="line">Format=disk</span><br><span class="line">Overlay=yes</span><br><span class="line"></span><br><span class="line">[Content]</span><br><span class="line">Bootable=no</span><br><span class="line">BaseTrees=%O/base</span><br></pre></td></tr></table></figure>
+
 <p>如果希望<code>systemd-sysext.service</code>在启动时自动导入<code>/var/lib/extensions.mutable/</code>目录下的替换文件（我们不希望USR可变），创建<code>mkosi.images/base/mkosi.extra/usr/lib/systemd/system/systemd-sysext.service.d/import.conf</code>：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[Service]</span><br><span class="line">ExecStart=</span><br><span class="line">ExecStart=systemd-sysext --mutable=import</span><br><span class="line">ExecReload=</span><br><span class="line">ExecReload=systemd-sysext --mutable=import</span><br></pre></td></tr></table></figure>
 
-<p>值得一提的是，安装Sysext&#x2F;Confext镜像时，虽然默认会触发<code>systemctl daemon-reload</code>，但是并不会触发<code>systemctl preset-all</code>、<code>systemd-tmpfiles --create</code>、<code>systemd-sysusers</code>的执行（有时候还需要重载<code>dbus.service</code>，例如<code>rtkit.service</code>这类需要在D-Bus上注册的服务），需要手动执行对应操作。</p>
+<p>值得一提的是，安装Sysext&#x2F;Confext镜像时，虽然默认会触发<code>systemctl daemon-reload</code>，但是并不会触发<code>systemctl preset-all</code>、<code>systemctl --global preset-all</code>、<code>systemd-tmpfiles --create</code>、<code>systemd-sysusers</code>的执行（有时候还需要重载<code>dbus.service</code>，例如<code>rtkit.service</code>这类需要在D-Bus上注册的服务），需要手动执行对应操作。</p>
 <ul>
-<li>启用（<code>enable</code>）Sysext镜像中提供的systemd单元的操作必须在<code>systemd-confext.service</code>没有启动时执行，确保<code>/etc/systemd/system/</code>目录下的软链接是在基础<code>/etc</code>中创建的，而不是合并Confext后的可变目录下（<code>/var/lib/extensions.mutable/</code>）。这一问题也可以通过在<code>/etc/rc.local</code>中手动添加<code>systemctl daemon-reload</code>解决。</li>
+<li><del>启用（<code>enable</code>）Sysext镜像中提供的systemd单元的操作必须在<code>systemd-confext.service</code>没有启动时执行，确保<code>/etc/systemd/system/</code>目录下的软链接是在基础<code>/etc</code>中创建的，而不是合并Confext后的可变目录下（<code>/var/lib/extensions.mutable/</code>），否则无法在初始事务中读取到单元</del>。（systemd V260已修复问题，Sysext和Confext的加载会提前到Initrd中）</li>
 </ul>
+<p>有的Sysext镜像会安装额外的单元依赖关系，这些关系会被体现为<code>/etc/systemd/system/</code>目录下的符号链接，如果日后我们不想再使用某个提供了依赖关系的Sysext镜像了，<code>/etc/systemd/system/</code>目录下就会留下残留的悬置符号链接（Dangling Symlink），要清理这些符号链接，可以执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find -L /etc/systemd/system/ -type l -print -delete</span><br></pre></td></tr></table></figure>
+
 <h4 id="（已废弃）可写的-etc"><a href="#（已废弃）可写的-etc" class="headerlink" title="（已废弃）可写的/etc/"></a>（已废弃）可写的<code>/etc/</code></h4><p>我的系统的<code>/etc/</code>是可变的，所以还需要为<code>systemd-confext.service</code>进行修改，主要是启用<code>--mutable=yes</code>可变选项和禁用<code>--noexec=no</code>不可执行脚本选项。创建<code>mkosi.images/base/mkosi.extra/usr/lib/systemd/system/systemd-confext.service.d/mutable.conf</code>：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[Service]</span><br><span class="line">ExecStart=</span><br><span class="line">ExecStart=systemd-confext --mutable=yes --noexec=no</span><br><span class="line">ExecReload=</span><br><span class="line">ExecReload=systemd-confext --mutable=yes --noexec=no</span><br></pre></td></tr></table></figure>
-
-<h4 id="动态解锁的-etc"><a href="#动态解锁的-etc" class="headerlink" title="动态解锁的/etc/"></a>动态解锁的<code>/etc/</code></h4><p>现在系统的<code>/etc/</code>也是不可变的，它的配置是这样的<code>mkosi.images/base/mkosi.extra/usr/lib/systemd/system/systemd-confext.service.d/exec.conf</code>：</p>
+<p>然后为了确保<code>systemd-confext.service</code>服务总是能够启动，我们还需要创建一个空的Confext：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># mkosi.images/confext-empty/mkosi.conf</span><br><span class="line">[Config]</span><br><span class="line">Dependencies=base</span><br><span class="line"></span><br><span class="line">[Output]</span><br><span class="line">ImageVersion=</span><br><span class="line">Format=confext</span><br><span class="line">Overlay=yes</span><br><span class="line"></span><br><span class="line">[Content]</span><br><span class="line">Bootable=no</span><br><span class="line">BaseTrees=%O/base</span><br></pre></td></tr></table></figure>
+<p>以及Sysext：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># mkosi.images/sysext-empty/mkosi.conf</span><br><span class="line">[Config]</span><br><span class="line">Dependencies=base</span><br><span class="line"></span><br><span class="line">[Output]</span><br><span class="line">ImageVersion=</span><br><span class="line">Format=sysext</span><br><span class="line">Overlay=yes</span><br><span class="line"></span><br><span class="line">[Content]</span><br><span class="line">Bootable=no</span><br><span class="line">BaseTrees=%O/base</span><br></pre></td></tr></table></figure>
+<p>然后在<code>mkosi.postoutput</code>中写入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p &quot;$&#123;OUTPUTDIR&#125;/var/lib/extensions/&quot; &quot;$&#123;OUTPUTDIR&#125;/var/lib/confexts/&quot; &amp;&amp; \</span><br><span class="line">    cp -af --update=all &quot;$&#123;OUTPUTDIR&#125;/sysext-empty.raw&quot; &quot;$&#123;OUTPUTDIR&#125;/var/lib/extensions/&quot; &amp;&amp; \</span><br><span class="line">    cp -af --update=all &quot;$&#123;OUTPUTDIR&#125;/confext-empty.raw&quot; &quot;$&#123;OUTPUTDIR&#125;/var/lib/confexts/&quot;</span><br></pre></td></tr></table></figure>
+<p>这样，我们对<code>/etc</code>所做的任何修改都会被保存在<code>/var/lib/extensions.mutable/</code>目录下。</p>
+<p>2025-04：这样仍然会导致<code>/var/lib/extensions.mutable/etc/</code>目录下出现大量的配置文件，根本无法管理。我们应该使用某种方式明确地区分开这几种行为：</p>
+<ol>
+<li>预设的，内置的，编写在构建配置里的<code>/etc/</code>下的文件或是修改操作。</li>
+<li>临时的手动<code>/etc/</code>修改。</li>
+<li>持久化的，加载式的<code>/etc/</code>修改。（现在完全没有也无法区分2和3。）</li>
+<li>本机特定的、持久化的，手动的<code>/etc/</code>修改。</li>
+</ol>
+<h4 id="动态解锁的-etc"><a href="#动态解锁的-etc" class="headerlink" title="动态解锁的/etc/"></a>动态解锁的<code>/etc/</code></h4><p>现在，系统的<code>/etc/</code>重新被设为不可变的，它的配置是这样的<code>mkosi.images/base/mkosi.extra/usr/lib/systemd/system/systemd-confext.service.d/exec.conf</code>（以及<code>mkosi.images/default-initrd/mkosi.extra/usr/lib/systemd/system/systemd-confext-sysroot.service.d/exec.conf</code>）：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[Service]</span><br><span class="line">ExecStart=</span><br><span class="line">ExecStart=systemd-confext refresh --noexec=no --mutable=import</span><br><span class="line">ExecReload=</span><br><span class="line">ExecReload=systemd-confext refresh --noexec=no --mutable=import</span><br></pre></td></tr></table></figure>
 
 <p>这意味着我们有两种动态修改<code>/etc/</code>的方式：</p>
@@ -320,6 +363,9 @@
 <p><code>unlock-etc</code>脚本，用于方便地修改下层的<code>/etc/</code>目录：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line">set -ue</span><br><span class="line"></span><br><span class="line">start_confext() &#123;</span><br><span class="line">    if ! systemctl --no-block start systemd-confext.service; then</span><br><span class="line">    	printf &#x27;%s\n&#x27; &#x27;Error: Failed to queue start job for systemd-confext.service.&#x27; &gt;&amp;2</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">trap start_confext HUP INT QUIT ABRT TERM</span><br><span class="line"></span><br><span class="line">usage() &#123;</span><br><span class="line">    printf &#x27;%s\n&#x27; &#x27;Unlock /etc and run command.&#x27;</span><br><span class="line">    exit 0</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if [ -z &quot;$&#123;1:-&#125;&quot; ]; then</span><br><span class="line">    usage</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">if ! [ -x &quot;$(which &quot;$1&quot;)&quot; ]; then</span><br><span class="line">    printf &#x27;%s\n&#x27; &quot;Error: $1 is not executable.&quot; &gt;&amp;2</span><br><span class="line">    exit 1</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">if systemctl stop systemd-confext.service; then</span><br><span class="line">    &quot;$@&quot; || &#123; printf &#x27;%s\n&#x27; &quot;Error: Failed to run $1&quot; &gt;&amp;2 &amp;&amp; exit 1; &#125;</span><br><span class="line">    systemctl --no-block start systemd-confext.service </span><br><span class="line">else</span><br><span class="line">    printf &#x27;%s\n&#x27; &#x27;Error: Failed to stop systemd-confext.service.&#x27; &gt;&amp;2</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
 
+<p>如果一个服务和<code>systemd-sysext.service</code>或<code>systemd-confext.service</code>单元并发启动（例如<code>ldconfig.service</code>、<code>systemd-networkd.service</code>和<code>systemd-resolved.service</code>），但却又依赖Sysext或Confext中添加的配置，那么就会存在竞态条件，可以创建<code>/usr/lib/systemd/单元名.service.d/tmpfiles.conf</code>，内容如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line"># systemd-sysext.service和systemd-confext.service都有Before=systemd-tmpfiles-setup.service</span><br><span class="line">After=systemd-tmpfiles-setup.service</span><br></pre></td></tr></table></figure>
+
 <h4 id="测试环境"><a href="#测试环境" class="headerlink" title="测试环境"></a>测试环境</h4><p><code>systemd-sysext</code>和<code>systemd-confext</code>原生就支持通过<code>--mutable=ephemeral</code>选项在Overlayfs的最上层再挂载一层可写的Tmpfs，从而实现可回滚的测试操作。</p>
 <p>究其原理其实不难，也就是在Tmpfs的<code>/run</code>目录下创建两个临时目录，分别用于Upperdir和Workdir，然后执行：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount -t overlay overlay -o lowerdir=下层目录,upperdir=/run中的Upperdir,workdir=/run中的Workdir 下层目录</span><br></pre></td></tr></table></figure>
@@ -329,8 +375,18 @@
 <p>退出<code>exit-rw</code>：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line">set -ue</span><br><span class="line"></span><br><span class="line">usage() &#123;</span><br><span class="line">    printf &#x27;%s\n&#x27; &#x27;Exit testing mode and restore /etc and /usr.&#x27;</span><br><span class="line">    exit 0</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">check_user() &#123;</span><br><span class="line">    if [ &quot;$(id -u)&quot; -ne 0 ]; then</span><br><span class="line">        echo &quot;Error: This script must be run as root.&quot; &gt;&amp;2</span><br><span class="line">        exit 1</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if [ &quot;$#&quot; -ne 0 ]; then</span><br><span class="line">    usage</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">check_user</span><br><span class="line"></span><br><span class="line">systemctl --no-block reload-or-restart systemd-confext.service systemd-sysext.service</span><br><span class="line"></span><br><span class="line">tmpify -r /var/lib/apt || :</span><br><span class="line">tmpify -r /var/lib/dpkg || :</span><br></pre></td></tr></table></figure>
 
-<h4 id="保留软件包元数据"><a href="#保留软件包元数据" class="headerlink" title="保留软件包元数据"></a>保留软件包元数据</h4><p>我希望在镜像中保留软件包元数据，因此在<code>mkosi.finalize.chroot</code>脚本中写入：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line">set -ue</span><br><span class="line"></span><br><span class="line">mkdir -p /usr/share/factory/var/lib/apt /usr/share/factory/var/lib/dpkg &amp;&amp; \</span><br><span class="line">cp --archive --no-target-directory --update=none /var/lib/apt /usr/share/factory/var/lib/apt &amp;&amp; \</span><br><span class="line">cp --archive --no-target-directory --update=none /var/lib/dpkg /usr/share/factory/var/lib/dpkg</span><br></pre></td></tr></table></figure>
+<h4 id="Drop-in式新增用户"><a href="#Drop-in式新增用户" class="headerlink" title="Drop-in式新增用户"></a>Drop-in式新增用户</h4><p>很多软件包都提供自己的新用户，而我们的<code>/etc/</code>是不可变的（而且<code>/etc/passwd</code>是单体的），所以没有办法直接添加用户。纯粹增量的、Drop-in方式管理用户的systemd组件是<code>systemd-userdbd</code>，具体方式为，在扩展镜像中添加<code>mkosi.extra/usr/lib/userdbd/</code>目录，这个目录下保存以下几个文件：</p>
+<p><code>/etc/userdb/GID.group -&gt; /etc/userdb/组名.group</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;groupName&quot;: &quot;组名&quot;,</span><br><span class="line">    &quot;gid&quot;: GID</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>UID.user -&gt; 用户名.user</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;userName&quot;: &quot;用户名&quot;,</span><br><span class="line">    &quot;uid&quot;: UID,</span><br><span class="line">    &quot;gid&quot;: GID,</span><br><span class="line">    &quot;realName&quot;: &quot;GECOS信息&quot;,</span><br><span class="line">    &quot;homeDirectory&quot;: &quot;/家目录&quot;,</span><br><span class="line">    &quot;shell&quot;: &quot;/shell&quot;,</span><br><span class="line">    &quot;storage&quot;: &quot;classic&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>/etc/userdb/用户名:组名.membership</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>这样，在插入镜像之后，<code>systemd-userdbd</code>就会自动识别到这些用户，连创建都不需要。</p>
+<h4 id="保留软件包元数据"><a href="#保留软件包元数据" class="headerlink" title="保留软件包元数据"></a>保留软件包元数据</h4><p>我希望在镜像中保留软件包元数据，因此配置了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[Content]</span><br><span class="line">CleanPackageMetadata=no</span><br></pre></td></tr></table></figure>
+<p>并且在<code>mkosi.finalize.chroot</code>脚本中写入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line">set -ue</span><br><span class="line"></span><br><span class="line">mkdir -p /usr/share/factory/var/lib/apt /usr/share/factory/var/lib/dpkg &amp;&amp; \</span><br><span class="line"># 目的是保留/var/lib/apt/extended_states中的Auto-installed信息</span><br><span class="line">cp --archive --no-target-directory --update=none /var/lib/apt /usr/share/factory/var/lib/apt &amp;&amp; \</span><br><span class="line"># 目的是保留系统中“已安装”软件包列表</span><br><span class="line">cp --archive --no-target-directory --update=none /var/lib/dpkg /usr/share/factory/var/lib/dpkg</span><br></pre></td></tr></table></figure>
 <p>然后写入<code>/etc/rc.local</code>：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp -rpf --update=all /usr/share/factory/var / &amp;</span><br></pre></td></tr></table></figure>
 <ul>
@@ -347,20 +403,139 @@
 <p><code>mkosi.images/base/mkosi.extra/usr/lib/systemd/system/systemd-firstboot.service.d/etc.conf</code></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[Service]</span><br><span class="line">ExecStartPre=cp -rpn /usr/share/factory/etc /</span><br></pre></td></tr></table></figure>
 <p>这样，在系统首次启动时，便会触发该命令的执行，确保从<code>/usr/share/factory/</code>中将系统需要的所有配置文件都释放出来，省了不少力气。</p>
-<p>此外，在系统A&#x2F;B更新后，也需要再次从<code>/usr/share/factory/</code>释放文件，这可以通过为<code>systemd-update-done.service</code>服务挂钩实现，具体来说，就是编写这样一个服务：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">DefaultDependencies=no</span><br><span class="line">Conflicts=shutdown.target</span><br><span class="line">Before=shutdown.target</span><br><span class="line">Before=systemd-update-done.service</span><br><span class="line">ConditionNeedsUpdate=/etc</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=oneshot</span><br><span class="line">ExecStart=cp -rpn /usr/share/factory/etc /</span><br><span class="line">RemainAfterExit=yes</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=systemd-update-done.service</span><br></pre></td></tr></table></figure>
+<p>此外，在系统A&#x2F;B更新后，也需要再次从<code>/usr/share/factory/</code>释放文件，这可以通过为<code>systemd-update-done.service</code>服务挂钩实现，具体来说，就是编写这样一个<code>update-etc.service</code>服务以更新<code>/etc</code>（v260更新：需要迁移到Initrd中）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">DefaultDependencies=no</span><br><span class="line">Conflicts=shutdown.target</span><br><span class="line">Before=shutdown.target</span><br><span class="line">Before=systemd-confext.service</span><br><span class="line">ConditionNeedsUpdate=/etc</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=oneshot</span><br><span class="line">ExecStart=cp -rpn /usr/share/factory/etc /</span><br><span class="line">RemainAfterExit=yes</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=systemd-update-done.service</span><br></pre></td></tr></table></figure>
+<p>编写这样一个服务<code>update-package-metadata.service</code>以更新<code>/var</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">DefaultDependencies=no</span><br><span class="line">Conflicts=shutdown.target</span><br><span class="line">Before=shutdown.target</span><br><span class="line">Before=systemd-update-done.service</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=oneshot</span><br><span class="line"># Copy preserved package metadata from /usr/share/factory.</span><br><span class="line">ExecStart=cp -rpf --update=all /usr/share/factory/var /</span><br><span class="line">RemainAfterExit=yes</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=systemd-update-done.service</span><br></pre></td></tr></table></figure>
 
-<h2 id="系统更新"><a href="#系统更新" class="headerlink" title="系统更新"></a>系统更新</h2><p>在systemd V257，我们终于迎来了<code>systemd-sysupdate</code>与<code>mkosi</code>的集成，因此，我们只需要为<code>mkosi</code>编写<code>mkosi.sysupdate</code>配置，即可将<code>mkosi</code>用作进行系统A&#x2F;B更新的工具。</p>
+<h2 id="系统更新"><a href="#系统更新" class="headerlink" title="系统更新"></a>系统更新</h2><p>在systemd v257，我们终于迎来了<code>systemd-sysupdate</code>与<code>mkosi</code>的集成，因此，我们只需要为<code>mkosi</code>编写<code>mkosi.sysupdate</code>配置，即可将<code>mkosi</code>用作进行系统A&#x2F;B更新的工具。</p>
 <p><code>mkosi.sysupdate</code>下的<code>.transfer</code>文件的格式与<code>systemd-sysupdate</code>的标准要求没什么区别，但是特别需要注意的是这两行：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[Source]</span><br><span class="line">Path=/</span><br><span class="line">PathRelativeTo=explicit</span><br></pre></td></tr></table></figure>
 <p>这代表着由<code>mkosi</code>确定更新源的地址，是<code>systemd-sysupdate</code>和<code>mkosi</code>集成的关键。</p>
 <p>其它的内容没什么特别的，详情请参考<code>systemd-sysupdate</code>的手册。</p>
-<h2 id="汉化"><a href="#汉化" class="headerlink" title="汉化"></a>汉化</h2><p>要使用中文Locale，可以直接安装预编译好的<code>locales-all</code>包，也可以选择创建<code>mkosi.postinst.chroot</code>脚本，写入编译逻辑：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sed -i &#x27;/^# C.UTF-8.*/c\C.UTF-8 UTF-8&#x27; /etc/locale.gen &amp;&amp; \</span><br><span class="line">sed -i &#x27;/^# en_US.UTF-8.*/c\en_US.UTF-8 UTF-8&#x27; /etc/locale.gen &amp;&amp; \</span><br><span class="line">sed -i &#x27;/^# zh_CN.UTF-8.*/c\zh_CN.UTF-8 UTF-8&#x27; /etc/locale.gen &amp;&amp; \</span><br><span class="line">locale-gen</span><br></pre></td></tr></table></figure>
+<h2 id="汉化"><a href="#汉化" class="headerlink" title="汉化"></a>汉化</h2><p>要使用中文Locale，可以直接安装预编译好的<code>locales-all</code>包。</p>
+<p>或者也可以选择创建<code>mkosi.postinst.chroot</code>脚本，写入编译逻辑：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line">set -ue</span><br><span class="line"></span><br><span class="line">sed -i &#x27;/^# C.UTF-8.*/c\C.UTF-8 UTF-8&#x27; /etc/locale.gen</span><br><span class="line">sed -i &#x27;/^# en_US.UTF-8.*/c\en_US.UTF-8 UTF-8&#x27; /etc/locale.gen</span><br><span class="line">sed -i &#x27;/^# zh_CN.UTF-8.*/c\zh_CN.UTF-8 UTF-8&#x27; /etc/locale.gen </span><br><span class="line"></span><br><span class="line"># MKOSI 26以后会自动执行</span><br><span class="line"># locale-gen</span><br></pre></td></tr></table></figure>
+<p>（V26更新）注意，这个脚本必须放在Main镜像中，否则每次构建扩展镜像时，由于<code>/etc/locale.gen</code>不为空，总是会触发执行<code>locale-gen</code>重新编译语言，浪费时间。</p>
+<h2 id="测试环境-1"><a href="#测试环境-1" class="headerlink" title="测试环境"></a>测试环境</h2><p>我们的系统镜像完全符合Hermetic USR，因此可以100%使用systemd-nspawn的Volatile模式启动：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">systemd-nspawn [-b] -D / \</span><br><span class="line">    --volatile=yes \</span><br><span class="line">    --overlay=/usr::/usr \</span><br><span class="line">    --overlay=/var::/var \</span><br><span class="line">    --bind-ro=/etc/passwd \</span><br><span class="line">    --bind-ro=/etc/group \</span><br><span class="line">    --bind-ro=/etc/apt \</span><br><span class="line">    [--bind-ro=/etc/配置] \</span><br><span class="line">    --private-users=no \</span><br><span class="line">    --capability=all \</span><br><span class="line">    --resolv-conf=bind-host \</span><br><span class="line">    --timezone=bind \</span><br><span class="line">    --private-network=no</span><br></pre></td></tr></table></figure>
 
-<h2 id="杂记"><a href="#杂记" class="headerlink" title="杂记"></a>杂记</h2><h3 id="修复regulatory-db"><a href="#修复regulatory-db" class="headerlink" title="修复regulatory.db"></a>修复<code>regulatory.db</code></h3><p>发现明明安装了<code>wireless-regdb</code>包，还是会报告<code>failed to load regulatory.db</code>。</p>
+<h2 id="病毒式安装"><a href="#病毒式安装" class="headerlink" title="病毒式安装"></a>病毒式安装</h2><p>要实现病毒式安装（即把运行中的系统原封不动克隆&#x2F;分裂到另一个块设备），关键在于在<code>00-esp.conf</code>中添加：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[Partition]</span><br><span class="line">CopyFiles=/boot:/</span><br><span class="line">CopyFiles=/efi:/</span><br></pre></td></tr></table></figure>
+<p>在<code>10-usr-verA.conf</code>和<code>20-usr-verB.conf</code>中添加：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[Partition]</span><br><span class="line">CopyBlocks=auto</span><br></pre></td></tr></table></figure>
+<p>然后执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemd-repart --empty=force --dry-run=no /dev/块设备</span><br></pre></td></tr></table></figure>
+<p>即可。</p>
+<p>结合这一思路，你还可以通过Netboot实现自动化安装。你只需要参考以下配置构建一个UKI，在UEFI中启动它，并把自己的系统镜像上传到一个HTTP服务器上，便会在启动时自动拉取镜像并在内存中启动系统，然后你就可以使用命令安装：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">[Include]</span><br><span class="line">Include=mkosi-initrd</span><br><span class="line"></span><br><span class="line">[Distribution]</span><br><span class="line"># 发行版</span><br><span class="line">Distribution=debian</span><br><span class="line"></span><br><span class="line">[Output]</span><br><span class="line">Format=uki</span><br><span class="line">Output=镜像名</span><br><span class="line"></span><br><span class="line">[Content]</span><br><span class="line">Bootable=no</span><br><span class="line"># 构建UKI的三要素</span><br><span class="line">Packages=</span><br><span class="line">    # 提供systemd-stub</span><br><span class="line">    systemd-boot-efi</span><br><span class="line">    # 提供importd</span><br><span class="line">    systemd-container</span><br><span class="line">    # 提供内核</span><br><span class="line">    linux-image-generic</span><br><span class="line"># UKI中封装的内核命令行参数</span><br><span class="line">KernelCommandline=</span><br><span class="line">    # 设置URL</span><br><span class="line">    rd.systemd.pull=raw,machine,verify=no,blockdev:usrdisk:http://URL/XXXOS.raw</span><br><span class="line">    mount.usr=/dev/disk/by-loop-ref/usrdisk.raw-part2</span><br><span class="line">    root=tmpfs</span><br><span class="line">    ip=dhcp</span><br><span class="line">    # systemd-repart没办法对Tmpfs或Loop设备进行重新分区，总是会失败</span><br><span class="line">    rd.systemd.mask=systemd-repart.service</span><br><span class="line">    systemd.mask=systemd-repart.service</span><br><span class="line"># UKI内已经包含了内核，Initrd中不需要再包含</span><br><span class="line"># 日后也许可以换成RemovePackages=</span><br><span class="line">RemoveFiles=</span><br><span class="line">    /boot/config-*</span><br><span class="line">    /boot/System.map-*</span><br><span class="line">    /boot/vmlinuz-*</span><br></pre></td></tr></table></figure>
+<p>启动后便可执行命令进行安装。</p>
+<p>（TODO：<code>systemd-sysinstall</code>开发完成后，更新。）</p>
+<h2 id="杂记"><a href="#杂记" class="headerlink" title="杂记"></a>杂记</h2><h3 id="不支持扩展镜像的组件"><a href="#不支持扩展镜像的组件" class="headerlink" title="不支持扩展镜像的组件"></a>不支持扩展镜像的组件</h3><p>参考<a target="_blank" rel="noopener" href="https://github.com/uapi-group/specifications/issues/76">Issue #76</a>，部分组件仅支持<strong>单例配置文件</strong>，因此无法通过扩展镜像进行扩展（会导致覆盖问题），必须尽可能保留在基座镜像，需要特别注意，包括：</p>
+<table>
+<thead>
+<tr>
+<th>核心组件</th>
+<th>阻塞文件</th>
+<th><strong>影响范围</strong></th>
+<th>详细说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>（致命）VFS、Veritysetup、Cryptsetup</td>
+<td><code>/etc/*tab</code></td>
+<td>所有文件系统挂载、Verity、Crypt配置</td>
+<td><strong>这些配置全部属于本机特定配置，不要保存在镜像中，尤其不要保存在基座镜像中</strong>。</td>
+</tr>
+<tr>
+<td>（严重）<strong>Shadow-utils</strong></td>
+<td><code>/etc/passwd</code>、<code>/etc/group</code>、<code>/etc/shadow</code></td>
+<td>所有需要自定义用户的组件（如<code>sshd</code>、<code>lightdm</code>）</td>
+<td>所有UNIX用户数据库文件都是单例的，如果你的扩展镜像包含了新的用户，你必须创建<code>systemd-userdbd</code>的JSON用户记录。</td>
+</tr>
+<tr>
+<td>（严重）<strong>GlibC</strong></td>
+<td><code>/etc/nsswitch.conf</code></td>
+<td><strong>所有NSS插件&#x2F;模块</strong></td>
+<td>NSS配置文件是单例的且每行都涉及复杂的优先级顺序，如果你在扩展镜像安里装了<code>nss-mdns</code>，你无法通过Drop-in将<code>mdns4_minimal</code>插入到<code>hosts</code>行中。这导致这些NSS插件装了也无法生效。因此，<strong>所有涉及身份验证源、主机名解析源的组件最好在基座中规划好。</strong></td>
+</tr>
+<tr>
+<td>（严重）<strong>PAM</strong></td>
+<td><code>/etc/pam.d/common-*</code>、<code>/etc/pam.d/system-*</code></td>
+<td><strong>所有PAM模块</strong>，例如：<code>libpam-google-authenticator</code>、<code>libpam-u2f</code>、<code>libpam-ldap</code>、<code>fprintd</code></td>
+<td>全局通用的认证栈（如<code>common-auth</code>）是单文件维护的，且严重依赖每行规则的先后顺序。如果你想通过扩展增加“指纹解锁”功能，你需要直接修改<code>common-auth</code>，不支持Drop-in插入。</td>
+</tr>
+<tr>
+<td>（中度）<strong>PAM_Shell</strong></td>
+<td><code>/etc/shells</code></td>
+<td><strong>所有非标准Shell</strong>，例如<code>zsh</code>、<code>fish</code>、<code>tcsh</code>、<code>ksh</code></td>
+<td>这是一个纯文本列表。如果你把<code>zsh</code>放在扩展镜像里却没有修改<code>/etc/shells</code>，用户会被某些认证（例如Polkit）拒绝导致无法登录（被PAM拒绝）。不过这个文件的格式简单（一行一条数据，不涉及复杂逻辑），因此可以通过<code>systemd-tmpfiles</code>管理。</td>
+</tr>
+<tr>
+<td>（中度）RPC</td>
+<td><code>/etc/rpc</code></td>
+<td><strong>使用RPC的服务</strong>，例如：<code>nfs-utils</code>、<code>nis</code>、<code>quota</code></td>
+<td>RPC程序号映射表。默认情况下通常包含了大部分常见的RPC，但是如果扩展镜像中包含了自定义的RPC服务，无法注册其程序号。不过这个文件的格式简单（一行一条数据，不涉及复杂逻辑），因此可以通过<code>systemd-tmpfiles</code>管理。</td>
+</tr>
+<tr>
+<td>（轻微）Alternatives</td>
+<td><code>/etc/alternatives/</code></td>
+<td><strong>存在多实现&#x2F;多版本的工具</strong>，例如：<code>java</code>、<code>editor</code>、<code>python</code></td>
+<td>Alternatives机制依赖<code>/etc</code>下的单个符号链接来指向不同的<code>/usr</code>下的二进制。如果符号链接被覆盖可能会指向意料之外的二进制。</td>
+</tr>
+<tr>
+<td>（中度）GSettings Schema</td>
+<td><code>/usr/share/glib-2.0/schemas/gschemas.compiled</code></td>
+<td>所有GTK的桌面环境和软件</td>
+<td>GLib应用程序启动时只会读取预编译的缓存，必须通过<code>GSETTINGS_SCHEMA_DIR</code>配置到别的路径，并执行<code>glib-compile-schemas</code>更新，Qt直接读取<code>.qrc</code>文本文件，不受影响</td>
+</tr>
+<tr>
+<td>（中度）GIO缓存</td>
+<td><code>/usr/lib/x86_64-linux-gnu/gio/modules/giomodule.cache</code></td>
+<td>所有使用GVFS的应用程序</td>
+<td>删除<code>/usr/lib/x86_64-linux-gnu/gio/modules/giomodule.cache</code>可以触发回退逻辑，直接读取源文件，或者修改<code>GIO_MODULE_DIR</code>环境变量，执行<code>gio-querymodules</code></td>
+</tr>
+<tr>
+<td>（中度）MIME类型缓存</td>
+<td><code>/usr/share/mime/mime.cache</code></td>
+<td>所有GUI应用程序，包括GTK和Qt</td>
+<td>依赖<code>XDG_DATA_DIRS</code>环境变量，执行<code>update-mime-database</code>更新</td>
+</tr>
+<tr>
+<td>（中度）MIME关联缓存</td>
+<td><code>/usr/share/applications/mimeinfo.cache</code></td>
+<td>所有GUI应用程序，包括GTK和Qt</td>
+<td>删除<code>/usr/share/applications/mimeinfo.cache</code>可以触发回退逻辑，直接读取源文件，或者修改<code>XDG_DATA_DIRS</code>，执行<code>update-desktop-database</code>更新</td>
+</tr>
+<tr>
+<td>（中度）GDK Pixbuf缓存</td>
+<td><code>/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/.../loaders/loaders.cache</code></td>
+<td>所有需要缩略图的应用程序，包括GTK和Qt</td>
+<td>修改<code>GDK_PIXBUF_MODULE_FILE</code>环境变量，然后执行<code>/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/gdk-pixbuf-query-loaders &gt;</code>更新，Qt不受影响</td>
+</tr>
+<tr>
+<td>（轻微）图标缓存</td>
+<td><code>/usr/share/icons/*/icon-theme.cache</code></td>
+<td>所有GUI应用程序，包括GTK和Qt</td>
+<td>删除<code>/usr/share/icons/*/icon-theme.cache</code>可以触发回退逻辑，直接读取源文件，或者修改<code>XDG_DATA_DIRS</code></td>
+</tr>
+<tr>
+<td>（无影响，仅记录）字体缓存</td>
+<td><code>/var/cache/fontconfig/*</code></td>
+<td>所有GUI应用程序，包括GTK和Qt</td>
+<td>无影响，仅记录，通过<code>/etc/fonts/fonts.conf</code>配置</td>
+</tr>
+</tbody></table>
+<h3 id="修复regulatory-db"><a href="#修复regulatory-db" class="headerlink" title="修复regulatory.db"></a>修复<code>regulatory.db</code></h3><p>发现明明安装了<code>wireless-regdb</code>包，还是会报告<code>failed to load regulatory.db</code>。</p>
 <p>猜想原因可能是<code>/usr</code>和<code>/etc</code>不在同一个分区。创建<code>mkosi.postinst.chroot</code>脚本，写入逻辑：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ln -sf regulatory.db-debian /usr/lib/firmware/regulatory.db</span><br><span class="line">ln -sf regulatory.db-debian.p7s /usr/lib/firmware/regulatory.db.p7s</span><br></pre></td></tr></table></figure>
+
+<h3 id="修复移动系统"><a href="#修复移动系统" class="headerlink" title="修复移动系统"></a>修复移动系统</h3><p>在使用U盘移动系统时由于Initrd中没有USB驱动导致无法正常启动。解决方案是在Initrd中包含所有的存储驱动：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[Content]</span><br><span class="line">KernelInitrdModules=</span><br><span class="line">    default</span><br><span class="line">    ata/</span><br><span class="line">    scsi/</span><br><span class="line">    nvme/</span><br><span class="line">    usb/</span><br><span class="line">    mmc/</span><br><span class="line">    firewire/</span><br><span class="line">    gpio/</span><br><span class="line">    virtio/</span><br><span class="line">    md/</span><br><span class="line">    mtd/</span><br><span class="line">    block/</span><br><span class="line">    input/</span><br><span class="line">    hid/</span><br></pre></td></tr></table></figure>
+
+<h3 id="图标丢失"><a href="#图标丢失" class="headerlink" title="图标丢失"></a>图标丢失</h3><p>在安装Sysext形式的X应用程序后，会发现其图标经常丢失。其原因在于X应用程序的的图标缓存是单体的（<code>/usr/share/icons/*/icon-theme.cache</code>），不支持增量扩展，插入新的Sysext会导致其被覆盖。</p>
+<p>解决方案是，直接删掉所有的<code>icon-theme.cache</code>，这样X在获取图标时就会放弃使用缓存，直接查找源文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[Content]</span><br><span class="line">RemoveFiles=/usr/share/icons/*/icon-theme.cache</span><br></pre></td></tr></table></figure>
 
 <h2 id="镜像口味"><a href="#镜像口味" class="headerlink" title="镜像口味"></a>镜像口味</h2><p>我们会希望为镜像编写不同微调的“口味”，例如让基础镜像带上桌面环境之类的。<code>mkosi</code>整理这些内容的方式是<code>mkosi.profiles</code>，每个Profile目录的结构都和项目根目录一致，除了不能嵌套包含<code>mkosi.profiles</code>目录以外。</p>
 <h2 id="Live系统"><a href="#Live系统" class="headerlink" title="Live系统"></a>Live系统</h2><p>要构建Live系统，只需要修改内核命令行参数，当然，我们可以通过UKI Profile在UKI中封装额外的内核命令行参数：</p>
@@ -387,9 +562,9 @@
 <p><img src="/images/not-so-immutable-os1.png" alt="not-so-immutable-os1.png"></p>
 <p><img src="/images/not-so-immutable-os2.png" alt="not-so-immutable-os2.png"></p>
 <p>这个<code>.raw</code>结尾的就是我们的系统镜像了，可以直接<code>truncate -s</code>调整大小后用于虚拟机：</p>
-<p><img src="/images/not-so-immutable-os3.png" alt="[not-so-immutable-os3.png]"></p>
+<p><img src="/images/not-so-immutable-os3.png" alt="not-so-immutable-os3.png"></p>
 <p>引导界面：</p>
-<p><img src="/images/not-so-immutable-os4.png" alt="[not-so-immutable-os4.png]"></p>
+<p><img src="/images/not-so-immutable-os4.png" alt="not-so-immutable-os4.png"></p>
 <p>在安装好的系统中，安装<code>mkosi</code>，克隆系统代码，进行自举的A&#x2F;B更新：</p>
 <p><img src="/images/not-so-immutable-os5.png" alt="not-so-immutable-os5.png"></p>
 <p><img src="/images/not-so-immutable-os6.png" alt="not-so-immutable-os6.png"></p>
@@ -411,6 +586,11 @@
     
 
     <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/systemd/" rel="tag"># systemd</a>
+              <a href="/tags/%E4%B8%8D%E5%8F%AF%E5%8F%98%E7%B3%BB%E7%BB%9F/" rel="tag"># 不可变系统</a>
+              <a href="/tags/mkosi/" rel="tag"># mkosi</a>
+          </div>
 
         
 

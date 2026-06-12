@@ -23,17 +23,15 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="10年后的systemd">
 <meta property="og:url" content="https://blog.icku.eu.org/2024/06/23/10%E5%B9%B4%E5%90%8E%E7%9A%84systemd/index.html">
-<meta property="og:site_name" content="Void of the Real">
+<meta property="og:site_name" content="Mokumesei Manor">
 <meta property="og:description" content="译自：darknedgy.net。 1我并不确定自己是否真的热衷于重新实现NetworkManager…… —— Lennart Poettering，2011年3月 十年前，systemd 首次出现在世人面前，迅速成为近代历史上最持久、最具争议性和两极分化的软件之一，尤其是在 GNU&#x2F;Linux 世界中。然而，自 2012 年至 2014 年的大规模社区论战以来，围绕 systemd">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-06-23T00:31:25.000Z">
-<meta property="article:modified_time" content="2025-10-01T14:12:53.620Z">
+<meta property="article:modified_time" content="2026-06-11T14:15:42.917Z">
 <meta property="article:author" content="Kwok &quot;Molten_Armor&quot; Guy">
-<meta property="article:tag" content="linux">
 <meta property="article:tag" content="systemd">
-<meta property="article:tag" content="operating_system">
-<meta property="article:tag" content="system">
-<meta property="article:tag" content="computer">
+<meta property="article:tag" content="译文">
+<meta property="article:tag" content="系统启动">
 <meta name="twitter:card" content="summary">
 
 
@@ -44,7 +42,7 @@
 <script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.icku.eu.org/2024/06/23/10%E5%B9%B4%E5%90%8E%E7%9A%84systemd/","path":"2024/06/23/10年后的systemd/","title":"10年后的systemd"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>10年后的systemd | Void of the Real</title>
+<title>10年后的systemd | Mokumesei Manor</title>
   
 
 
@@ -74,7 +72,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <p class="site-title">Void of the Real</p>
+      <p class="site-title">Mokumesei Manor</p>
       <i class="logo-line"></i>
     </a>
   </div>
@@ -109,7 +107,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9C%A8-systemd-%E4%B9%8B%E5%89%8D%E7%9A%84-init-%E7%8E%B0%E4%BB%A3%E5%8C%96%E5%8A%AA%E5%8A%9B"><span class="nav-number">1.</span> <span class="nav-text">在 systemd 之前的 init 现代化努力</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux-%E6%96%87%E5%8C%96%E4%B9%8B%E4%BA%89%E7%9A%84%E6%A0%B9%E6%BA%90"><span class="nav-number">1.1.</span> <span class="nav-text">Linux 文化之争的根源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8-systemd-%E5%87%BA%E7%8E%B0%E4%B9%8B%E5%89%8D%EF%BC%9A2000-%E5%B9%B4%E4%BB%A3%E4%B8%AD%E6%9C%9F-Linux-%E5%8F%91%E8%A1%8C%E7%89%88%E7%BB%B4%E6%8A%A4%E8%80%85%E5%90%84%E8%87%AA%E4%B8%BA%E6%94%BF%E7%9A%84%E7%9B%AE%E6%A0%87"><span class="nav-number">1.2.</span> <span class="nav-text">在 systemd 出现之前：2000 年代中期 Linux 发行版维护者各自为政的目标</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#systemd%EF%BC%9A%E8%AE%BE%E8%AE%A1%E5%93%B2%E5%AD%A6%E4%B8%8E%E6%94%BF%E6%B2%BB"><span class="nav-number">2.</span> <span class="nav-text">systemd：设计哲学与政治</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%97%E6%8C%AB%E7%9A%84%E7%90%86%E6%83%B3%E4%B8%BB%E4%B9%89%E8%80%85"><span class="nav-number">2.1.</span> <span class="nav-text">受挫的理想主义者</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A8%E9%9D%A2%E6%8E%8C%E6%9D%83"><span class="nav-number">2.2.</span> <span class="nav-text">全面掌权</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BB%A1%E8%B6%B3%E4%B8%8E%E8%BF%B7%E8%8C%AB"><span class="nav-number">2.3.</span> <span class="nav-text">满足与迷茫</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#systemd%E7%9A%84%E6%8A%80%E6%9C%AF%E6%89%B9%E8%AF%84"><span class="nav-number">3.</span> <span class="nav-text">systemd的技术批评</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#systemd-%E7%9A%84%E5%85%B7%E4%BD%93%E5%AE%9A%E4%B9%89"><span class="nav-number">3.1.</span> <span class="nav-text">systemd 的具体定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E5%85%83%EF%BC%88Unit%EF%BC%89"><span class="nav-number">3.2.</span> <span class="nav-text">单元（Unit）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%9C%E4%B8%9A%EF%BC%88Job%EF%BC%89"><span class="nav-number">3.3.</span> <span class="nav-text">作业（Job）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%E4%B8%8E-Manager-%E5%AF%B9%E8%B1%A1"><span class="nav-number">3.4.</span> <span class="nav-text">事务与 Manager 对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E5%90%8D%E7%9A%84%E4%B8%8D%E4%B8%80%E8%87%B4%E4%B8%8E%E5%A4%B1%E8%B4%A5%E7%9A%84%E6%8A%BD%E8%B1%A1"><span class="nav-number">3.5.</span> <span class="nav-text">命名的不一致与失败的抽象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96%E7%9A%84%E5%9C%B0%E7%8B%B1"><span class="nav-number">3.5.1.</span> <span class="nav-text">依赖的地狱</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90"><span class="nav-number">3.6.</span> <span class="nav-text">案例分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E4%BA%8E%E4%B8%8D%E5%AD%98%E5%9C%A8%E7%9A%84%E5%8D%95%E5%85%83%E7%9A%84%E5%90%88%E6%B3%95%E4%BA%8B%E5%8A%A1"><span class="nav-number">3.6.1.</span> <span class="nav-text">对于不存在的单元的合法事务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%85%E5%90%AB%E4%BA%92%E6%96%A5%E7%9A%84%E4%BD%9C%E4%B8%9A%E7%B1%BB%E5%9E%8B%E7%9A%84%E4%BA%8B%E5%8A%A1"><span class="nav-number">3.7.</span> <span class="nav-text">包含互斥的作业类型的事务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96%E4%BC%A0%E6%92%AD%E8%A6%86%E7%9B%96%E6%98%BE%E5%BC%8F%E7%9A%84%E9%87%8D%E5%90%AF%E7%AD%96%E7%95%A5"><span class="nav-number">3.8.</span> <span class="nav-text">依赖传播覆盖显式的重启策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bug%E5%8D%B3%E7%89%B9%E6%80%A7%EF%BC%9A%E7%A0%B4%E5%9D%8F%E6%80%A7%E4%BA%8B%E5%8A%A1%E3%80%81%E9%9A%90%E5%BC%8F-wants%E5%92%8CPartOf-%E7%9A%84%E9%9D%9E%E4%BC%A0%E9%80%92%E6%80%A7"><span class="nav-number">3.9.</span> <span class="nav-text">Bug即特性：破坏性事务、隐式.wants和PartOf&#x3D;的非传递性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E%E5%BC%8F%E9%85%8D%E7%BD%AE%E7%9A%84%E5%B9%BB%E8%A7%89"><span class="nav-number">3.10.</span> <span class="nav-text">声明式配置的幻觉</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A5%E5%90%8E%E4%BC%9A%E6%80%8E%E6%A0%B7%EF%BC%9F"><span class="nav-number">4.</span> <span class="nav-text">以后会怎样？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A2%AB%E6%94%BE%E9%80%90%E7%9A%84%E4%B9%8C%E6%89%98%E9%82%A6%EF%BC%9AHAL%E3%80%81DeviceKit-%E5%92%8C%E9%82%A3%E4%B8%AA%E6%9C%AA%E6%9B%BE%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%84%BF%E6%99%AF"><span class="nav-number">4.1.</span> <span class="nav-text">被放逐的乌托邦：HAL、DeviceKit 和那个未曾实现的愿景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A5%E6%B8%90%E5%B0%81%E9%97%AD%E7%9A%84%E6%80%9D%E6%83%B3"><span class="nav-number">4.2.</span> <span class="nav-text">日渐封闭的思想</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9C%A8-systemd-%E4%B9%8B%E5%89%8D%E7%9A%84-init-%E7%8E%B0%E4%BB%A3%E5%8C%96%E5%8A%AA%E5%8A%9B"><span class="nav-number">1.</span> <span class="nav-text">在 systemd 之前的 init 现代化努力</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux-%E6%96%87%E5%8C%96%E4%B9%8B%E4%BA%89%E7%9A%84%E6%A0%B9%E6%BA%90"><span class="nav-number">1.1.</span> <span class="nav-text">Linux 文化之争的根源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8-systemd-%E5%87%BA%E7%8E%B0%E4%B9%8B%E5%89%8D%EF%BC%9A2000-%E5%B9%B4%E4%BB%A3%E4%B8%AD%E6%9C%9F-Linux-%E5%8F%91%E8%A1%8C%E7%89%88%E7%BB%B4%E6%8A%A4%E8%80%85%E5%90%84%E8%87%AA%E4%B8%BA%E6%94%BF%E7%9A%84%E7%9B%AE%E6%A0%87"><span class="nav-number">1.2.</span> <span class="nav-text">在 systemd 出现之前：2000 年代中期 Linux 发行版维护者各自为政的目标</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#systemd%EF%BC%9A%E8%AE%BE%E8%AE%A1%E5%93%B2%E5%AD%A6%E4%B8%8E%E6%94%BF%E6%B2%BB"><span class="nav-number">2.</span> <span class="nav-text">systemd：设计哲学与政治</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%97%E6%8C%AB%E7%9A%84%E7%90%86%E6%83%B3%E4%B8%BB%E4%B9%89%E8%80%85"><span class="nav-number">2.1.</span> <span class="nav-text">受挫的理想主义者</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A8%E9%9D%A2%E6%8E%8C%E6%9D%83"><span class="nav-number">2.2.</span> <span class="nav-text">全面掌权</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BB%A1%E8%B6%B3%E4%B8%8E%E8%BF%B7%E8%8C%AB"><span class="nav-number">2.3.</span> <span class="nav-text">满足与迷茫</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#systemd%E7%9A%84%E6%8A%80%E6%9C%AF%E6%89%B9%E8%AF%84"><span class="nav-number">3.</span> <span class="nav-text">systemd的技术批评</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#systemd-%E7%9A%84%E5%85%B7%E4%BD%93%E5%AE%9A%E4%B9%89"><span class="nav-number">3.1.</span> <span class="nav-text">systemd 的具体定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E5%85%83%EF%BC%88Unit%EF%BC%89"><span class="nav-number">3.2.</span> <span class="nav-text">单元（Unit）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%9C%E4%B8%9A%EF%BC%88Job%EF%BC%89"><span class="nav-number">3.3.</span> <span class="nav-text">作业（Job）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%EF%BC%88Transaction%EF%BC%89%E4%B8%8E-Manager-%E5%AF%B9%E8%B1%A1"><span class="nav-number">3.4.</span> <span class="nav-text">事务（Transaction）与 Manager 对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E5%90%8D%E7%9A%84%E4%B8%8D%E4%B8%80%E8%87%B4%E4%B8%8E%E5%A4%B1%E8%B4%A5%E7%9A%84%E6%8A%BD%E8%B1%A1"><span class="nav-number">3.5.</span> <span class="nav-text">命名的不一致与失败的抽象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96%E7%9A%84%E5%9C%B0%E7%8B%B1"><span class="nav-number">3.5.1.</span> <span class="nav-text">依赖的地狱</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90"><span class="nav-number">3.6.</span> <span class="nav-text">案例分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E5%AD%98%E5%9C%A8%E7%9A%84%E5%8D%95%E5%85%83%E7%9A%84%E4%BD%9C%E4%B8%9A"><span class="nav-number">3.6.1.</span> <span class="nav-text">不存在的单元的作业</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%85%E5%90%AB%E4%BA%92%E6%96%A5%E7%9A%84%E4%BD%9C%E4%B8%9A%E7%B1%BB%E5%9E%8B%E7%9A%84%E4%BA%8B%E5%8A%A1"><span class="nav-number">3.6.2.</span> <span class="nav-text">包含互斥的作业类型的事务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96%E4%BC%A0%E6%92%AD%E8%A6%86%E7%9B%96%E6%98%BE%E5%BC%8F%E7%9A%84%E9%87%8D%E5%90%AF%E7%AD%96%E7%95%A5"><span class="nav-number">3.6.3.</span> <span class="nav-text">依赖传播覆盖显式的重启策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E8%B5%B7%E4%BD%9C%E7%94%A8%E7%9A%84Conflicts"><span class="nav-number">3.6.4.</span> <span class="nav-text">不起作用的Conflicts&#x3D;</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bug%E5%8D%B3%E7%89%B9%E6%80%A7%EF%BC%9A%E7%A0%B4%E5%9D%8F%E6%80%A7%E4%BA%8B%E5%8A%A1%E3%80%81%E9%9A%90%E5%BC%8F-wants%E5%92%8CPartOf-%E7%9A%84%E9%9D%9E%E4%BC%A0%E9%80%92%E6%80%A7"><span class="nav-number">3.7.</span> <span class="nav-text">Bug即特性：破坏性事务、隐式.wants和PartOf&#x3D;的非传递性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E%E5%BC%8F%E9%85%8D%E7%BD%AE%E7%9A%84%E5%B9%BB%E8%A7%89"><span class="nav-number">3.8.</span> <span class="nav-text">声明式配置的幻觉</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A5%E5%90%8E%E4%BC%9A%E6%80%8E%E6%A0%B7%EF%BC%9F"><span class="nav-number">4.</span> <span class="nav-text">以后会怎样？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A2%AB%E6%94%BE%E9%80%90%E7%9A%84%E4%B9%8C%E6%89%98%E9%82%A6%EF%BC%9AHAL%E3%80%81DeviceKit-%E5%92%8C%E9%82%A3%E4%B8%AA%E6%9C%AA%E6%9B%BE%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%84%BF%E6%99%AF"><span class="nav-number">4.1.</span> <span class="nav-text">被放逐的乌托邦：HAL、DeviceKit 和那个未曾实现的愿景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A5%E6%B8%90%E5%B0%81%E9%97%AD%E7%9A%84%E6%80%9D%E6%83%B3"><span class="nav-number">4.2.</span> <span class="nav-text">日渐封闭的思想</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -122,12 +120,16 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">40</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">52</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
@@ -170,12 +172,12 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Void of the Real">
+      <meta itemprop="name" content="Mokumesei Manor">
       <meta itemprop="description" content="Just another blog about Linux, systemd, and something more.">
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="10年后的systemd | Void of the Real">
+      <meta itemprop="name" content="10年后的systemd | Mokumesei Manor">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
@@ -198,7 +200,16 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-10-01 22:12:53" itemprop="dateModified" datetime="2025-10-01T22:12:53+08:00">2025-10-01</time>
+      <time title="修改时间：2026-06-11 22:15:42" itemprop="dateModified" datetime="2026-06-11T22:15:42+08:00">2026-06-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/systemd/" itemprop="url" rel="index"><span itemprop="name">systemd</span></a>
+        </span>
     </span>
 
   
@@ -213,14 +224,14 @@
     <div class="post-body" itemprop="articleBody"><p>译自：<a target="_blank" rel="noopener" href="https://blog.darknedgy.net/technology/2020/05/02/0//">darknedgy.net</a>。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">我并不确定自己是否真的热衷于重新实现NetworkManager……</span><br></pre></td></tr></table></figure>
 <p>—— Lennart Poettering，2011年3月</p>
-<p>十年前，systemd 首次出现在世人面前，迅速成为近代历史上最持久、最具争议性和两极分化的软件之一，尤其是在 GNU&#x2F;Linux 世界中。然而，自 2012 年至 2014 年的大规模社区论战以来，围绕 systemd 的辩论并未在质量上有所提升。尽管 systemd 受到了广泛关注，但从技术和社会层面来看，人们对它的理解和研究仍然匮乏。</p>
-<span id="more"></span>
-
-<p>我撰写这篇文章，既是为自己寻求一份慰藉——让我能够彻底放下对它的纠结，也是希望我的分析能为这场长达十年的闹剧提供一些新的思考，而不至于让它如 Benno Rice 著名的描述那样，”不过是一场悲剧”。</p>
+<p>十年前，systemd 首次出现在世人面前，迅速成为近代历史上最持久、最具争议性和两极分化的软件之一，尤其是在 GNU&#x2F;Linux 世界中。然而，自 2012 年至 2014 年的大规模社区论战以来，围绕 systemd 的辩论并未在质量上有任何提升。尽管 systemd 受到了广泛关注，但从技术和社会层面来看，人们对它的理解和研究仍然严重匮乏。</p>
+<p>我撰写这篇文章，既是为自己寻求一份慰藉——让我能够彻底放下对它的纠结，也是希望我的分析能为这场长达十年的闹剧提供一些新的思考，而不至于让它如 Benno Rice 著名的描述那样，“不过是一场悲剧罢了”。</p>
 <p>在第一章中，我将基于当时的邮件列表，探讨在 systemd 出现之前，为现代化 init 程序、rc 脚本和服务管理方法所做的努力，以及那些推动变革的主要动机。我会从不同类型的 Linux 用户之间的文化分歧开始谈起。</p>
 <p>第二章中，我将讨论 systemd 的早期历史和设计哲学，以及促使其被广泛采用的因素。</p>
 <p>第三章将对 systemd 进行技术层面的批评。我假设读者已经熟悉 systemd，并将重点放在其实现细节上。我还会包含一些基于 Bug 报告的“案例研究”，以更深入地阐释一些较为枯燥的理论。</p>
 <p>第四章将探讨在自由开源软件（FOSS）开发中与 systemd 类似的其他历史事件，综合第一章和第二章中的一些主题，并对 Linux 低层用户空间（Low-level Userspace）的未来前景提出一些猜想。</p>
+<span id="more"></span>
+
 <h1 id="在-systemd-之前的-init-现代化努力"><a href="#在-systemd-之前的-init-现代化努力" class="headerlink" title="在 systemd 之前的 init 现代化努力"></a>在 systemd 之前的 init 现代化努力</h1><h2 id="Linux-文化之争的根源"><a href="#Linux-文化之争的根源" class="headerlink" title="Linux 文化之争的根源"></a>Linux 文化之争的根源</h2><p>关于Linux的碎片化本质——如同无政府状态的市场一样，各类独立的白盒组件在这里被拼凑成各种发行版——以及对这一固有问题的“解决”之道，几乎与第一个 Linux 发行版的诞生一样古老。</p>
 <p>Linux TCP&#x2F;IP 协议栈的早期贡献者 Fred van Kempen 在 1994 年 6 月接受《Linux Journal》采访时表示：</p>
 <blockquote>
@@ -237,7 +248,7 @@
 <p>除了令人遗憾的 Linux Standard Base，还有几个早期尝试统一 “Linux” API 的标准化项目。其中之一是如今已被遗忘的<a target="_blank" rel="noopener" href="https://sourceware.org/elix/">EL&#x2F;IX规范</a>，由 Cygnus Solutions 于 1999 年底制定——就在他们即将被红帽（Red Hat）收购之前。该规范专为当时所谓的“深度嵌入式”平台设计，包括“汽车控制、数码相机、手机、寻呼机”，旨在与 eCos 等实时操作系统竞争。值得注意的是，在 FAQ 中我们可以读到：“红帽致力于确保 Linux 的可移植性和维护用户选择的自由”——在我们这个时代，这种观点并不常见。当时的一篇<a target="_blank" rel="noopener" href="https://www.eetimes.com/esc-cygnus-develops-api-in-bid-to-unify-embedded-linux/">EE Times文章</a>透露，其他开发嵌入式 Linux 的供应商对 EL&#x2F;IX 的发布反应不一。</p>
 <p>Linux“社区”的主要文化分歧可以归结为两点：一是 Linux 与 GNU 以及自由软件运动的历史纠葛，二是 Linux 作为“革命性操作系统”的形象——一个由业余爱好者和志愿者共同开发的自由文化产品，旨在摆脱商业软件供应商，或者在更现代的语境中，摆脱云服务提供商的束缚。</p>
 <p>因此，专业的 Linux 系统管理员和普通的业余爱好者实际上生活在两个截然不同的世界。那些在桌面 Linux 和 DevOps 中间件前沿工作、领取薪水的从业者，与那些使用 Suckless 软件、从头构建基于 MUSL 的发行版、推崇极简主义和自给自足价值观的亚文化群体之间，几乎没有共同点。对于后者中的许多人来说（他们大多是通过自由软件渠道了解 Linux 的），他们最终会意识到现实世界的 Linux 开发越来越受到大型云提供商（如 Linux 基金会的白金会员）的商业利益主导。这种幻灭感几乎就像一个真正的共产主义者目睹托洛茨基残酷镇压喀琅施塔得起义的水手后所感受到的那样——无论表面上如何宣称进步和平等，寡头政治的铁律依然如故。</p>
-<p>尽管崇尚自给自足的业余黑客时代早已远去，但其形象仍令人怀念。自由软件的集体主义精神永远无法从 GNU&#x2F;Linux 的 DNA 中被抹去，但它越来越多地被视为一种无关紧要的兴趣。理查德·斯托曼（Richard Stallman）、GNU 和 FSF 等人物或组织，逐渐被视为需要被克服的障碍，以创造一个更加“专业”和“包容”的社区环境——这很可能意味着在专业层面上，将用户视为全景监狱中的一个数据输入，而非自由独立的人，这与最初人们设想的乌托邦式梦想相去甚远。</p>
+<p>尽管崇尚自给自足的业余黑客时代早已远去，但其形象仍然令人怀念。自由软件的集体主义精神永远无法从 GNU&#x2F;Linux 的 DNA 中被抹去，但它越来越多地被视为一种无关紧要的兴趣。理查德·斯托曼（Richard Stallman）、GNU 和 FSF 等人物或组织，逐渐变成了需要被克服的障碍，以创造一个更加“专业”和“包容”的社区环境——这很可能意味着在专业层面上，将用户视为全景监狱中的一个数据输入，而非自由独立的人，这与最初人们设想的乌托邦式梦想相去甚远。</p>
 <p>现实很快给了业余黑客们当头一棒。2000 年 4 月，红帽创始人 Bob Young 接受《渥太华公民报》<a target="_blank" rel="noopener" href="https://web.archive.org/web/20000511232035/http://www.ottawacitizen.com/hightech/000424/3981326.html">对他的采访</a>表示：</p>
 <blockquote>
 <p>关于 Linux，有两个普遍的误解。第一，认为只有一个 Linux 操作系统。实际上，Linux 是 Corel、红帽等公司制作的 600 兆字节操作系统中的一个 16 兆字节的内核。Linux 可以比喻为汽车的发动机，但如果你只把发动机放在车道上，是无法开车送孩子上学的。</p>
@@ -249,19 +260,19 @@
 <p>无论如何，最近一次实现 GnomeOS 愿景的努力包括 Flatpak、OSTree、BuildStream 和 Freedesktop SDK（基本上就是一个由 BuildStream 文件组成的发行版），这次似乎是最有可能成功的尝试。在这个崭新的世界中，“传统”发行版将如何适应，仍然是一个悬而未决的问题。</p>
 <p>GNOME 开发者 Emmanuele Bassi 对于<a target="_blank" rel="noopener" href="https://www.bassi.io/articles/2019/01/17/history-of-gnome-episode-2-0/">统一主义观点</a>发表了最为明确的声明：</p>
 <blockquote>
-<p>如果桌面环境是操作系统朝着集成化方向发展的结果，旨在为用户（而非一定是贡献者）提供全面、一体化的功能，那么将模块拆分到各自的仓库，采用各自独立的发布周期、构建系统、选项、编码风格和贡献政策，显然与这种集成化的努力背道而驰。这种去中心化会在项目之间、维护者之间引发冲突；它会制造模块化和 API 的障碍，导致依赖性问题，增加冲突的可能性，并阻碍贡献、分发和升级。</p>
-<p>那么，为什么会出现这种情况呢？</p>
-<p>主流的自由和开源软件分析框架告诉我们，一旦软件达到一定规模，社区成员会自觉地将组件拆分，而非集中功能；他们更倾向于组合具有明确边界和交互关系的组件，而不是在缺乏抽象的层次结构上堆砌功能和 API。他们钟爱小型组件，因为维护者推崇这种设计哲学——让用户在使用软件时拥有选择权，并让有品味的用户能够通过松散耦合的接口，组合出符合自身需求的操作系统。</p>
-<p>当然，我刚才所说的一切都是胡扯。</p>
-<p>你无法想象我为了不笑场，重录了多少次。</p>
+<p>如果桌面环境的目的是推动集中化，将全面、集成的功能呈现给使用者（但不一定贡献者），那么，将模块拆分到各自的代码库、采用各自的发布周期、在构建系统、选项、编码风格和贡献政策上各搞一套独特做法，就理应违背这种集中化的努力。这种去中心化会在项目之间、维护者之间制造摩擦，它会造成模块化和API壁垒，它会产生依赖关系，而这些依赖关系不仅会带来冲突的可能性，还会阻碍贡献，甚至阻碍分发和升级。</p>
+<p>那么，为什么会这样呢？</p>
+<p>自由和开源软件的主流分析框架告诉我们，当项目达到一定规模后，社区会有意识地选择拆分组件，而不是集中功能；社区成员更倾向于委任和组合那些具有明确边界和清晰交互的组件，而不是在定义模糊的抽象层次上不断堆砌功能和API。他们喜欢小组件，因为维护者看重这种设计理念——它能让用户有选择权，让有辨别力的用户能够通过松耦合的接口，组装出符合自己需求的操作系统。</p>
+<p>当然，我前面说的这一切，完全是胡扯。</p>
+<p>你们都不知道我排练了多少遍，才能憋住笑把那段话说完。</p>
 <p>……</p>
-<p>事实上，由多个贡献者开发、包含众多组件的复杂开源项目，最好划分为较小的模块，这样每个维护者就能更轻松地掌握全部内容，而不至于精疲力竭。较小的模块使项目更能抵御那些持有强烈观点的维护者的影响，并允许其他同样有强烈观点的维护者绕过他们不喜欢的部分。自包含的模块让小众问题变得可控，或者至少可以限制问题的影响范围。</p>
-<p>当然，如果我们一开始就直言不讳，或许会让每个人都更好受些，因为这传达了明确的预期；然而，这么做的副作用就是揭开了“皇帝的新衣”——这意味着我们必须将康威定律的这个副作用包装成“关于选择”、“是机制而非政策”或者“网络对象模型”。</p>
+<p>实际上，拥有众多贡献者、开发着多个组件的复杂自由软件项目，之所以偏爱小模块，是因为这样更容易让每个维护者把东西装进脑子里，而不至于发疯。小模块更容易隔离那些固执己见的维护者，也让其他同样固执己见的维护者能够绕过他们不喜欢的东西。自包含的模块让解决小众问题变得可行，或者至少能把损害控制住。</p>
+<p>当然，如果我们一开始就明说这个，大家的日子可能都会好过一点，因为这能传递明确的期望；但另一方面，这也会产生副作用——暴露“皇帝的新装”问题。这就意味着，我们不得不把康威定律（Conway’s Law）带来的这个意外副产品，包装成“关乎选择”，或者“机制而非策略”，或者“网络对象模型”这些冠冕堂皇的说法。</p>
 <p>……</p>
-<p>所以，如果“选择”是光谱的一端，那么另一端是什么呢？也许是一种类似于企业的结构，由少数人的愿景驱动项目，其他人（至少是那些拿薪水支持项目的人）则遵循这一愿景行事。</p>
-<p>当然，一旦有人决定提出自己的愿景，或开始落实，或试图说服他人追随时，就是他们敞开心扉接受批评的时刻。如果你的项目没有一个基本的框架，那么就没人能指责你做错了什么；但如果你确立了框架，这种可能性就会出现，剩下的就是一些人们可以抓住的具体事物——无论好坏。</p>
+<p>那么，如果“关乎选择”是光谱的一端，那另一端是什么呢？也许是类似公司的结构——项目由少数几个人的愿景驱动，由其他认同该愿景（或者至少是拿钱干活）的人来实现。</p>
+<p>当然，一旦有人决定提出自己的愿景、着手实现它、或者说服别人追随它，那就是把自己置于众矢之的了。如果你的项目没有明确的框架，那就没人能指责你做错了什么；但是如果你有了，模棱两可的可能性就消失了，剩下的就是实实在在、让人们必须面对的东西了——无论是好是坏。</p>
 </blockquote>
-<p>如果我们将“革命性操作系统”的比喻进一步延伸，那么 Bassi 的立场就如同斯大林在《列宁主义基础》（1924 年）中为先锋队的必要性所作的辩护，而那些持反对意见的人则相应地扮演了托洛茨基主义者、季诺维也夫派和极左分子的角色：“崇拜自发性的理论坚决反对使自发运动带有自觉的和有计划的性质，反对党走在工人阶级的前面，反对党把群众提高到自觉的水平，反对党领导运动，而主张使运动中的自觉因素不致妨碍运动循着自己的道路行进，使党只依从自发运动，做运动的尾巴。自发论是降低自觉因素在运动中的作用的理论，是尾巴主义的思想体系，是一切机会主义的逻辑基础。”</p>
+<p>如果我们将“革命性操作系统”的比喻进一步延伸，那么 Bassi 的立场就如同斯大林在《列宁主义基础》（1924 年）中为先锋队的必要性所作的辩护，而那些持反对意见的人则相应地扮演了托洛茨基主义者、季诺维也夫派和极左分子的角色：“崇拜自发性的理论坚决反对使自发运动带有自觉的和有计划的性质，反对党走在工人阶级的前面，反对党把群众提高到自觉的水平，反对党领导运动，而主张使运动中的自觉因素不致妨碍运动循着自己的道路行进，使党只依从自发运动，做运动的尾巴。自发论是降低自觉因素在运动中的作用的理论，是尾巴主义的思想体系，是一切机会主义的逻辑基础。”  </p>
 <p>正如我们无法说服费边社的成员放弃对全球人道主义政府的追求，我们也难以改变这些梦想家的信念。然而，另一方面，普通民众的意见也无法对社会变革产生实质性的影响。人们只能无奈地屈从于不可避免的趋势。</p>
 <p>专业人士们注定会怀揣着自负，永远踏上构建统一、集成的 Linux 生态系统的西西弗斯式征程，即便这意味着将 Linux 内核变成 BPF 虚拟机的运行时，或者像最近的趋势那样，将构建和部署流水线变成复杂的鲁布·戈德堡装置。而业余爱好者们则注定在虚空中呼喊，却无人倾听。在这场悲剧中，唯一的胜利者是伪装成“进步”的混乱和不和谐。唯一可以预见的是，我们将通过不停的创新来进行永久的革命。而所谓的革命，不过是原地踏步。那些西装革履的人早已忘记了自己曾经是嬉皮士，而嬉皮士们则成了被他人思想所左右的迷途者——而非坚守自我的践行者。</p>
 <h2 id="在-systemd-出现之前：2000-年代中期-Linux-发行版维护者各自为政的目标"><a href="#在-systemd-出现之前：2000-年代中期-Linux-发行版维护者各自为政的目标" class="headerlink" title="在 systemd 出现之前：2000 年代中期 Linux 发行版维护者各自为政的目标"></a>在 systemd 出现之前：2000 年代中期 Linux 发行版维护者各自为政的目标</h2><p>从 2001 年到 2010 年，除了最著名的 Upstart 外，还有许多努力试图解决 sysvinit 和 init 脚本的问题。这些旧时的邮件列表，不仅提供了一个有趣的时间胶囊，还从侧面揭示了 Linux 开发者在 2000 年代中期更新守护进程管理和启动机制的动机——这与 systemd 出现后表达的动机有着显著不同。</p>
@@ -334,7 +345,7 @@
 <p>对使用 D-Bus 启动程序的兴趣已经持续数月。这将使简单的系统只启动必要的服务，并在首次请求时自动启动这些服务。这消除了对 init 系统的需求，意味着我们可以轻松地并行启动服务。这对于 OLPC 来说是当务之急，对 Fedora 和 RHEL 来说则是面向未来的需求。</p>
 </blockquote>
 <p>然而，正如 Jonathan de Boyne Pollard <a target="_blank" rel="noopener" href="https://jdebp.eu/Softwares/nosh/avoid-dbus-bus-activation.html">后来指出的</a>，这是一种反模式。因为 D-Bus 守护进程“几乎没有任何守护进程管理机制，如资源限制、自动重启、日志管理、权限&#x2F;账户管理等”。此外，许多 D-Bus 服务所采用或曾经采用的协作方式，都会导致上游开发者主导系统管理员的决策。</p>
-<p>2005 年，Debian 开发者组建了一个名为 “initscripts-ng” 的工作组。其中一位重要成员是此前提到的 Henrique de Moraes Holschuh。该工作组<a target="_blank" rel="noopener" href="https://alioth-lists-archive.debian.net/pipermail/initscripts-ng-devel/2005-July/000002.html">最初的目标</a>与 2002 年论文中的提案类似，但这次更为雄心勃勃。他们的总体目标是创建一个与发行版无关的框架，以统一各种启动方案，制定系统管理策略。组内提议以 init-ng 或 runit 为基础。尽管如此，完全取代 init 脚本的想法仍被认为是<a target="_blank" rel="noopener" href="https://alioth-lists-archive.debian.net/pipermail/initscripts-ng-devel/2005-July/000018.html">不切实际的</a>。</p>
+<p>2005 年，Debian 开发者组建了一个名为“initscripts-ng”的工作组。其中一位重要成员是此前提到的 Henrique de Moraes Holschuh。该工作组<a target="_blank" rel="noopener" href="https://alioth-lists-archive.debian.net/pipermail/initscripts-ng-devel/2005-July/000002.html">最初的目标</a>与 2002 年论文中的提案类似，但这次更为雄心勃勃。他们的总体目标是创建一个与发行版无关的框架，以统一各种启动方案，制定系统管理策略。组内提议以 init-ng 或 runit 为基础。尽管如此，完全取代 init 脚本的想法仍被认为是<a target="_blank" rel="noopener" href="https://alioth-lists-archive.debian.net/pipermail/initscripts-ng-devel/2005-July/000018.html">不切实际的</a>。</p>
 <p>多年来，Debian 小组对各种方案进行了广泛的头脑风暴，但大多数都未被采纳。其中一些较成功的成果，是通过解决一些<a target="_blank" rel="noopener" href="https://alioth-lists.debian.net/pipermail/pkg-sysvinit-devel/2006-January/000542.html">关键问题</a>来谨慎地改进启动速度。这在 2006 年的<a target="_blank" rel="noopener" href="https://pdfs.semanticscholar.org/a171/696ddb41ba8aad53cdcbb6aba1c4547aa80e.pdf">立场文件</a>中有更详细的描述。提出的优化措施包括用 dash 替换 bash 作为 init 脚本的默认 Shell，实现 LSB 标准化，使用 startpar 实现并行启动，以及将某些耗时操作移至后台。Ubuntu 在 Upstart 出现之前也采用了<a target="_blank" rel="noopener" href="https://wiki.ubuntu.com/FasterBoot">类似的措施</a>。</p>
 <p>基于 LSB 依赖的启动方式直到 2009 年 7 月才<a target="_blank" rel="noopener" href="https://wiki.debian.org/LSBInitScripts/DependencyBasedBoot">成为 Debian 的默认配置</a>，而并行启动方式直到<a target="_blank" rel="noopener" href="https://lists.debian.org/debian-devel-announce/2010/05/msg00009.html">2010 年 5 月</a>才默认启用，这距离 2002 年最初的 DebConf 提案已经过去整整 8 年！而此时，systemd 已经出现在人们的视野中。</p>
 <p>期间发生了一个有趣的插曲，即 <a target="_blank" rel="noopener" href="https://wiki.debian.org/MetaInit">metainit 项目</a>。metainit 基本上就是一个用于生成 init 脚本的 Perl 脚本。是的，你没听错。参与该项目的人数<a target="_blank" rel="noopener" href="https://wiki.debian.org/HackFests/Init">出奇地多</a>，其中包括 Michael Biebl，他是 Debian 和 Ubuntu 中 systemd 的包维护者，也是上游的 systemd 开发者。</p>
@@ -354,7 +365,7 @@
 <li>改革 init 系统的主要瓶颈在于社会层面的因素，即发行版打包的指导方针。</li>
 <li>init 系统的兴衰取决于需要与之交互的包维护者的关注程度。只有当 init 脚本的复杂度不断累积，达到某个临界点时，才会激发对其进行彻底变革的渴望。</li>
 </ol>
-<h1 id="systemd：设计哲学与政治"><a href="#systemd：设计哲学与政治" class="headerlink" title="systemd：设计哲学与政治"></a>systemd：设计哲学与政治</h1><h2 id="受挫的理想主义者"><a href="#受挫的理想主义者" class="headerlink" title="受挫的理想主义者"></a>受挫的理想主义者</h2><p>在这种混乱无序的氛围中，人们渴望以果断的行动摆脱技术债务的束缚，这种心情完全可以理解，而这种混乱在很大程度上是由发行版开发者自身造成的。Debian 花了 8 年时间才实现 init 脚本的并行化——显然，是时候做出改变了。</p>
+<h1 id="systemd：设计哲学与政治"><a href="#systemd：设计哲学与政治" class="headerlink" title="systemd：设计哲学与政治"></a>systemd：设计哲学与政治</h1><h2 id="受挫的理想主义者"><a href="#受挫的理想主义者" class="headerlink" title="受挫的理想主义者"></a>受挫的理想主义者</h2><p>在这种混乱无序的氛围中，人们渴望采取果断的行动摆脱技术债务的束缚，这种心情完全可以理解，因而这种混乱在很大程度上是发行版开发者自身造成的。Debian 花了 8 年时间才实现 init 脚本的并行化——显然，是时候做出改变了。</p>
 <p>systemd 最初以 “BabyKit” 的名字进行原型设计，寓意为进程的保姆。2010 年 3 月，systemd 正式亮相，迅速崛起，并以异常迅猛的速度确立了主导地位，在自由软件界引发了前所未有的激烈争议，至今仍未真正平息。可以说，systemd 的出现标志着一个前 systemd 时代和后 systemd 时代的分水岭。</p>
 <p>要正确理解 systemd 的历史地位，我们至少需要回答以下三个问题：</p>
 <ul>
@@ -381,13 +392,11 @@
 <blockquote>
 <p>然而，对于大多数正常的服务来说，通常不需要手动配置任何依赖项，因为各种激活方式会自动处理这些依赖关系。手动配置依赖项仅在必要时才需要，比如在系统启动早期或关机时的最后阶段。</p>
 <p>换句话说：我们在内部使用依赖关系。当然，我们也向用户公开它们，但用户通常很少需要使用。</p>
-<blockquote>
 <p>这与 launchd 不同，launchd 实际上完全不考虑依赖关系。但为此他们付出了一定的代价：他们的早期启动过程与实际服务的启动过程完全不同。由于我们的 Linux 启动过程比他们的更复杂，我们决定同时保留两种情况：无依赖的主要启动过程，以及在系统启动极早期需要手动配置依赖的少数特殊服务。</p>
-</blockquote>
 </blockquote>
 <p>Lennart 还驳斥了对通用事件代理的需求，而 systemd 经常被这样解释（例如，<a target="_blank" rel="noopener" href="https://www.debian.org/doc/manuals/debian-reference/ch03.en.html#_stage_4_the_normal_debian_system">Debian 参考手册</a>将 systemd 描述为“用于并发的事件驱动的 init 守护进程”）：</p>
 <blockquote>
-<p>因此，我不明白你为什么需要超出 systemd 提供的依赖系统和 Linux 内核已经提供的各种通知系统之外的通用事件系统。例如 inotify、netlink、udev、对 &#x2F;proc&#x2F;mount 的 poll() 调用等。如果应用程序需要这些事件，它们应该直接使用这些通知功能，没必要让 systemd 参与其中。</p>
+<p>因此，我不明白你为什么需要超出 systemd 提供的依赖系统和 Linux 内核提供的各种通知系统（例如 inotify、netlink、udev、对 &#x2F;proc&#x2F;mount 的 poll() 调用等）之外的通用事件系统。如果应用程序需要这些事件，它们应该原生地（Natively）使用这些通知功能，没必要让 systemd 参与其中。</p>
 </blockquote>
 <p>他再次强调对依赖关系的立场：</p>
 <blockquote>
@@ -400,7 +409,7 @@
 <p>既然我们并行启动所有内容，并且从不进行等待，那就不存在一个确切标志着启动工作已完成的时间点。这样的时间点根本不存在。</p>
 <p>不再有一个明确的“启动完成”时刻，这是这里最大的问题。在传统的 sysvinit 系统中，只有在系统启动过程中启动 sysv 服务时，才会在控制台上打印对应服务的启动消息。然而，在更加动态的 systemd 中，我们会为所有服务（包括 D-Bus 服务——在大多数设置中，这类服务的数量实际上超过了 SysV 服务）打印启动消息。因此，服务随时可能启动，将 getty 的启动与此同步没有意义。</p>
 </blockquote>
-<p>2012 年 1 月，Kay Sievers <a target="_blank" rel="noopener" href="https://lists.freedesktop.org/archives/systemd-devel/2012-January/004234.html">写道</a>：“非依赖服务的顺序是未定义的。”</p>
+<p>2012 年 1 月，Kay Sievers <a target="_blank" rel="noopener" href="https://lists.freedesktop.org/archives/systemd-devel/2012-January/004234.html">写道</a>：“没有依赖关系的服务之间的顺序是未定义的。”</p>
 <p>Lennart 在 2015 年 10 月<a target="_blank" rel="noopener" href="https://lists.freedesktop.org/archives/systemd-devel/2015-October/034576.html">再次指出</a>：</p>
 <blockquote>
 <p>在系统启动或关闭的过程中，不存在某些程序“首先”或“最后”运行的概念，也不存在如果自己的程序正在运行就阻塞其他程序执行的情况。因为在像 systemd 这样主要基于并行机制的系统中，与另一个服务建立连接，或在其上调用方法，都可能导致自动激活。</p>
@@ -440,12 +449,12 @@
 <p>换句话说：我们并不是用户应该直接交互的最终产品，我们只是提供了一套组件，其他人可以基于这些组件来构建最终产品。在构建过程中，他们也需要承担提供支持的责任。</p>
 </blockquote>
 <p>大约在 2015 年左右，随着 systemd 确立了其广泛应用的地位，以及容器化背后的商业利益将焦点转移到无状态系统、基于镜像的不可变部署等方面，开发者在很大程度上降低了这一愿景的重要性。然而，从 2012 年底到 2014 年左右，它在 systemd 崛起的过程中发挥了关键作用。我们将在下一节中详细讨论其众多广为人知的发展成果。</p>
-<h2 id="全面掌权"><a href="#全面掌权" class="headerlink" title="全面掌权"></a>全面掌权</h2><p>systemd 的开发者毫不犹豫地开始推广他们的系统。除了前述为守护进程添加套接字激活的补丁之外，他们还在 2010 年 7 月之前，将 systemd 设为 Fedora Rawhide 的 <a target="_blank" rel="noopener" href="https://www.spinics.net/lists/fedora-devel/msg139439.html">默认 init 系统</a>。</p>
+<h2 id="全面掌权"><a href="#全面掌权" class="headerlink" title="全面掌权"></a>全面掌权</h2><p>systemd 的开发者毫不犹豫地开始推广他们的系统。除了前述为守护进程添加套接字激活的补丁之外，他们还在 2010 年 7 月之前，将 systemd 设为 Fedora Rawhide 的 <a target="_blank" rel="noopener" href="https://www.spinics.net/lists/fedora-devel/msg139439.html">默认 init 系统</a>（<a target="_blank" rel="noopener" href="https://fedoraproject.org/wiki/F15_one_page_release_notes">该变化在 2011 年 5 月应用于 Fedora 15</a>）。</p>
 <p>在 2010 年 8 月的一篇关于 systemd 打包指南的 Fedora 开发者帖子中，Lennart 对任何对向后兼容性或稳定性有哪怕一丁点担忧的人都表现出了极为强硬的态度。针对 Matthew Miller 对 inittab 兼容性的担忧，他半开玩笑地说：</p>
 <blockquote>
-<p>是不是我们还得检查一下AUTOEXEC.BAT？</p>
+<p>是不是我们还得检查一下 AUTOEXEC.BAT？</p>
 </blockquote>
-<p>（Stephen John Smoogen<a target="_blank" rel="noopener" href="https://lists.fedoraproject.org/archives/list/devel@lists.fedoraproject.org/message/SKIFTC43NDFLFWODQW5TLM5SJNMOAJG5/">对此回复道</a>：“Lennart this is neither helpful or ‘excellent’. Please tone it down or take a break from posting for a bit.”）</p>
+<p>（Stephen John Smoogen <a target="_blank" rel="noopener" href="https://lists.fedoraproject.org/archives/list/devel@lists.fedoraproject.org/message/SKIFTC43NDFLFWODQW5TLM5SJNMOAJG5/">对此回复道</a>：“Lennart this is neither helpful or ‘excellent’. Please tone it down or take a break from posting for a bit.”）</p>
 <p>当 Daniel J. Walsh 询问是否会兼容 SELinux 标签时，Lennart 回应道：</p>
 <blockquote>
 <p>这不公平！Upstart 都从来没做到过。</p>
@@ -480,10 +489,11 @@
 <p>（事实上，早在 2009 年，就有一个鲜为人知的与 Freedesktop 相关的项目，名为 <a target="_blank" rel="noopener" href="https://fedoraproject.org/wiki/Features/BetterHostname">xdg-hostname</a>，这是朝着创建可供桌面小部件和其他应用程序使用的 D-Bus “功能性守护进程” 方向迈进的独立项目。如果遵循这个项目，而不是将功能性守护进程纳入 systemd 的源代码中，或许能避免许多政治上的敌意——尽管会以削弱 systemd 的影响力为代价。）</p>
 <p><a target="_blank" rel="noopener" href="https://lwn.net/Articles/520892/">2012 年 10 月</a>，随着 gnome-settings-daemon 从 GNOME 3.8 开始正式迁移到 logind，争议进一步加剧。来自 Gentoo、Ubuntu、OpenBSD、Solaris 等项目的开发者提出了反对意见。随后，为实现<a target="_blank" rel="noopener" href="https://wiki.gnome.org/ThreePointThirteen/Features/SystemdUserSession">用户会话管理</a>，进一步添加 systemd 集成的工作很快展开（<a target="_blank" rel="noopener" href="https://wiki.gnome.org/Initiatives/Systemd">参考</a>），这影响了 gnome-session、gnome-shell 等组件。从 <a target="_blank" rel="noopener" href="https://blogs.gnome.org/benzea/2019/10/01/gnome-3-34-is-now-managed-using-systemd/">GNOME 3.34</a> 开始，gnome-settings-daemon 完全由 systemd 管理，如果不使用 systemd，就需要进行<a target="_blank" rel="noopener" href="https://github.com/dantrell/gentoo-project-gnome-without-systemd">大量的修改</a>。</p>
 <p>当时的主要困惑源于对依赖组件的不确定性。哪些是依赖的组件？这些依赖是构建时依赖还是运行时依赖？依赖的是 systemd，还是 systemd 套件中某个组件提供的接口？整个语义都存在歧义。当时，<a target="_blank" rel="noopener" href="https://www.freedesktop.org/wiki/Software/systemd/InterfacePortabilityAndStabilityChart/">systemd 接口兼容性和稳定性图表</a>将 logind 列为不可独立重新实现的组件。GNOME 开发者 Olav Vitters 当时也对这个问题<a target="_blank" rel="noopener" href="https://blogs.gnome.org/ovitters/2013/09/25/gnome-and-logindsystemd-thoughts/">含糊其辞</a>。</p>
-<p>logind 对 .scope 和 .slice 单元的使用，使得这个问题进一步与 cgroups 子系统的未来纠葛在一起。这在 2013 年和 2014 年成为热点话题，下面将对此进行讨论。</p>
+<p>logind 对 .scope 和 .slice 单元的使用，使得这个问题进一步与 cgroups 子系统的未来纠葛在一起。这在 2013 年和 2014 年成为热点话题，之后我们会对此进行讨论。</p>
 <p>到了 2013 年和 2014 年，Debian 和 Ubuntu 几乎是主流发行版中仅存的“顽固分子”，而 GNOME 问题也是 Debian 接受 systemd 的一个重要原因。</p>
-<p>（Arch Linux 在 2012 年 8 月经历了一些<a target="_blank" rel="noopener" href="http://jasonwryan.com/blog/2012/08/18/trolls/">戏剧性的变化</a>，但主要是内部事务。在 Arch Linux 内部，当时负责管理 init 脚本的 Tom Gundersen 是 systemd 的主要支持者，也是上游 systemd 的开发者，后来成为 systemd-networkd 的主要架构师。<a target="_blank" rel="noopener" href="https://lists.archlinux.org/pipermail/arch-general/2012-April/026317.html">他表示“跨发行版协作”是他的一个重要目标</a>：“在我看来，一个不错的目标是加强跨发行版的协作。你们的项目中，不同主流发行版的贡献者占比如何？我认为，systemd 的一个优点是它几乎吸引了所有主流发行版的活跃贡献者（包括 Gentoo 和 Arch Linux，但可能不包括 Ubuntu？我不太确定）。”）</p>
-<p>例如，Debian 开发者 Ansgar Burchardt 在 2014 年 1 月的技术委员会会议上谈到了<a target="_blank" rel="noopener" href="https://lists.debian.org/debian-ctte/2014/01/msg00022.html">围绕桌面 Linux 的生态系统</a>正在逐渐倾向于 systemd：</p>
+<p>Arch Linux 在 2012 年 8 月经历了一些<a target="_blank" rel="noopener" href="http://jasonwryan.com/blog/2012/08/18/trolls/">戏剧性的变化</a>，但主要是内部事务。在 Arch Linux 内部发生了激烈的辩论，<a target="_blank" rel="noopener" href="https://lists.archlinux.org/pipermail/arch-dev-public/2012-August/023389.html">有的人认为 systemd 相比 SysV 来说设计更好、功能更多、速度也更快</a>，<a target="_blank" rel="noopener" href="https://lists.archlinux.org/pipermail/arch-dev-public/2012-August/023392.html">有的人认为维护 SysV 的补丁并不值得</a>，<a target="_blank" rel="noopener" href="https://bbs.archlinux.org/viewtopic.php?pid=1149530">更多人的想法是，大部分对 systemd 的批评并不是基于实际的缺陷，而是出于社区中对 Lennart Poettering 本人普遍的厌恶情绪和对变革的抵触</a>。</p>
+<p>当时负责管理 init 脚本的 Tom Gundersen 是 systemd 的主要支持者，也是上游 systemd 的开发者，后来成为了 systemd-networkd 的主要架构师。<a target="_blank" rel="noopener" href="https://lists.archlinux.org/pipermail/arch-general/2012-April/026317.html">他表示“跨发行版协作”是他的一个重要目标</a>：“在我看来，一个不错的目标是加强跨发行版的协作。你们的项目中，不同主流发行版的贡献者占比如何？我认为，systemd 的一个优点是它几乎吸引了所有主流发行版的活跃贡献者（包括 Gentoo 和 Arch Linux，但可能不包括 Ubuntu？我不太确定）。”最终在 2012 年 10 月，<a target="_blank" rel="noopener" href="https://archlinux.org/news/systemd-is-now-the-default-on-new-installations/">Arch Linux 也切换到了 systemd</a>。</p>
+<p>Debian 开发者 Ansgar Burchardt 在 2014 年 1 月的技术委员会会议上谈到了<a target="_blank" rel="noopener" href="https://lists.debian.org/debian-ctte/2014/01/msg00022.html">围绕桌面 Linux 的生态系统</a>正在逐渐倾向于 systemd：</p>
 <blockquote>
 <p>另一方面，即使我们使用 upstart 作为 init 的替代品，我们仍然会继续使用大量的 systemd 组件（比如 logind 和其他 D-Bus 服务）。我个人认为，“少即是多”的论点只有在我们确实不需要这些额外功能的情况下才有说服力。</p>
 <p>我还有一个问题：你的邮件没有提及在使用 upstart 而非 systemd 作为 init 的系统中集成 logind 面临的问题。你不认为这会是一个问题吗？鉴于这意味着未来需要持续的工作投入，而不是一次性投资，这是我对 upstart 的主要不满之一。我觉得，为了 init 替代方案之间微小的技术差异，长期维护一个脱离 systemd 的 systemd-logind 分支并不值得。我们完全可以将资源投入到更有趣的领域。</p>
@@ -500,7 +510,8 @@
 <p><strong>换句话说，这场争论实际上并不是 systemd 与 upstart 的对决。如果我们把选择缩小到这两个竞争者之间，那么问题是：是采用 systemd 的所有主要组件，包括 init 系统？还是采用 systemd 的大部分主要组件，但用 upstart 替换掉 init 系统？无论哪种方式，我们都将不得不运行 udev、logind、一些 systemd 的 D-Bus 服务，以及很可能用于桌面环境的 timedated 和 hostnamed。</strong></p>
 <p>这在很大程度上改变了讨论的性质。我们不再是在两种相互竞争的生态系统之间做出选择。相反，我们是在讨论是否要将现有的集成生态系统中的一个核心组件替换为我们更喜欢的组件。</p>
 </blockquote>
-<p>然后，该来的还是来了。</p>
+<p>然后，该来的还是来了。<a target="_blank" rel="noopener" href="https://www.debian.org/vote/2019/vote_002">Debian 最终选择切换到 systemd，尽管保留了对其他 init 系统的兼容性</a>。在随后不久，2014 年 2 月，Mark Shuttleworth 在他的博客中宣布 Ubuntu 也将<a target="_blank" rel="noopener" href="https://www.markshuttleworth.com/archives/1295">跟随 Debian 切换到 systemd</a>，<a target="_blank" rel="noopener" href="https://www.markshuttleworth.com/archives/1316">并且放弃自己的 Upstart</a>。</p>
+<p>（在 2014 年 11 月，Debian 开发者 <a target="_blank" rel="noopener" href="https://joeyh.name/blog/entry/on_leaving/">Joey Hess</a>、Debian 技术委员会成员 <a target="_blank" rel="noopener" href="https://lists.debian.org/debian-ctte/2014/11/msg00071.html">Russ Allbery</a> 和 <a target="_blank" rel="noopener" href="https://lists.debian.org/debian-ctte/2014/11/msg00091.html">Ian Jackson</a>、以及 Debian 的 systemd 包维护者 <a target="_blank" rel="noopener" href="https://lists.alioth.debian.org/pipermail/pkg-systemd-maintainers/2014-November/004563.html">Tollef Fog Heen</a> 主动辞去了他们的职务，其主要原因在于社区舆论带来的巨大压力，<a target="_blank" rel="noopener" href="https://lwn.net/Articles/620878/">另见</a>。）</p>
 <p>Allbery <a target="_blank" rel="noopener" href="https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=727708#2230">随后进一步阐述了</a>在社区项目中志愿者劳动的本质。他的建议是将这个问题上升到 GR（通用决议）级别，原因是一种社会意识：“这不是一个技术问题；这是一个关于项目整体方向的问题，也是在上游合作伙伴更倾向于紧密耦合的情况下，我们是否仍然要强求采用松散耦合的模式的问题。”</p>
 <p>另一个主要推动因素是 udev 的合并。这个合并于 2012 年 4 月正式<a target="_blank" rel="noopener" href="https://lwn.net/Articles/490413/">宣布</a>。当时，Kay Sievers 承诺，在非 systemd 系统上使用的 udev 构建将得到官方支持，合并主要是构建系统的变更。然而，仅仅几个月后的 <a target="_blank" rel="noopener" href="https://lists.freedesktop.org/archives/systemd-devel/2012-August/006066.html">8 月</a>，Lennart 就公开表示，非 systemd 系统上的 udev 是一条“死胡同”：</p>
 <blockquote>
@@ -535,7 +546,7 @@
 <p>systemd 开发者正在与内核 cgroups 开发者密切合作，为 cgroup v1 被废弃后的第三阶段做准备。我不确定 cgmanager 是否能够做到同样的事情：据我与更了解情况的人的讨论得知，它只是将当前的 cgroups API 以 D-Bus 调用的形式暴露出来，这种方法在 cgroups API 发生变化时无法透明地工作。因此，我们最终可能只有一个可用的 cgroups 仲裁者：systemd。</p>
 <p>其他部分必须迁移到基于 D-Bus 的接口。问题是，到目前为止，systemd 和 cgmanager 的开发者尚未就一个公共 API 达成一致。对于那些使用 cgroups 的服务，其后果不难推断——一些服务将仅支持 systemd，一些将通过编写更复杂的代码以同时支持两者，还有一些将等待一个“标准”出现，而不会在过渡方面投入精力。</p>
 </blockquote>
-<p>同样，在 2014 年 1 月，他与 Upstart 开发者 Steve Langasek 的交流中，也<a target="_blank" rel="noopener" href="https://lists.debian.org/debian-ctte/2014/01/msg00041.html">放弃了 logind 可作为独立于 systemd 的组件的幻想</a>：</p>
+<p>同样，在 2014 年 1 月，他与 Upstart 开发者 Steve Langasek 的交流中，也<a target="_blank" rel="noopener" href="https://lists.debian.org/debian-ctte/2014/01/msg00041.html">放弃了 logind 可作为独立于 systemd 的组件的幻想</a>（并在 systemd v205 中消灭了独立使用 logind 的可能性）：</p>
 <blockquote>
 <p>实际上，logind 在未使用 systemd 作为 init 程序时能够正常工作，完全是巧合，因为 logind 从一开始就被设计为 systemd 的不可分割部分（特别是由于 cgroups 的设计）。具体的变化可能与预期的内核变更有关（但目前尚未实现），但即使不是因为 cgroups，也会由于其他原因导致这一结果。</p>
 </blockquote>
@@ -543,7 +554,7 @@
 <blockquote>
 <p>内核开发者希望用户空间有一个单一的仲裁组件来管理 cgroups。在 systemd 系统中，systemd 就是这个组件，你无法将其从 systemd 中分离。Upstart 在这一领域完全没有取得任何成果，甚至没有具体的计划。有人幻想让一个辅助守护进程承担 cgroups 仲裁者的角色，但这是一个复杂的任务，不是说说就能完成的。我非常确定 Ubuntu 团队甚至根本不了解这种复杂性。控制组当然是现代服务器领域的核心工作之一。服务的资源管理是服务管理的主要部分（如果不是最大的部分）。如果你想在服务器领域保持相关性，就必须在这一领域有所作为。systemd 提供的 cgroups API 非常特定于 systemd，因此，无论 Upstart 将来提出何种解决方案，都不太可能与之兼容。当然，到那时，Linux 生态系统的大部分应该都已经在使用 systemd API……</p>
 </blockquote>
-<p><a target="_blank" rel="noopener" href="https://lists.freedesktop.org/archives/systemd-devel/2013-June/011524.html">2013 年 6 月</a>，在 systemd 邮件列表上的一篇帖子讨论了 systemd 作为 cgroups 单一写入者的 D-Bus API 应该如何设计。值得注意的是，内核黑客 Andy Lutomirski 提出了<a target="_blank" rel="noopener" href="https://lists.freedesktop.org/archives/systemd-devel/2013-June/011564.html">一种可能的解决方案</a>：通过加强 <code>subreaper</code> 系统调用以可靠地跟踪进程，从而完全避免使用 systemd 的 cgroups，允许将 cgroups 的管理权移交给不同的进程——对于这种建议，systemd 的开发者毫不感兴趣。</p>
+<p><a target="_blank" rel="noopener" href="https://lists.freedesktop.org/archives/systemd-devel/2013-June/011524.html">2013 年 6 月</a>，在 systemd 邮件列表上的一篇帖子讨论了 systemd 作为 cgroups 单一写入者的 D-Bus API 应该如何设计。值得注意的是，内核黑客 Andy Lutomirski 提出了<a target="_blank" rel="noopener" href="https://lists.freedesktop.org/archives/systemd-devel/2013-June/011564.html">一种可能的解决方案</a>：通过加强<code>subreaper</code>系统调用以可靠地跟踪进程，从而完全避免使用 systemd 的 cgroups，允许将 cgroups 的管理权移交给不同的进程——对于这种建议，systemd 的开发者毫不感兴趣。</p>
 <p>无论如何，Lennart <a target="_blank" rel="noopener" href="https://lists.freedesktop.org/archives/systemd-devel/2013-June/011521.html">宣布即将到来的这一变化</a>时的措辞颇为夸张：</p>
 <blockquote>
 <p>cgroups 层次结构已成为 systemd 的私有财产。systemd 将负责构建、维护和重新组织它。其他想要使用 cgroups 的软件只能通过 systemd 的 API 来实现。这种单一写入者的逻辑是绝对必要的，因为各控制器、属性和 cgroups 之间的相互依赖关系并不明显，我们不能允许 cgroup 用户独立地改变树结构。因此，<a target="_blank" rel="noopener" href="https://www.freedesktop.org/wiki/Software/systemd/PaxControlGroups/">“Pax Control Groups”</a> 文件已成为过去，已经过时。</p>
@@ -589,56 +600,114 @@
 <p>让我们总结一下有关systemd的历史环节：</p>
 <ol>
 <li>systemd 从一开始就肩负着实现跨发行版标准化的宏大抱负，早在 2011 年 1 月就已自称为 “操作系统的基本构建块”。与 GNOME 的集成也在同一时间开始规划。systemd 仅作为 init 系统存在的时间窗口非常短暂，最多只有半年。</li>
-<li>它被采用的根本原因在很大程度上既是社会和网络效应，也是技术评估的结果。许多发行版的开发者因分散的集市开发方式而感到疲惫，渴望有机会将低层用户空间整合到一个中央的上游代码库中。多年来 init 脚本的冗余累积导致了越来越难以维护的混乱代码。systemd 通过单元文件的 “干净重写” 以及对各大主要项目的深入整合，最终推动发行版维护者加快了停滞不前的 init 现代化工作。Upstart 效果较差的部分原因是，它允许在 Job 配置文件中逐字执行 init 脚本（算是一种妥协），且其事件模型晦涩难懂。</li>
+<li>它被采用的根本原因在很大程度上既是社会和网络效应，也是技术评估的结果。许多发行版的开发者因分散的集市开发方式而感到疲惫，渴望有机会将低层用户空间整合到一个中央的上游代码库中。多年来 init 脚本的冗余累积导致了越来越难以维护的混乱代码。systemd 通过单元文件的 “干净重写” 以及对各大主要项目的深入整合，最终推动发行版维护者加快了停滞不前的 init 现代化工作。Upstart 效果较差的部分原因是，它允许在 Job 配置文件中逐字执行 shell 脚本（算是一种妥协），且其事件模型晦涩难懂。</li>
 <li>许多具体的或计划中的发展，例如 GNOME 对 systemd 不同组件依赖的不断增加、kdbus 看似不可避免的到来、整个 D-Bus 生态系统的彻底改造、停止在非 systemd 系统上支持 udev 的计划、将 kdbus API 用于 libudev 的计划，以及重新设计的 cgroupv2 API 的单一写入者限制——所有这些发展在相对较短的时间内交汇在一起，造成了一种不可阻挡的趋势——发行版要么被整合，要么变得无关紧要。</li>
 <li>systemd 围绕其原作者的宏伟愿景构建，这个愿景并未被完全阐述，但可以通过阅读其开发者的早期材料来重建。其预期的使用方式（普遍的套接字和 D-Bus 激活）与实际使用情况不符，再加上几次被内核维护者挫败，导致项目整体方向丧失，开发变得越来越随意、被动，甚至接近于停滞（这通常被更委婉地称为 “成熟”）。</li>
 <li>由于 GNOME&#x2F;Red Hat&#x2F;SUSE 在过去几年里不断尝试通过 D-Bus 接口和 D-Bus 激活进行服务管理，但均未取得成功，因此 systemd 先天对它们具有一定的吸引力。相反，直到相对较晚的时候，这项工作才成为 Upstart 或其他任何 init 系统的关注重点。</li>
 <li>即使软件是自由的，马基雅维利主义和联盟政治也不会消失。</li>
 </ol>
 <h1 id="systemd的技术批评"><a href="#systemd的技术批评" class="headerlink" title="systemd的技术批评"></a>systemd的技术批评</h1><p>systemd 不是一个基于依赖关系的 init 系统，这或许听起来有些离奇。毕竟，它为编写单元文件的开发者提供了丰富的依赖类型。确切的数量难以精确计算，因为 systemd 内部对依赖的理解与它向用户展示的有所不同，且许多配置选项要么具有类似依赖的副作用，要么最终被转换为实际的依赖关系。</p>
-<p>十年来，仍没有一份令人满意的 systemd 架构系统化概述。我们不得不通过浏览邮件列表、Bug 报告和源代码来深入理解。例如，在<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/4787">这个 Bug 报告</a>中，一位用户对于一个失败的服务仍能满足<code>Wants=</code>依赖感到困惑。对此，Poettering 模糊地回应道：“systemd 是一个作业引擎”，随后 <a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/4756#issuecomment-266266049">Andrei Borzenkov 进一步解释</a>：“systemd 确实是一个作业引擎，并且在作业之间定义了依赖关系。”systemd 的开发者和几乎所有公开文档都围绕着“以单元为中心”来描述 systemd（除非在讨论 Bug 时）。但我认为，对于作为服务管理器的 systemd 而言，最核心的结构不是单元，而是作业。因此，理解 systemd 应从“以作业为中心”的角度出发。systemd 的许多复杂性源于单元与为其排队的作业在语义上并非一一对应。</p>
+<p>十年来，仍没有一份令人满意的 systemd 架构系统化概述。我们不得不通过浏览邮件列表、Bug 报告和源代码来深入理解。例如，在<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/4787">这个 Bug 报告</a>中，一位用户对于一个失败的服务仍能满足<code>Wants=</code>依赖感到困惑。对此，Poettering 模糊地回应道：“systemd 是一个作业引擎”，随后 <a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/4756#issuecomment-266266049">Andrei Borzenkov 进一步解释</a>：“systemd 确实是一个作业引擎，并且在作业之间定义了依赖关系。”</p>
+<p>systemd 的开发者和几乎所有公开文档都围绕着“以单元为中心”来描述 systemd（除非在讨论 Bug 时）。但我认为，对于作为服务管理器的 systemd 而言，最核心的结构不是单元，而是作业。因此，理解 systemd 应从“以作业为中心”的角度出发。systemd 的许多复杂性的根源在于单元与 systemd 为单元入队的作业在语义上并非一一对应。</p>
 <p>基于以上理解，我对 systemd 作出如下简要定义：</p>
-<h2 id="systemd-的具体定义"><a href="#systemd-的具体定义" class="headerlink" title="systemd 的具体定义"></a>systemd 的具体定义</h2><p>systemd 是一个事件驱动的对象管理器，具备类似于依赖关系的副作用。它将原始的内核资源和用户空间子系统封装为一种通用的对象类型——“单元”（Unit）。这些单元对象通过“作业”（Job）的状态传播机制进行调度，并由名为 Manager 的单例对象动态管理。Manager 负责在“事务”（Transaction）中启动作业，执行合并、循环排序和一致性检查，并作为引入单元依赖关系的主要节点。单元的启动以非幂等的并行数据流方式执行，在作业层面提供弱排序保证，通常与依赖单元的活动状态（Active State）无关。</p>
-<h2 id="单元（Unit）"><a href="#单元（Unit）" class="headerlink" title="单元（Unit）"></a>单元（Unit）</h2><p>单元是 systemd 为终端用户建模时采用的核心抽象概念。</p>
-<p>单元表示具有通用方法（如启动、停止、重载等）的工作单元对象。这些方法被分派到针对每种单元类型的多态虚函数表（Vtable）中。目前共有 11 种类型：<code>.service</code>、<code>.socket</code>、<code>.target</code>、<code>.device</code>、<code>.mount</code>、<code>.automount</code>、<code>.swap</code>、<code>.timer</code>、<code>.path</code>、<code>.slice</code>和<code>.scope</code>。每个单元都关联到一个 Manager 对象，描述了 systemd 自身的一个实例，可能是系统范围的，也可能是每个用户会话的。单元包含加载状态（Load State）、活动状态（Active State）、描述（Description）和文档（Documentation）等元数据，一个哈希表用于存储其依赖项（Dependency），以及条件（Condition）和断言（Assertion）检查的列表。每个单元都有一个表示状态变更请求的作业槽（Job Slot）。他们还引用了关联 Manager 的加载队列（Load Queue）、运行队列（Run Queue）和 D-Bus 队列（D-Bus Queue）。此外，还有与单元执行状态相关的各种数据，以及在特殊情况下导致行为临时变更的布尔值。</p>
-<p>单元的活动状态包括 “active”、“activating”、“inactive”、“deactivating”、“failed”、“reloading”和“maintenance”。每种类型的单元都有一个状态映射表，将特定于类型的活动状态映射到通用的活动状态。</p>
-<p>单元依赖关系可分为以下几类：顺序依赖（Ordering）与需求依赖（Requirement）、正向依赖（Forward）与反向依赖（Inverse）、重载传播依赖（Reload Propagate）等。顺序依赖在并行启动过程中至关重要，会影响作业的完成顺序，可能触发不同的失败状态。需求依赖用于触发作业的状态变化传播。</p>
-<p>顺序依赖由<code>Before=</code>和<code>After=</code>控制。正向依赖有<code>Requires=</code>、<code>Wants=</code>、<code>BindsTo=</code>和<code>Requisite=</code>，其对应的反向依赖是<code>RequiredBy=</code>、<code>WantedBy=</code>、<code>BoundBy=</code>和<code>RequisiteOf=</code>，这些反向依赖仅在 systemd 内部使用。<code>PropagatesReloadTo=</code>及其反向<code>ReloadPropagatedFrom=</code>是独立的一类。<code>Conflicts=</code>及其反向<code>ConflictedBy=</code>是一种特殊的“负向”依赖。<code>PartOf=</code>实际上是一种反向依赖，其正向形式<code>ConsistsOf=</code>纯粹供内部使用。<code>OnFailure=</code>和<code>JoinsNamespaceOf=</code>也被 systemd 视为单元依赖类型。</p>
-<p>套接字（Socket）、路径（Path）、定时器（Timer）和自动挂载（Automount）的激活机制通过<code>Triggers=</code>和<code>TriggeredBy=</code>依赖实现，这些依赖对终端用户不可直接使用。<code>References=</code>和<code>ReferencedBy=</code>用于垃圾回收单元。</p>
+<h2 id="systemd-的具体定义"><a href="#systemd-的具体定义" class="headerlink" title="systemd 的具体定义"></a>systemd 的具体定义</h2><p>systemd 是一个事件驱动的对象管理器，具备类似于依赖关系的副作用。它将原始的内核资源和用户空间子系统封装为一种通用的对象类型——“单元”（Unit）。这些单元对象通过名为“作业”（Job）的传播机制进行调度，并由名为 Manager 的单例对象动态管理。Manager 负责在“事务”（Transaction）中执行作业的同类合并、循环排序和一致性检查，然后启动作业，这一阶段是引入单元依赖关系的主要节点。单元的启动以非幂等的并行数据流方式执行，在作业层面提供弱排序保证，通常情况下与依赖单元的活动状态（Active State）无关。</p>
+<h2 id="单元（Unit）"><a href="#单元（Unit）" class="headerlink" title="单元（Unit）"></a>单元（Unit）</h2><p>单元是 systemd 为最终用户建模时采用的核心抽象概念。</p>
+<p>单元表示具有特定的通用方法（如启动、停止、重载等）的工作单元对象，这些方法被保存在每种单元类型绑定的虚函数表（Vtable）中。目前共有 11 种<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/basic/unit-def.h#L13">单元类型</a>：<code>.service</code>、<code>.socket</code>、<code>.target</code>、<code>.device</code>、<code>.mount</code>、<code>.automount</code>、<code>.swap</code>、<code>.timer</code>、<code>.path</code>、<code>.slice</code>和<code>.scope</code>。</p>
+<p>每个单元都会关联到一个 Manager 对象，Manager 对象是 systemd 自身的一个实例，可能是系统范围的，也可能是用户会话的。单元内部包含<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/unit.h#L218">加载状态（Load State）</a>、描述（Description）和文档（Documentation）等元数据，还包含一个<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/unit.h#L229">哈希表（Hash Map），用于存储其依赖项（Dependency）</a>，以及条件（Condition）和断言（Assertion）检查的列表。每个单元都有一个表示状态变更请求的<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/unit.h#L266">作业槽（Job Slot）</a>。它们还包含了对运行自己的 Manager 的<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/unit.c#L490">加载队列（Load Queue）</a>、<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/unit.c#L2524">运行队列（Run Queue）</a>和<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/unit.c#L524"> D-Bus 队列（D-Bus Queue）</a>的引用，此外，还有与单元执行状态相关的各种数据，以及在特殊情况下导致单元的某些行为发生临时变化的布尔值。</p>
+<p>单元属性（Unit Properties）是单元内部通用元信息的外部暴露机制，它们通过虚函数表（Vtable）中定义的<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/unit.h#L664"> <code>bus_set_property</code> </a>和<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/unit.h#L667"> <code>bus_commit_properties</code> </a>方法提供对内部数据的 D-Bus 接口访问和&#x2F;或修改。通过这些接口，用户和其他服务可以查询单元状态或配置单元行为。根据来源和允许的修改时机，单元属性分为以下几类：</p>
+<table>
+<thead>
+<tr>
+<th>属性类别</th>
+<th><code>StartTransientUnit</code>接口调用时提供</th>
+<th>单元文件内或<code>systemd-run -p</code>设置</th>
+<th>运行时动态修改（D-Bus）</th>
+<th>典型示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>运行时可修改</strong></td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td><code>Description</code>、<code>Documentation</code>等一般元信息，<code>CPUWeight</code>、<code>MemoryMax</code>等CGroup资源限制</td>
+<td>最常见的属性类型，可以通过任何来源提供，也可以在单元创建后，通过D-Bus <code>SetProperties</code>接口动态修改</td>
+</tr>
+<tr>
+<td><strong>单元创建后固定</strong></td>
+<td>Y</td>
+<td>Y</td>
+<td>N</td>
+<td><code>StopWhenUnneeded</code>、<code>ExecStart</code>、<code>OnCalendar</code>等不可逆的元信息</td>
+<td>单元创建时必须设置，创建后就不可修改</td>
+</tr>
+<tr>
+<td><strong>瞬态创建专用</strong></td>
+<td>Y</td>
+<td>N</td>
+<td>N</td>
+<td><code>PIDs</code>（<code>.scope</code>单元）</td>
+<td><strong>只能在瞬态单元创建时，通过D-Bus接口（<code>StartTransientUnit</code>）传递</strong>，它们在单元文件中没有对应的配置项，也无法通过<code>systemd-run</code>命令行的<code>-p</code>选项设置</td>
+</tr>
+<tr>
+<td><strong>系统内部状态</strong></td>
+<td>N</td>
+<td>N</td>
+<td>N</td>
+<td><code>ActiveState</code>、<code>LoadState</code>、<code>MainPID</code>、<code>InvocationID</code>等仅在运行时有意义的元信息</td>
+<td>由systemd内部管理和更新，用户只能查询（只读），它们反映了单元的当前运行状态或内部标识</td>
+</tr>
+</tbody></table>
+<p>单元的<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/unit.h#L604">活动状态（Active State）</a>保存在单元的Vtable中，<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/basic/unit-def.h#L42">通用的活动状态</a>包括<code>active</code>、<code>activating</code>、<code>inactive</code>、<code>deactivating</code>、<code>failed</code>、<code>reloading</code>和<code>maintenance</code>。每种类型的单元都有一个<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/service.c#L57">状态映射表</a>，将该类型特定的活动状态映射到通用的活动状态。</p>
+<p>单元间“所谓的”依赖关系可以按照不同分类方式分为以下几类：顺序依赖（Ordering）与需求依赖（Requirement）、正向依赖（Forward）与反向依赖（Inverse）、重载传播依赖（Reload Propagate）等。顺序依赖在并行启动过程中至关重要，会影响作业的完成顺序，进而可能触发不同的失败状态。需求依赖则用于触发作业的传播。</p>
+<p>顺序依赖由<code>Before=</code>和<code>After=</code>控制。</p>
+<p>正向需求依赖有<code>Requires=</code>、<code>Wants=</code>、<code>BindsTo=</code>和<code>Requisite=</code>，其对应的反向需求依赖是<code>RequiredBy=</code>、<code>WantedBy=</code>、<code>BoundBy=</code>和<code>RequisiteOf=</code>，这些反向依赖仅在 systemd 内部使用。</p>
+<p><code>PropagatesReloadTo=</code>及其反向<code>ReloadPropagatedFrom=</code>是独立的一类，即重载传播依赖。</p>
+<p><code>Conflicts=</code>及其反向<code>ConflictedBy=</code>是一种特殊的“负”依赖。</p>
+<p><code>PartOf=</code>实际上是一种反向依赖，其正向形式<code>ConsistsOf=</code>仅供 systemd 内部使用。</p>
+<p><code>OnFailure=</code>和<code>JoinsNamespaceOf=</code>也被 systemd 视为单元依赖类型。</p>
+<p>套接字（Socket）、路径（Path）、定时器（Timer）和自动挂载（Automount）的激活机制通过<code>Triggers=</code>和<code>TriggeredBy=</code>依赖实现，这些依赖对最终用户不可直接使用。</p>
+<p><code>References=</code>和<code>ReferencedBy=</code>用于垃圾回收单元。</p>
 <p><code>RequiresMountsFor=</code>路径依赖存储在独立的哈希表中，与其他依赖类型分开处理。</p>
-<p>每当添加一个单元依赖项时，都会标记一个单元依赖掩码，以指示其来源。通过单元文件添加的依赖被标记为<code>UNIT_DEPENDENCY_FILE</code>。但大多数掩码是为 systemd 通过编程合成的单元设计的（包括隐式和默认的，分别代表隐式依赖项和默认依赖项），无需用户直接输入，例如设备的<code>UNIT_DEPENDENCY_UDEV</code>、交换分区的<code>UNIT_DEPENDENCY_PROC_SWAP</code>、挂载点的<code>UNIT_DEPENDENCY_MOUNTINFO_*</code>等。</p>
-<p>单元文件（Unit Files）只是通过显式元数据清单加载单元对象的一种方式。它们具有独特的“单元安装”逻辑（<code>[Install]</code>指令），该逻辑遵循纯字典排序，与 systemd 的单元和作业机制的其他部分完全不同。这使得 systemd 可以启动类似默认目标（Default Target）的“目标服务”，从中递归加载单元及其依赖项，以构建初始启动事务。</p>
-<p>除了在传播状态变化时作为通用的“节点”对象之外，单元并不是一个高度内聚的抽象——它们在各方面可能存在差异。例如，引入的默认依赖和隐式依赖、是否可以通过文件创建、是否是长期存在的、是否仅能运行一次、是否支持排序或其他特定依赖（如触发器）、是否支持启动、停止或重载、是否封装进程（是否有“主进程”、“控制进程”或两者皆有）、是否可作为临时单元（Transient Unit）生成、甚至是否存在失败状态。</p>
+<p>每当添加一个单元依赖项时，都会标记一个<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/unit.h#L75">单元依赖掩码</a>，以指示其来源。通过单元文件添加的依赖被标记为<code>UNIT_DEPENDENCY_FILE</code>。但<strong>大多数掩码是为 systemd 通过编程方式合成的单元设计的</strong>（包括隐式的和默认的，分别代表隐式依赖项和默认依赖项），无需用户直接输入，例如设备的<code>UNIT_DEPENDENCY_UDEV</code>、交换分区的<code>UNIT_DEPENDENCY_PROC_SWAP</code>、挂载点的<code>UNIT_DEPENDENCY_MOUNTINFO_*</code>等。</p>
+<p>单元文件（Unit Files）只是通过显式元数据清单加载单元对象的一种方式。它们具有独特的“单元安装”逻辑（<code>[Install]</code>指令），该逻辑与 systemd 的单元和作业机制的其他部分完全没有关系，遵循纯字典排序。这使得 systemd 可以通过启动类似于默认目标（Default Target）的“目标服务”，然后将其作为锚点，递归地加载依赖单元，以构建系统的初始启动事务。</p>
+<p>除了在传播状态变化时作为通用的“节点”对象之外，单元并<strong>不是</strong>一个高度内聚的抽象——它们在各方面都可能存在差异。例如，引入的默认依赖和隐式依赖、是否可以通过文件创建、是否长期存在、是否仅能运行一次、是否支持排序或其他特定依赖（如触发器）、是否支持启动、停止或重载、是否封装进程（是否有“主进程”、“控制进程”或两者皆有）、是否可以作为临时单元（Transient Unit）生成、甚至于是否存在失败状态。</p>
+<ul>
+<li>这是 systemd 设计权衡的结果，其目的就是为了尽可能“忠实”地还原各种系统资源的状态和行为。</li>
+</ul>
 <h2 id="作业（Job）"><a href="#作业（Job）" class="headerlink" title="作业（Job）"></a>作业（Job）</h2><p>作业是与 Manager 对象关联的单元状态变更请求，其副作用包括为单元依赖关系提供解决方案。</p>
-<p>一个作业包含四个属性：类型（Type）、状态（State）、模式（Mode）和结果（Result）。</p>
-<p>作业类型是使单元过渡到不同状态的动作，包括<code>JOB_START</code>、<code>JOB_STOP</code>、<code>JOB_RESTART</code>（即一开始是<code>JOB_STOP</code>，随后变为<code>JOB_START</code>）、<code>JOB_RELOAD</code>、<code>JOB_TRY_RESTART</code>和<code>JOB_VERIFY_ACTIVE</code>。实际上，最后一个就是<code>Requisite=</code>队列的内容——并非状态转换，而是状态检查。同一时间只能为给定的单元运行一个作业。在 systemd 中，依赖关系主要涉及作业如何传播和影响其他单元。</p>
+<p>一个作业包含四个属性：<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/job.h#L23">类型（Type）</a>、<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/job.h#L67">状态（State）</a>、<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/job.h#L74">模式（Mode）</a>和<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/job.h#L88">结果（Result）</a>。</p>
+<p>作业类型是使单元过渡到不同状态的动作，包括<code>JOB_START</code>、<code>JOB_STOP</code>、<code>JOB_RESTART</code>（即一开始是<code>JOB_STOP</code>，随后变为<code>JOB_START</code>）、<code>JOB_RELOAD</code>、<code>JOB_TRY_RESTART</code>和<code>JOB_VERIFY_ACTIVE</code>。实际上，最后一个就是<code>Requisite=</code>的功能——并非进行状态转换，而是进行状态检查。</p>
+<p>同一段时间内，只能为给定的单元运行一个作业。在 systemd 中，依赖关系的本质是作业传播和影响其他单元的方式。</p>
 <p>一些复杂的作业类型如<code>JOB_TRY_RESTART</code>、<code>JOB_TRY_RELOAD</code>和<code>JOB_RELOAD_OR_START</code>，可能会根据单元的活动状态（Active State）分别被合并为<code>JOB_RESTART</code>、<code>JOB_RELOAD</code>和<code>JOB_RELOAD</code>。</p>
-<p>作业状态（Job State）非常简单，要么是 “waiting”，要么是 “running”。例如，一旦停止作业达到 “done” 结果，重启作业就会进入 “waiting” 状态，并将其类型更改为启动作业。</p>
-<p>作业模式（Job Mode），如<code>systemctl</code>中的<code>--job-mode</code>选项所示，影响作业应如何抢占其他已排队的作业。这不仅关系到与待处理作业的冲突（例如，一个处于 waiting 状态的启动作业可能被转换为停止作业）是否应该失败或成功替换，还涉及单元级别的全局变化。例如，<code>JOB_ISOLATE</code>用于停止除被隔离单元之外的所有其他单元，<code>JOB_IGNORE_DEPENDENCIES</code>则强制执行作业，忽略顺序依赖和需求依赖。</p>
-<p>作业结果（Job Result）即作业的最终状态，包括多种情况，如<code>JOB_DONE</code>、<code>JOB_CANCELED</code>、<code>JOB_DEPENDENCY</code>、<code>JOB_TIMEOUT</code>、<code>JOB_SKIPPED</code>等。单元方法状态机（启动 &#x2F; 停止 &#x2F; 重载等）的错误代码会传递到作业结果中，使得作业结果通常能反映出单元方法的错误，并具有不同的含义，例如 “单元未加载”、“单元不支持启动”、“无法再次启动”、“操作已在进行中”等。</p>
-<p>作业可以通过服务管理器显式触发，无论是通过总线，作为事务依赖添加的一部分，还是由 Manager 在构建事务时以其他方式引入——例如，从文件启动一个单元的常规流程。此外，每种单元类型都会调用一个<code>unit_notify</code>方法，并可选择传递特定于单元类型的通知标志。这适用于所有低级或特定类型的状态变更（如进程退出、发送终止信号或超时到期），因此包括那些并非源自作业但仍导致作业被排队的变更。例如，这就是为具有自动重启（Auto-restart）功能的服务单元（<code>.service</code>单元）传播<code>OnFailure=</code>依赖的方式。我们可以将这些作业称为“隐式作业”。</p>
-<h2 id="事务与-Manager-对象"><a href="#事务与-Manager-对象" class="headerlink" title="事务与 Manager 对象"></a>事务与 Manager 对象</h2><p>Manager 是一个单例对象（每个 systemd 辅助守护进程，如<code>logind</code>和<code>networkd</code>，也有类似的对象），负责在运行、加载和 D-Bus 队列过程中调度作业和事务。它还包含设备、挂载点和 Swap 特定的数据。所有显式作业，包括通过<code>systemctl</code>启动的作业，都通过 Manager 进行。Manager 对象还负责全局系统状态转换，例如<code>poweroff</code>、<code>reboot</code>、<code>halt</code>、<code>isolate</code>等。</p>
-<p>Manager 触发的作业在所谓的“事务”（Transaction）中启动。实际上，直到 systemd-183 之前，事务构建器都与 Manager 的实现位于同一个源文件中。事务总是从一个“锚定作业”（即调用者请求的作业）开始，递归地为依赖单元添加作业。事务旨在执行某些合理性检查，如检测排序循环、防止冲突作业运行，并尝试通过作业合并规则解决冲突。例如，一个单元上的<code>JOB_VERIFY_ACTIVE</code>和<code>JOB_START</code>作业将被合并为后者。由此可见，systemd 中的依赖关系通常不是累加性的约束，而是遵循一定的优先级层次。</p>
-<p>systemd 事务的一个重要微妙之处在于，它们在计算时独立于当前单元的运行状态，因此启动作业是非幂等的——它们总是会“唤醒”单元的依赖项，即使该单元已经启动。这正是设计使然，systemd 开发者 Zbigniew Jędrzejewski-Szmek <a target="_blank" rel="noopener" href="https://bugzilla.redhat.com/show_bug.cgi?id=1807771">如此解释</a>：</p>
+<p>作业状态（Job State）非常简单，要么是<code>waiting</code>，要么是<code>running</code>（2026更新：<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/commit/78208556b281bd6ee8a95d16a517152728010475">还有一个<code>finished</code></a>）。例如，一旦停止作业返回<code>JOB_DONE</code>结果，重启作业就会进入<code>waiting</code>状态，并将其类型更改为启动作业。</p>
+<p>作业模式（Job Mode），如<code>systemctl</code>中的<code>--job-mode</code>选项所示，影响作业应如何抢占其他已入队的作业。这不仅关系到与待执行作业的冲突处理（例如，一个处于<code>waiting</code>状态的启动作业可能被转换为停止作业）——是应该失败还是应该替换掉，还涉及单元层面的全局变化。例如，<code>JOB_ISOLATE</code>用于停止除了被隔离单元（及其依赖单元）之外的所有其他单元，<code>JOB_IGNORE_DEPENDENCIES</code>则强制执行作业，忽略顺序依赖和需求依赖。</p>
+<p>作业结果（Job Result）即作业的最终状态，包括多种情况，如<code>JOB_DONE</code>、<code>JOB_CANCELED</code>、<code>JOB_DEPENDENCY</code>、<code>JOB_TIMEOUT</code>、<code>JOB_SKIPPED</code>、<code>JOB_FAILED</code>等。单元方法（启动 &#x2F; 停止 &#x2F; 重载等）的错误代码会被传递到作业结果中，这使得作业结果通常能反映出单元方法的错误，例如“单元未加载”、“单元不支持启动”、“无法再次启动”、“操作已在进行中”等。</p>
+<p>作业可以由 Manager 显式触发——这可以是用户通过 DBus 触发（如通过<code>systemctl</code>命令行接口），可以是作为依赖的一部分添加到事务中，还可以是由 Manager 在构建事务时通过其他方式引入——例如，通过单元文件启动另一个单元。</p>
+<p>此外，每种单元类型<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/unit.c#L2597">都会调用一个<code>unit_notify</code>方法</a>，并且可以选择传递特定于单元类型的通知标志。这适用于所有低级或特定类型的状态变更（如进程退出、发送终止信号或超时到期），因此包括那些并非源自作业但仍然导致作业被入队的变更。例如，这就是为具有自动重启（Auto-restart）功能的服务单元（<code>.service</code>单元）传播<code>OnFailure=</code>依赖的方式。我们可以将这些作业称为“隐式作业”。</p>
+<h2 id="事务（Transaction）与-Manager-对象"><a href="#事务（Transaction）与-Manager-对象" class="headerlink" title="事务（Transaction）与 Manager 对象"></a>事务（Transaction）与 Manager 对象</h2><p>Manager 是一个单例对象（每个 systemd 辅助守护进程，如<code>logind</code>和<code>networkd</code>，也有类似的对象），负责在运行、加载和 D-Bus 队列过程中调度作业和事务。它还包含设备、挂载点和 Swap 特定的数据。所有显式作业，包括用户使用<code>systemctl</code>接口启动的作业，都通过 Manager 进行。Manager 对象还负责全局系统状态转换，例如<code>poweroff</code>、<code>reboot</code>、<code>halt</code>、<code>isolate</code>等。</p>
+<p>Manager 触发的作业在所谓的“事务”（Transaction，本质上是一个 Hash Map，因此存在去重的副作用）中启动。实际上，直到 systemd-183 之前，事务构建器都与 Manager 的实现位于同一个源文件中。事务总是从一个“锚点作业”（即调用者请求的作业）开始，递归地添加依赖单元的作业。构建事务的目的在于进行某些合理性检查，如检测排序循环、阻止冲突作业执行，并<strong>在添加作业时</strong>尝试按照特定的规则对作业进行合并，以解决一些冲突。例如，同一个单元上的<code>JOB_VERIFY_ACTIVE</code>和<code>JOB_START</code>作业会被合并为后者。由此可见，systemd 中的依赖关系通常不是累加性的约束，而是遵循一定的优先级层次。</p>
+<p>systemd 事务的一个重要微妙之处在于，它们在构建时并不考虑单元当前的活动状态，因此启动作业实际上是非幂等的——它们总是会尝试“唤醒”单元的依赖项，即使该单元已经启动。这正是设计使然，systemd 开发者 Zbigniew Jędrzejewski-Szmek <a target="_blank" rel="noopener" href="https://bugzilla.redhat.com/show_bug.cgi?id=1807771">如此解释</a>：</p>
 <blockquote>
-<p>从 systemd 的角度来看一些背景信息：当启动一个服务时，systemd 会递归遍历完整的依赖树，即使对于已经启动的服务和目标也是如此。因此，例如，在某个时刻我们有一个像<code>httpd.service/start</code>这样的作业，我们将遍历它的所有依赖，通常包括<code>sysinit.target</code>，然后是<code>local-fs.target</code>，并为依赖树中任何未运行的单元（或在<code>Type=oneshot</code>&#x2F;<code>RemainAfterExit=yes</code>的情况下未运行过的单元）调用启动作业。</p>
-<p>这样做增加了系统的鲁棒性，因为即使没有明确地重启该单元，新的依赖项也需要在配置后被启动。而且如果发生故障，它们通常需要被再次启动。另一方面，这使得 PID1 每次启动某个作业时都确保遍历整个单元树。此外，它还有一个缺点，即即使我们不期望，依赖树中的单元也会被启动。这个问题之前已经讨论过，我认为如果我们尝试改变这种行为，将会是很有趣的探索。但这将对基础产生非常重大的改变，我不确定是否能带来更好的结果。因此，在可预见的未来，这种现状都不会改变。</p>
+<p>从 systemd 的角度来看一些背景信息：当启动一个服务时，systemd 会递归遍历完整的依赖树，即使对于已经启动的服务和目标来说，也是如此。因此，例如，在某个时刻我们有一个像<code>httpd.service/start</code>这样的作业，我们将遍历它的所有依赖，通常包括<code>sysinit.target</code>，然后是<code>local-fs.target</code>，并为依赖树中任何未运行的单元（或在<code>Type=oneshot</code>&#x2F;<code>RemainAfterExit=yes</code>的情况下未运行过的单元）调用启动作业。</p>
+<p>这样做增加了系统的鲁棒性，因为即使没有明确地重启该单元，新的依赖项也需要在配置后被启动。而且如果发生故障，它们通常需要被再次启动。另一方面，这使得 PID1 每次启动某个作业时都确保遍历整个单元树。此外，它还有一个缺点，即：即使我们不期望，依赖树中的单元也会被启动。这个问题之前已经讨论过，我认为如果我们尝试改变这种行为，将会是很有趣的探索。但是，这将对 systemd 的基础产生非常重大的改变，我不确定是否能带来更好的结果。因此，在可预见的未来，这种现状都不会发生改变。</p>
 </blockquote>
 <p>直到 2019 年 1 月，在 Jonathon Kowalski <a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/pull/11453">提交的 PR</a> 之后，systemd 文档才得到更新，声明如下：</p>
 <blockquote>
-<p>请注意，事务的生成独立于单元的运行时状态，因此，例如，如果请求启动一个已经启动的单元，它仍然会生成一个事务并唤醒任何非活动的依赖关系（并根据定义的关系传播其他作业）。这是因为排队的作业在执行时会与该单元的状态进行比对，并在条件满足时被标记为成功和完成。然而，这个作业也会因为定义的关系而触发其他依赖项，因此在我们的例子中，依赖的任何非活动单元的启动作业也会被排队。</p>
+<p>请注意，事务的生成独立于单元的运行时状态，因此，例如，如果请求启动一个已经启动的单元，它仍然会生成一个事务并唤醒任何非活动（Active）的依赖关系（并根据定义的关系传播其他作业）。这是因为入队的作业在执行时会与该单元的状态进行比对，并在条件满足时被标记为成功和完成。然而，这个作业也会因为定义的关系而触发其他依赖项，因此在我们的例子中，依赖的任何非活动单元的启动作业也会被入队。</p>
 </blockquote>
-<p>同时在<code>systemctl</code>中的 <code>--show-transaction</code>：</p>
+<p>同时在<code>systemctl</code>的<code>--show-transaction</code>选项的文档中：</p>
 <blockquote>
-<p>请注意，输出中只会包含与事务请求直接相关的作业。由于已排队的作业可能会触发启动服务的程序代码，因此可能会进一步引入更多作业。这意味着列出的作业的完成最终可能涉及到更多作业。</p>
+<p>请注意，输出中只会包含与事务请求直接相关的作业。由于已入队的作业可能会触发启动服务的程序代码，因此可能会进一步引入更多作业。这意味着列出的作业的执行最终可能涉及更多作业。</p>
 </blockquote>
-<p>一个伪唤醒和非幂等性的典型例子是<code>JOB_ISOLATE</code>，这是<code>systemctl isolate</code>背后的作业模式，用于模拟运行级别的功能。一个隔离作业将重新运行未设置<code>RemainAfterExit=yes</code>的一次性（<code>Type=oneshot</code>）服务，终止用户在当前作用域中的服务，停止套接字激活的服务，以及终止<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/6505">特定硬件的目标单元</a>。这使得即使是<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/2607">systemd 核心开发者</a>也不愿推荐使用它。回想 Lennart 在 2011 年 3 月的声明：“正在运行的服务集合不再是系统启动时加载的那个，而是在过去某个时间段内触发的所有服务的总和。如果将触发器与其结合使用，其工作方式甚至可能也会不同。”</p>
-<p>此外，由于：</p>
+<p>一个伪唤醒和非幂等性的典型例子是<code>JOB_ISOLATE</code>，这是<code>systemctl isolate</code>背后的作业模式，用于模拟运行级别的功能。一个隔离作业将重新运行未设置<code>RemainAfterExit=yes</code>的一次性（<code>Type=oneshot</code>）服务，杀死影响范围内的用户服务，停止套接字激活的服务，以及终止<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/6505">特定硬件的目标单元</a>。这使得即使是<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/2607">systemd 核心开发者</a>也不愿意推荐使用它。回想 Lennart 在 2011 年 3 月的声明：“正在运行的服务集合不再是系统启动时加载的那个，而是在过去某个时间段内触发的所有服务的总和。如果将触发器与其结合使用，其工作方式甚至可能也会不同。”</p>
+<p>此外，还有两件特别值得注意的事：</p>
 <ol>
-<li>顺序依赖是在作业而非单元级别上评估的（这一点甚至让<a target="_blank" rel="noopener" href="https://github.com/snapcore/snapd/pull/6023">开发 Snappy 的 Canonical 开发者</a>们感到困惑）。</li>
-<li>systemd 的“事务”实际上无法同时合并处理多个单元，因此你调用多个单元进行启动 &#x2F; 停止操作的顺序很重要。因此，服务的启动和重启结果可能是不确定的，正如<a target="_blank" rel="noopener" href="https://lists.freedesktop.org/archives/systemd-devel/2018-January/040129.html">这里</a>在一个简单的案例中描述的。</li>
+<li>顺序依赖是在作业而非单元层面上评估的（这一点甚至让<a target="_blank" rel="noopener" href="https://github.com/snapcore/snapd/pull/6023">开发 Snappy 的 Canonical 开发者</a>们感到困惑）。</li>
+<li><strong>systemd 的“事务”被设计为一对一的关系——一个事务对应一个锚点作业，它不能同时设置多个锚点作业并进行处理</strong>，因此你对多个单元进行启动&#x2F;停止操作的顺序很重要。这就意味着，服务的启动和重启结果可能是不确定的，正如<a target="_blank" rel="noopener" href="https://lists.freedesktop.org/archives/systemd-devel/2018-January/040129.html">这里</a>在一个简单的案例中描述的。</li>
 </ol>
-<p>在<code>rpcbind.service</code>和<code>rpcbind.socket</code>单元文件中，出现了一个更加微妙的问题。<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/13271">有时执行<code>systemctl restart rpcbind.service rpcbind.socket</code>命令会成功，有时则会失败</a>，这导致了 Debian 系统升级时出现的一个<a target="_blank" rel="noopener" href="https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=933268">严重 Bug</a>。</p>
+<p>在<code>rpcbind.service</code>和<code>rpcbind.socket</code>单元文件中，出现了一个更加微妙的问题。<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/13271">有时执行<code>systemctl restart rpcbind.service rpcbind.socket</code>命令会成功，有时则会失败</a>，这是因为当你通过命令行操作多个单元时，systemd 实际上是<strong>按参数顺序依次构建了多个独立的事务</strong>，这些事务之间存在竞态条件。这导致了 Debian 系统升级时出现的一个<a target="_blank" rel="noopener" href="https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=933268">严重 Bug</a>。</p>
 <p>Poettering 在解释时，提到了<code>syslog.socket</code>和<code>rsyslog.service</code><a target="_blank" rel="noopener" href="https://lists.freedesktop.org/archives/systemd-devel/2015-February/027979.html">类似的情况</a>：</p>
 <blockquote>
 <p>需要注意的是，该命令首先为第一个提及的单元添加重启作业，然后为第二个单元添加重启作业。然后它将等待两个作业完成。在执行<code>systemctl restart rsyslog.service syslog.socket</code>的情况下，可能会发生这样的情况：服务首先被停止，然后是套接字被停止，然后服务再次启动。现在，当套接字即将再次启动时，服务已经以非套接字激活的方式启动了，在这种情况下，套接字单元将拒绝启动，以防止在使用套接字激活的情况下，服务自己创建的套接字被破坏。</p>
@@ -646,97 +715,118 @@
 <p>替代的解决办法是，只重启服务单元，而不理会套接字单元……</p>
 </blockquote>
 <p>因此，顺序依赖和特定单元类型的策略之间的相互作用会产生一些有趣的竞争条件。</p>
-<h2 id="命名的不一致与失败的抽象"><a href="#命名的不一致与失败的抽象" class="headerlink" title="命名的不一致与失败的抽象"></a>命名的不一致与失败的抽象</h2><p>所有 systemd 的官方文档、公开可用的单元文件指令和<code>systemctl</code>工具，揭示了 systemd 在展示其内部机制的方式上的矛盾之处。总体而言，当前的 systemd 希望你纯粹从“单元”和“单元之间的依赖关系”来考虑问题。</p>
-<p>然而，与此同时，<code>systemctl</code>又允许你在排队作业类型时选择作业模式（但从未明确解释过作业类型和作业结果本身）。<code>systemd.unit</code>提供了一个<code>CollectMode=</code>指令来调整单元垃圾回收逻辑，以及一个<code>OnFailureJobMode=</code>指令，主要用于上层封装的目标单元，将其模式设置为 “replace-irreversibly”。</p>
-<p>对于依赖指令的解释相当模糊，并未明确说明哪些作业类型会传播，哪些则会引发失败状态。例如，你永远不会看到<code>Requisite=</code>排队一个<code>JOB_VERIFY_ACTIVE</code>作业，尽管这会使该指令的意义更加清晰。</p>
-<p>这意味着大多数人对 systemd 的运行机制存在一种错误的“民间”认知模型。尽管 systemd 已经成为一个根深蒂固的标准并且过去了十年，但开发人员却认为没有必要编写一份完整的规范说明。</p>
+<h2 id="命名的不一致与失败的抽象"><a href="#命名的不一致与失败的抽象" class="headerlink" title="命名的不一致与失败的抽象"></a>命名的不一致与失败的抽象</h2><p>所有 systemd 的官方文档、公开可用的单元文件指令和<code>systemctl</code>工具，都揭示了 systemd 在展示其内部机制的方式上的矛盾之处。总体而言，当前的 systemd 希望你纯粹从“单元”和“单元之间的依赖关系”来考虑问题。</p>
+<p>然而，与此同时，<code>systemctl</code>又允许你在入队作业类型时选择作业模式（但又从未明确解释过作业类型和作业结果本身）。<code>systemd.unit</code>提供了一个<code>CollectMode=</code>指令来调整单元的垃圾回收逻辑，以及一个<code>OnFailureJobMode=</code>指令，主要用于上层封装的目标单元，将其模式设置为<code>replace-irreversibly</code>。</p>
+<p>对于依赖指令的解释也相当模糊，没有明确说明哪些作业类型会传播，哪些会引发失败状态。例如，你永远不会文档中看到这样的描述：“<code>Requisite=</code>会入队一个<code>JOB_VERIFY_ACTIVE</code>作业”，尽管这种解释会使这个指令的意义清晰的多。</p>
+<p>这意味着大多数人对 systemd 的运行机制产生了一种错误的“民间”认知模型。尽管 systemd 已经成为一个根深蒂固的标准并且过去了十年，但是开发人员却一直认为没有必要编写一份完整的规范说明。</p>
 <p>让我们从一些更简单的例子开始，然后再深入探讨 systemd 依赖指令的细节。</p>
-<p>套接字单元不仅封装套接字，而且还封装其他 IPC（进程间通信）端点，如 POSIX 消息队列、FIFO（先进先出队列）、字符设备和虚拟文件。最令人惊奇的是，它还封装了像 USB GadgetFS 描述符这样特定的对象。这意味着套接字单元在可扩展性方面存在一定的不足。</p>
-<p>挂载单元有些复杂，其特性根据其生成方式的不同而有所不同。systemd 会自动根据<code>/proc/self/mountinfo</code>生成挂载单元；然而从<code>.mount</code>单元文件加载的挂载单元实际上会让 systemd 直接执行<code>util-linux</code>中的<code>/bin/mount</code>二进制程序（<code>MountExecCommand=</code>），这可以在 D-Bus 属性中的<code>ExecMount</code>中看到，也可以通过<code>systemctl status</code>查看。我们必须记住这种区别，因为在前一种情况下，为挂载单元编写插入替换（Drop-in）单元是没有意义的，而在后一种情况下则不同。</p>
-<p>Swap 单元也有类似的区别，可分为根据<code>/proc/swaps</code>生成的 Swap 单元，以及通过<code>.swap</code>单元文件配置的 Swap 单元，后者会让 systemd 执行<code>/sbin/swapon</code>二进制程序（<code>SwapExecCommand=</code>）。此外，还有几种“外部挂载”，它们不会生成挂载单元。但据我所知，用户无法让自己的挂载点被 systemd 视为这种“外部”类型，以便摆脱挂载单元状态机。</p>
-<p>此外，根据<code>/proc/self/mountinfo</code>创建单元的逻辑导致了一个臭名昭著的长期问题，即<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/13674">挂载风暴</a>（Mount Storm，在<a target="_blank" rel="noopener" href="https://blog.janestreet.com/troubleshooting-systemd-with-systemtap/">这篇 Jane Street 的文章</a>中也有描述），这种问题可能会轻易让一台机器陷入拒绝服务攻击（DoS）。2018 年，systemd 开发组曾<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/pull/11212">尝试解决</a>这个问题，但由于回归测试失败而未能成功。挂载单元目前<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/13871">也没有</a>独立的启动和停止超时机制。</p>
-<p>设备单元有许多来源，但其主要来源是 udev 标签，因此在某种程度上，它们是 udev 的依赖传播者。设备单元不支持<code>Before=</code>和<code>After=</code>这样的顺序依赖。此外，由于设备没有与之关联的停止或重启作业，所以<code>PartOf=</code>在设备上不起作用，因为设备永远不会经历 stopping 状态，而是直接变为 inactive。但是，<code>BindsTo=</code>却是有效的。</p>
-<p>挂载单元和设备单元之间的交互长期受到一个 Bug 的困扰：systemd 由于无法更新挂载单元和设备单元关系之间过时的信息，而<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/1741">意外地卸载手动挂载点</a>。</p>
-<p>设备单元和目标单元没有失败状态（<code>u-&gt;can_fail</code>没有被设置为<code>true</code>），因此显然不能成为<code>OnFailure=</code>依赖的来源。尽管如此，多年来，直到<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/pull/14787">不久前的 systemd-245</a>，上游 systemd 仍然在像<code>local-fs.target</code>和<code>initrd.target</code>这样的目标单元文件中提供了<code>OnFailure=</code>指令，也就是说它们根本不会起作用！</p>
-<p><code>OnFailure=</code>和<code>JoinsNamespaceOf=</code>在内部被视为依赖类型。按照这个逻辑，我们至少还必须包括<code>OnFailureJobMode=</code>和<code>StopWhenUnneeded=</code>。此外，所有的<code>*Directory=</code>指令都会被归为<code>RequiresMountsFor=</code>依赖项，该依赖项本身使用单独的哈希表进行处理。路径单元和定时器单元中的<code>Unit=</code>选项实际上是为该单元创建了一个<code>Triggers=</code>依赖，而该依赖又有自己的<code>JOB_TRIGGERING</code>模式，这与依赖倾向于作为“作业类型”而不是“作业模式”进行传播的事实并不一致。当然，<code>Triggers=</code>对终端用户来说并不直接可用，即使原则上可以用来创建通用的懒加载激活关系。</p>
-<p><code>DefaultDependencies=</code>的含义被<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/10210">过度赋予</a>了，这与 systemd 整体上对“依赖”的含义被过度赋予直接相关，它涵盖了任何作业类型或状态传播的机制。尽管默认依赖可以在需要时被关闭，但每种单元类型也包含它们自己的隐式依赖，这些依赖是无法关闭的。</p>
+<p>套接字单元不仅封装套接字，而且还封装其他 IPC（进程间通信）端点，如 POSIX 消息队列、FIFO（先进先出队列）、字符设备和虚拟文件。最令人惊奇的是，它还封装了像 USB GadgetFS 描述符这样特殊的对象，这意味着套接字单元在可扩展性方面的设计可能存在一定的不足。</p>
+<p>挂载单元有些复杂，其特性根据其生成方式的不同而有所不同。systemd 会自动根据<code>/proc/self/mountinfo</code>生成挂载单元；然而，从<code>.mount</code>单元文件加载的挂载单元实际上会让 systemd 直接执行<code>util-linux</code>中的<code>/bin/mount</code>二进制程序（<code>MountExecCommand=</code>），这可以在 D-Bus 属性中的<code>ExecMount</code>中看到，也可以通过<code>systemctl status</code>查看。我们必须记住这种区别，因为在前一种情况下，为挂载单元编写插入替换（Drop-in）文件是没有意义的，而在后一种情况下则不同。</p>
+<p>根据<code>/proc/self/mountinfo</code>创建单元的逻辑导致了一个臭名昭著的长期问题，即<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/13674">挂载风暴</a>（Mount Storm，在<a target="_blank" rel="noopener" href="https://blog.janestreet.com/troubleshooting-systemd-with-systemtap/">这篇 Jane Street 的文章</a>中也有描述），这种问题可能会轻易让一台机器陷入拒绝服务攻击（DoS）。2018 年，systemd 开发组曾<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/pull/11212">尝试解决</a>这个问题，但由于回归测试失败而未能成功。挂载单元目前<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/13871">也没有</a>独立的启动和停止超时机制。</p>
+<p>此外，还存在几种“外部挂载”的情况，这种情况下 systemd 不会生成挂载单元。但是，用户无法让自己的挂载点被 systemd 视为这种“外部”类型，以便摆脱挂载单元状态机。</p>
+<p>Swap 单元也有类似的区别，可以分为根据<code>/proc/swaps</code>生成的 Swap 单元，以及通过<code>.swap</code>单元文件配置的 Swap 单元，后者会让 systemd 执行<code>/sbin/swapon</code>二进制程序（<code>SwapExecCommand=</code>）。</p>
+<p>设备单元有许多种来源，但其中最主要的一个来源是 udev 标签，因此在某种程度上，udev 可以被理解为是它们的依赖。设备单元不支持<code>Before=</code>或<code>After=</code>这样的顺序依赖。此外，由于<strong>设备单元的停止和启动作业没有意义</strong>（<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/device.c#L1247">设备单元的VTable中没有<code>start()</code>函数</a>，因此<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/unit.c#L1924">在执行启动函数<code>unit_start()</code>时会返回<code>-EBADR</code></a>，而<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/job.c#L878">该错误实际上会让<code>JOB_START</code>和<code>JOB_STOP</code>什么也不做，等待超时</a>），所以<code>PartOf=</code>在设备单元上不起作用，<strong>因为设备单元永远不会经历<code>stopping</code>状态</strong>，而是直接变为<code>inactive</code>。但是，<code>BindsTo=</code>却是有效的。</p>
+<ul>
+<li>挂载单元和设备单元之间的交互长期受到一个 Bug 的困扰：systemd 由于无法更新挂载单元和设备单元关系之间过时的信息，而<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/1741">意外地卸载用户的手动挂载点</a>。</li>
+</ul>
+<p>设备单元和目标单元没有失败状态（<code>u-&gt;can_fail</code>没有被设为<code>true</code>），因此显然不能成为<code>OnFailure=</code>依赖的来源。然而，多年来，直到<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/pull/14787">不久前的 systemd-245</a>，上游 systemd 仍然在<code>local-fs.target</code>和<code>initrd.target</code>这样的目标单元文件中提供了<code>OnFailure=</code>指令，也就是说它们根本就不起作用！</p>
+<p><code>OnFailure=</code>和<code>JoinsNamespaceOf=</code>在内部被视为依赖类型。按照这个逻辑，我们在使用时至少还必须包括<code>OnFailureJobMode=</code>和<code>StopWhenUnneeded=</code>。此外，所有的<code>*Directory=</code>指令都会被还原为<code>RequiresMountsFor=</code>依赖项，该依赖项本身使用单独的哈希表进行处理。<code>.path</code>单元和<code>.timer</code>单元中的<code>Unit=</code>选项实际上是为该单元创建了一个<code>Triggers=</code>依赖，而该依赖又有自己的<code>JOB_TRIGGERING</code>模式，这与依赖倾向于按照“作业类型”而不是“作业模式”进行传播的事实并不一致。当然，<code>Triggers=</code>对最终用户来说并不直接可用，即使原则上可以用来创建通用的懒加载激活关系。</p>
+<p><code>DefaultDependencies=</code>的含义被<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/10210">过度赋予</a>了，这与 systemd 整体上赋予了“依赖”一词过多的含义直接相关，它涵盖了任何作业类型或单元状态传播的机制。尽管默认依赖可以在需要时被关闭，但是每种单元类型也包含它们自己的隐式依赖，这些依赖是无法关闭的。</p>
 <p><code>PartOf=</code>的独特之处在于它是唯一一个仅向用户提供反向逻辑的依赖类型，虽然其正向依赖<code>ConsistsOf=</code>在创建“虚拟服务”（即传统的 “Provides” 关系）方面具有潜在的实用性，但它仍然完全是内部使用，用户无法直接访问。要实现这一点，我们还可以使用单元文件模板（Unit File Templating）和预设（Preset），但这些选项实际上完全不涉及作业和事务依赖传播逻辑。</p>
-<p>systemd 的作业结果<code>JOB_DONE</code>实际上并不意味着“成功”，即使存在<code>Condition*=</code>失败，也会返回这个作业结果。正如 Lennart <a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/pull/4733#issuecomment-263675294">所澄清的</a>：</p>
+<p>systemd 的作业结果<code>JOB_DONE</code>实际上并不意味着“成功”，在<code>Condition*=</code>不满足时，也会返回这个作业结果。正如 Lennart <a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/pull/4733#issuecomment-263675294">所澄清的</a>：</p>
 <blockquote>
 <p>单元 A 包含<code>Requires=B</code>，并不意味着它真的关心 B 是否启动。重要的是 B 的启动作业是否成功。即使<code>ConditionXYZ=</code>条件失败了，B 实际上没有启动，但它的启动作业可能成功。毕竟，条件指令被认为是“非致命”的，它们允许一个单元的启动作业即使条件不满足也能成功完成，当然，该单元之后并不会启动。</p>
 </blockquote>
-<p>systemd 没有内置的<code>OnDependencyFailure=</code>选项，来强制在 Manager 对象触发停止作业或失败状态时重启对应的服务，而不是在监视到进程异常时触发。这是因为手动的<code>systemctl stop</code>和为了满足依赖的传播而在事务中排队的停止作业之间没有区别。目前针对这一问题存在许多 <a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/1312">脆弱的临时解决方案</a>。</p>
+<p>systemd 没有内置的<code>OnDependencyFailure=</code>选项，来强制在 Manager 对象触发停止作业或失败状态时重启对应的服务，而不是在监视到进程异常时触发。这是因为手动的<code>systemctl stop</code>和为了满足依赖的传播而在事务中入队的停止作业之间没有区别。目前针对这一问题存在许多 <a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/1312">脆弱的临时解决方案</a>。</p>
 <p>顺序依赖与需求依赖按理来说应该是正交的，但是目标单元（Target Unit）<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/13847">并非如此</a>：它们会自动获得所有<code>Wants=</code>、<code>PartOf=</code>或<code>Requisite=</code>单元的<code>After=</code>依赖！</p>
-<p>作用域（Scope）单元只能被启动一次，甚至有一个特殊的作业结果<code>JOB_ONCE</code>专门用于报告这一限制。出于某种原因，Slice 单元并没有同样的限制。作用域单元和 Slice 单元都是长期存在的单元，无法停止。</p>
-<p><code>Conflicts=</code>是一个隐含<code>ConflictedBy=</code>的双向关系。它们在事务构建逻辑中有特殊的集成方式。它<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/7104">臭名昭著地不可靠且不起作用</a>，很容易导致 Manager 对象在系统启动时启动两个互相冲突的服务，这使得它根本无法可靠地用于创建互斥服务。由于<code>Conflicts=</code>实际上只是在互相冲突的单元上排队一个停止作业，而后续事务可以抢占它，因而它根本不是一个硬性的约束。<code>Conflicts=</code>主要用于<code>shutdown.target</code>的默认依赖，以便计算与系统启动时完全相反的关闭顺序。事实上，<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/8730#issuecomment-382091197">Lennart Poettering 本人</a>特别强调建议不要将其用于任何其他用途。由此，我们感觉到：它本来就不应该暴露给终端用户，但出于兼容性原因不得不这样做。</p>
-<p>由 Manager 对象隐式传播的重载（Reload）作业（如响应设备状态变化的作业），以及通过<code>PropagatesReloadTo=</code>显式触发的作业，似乎都会以<code>JOB_IGNORE_DEPENDENCIES</code>模式排队，这使得它们具有某种独特性。Poettering 多次称<code>JOB_IGNORE_DEPENDENCIES</code>为<a target="_blank" rel="noopener" href="https://lists.freedesktop.org/archives/systemd-devel/2014-August/022094.html">“糟糕的发明”</a>、<a target="_blank" rel="noopener" href="https://lists.freedesktop.org/archives/systemd-devel/2015-February/027885.html">“极其丑陋”</a>和<a target="_blank" rel="noopener" href="https://lists.freedesktop.org/archives/systemd-devel/2014-August/022048.html">“可怕的发明”</a>，由此可见一斑。我相信导致这种令人畏惧的设计的原因是，systemd 中的重载作业是同步的，正如链接的邮件列表帖子中所讨论的，这可能会导致死锁，就像<a target="_blank" rel="noopener" href="https://bugs.launchpad.net/ubuntu/+source/systemd/+bug/1417010">这个例子</a>一样。</p>
+<p>作用域（Scope）单元只能被启动一次，甚至有一个特殊的作业结果<code>JOB_ONCE</code>专门用于确认这一限制。出于某种原因，Slice 单元并没有同样的限制。</p>
+<p><code>Conflicts=</code>是一个隐含<code>ConflictedBy=</code>的双向关系。它们在事务构建逻辑中有特殊的集成方式。它是<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/7104">臭名昭著的不可靠和不起作用</a>，很容易出现 Manager 对象在系统启动时启动两个互相冲突的服务的情况，这使得它根本无法可靠地用于创建互斥服务。其原因在于，<code>Conflicts=</code>在本质上只是在启动当前单元时，为所有冲突单元入队一个停止作业（或是在启动冲突单元中的任意一个时，为当前单元入队一个停止作业），而之后构建的事务可能会导致它被覆盖或抢占，因此它根本不是一个硬性的约束。<code>Conflicts=</code>主要用于<code>shutdown.target</code>的默认依赖，以便计算与系统启动时完全相反的关闭顺序。事实上，<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/8730#issuecomment-382091197">Lennart Poettering 本人</a>特别强调建议不要将其用于任何其他用途。我们会有这样一种感觉：它本来就不应该被暴露给最终用户，但是出于兼容性原因不得不这样做。</p>
+<p>由 Manager 对象隐式传播的重载（Reload）作业（如响应设备状态变化的作业），以及通过<code>PropagatesReloadTo=</code>显式触发的作业，似乎都会以<code>JOB_IGNORE_DEPENDENCIES</code>模式入队，这使得它们具有某种独特性。Poettering 多次称<code>JOB_IGNORE_DEPENDENCIES</code>为<a target="_blank" rel="noopener" href="https://lists.freedesktop.org/archives/systemd-devel/2014-August/022094.html">“糟糕的发明”</a>、<a target="_blank" rel="noopener" href="https://lists.freedesktop.org/archives/systemd-devel/2015-February/027885.html">“极其丑陋”</a>和<a target="_blank" rel="noopener" href="https://lists.freedesktop.org/archives/systemd-devel/2014-August/022048.html">“可怕的造物”</a>，其性质由此可见一斑。我认为，导致这种恐怖的设计的根本原因是，systemd 中的重载作业是同步的，正如链接中的邮件列表帖子中讨论的，这可能会导致死锁，就像<a target="_blank" rel="noopener" href="https://bugs.launchpad.net/ubuntu/+source/systemd/+bug/1417010">这个例子</a>一样。</p>
+<p>另一个与之类似的产物是影响停止作业的<code>KillMode=none</code>。<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/service.c#2306">服务单元的<code>ExecStop=</code>和<code>ExecStopPost=</code>即使异常退出，也不会导致停止作业失败</a>，这使得在绝大多数情况下，<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/job.c#982">停止作业都不会失败</a>，只有在 systemd 发送信号时，发生了<code>-EDEADLK</code>（发生了死锁）、<code>-EALREADY</code>（单元已经是<code>inactive</code>）以外的错误（当然，还包括超时的情况），才会导致停止作业失败。<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/service.c#L2255"><code>KillMode=none</code>会使 systemd 在执行停止作业时不发送任何信号</a>（这是因为<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/unit.c#L4856"><code>unit_kill_context()</code>直接返回 0</a>，<code>service_enter_signal()</code>函数会直接进入<code>service_enter_dead(s, SERVICE_SUCCESS, true);</code>），进而导致单元被无条件地置为<code>inactive(dead)</code>状态。这个过程完全没有信号参与，自然也不会出现 SIGCHLD，也就不会触发<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/service.c#L3893"><code>service_sigchld_event()</code></a>，这相当于让单元直接绕开了 systemd 的生命周期管理机制。这一设计被普遍认为是历史的错误，<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/pull/30038">systemd 开发者 Luca Boccassi 也如此承认</a>。</p>
 <p>实际上，<code>PropagatesReloadTo=</code>和<code>ReloadPropagatedFrom=</code>的起源，以及它们令人匪夷所思的设计，本质上都是因为<a target="_blank" rel="noopener" href="https://lists.freedesktop.org/archives/systemd-devel/2012-January/004181.html"><code>BindsTo=</code>不传播重载作业</a>，这是作为一个特性被请求合并的。然而，考虑到 systemd 中“依赖”的含义，明智的做法应该是为所有作业类型公开<code>Propagates=</code>指令，虽然这可能会使单元文件变得更加难以理解，但这就是 systemd 架构的本质。</p>
 <p>类似地，我们可能期望存在<code>RefuseManualRestart=</code>和<code>RefuseManualReload=</code>指令，就像存在<code>RefuseManualStart=</code>和<code>RefuseManualStop=</code>一样，但实际上并不存在。其他不一致之处还包括没有<code>ExecReloadPre=</code>&#x2F;<code>ExecReloadPost=</code>或<code>ExecRestartPre=</code>&#x2F;<code>ExecRestartPost=</code>，<code>TimeoutStopSec=</code>并非适用于所有类型的单元，以及<code>Type=oneshot</code>的服务单元不支持<code>ExecStopPost=</code>和<code>RestartForceExitStatus=</code>（而且<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/pull/13754">直到最近</a>之前，它们根本不支持<code>Restart=</code>）。</p>
-<h3 id="依赖的地狱"><a href="#依赖的地狱" class="headerlink" title="依赖的地狱"></a>依赖的地狱</h3><p>启动一个单元与为其排队一个启动作业，是两个截然不同的操作。一个单元是否可以启动，和是否可以为其排队启动作业，完全是两回事。在 systemd 的<code>unit.c</code>源代码注释中，有这样一段话：“这是因为<code>.device</code>单元和其他类似的单元并不能由我们启动，但可能会由于外部事件而出现，因此允许为其排队作业是有意义的。”这表明，systemd 的管理器（Manager）经常会根据环境自动引入用户无法操作的单元。而且，依赖关系是在单元层面还是在作业层面（作为事务的一部分）解决的，并没有明确的界限。例如，<code>BindsTo=</code>指令会在底层单元状态发生任何变化时重新检查——我认为这就是它可以在设备单元中使用，而<code>PartOf=</code>不能的原因。</p>
-<p>此外，取消启动作业并不一定能阻止单元的激活，因为<code>JOB_CANCELED</code>的结果并不等同于失败条件。事实上，它被明确用于在执行<code>JOB_ISOLATE</code>的作业时（例如隔离进入某个目标时），避免触发<code>OnFailure=</code>依赖。</p>
+<h3 id="依赖的地狱"><a href="#依赖的地狱" class="headerlink" title="依赖的地狱"></a>依赖的地狱</h3><p>调用一个单元的启动方法，与为其入队一个启动作业，是两个截然不同的操作。一个单元的Vtable中是否具备启动方法，和能否为其入队启动作业，完全是两回事。在不支持启动方法的单元上执行启动作业，<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/job.c#L878">实际上会使 Manager 什么也不做，等待设备连接（<code>.device</code>单元通过 Udev 事件立刻成为<code>active</code>状态）或超时</a>。</p>
+<p>在 systemd 的<code>unit.c</code>源代码注释中，有这样一段话：<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/unit.c#L2986">“这是因为<code>.device</code>单元和其他类似的单元并不能由我们启动，但是可能会由于外部事件而出现，因此允许为其入队启动作业是有意义的。”</a>（尽管这些启动作业并没有实际操作）这表明，systemd 的 Manager 经常会根据环境自动引入一些<strong>用户并不能直接操作的单元</strong>。</p>
+<p>而且，依赖关系是发生在单元层面，还是作业层面（作为事务的一部分），并没有明确的界限。作业执行成功未必意味着单元会达到预期状态（<code>Type=simple</code>的服务单元），单元发生状态变化也未必意味着存在作业（<code>.device</code>单元）。</p>
+<p>例如，<code>BindsTo=</code>指令会在单元状态发生任何变化（单元状态变化可能是作业导致的，也可能不是，systemd 内部将后者标记为<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/unit.c#L2654">“意外”（<code>unexpected</code>）的</a>）时进行检查——我认为这就是它可以在<code>.device</code>单元中使用，而<code>PartOf=</code>不能的原因。</p>
+<ul>
+<li>非作业的状态变化也会导致 Manager 对象遍历单元的依赖项。<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/unit.c#L2668">在单元由于非作业原因从<code>inactive</code>状态变为<code>active</code>状态时（例如设备接入导致的<code>.device</code>单元状态变化，或是程序注册导致的<code>.scope</code>单元的状态变化）</a>，<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/unit.c#L2211">Manager 对象会为其所有依赖项（注意：对于<code>.device</code>单元来说，依赖关系会通过 udev 规则中的<code>SYSTEMD_WANTS=</code>属性保存）分别排队一个<code>JOB_START</code>锚点作业，并递归添加依赖作业</a>，其中，<code>Requires=</code>和<code>BindsTo=</code>的作业为<code>JOB_REPLACE</code>模式，<code>Wants=</code>的作业为<code>JOB_FAIL</code>模式，另外，还会为<code>Conflicts=</code>的单元排队<code>JOB_REPLACE</code>模式的停止作业；<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/unit.c#L2670">在单元由于非作业原因从<code>active</code>状态变为<code>inactive</code>状态时（例如服务单元的主进程正常或非正常退出）</a>，<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/unit.c#L2232">Manager 对象会递归地为其所有依赖项分别排队一个<code>JOB_STOP</code>锚点作业，并递归添加依赖作业</a>，事实上，受影响的只有<code>Boundby=</code>的单元，其作业模式为<code>JOB_REPLACE</code>。</li>
+</ul>
+<p>此外，取消启动作业并不一定能阻止单元的启动，因为<code>JOB_CANCELED</code>结果并不等同于作业执行失败。事实上，这个作业结果（Job Result）<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/job.c#L1076">已经被明确说明了</a>，用于在执行<code>JOB_ISOLATE</code>模式的启动作业时（例如隔离进入某个<code>.target</code>时），避免触发<code>OnFailure=</code>依赖。</p>
+<ul>
+<li><code>JOB_FAILED</code>实际上也并不直接导致单元及其依赖项的清理逻辑，<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/unit.c#L2680">这是通过单元状态变化时触发的<code>unit_notify()</code>函数进行的</a>。</li>
+</ul>
 <p>有关 systemd 依赖的基本概念，最好的描述可以参见 <a target="_blank" rel="noopener" href="https://bl33pbl0p.github.io/systemd_dependency">Jonathon Kowalski 的文章</a>。尽管文章有些杂乱无章，但它可能是最接近 systemd 作业引擎非正式规范的文档。</p>
-<p><code>Requires=</code>具有三种不同的效果：它会排队启动作业，将停止作业传播到<code>RequiredBy=</code>单元，并使依赖单元以<code>JOB_DEPENDENCY</code>的结果失败。它通常与<code>After=</code>一起使用，<a target="_blank" rel="noopener" href="https://www.spinics.net/lists/systemd-devel/msg01442.html">原因如下</a>：</p>
+<p><code>Requires=</code>具有三种不同的效果：它会<strong>传播启动作业</strong>，<strong>反向传播停止作业到<code>RequiredBy=</code>单元</strong>，并在<strong>作业结果</strong>检查不通过（<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/job.c#L1046">不是<code>JOB_DONE</code>的情况下</a>）的情况下使<code>RequiredBy=</code>单元的<strong>启动作业</strong>以<code>JOB_DEPENDENCY</code>的结果<strong>失败</strong>（不是取消）。它通常与<code>After=</code>一起使用，<a target="_blank" rel="noopener" href="https://www.spinics.net/lists/systemd-devel/msg01442.html">原因如下</a>：</p>
 <blockquote>
-<p>单独使用 <code>Requires=</code> 而不使用 <code>After=</code> 时，会与 systemd 的作业机制产生有趣的互动。</p>
-<p>当你单独使用<code>Requires=</code>，例如让 a 具有<code>Requires=b</code>，事务中会为这两个单元分别排队两个启动作业，但 a 的启动作业不会等待 b 的启动作业完成。因此，两者将并行进行，如果 a 的启动作业在 b 的启动作业完成之前就完成了，那么它将正常启动。但是，如果 b 的启动作业在 a 的启动作业完成之前失败了，那么 a 的启动作业将伴随着<code>JOB_DEPENDENCY</code>作业结果被取消。总之，在你的情况下，作业会立即被派发，并且 a 的启动作业可能在 b 的启动作业失败之前就已经完成。</p>
-<p>这也是为什么通过文件系统符号链接获取依赖项的目标单元通常会具有隐式的顺序依赖。因为通过上述机制定义依赖项的顺序是不可能的。</p>
+<p>单独使用<code>Requires=</code>而不使用<code>After=</code>时，会与 systemd 的作业机制产生有趣的互动。</p>
+<p>当你单独使用<code>Requires=</code>，例如让 a 具有<code>Requires=b</code>，事务中会为这两个单元分别入队两个启动作业，但 a 的启动作业不会等待 b 的启动作业完成。因此，两者将并行进行，如果 a 的启动作业在 b 的启动作业完成之前就完成了，那么它将正常启动。但是，如果 b 的启动作业在 a 的启动作业完成之前失败了，那么 a 的启动作业（b 的被依赖作业）将伴随着<code>JOB_DEPENDENCY</code>作业结果被（作业引擎）置为失败。总之，在你的情况下，作业会立即被执行，并且 a 的启动作业可能在 b 的启动作业失败之前就已经完成。</p>
+<p>这也是为什么<strong>通过文件系统符号链接获取依赖项的目标单元通常会具有隐式的顺序依赖</strong>。因为通过上述机制定义依赖项的顺序是不可能的。</p>
 <p>现在，明确回答一下为什么停止 b 会导致停止 a？因为这正是<code>Requires=</code>应该发挥的作用。实际上，这可能是用户在<code>Requires=</code>和<code>BindsTo=</code>之间唯一能注意到的区别。</p>
 </blockquote>
-<p>传统观点认为，在没有<code>After=</code>的情况下使用<code>Requires=</code>并没有实际用例。然而，由于它具有多种副作用，实际上<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/11284">还是存在</a>一些用例的。<code>Requires=</code>与<code>Before=</code>结合使用，可以通过拒绝等待依赖的作业完成，有效地避免当前服务启动失败，同时在启动时传播启动作业的行为。这类似于<code>Wants=</code>，但会在<code>RequiredBy=</code>的单元上传播停止作业，这与<code>Wants=</code>不同。</p>
-<p><code>Wants=</code>非常特殊。<code>systemd.unit</code>将其称为需求依赖（Requirement Dependency），描述为<code>Requires=</code>的弱化版本。一些 systemd 核心开发者表示，没有<code>After=</code>的<code>Requires=</code>实际上<a target="_blank" rel="noopener" href="https://www.spinics.net/lists/systemd-devel/msg01444.html">会被降级</a>为<code>Wants=</code>，这其实是相当误导的。<code>Wants=</code>唯一的作用就是排队启动作业，仅此而已。更有趣的是<code>Wants=</code>不做的事情：它不会将“单元未找到”、“单元被屏蔽”或“作业类型不适用”视为错误，并且无论如何都会完成作业。因此，<code>Wants=</code>实际上并不是真正的“依赖”，它是一个<strong>无条件的启动作业传播</strong>。</p>
-<p>这也是为什么依赖项倾向于通过<code>WantedBy=</code>将自己引入目标单元，因为目标单元没有失败状态，而<code>Wants=</code>的这种性质意味着可以轻松打破顺序依赖中的循环，这是确保目标作为同步点始终可达的一种方式。同时，<code>Wants=</code>的宽松性也使其容易产生完全合法的<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/12353">无限循环</a>。</p>
-<p>systemd 在<code>Wants=</code>和<code>Requires=</code>这两个极端之间，没有提供任何惯用的中间选项。</p>
-<p>我们在上文中已经讨论了<code>Conflicts=</code>。它唯一真正有效的用例是获取相对于<code>shutdown.target</code>的<code>ConflictedBy=</code>关系，除此之外，它并不是一个有效的排他机制。关于重载传播器（Reload Propagator），我们也已有充分讨论。</p>
-<p><code>PartOf=</code>（<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/commit/85e9a1010d16064ce435b84f02dc585bc645aade">在 systemd-188 中引入</a>，用于对目标单元进行分组）通过传播停止和重启作业来扩展<code>Requires=</code>，但不支持那些不支持显式停止和重启操作的单元，如设备单元。这与“被停止和重启作业触发”不同，后者可以通过<code>unit_notify</code>发送的底层单元状态更改隐式发生，每种单元类型可能各不相同。<code>PartOf=</code>也不会像<code>Wants=</code>和<code>Requires=</code>那样触发启动作业。它是唯一仅作为反向依赖可用的 systemd 依赖指令，其正向等价物<code>ConsistsOf=</code>对用户不可访问。</p>
-<p><code>BindsTo=</code>基本上是一个“万能”选项，它跟踪所有显式和隐式的启动、停止和重启作业，因此可以在设备单元中使用。与<code>PartOf=</code>不同，它还会排队启动作业，因此它并不是<code>PartOf=</code>的补充。有人<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/5966">批评它</a>“混淆了两个正交的概念（通过主体的启动作业的传播，以及所有导致单元进入 inactive&#x2F;failed 状态的状态变化的传播）”。<code>BindsTo=</code>的一个微妙之处在于，如果没有与<code>After=</code>一起使用，它会在单元级别上跳过检查，而不仅仅是在作业级别上，这与大多数其他依赖项不同。更广泛地说，它会跟踪单元的激活状态，而直接从 activating 转变为 inactive 的单元将会失败，这与<code>Requires=</code>不同。</p>
-<p><code>Requisite=</code>根本没有特殊的依赖处理，它只是触发<code>JOB_VERIFY_ACTIVE</code>。它更应该被称为<code>AssertStarted=</code>或类似名称。如果在没有顺序依赖的情况下使用，它会高度竞争，引用 Kowalski 的话：</p>
+<p>传统观点认为，在没有<code>After=</code>的情况下使用<code>Requires=</code>并没有实际意义。然而，由于它的多种副作用，实际上<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/11284">还是存在一些用例的</a>。<code>Requires=</code>与<code>Before=</code>结合使用，可以通过<strong>拒绝等待</strong>依赖的作业完成，有效地避免当前服务启动失败，同时又能在启动时传播启动作业。这类似于<code>Wants=</code>，但是会对<code>RequiredBy=</code>的单元传播停止作业，这又与<code>Wants=</code>不同。</p>
+<p><code>Wants=</code>非常特殊。<code>systemd.unit</code>将其称为需求依赖（Requirement Dependency），描述成<code>Requires=</code>的弱化版本。一些 systemd 核心开发者表示，没有<code>After=</code>的<code>Requires=</code>实际上<a target="_blank" rel="noopener" href="https://www.spinics.net/lists/systemd-devel/msg01444.html">会被降级</a>为<code>Wants=</code>，这其实是相当误导的。<code>Wants=</code>的唯一作用就是传播启动作业，仅此而已（而<code>Requires=</code>还会做作业结果检查）。更重要的是<code>Wants=</code>不做的事情：它不会将“单元未找到”、“单元被屏蔽”或“作业类型不适用”视为错误，并且无论如何都不会导致当前单元的作业失败，<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/transaction.c#L1045">根据<code>transaction.c</code>中的注释所言，这就是故意的</a>。因此，<code>Wants=</code>实际上并不是真正的“依赖”，它是一个<strong>无条件的启动作业传播</strong>（对于已经处于<code>active</code>状态的单元，它们被传播的<code>JOB_START</code>实际上会<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/manager.c#L2235">在 Manager 添加依赖时</a>，<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/transaction.c#L727">被<code>transaction_activate()</code>函数中调用的<code>transaction_drop_redundant()</code>函数</a>删除掉，其依据的条件在<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/job.c#L438"><code>job_type_is_redundant()</code>函数中</a>）。</p>
+<p>这也是为什么依赖项倾向于通过<code>WantedBy=</code>将自己引入<code>.target</code>单元，因为<code>.target</code>单元没有失败状态，而<code>Wants=</code>的这种性质意味着可以轻松打破原先使用顺序依赖时可能产生的环路，这是确保目标作为同步点始终可达的一种方式。同时，<code>Wants=</code>的宽松性也使其容易产生完全合法的<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/12353">无限循环</a>。</p>
+<p>然而，systemd 在<code>Wants=</code>和<code>Requires=</code>这两个极端之间，没有提供任何惯用的中间选项。</p>
+<p>我们在上文中讨论过<code>Conflicts=</code>，这个指令唯一真正有效的用例是让单元获得相对于<code>shutdown.target</code>的<code>ConflictedBy=</code>关系（以在关机时传播停止作业），除此之外，它并不是一个有效的排他机制。关于重载传播器（Reload Propagator），我们也已经充分讨论过了。</p>
+<p><code>PartOf=</code>（<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/commit/85e9a1010d16064ce435b84f02dc585bc645aade">在 systemd-188 中引入</a>，用于对目标单元进行分组）通过只保留<strong>反向传播停止和重启作业</strong>的功能来拆分<code>Requires=</code>，但是它不支持那些<strong>停止和重启作业没有意义的单元</strong>，如<strong>设备单元</strong>。这与“被单元的状态变化触发”是不同的，因为后者可以通过非作业导致的单元状态变化隐式发生（如前所述，这是通过<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/unit.c#L2597"><code>unit_notify</code>函数</a>实现的），每种单元类型都各不相同。**<code>PartOf=</code>也不会像<code>Wants=</code>和<code>Requires=</code>那样传播启动作业**。它是唯一一个只存在反向逻辑的 systemd 依赖指令，它的正向等价物<code>ConsistsOf=</code>对用户不可见。</p>
+<p><code>BindsTo=</code>是一个“万能”指令，它会传播所有显式的启动作业，反向传播所有显式的停止和重启作业，还会通过<code>unit_notify()</code>创建隐式作业，因此可以在设备单元中使用。与<code>PartOf=</code>不同，它会传播启动作业，因此它并不是<code>PartOf=</code>的补充。有人<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/5966">批评它</a>“混淆了两个正交的概念（即源自依赖主体的启动作业传播，以及基于单元进入<code>inactive</code>&#x2F;<code>failed</code>的状态变化而触发的停止&#x2F;重启传播）”。</p>
+<p><code>BindsTo=</code>的一个微妙之处在于，<strong>如果没有与<code>After=</code>一起使用，它对单元激活状态的额外检查就会被跳过——这一点与大多数只检查作业结果的依赖指令不同</strong>。更具体地说，它会跟踪单元的激活状态，而<strong>直接从<code>activating</code>变成<code>inactive</code>（没有中间状态，例如<code>Condition*=</code>检查失败而跳过启动作业的单元，或者<code>.device</code>单元）的<code>BindsTo=</code>目标将会导致当前作业失败</strong>，这与<code>Requires=</code>不同。</p>
+<p><code>Requisite=</code>根本没有特殊的依赖处理，它只是触发一个<code>JOB_VERIFY_ACTIVE</code>类型的作业。它更应该被定义为<code>AssertStarted=</code>或者类似的名称。如果在没有顺序依赖的情况下使用，它会高度竞争，引用 Kowalski 的话：</p>
 <blockquote>
-<p><code>Requisite=</code>在内部会为你引用的单元触发一个<code>JOB_VERIFY_ACTIVE</code>类型的作业。如果<code>JOB_VERIFY_ACTIVE</code>作业没有成功，那么之后将会导致你的单元的（举例来说）启动作业失败。然而，不指定顺序依赖意味着在你请求启动单元时，这些作业可能按照任意顺序被调度，取决于哪个作业先完成，可能会，也可能不会导致作业失败，返回<code>JOB_DEPENDENCY</code>作业结果。</p>
-<p><code>After=</code> 确保调度器将你的单元的作业放到 <code>JOB_WAITING</code> 状态，直到另一个作业完成，这意味着它可以确保使你的作业失败。然而，这意味着你将等待该单元的每个作业，无论是启动作业、停止作业还是其他。因此，如果你使用了<code>Wants=</code>而没有使用<code>After=</code>（只是为了触发一个单元，而不等待它，如果它停止也不失败），并且还想使用<code>Requisite=</code>，你就需要放弃不等待它的属性，这其实是内部实现不佳的结果。</p>
+<p><code>Requisite=</code>在内部会为你引用的单元触发一个<code>JOB_VERIFY_ACTIVE</code>类型的作业。如果<code>JOB_VERIFY_ACTIVE</code>作业没有成功（作业结果不是<code>JOB_DONE</code>），那么将会导致你的单元的（举例来说）启动作业失败，返回<code>JOB_DEPENDENCY</code>作业结果。然而，不指定顺序依赖意味着在你请求启动单元时，这些作业可能按照任意顺序被调度，可能会，也可能不会导致作业失败，取决于哪个作业先完成。</p>
+<p><code>After=</code>确保 Manager 将你的单元的作业放到<code>JOB_WAITING</code>状态，直到另一个作业完成，这意味着它可以确保获取作业结果。然而，这也意味着你将不得不等待该单元的每一个作业，无论是启动作业、停止作业还是其他类型的作业。因此，如果你使用了<code>Wants=</code>而没有使用<code>After=</code>（只是为了触发启动一个单元，而不等待启动作业完成，如果这个单元停止也不失败），并且还想使用<code>Requisite=</code>，你就需要放弃“不等待”的属性，这其实是内部实现不佳的结果。</p>
 </blockquote>
-<p><code>Requisite=</code>的一个后果是，对于没有达到 “active” 状态的单元，例如未设置<code>RemainAfterExit=yes</code>的一次性服务单元（<code>Type=oneshot</code>），它会始终失败，因为对于这样的单元，<code>verify-active</code>作业总是会失败。然而，由于作业合并规则（Job Merging Rules），如果你同时使用<code>Requisite=</code>和<code>Wants=</code>，前者的<code>JOB_VERIFY_ACTIVE</code>将与后者的<code>JOB_START</code>合并，产生<code>JOB_START</code>并始终成功，相当于<code>Requisite=</code>被降级为<code>Wants=</code>。参见<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/8309">这个例子</a>。</p>
-<p><code>Requisite=</code>的例子充分说明了 systemd 的依赖关系并非累加性的，也不是人们直观上预期的那种约束、不变量或“检查”。将依赖关系组合在一起，会覆盖和取代行为，而不是施加更多的约束，因为所有这些依赖指令都是粗粒度的、临时性的，具有事件、关系、顺序依赖和自身传播效果等多种副作用。这些特性都难以理解。</p>
-<p>此外，与<code>Wants=</code>不同，<code>Requisite=</code>会使依赖作业以<code>JOB_DEPENDENCY</code>结果失败，这意味着它们将<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/12352">触发</a><code>OnFailure=</code>条件，这也意味着我们不能简单地使用这个指令异步排队<code>verify-active</code>作业，并通过软检查的方式忽略依赖失败。</p>
-<p>只有<code>Wants=</code> &#x2F; <code>WantedBy=</code>在其最小性和宽容性方面显得独树一帜。几乎所有 systemd 中的依赖操作要么过于粗糙，要么过于薄弱，实际上没有办法让你向 Manager 明确表达你希望从其状态机中获得的确切期望行为。</p>
+<p><code>Requisite=</code>的一个后果是，对于没有达到<code>active</code>状态的单元，例如未设置<code>RemainAfterExit=yes</code>的一次性服务单元（<code>Type=oneshot</code>），它总是会失败，因为对于这样的单元，<code>verify-active</code>作业总是会失败。然而，由于作业合并规则（Job Merging Rules），如果你同时使用<code>Requisite=</code>和<code>Wants=</code>，前者的<code>JOB_VERIFY_ACTIVE</code>将与后者的<code>JOB_START</code>合并，变成<code>JOB_START</code>，并且总是会成功！这相当于<code>Requisite=</code>被降级为<code>Wants=</code>。参见<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/8309">这个例子</a>。</p>
+<p><code>Requisite=</code>的例子充分说明了 systemd 的依赖关系并不是累加性的，也不是人们直观上预期的那种静态约束或“检查”。将依赖关系组合在一起，会覆盖和&#x2F;或取代某些行为，而不是施加更多的约束，因为所有这些依赖指令都是粗粒度的、即时性的，具有事件、单元关系、顺序依赖和传播机制等多种副作用。这些特性都难以理解。</p>
+<p>此外，与<code>Wants=</code>不同，<code>Requisite=</code>有可能会使当前作业以<code>JOB_DEPENDENCY</code>结果失败，这意味着它们会<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/12352">触发</a><code>OnFailure=</code>条件，这也意味着我们不能简单地使用这个指令异步入队<code>verify-active</code>作业，并通过软检查的方式忽略依赖失败。</p>
+<p>只有<code>Wants=</code> &#x2F; <code>WantedBy=</code>在其最小性和宽容性方面显得独树一帜。几乎所有 systemd 中的依赖指令要么过于粗糙，要么过于薄弱，实际上没有办法让你向 Manager 明确地表达你希望从其状态机中获得的确切期望行为。</p>
 <h2 id="案例分析"><a href="#案例分析" class="headerlink" title="案例分析"></a>案例分析</h2><p>以上的讨论可能显得有些理论化和过于挑剔，下面我将通过几个示例来说明。</p>
-<h3 id="对于不存在的单元的合法事务"><a href="#对于不存在的单元的合法事务" class="headerlink" title="对于不存在的单元的合法事务"></a>对于不存在的单元的合法事务</h3><p>假设我有一个服务单元文件<code>foo.service</code>：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=Nonexistent dependency</span><br><span class="line">Requires=nonexistent.service</span><br><span class="line">After=nonexistent.service</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=simple</span><br><span class="line">ExecStart=/bin/sleep 999</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+<h3 id="不存在的单元的作业"><a href="#不存在的单元的作业" class="headerlink" title="不存在的单元的作业"></a>不存在的单元的作业</h3><p>假设我有一个服务单元文件<code>foo.service</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=Nonexistent dependency</span><br><span class="line">Requires=nonexistent.service</span><br><span class="line">After=nonexistent.service</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=simple</span><br><span class="line">ExecStart=/bin/sleep infinity</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
 <p>如果我使用<code>systemctl start foo</code>命令手动启动服务，那么对于不存在的服务单元<code>nonexistent.service</code>的依赖关系将无法找到，服务将因 “找不到单元” 而失败。</p>
 <p>然而，如果我通过<code>systemctl enable foo</code>命令启用它，字典排序解析不会发现任何问题并且成功执行<code>[Install]</code>段的指令。当我重启系统时，systemd 将在初始启动事务中触发不存在的依赖单元<code>nonexistent.service</code>，加载并正常启动它。</p>
-<p>如果尝试重启该单元，会因 “找不到<code>nonexistent.service</code>单元” 而失败。但幸运的是，停止操作可以正常发送 <code>SIGTERM</code> 信号并将其停止。</p>
-<p>在我的 Manjaro Linux 系统上，更有趣的是，当我将<code>WantedBy=</code>指令更改为<code>graphical.target</code>（这是我系统上的默认目标），并将<code>Type=</code>更改为<code>oneshot</code>时。在进入显示管理器后，我的系统上会有四个待处理的启动作业：一个处于 “activating” 状态的不存在的依赖项，以及处于 “waiting” 状态的<code>multi-user.target</code>、<code>graphical.target</code>和<code>tlp.service</code>。手动取消可以将其删除，而不会触发故障状态，正如上面所讨论的。</p>
+<p>如果尝试重启该单元，会因 “找不到<code>nonexistent.service</code>单元” 而失败。但幸运的是，停止操作可以正常发送<code>SIGTERM</code>信号并将其停止。</p>
+<p>在我的 Manjaro Linux 系统上，更有趣的是，当我将<code>WantedBy=</code>指令更改为<code>graphical.target</code>（这是我系统上的默认目标），并将<code>Type=</code>更改为<code>oneshot</code>时。在进入显示管理器后，我的系统上会有四个待处理的启动作业：一个处于<code>activating</code>状态的不存在的依赖项，以及处于<code>waiting</code>状态的<code>multi-user.target</code>、<code>graphical.target</code>和<code>tlp.service</code>。手动取消可以将其删除，而不会触发故障状态，正如前面讨论的。</p>
 <p>这个问题已经被多次报告：<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/11338">1</a>、<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/4937">2</a>、<a target="_blank" rel="noopener" href="https://serverfault.com/questions/952668/systemd-starting-service-even-if-service-in-requires-wont-start/">3</a>。也有人报告说它会影响<code>BindsTo=</code>和<code>RequiresMountsFor=</code>。</p>
-<p>据我所知，这里发生了以下几件事情。首先，回想一下，<code>Wants=</code>和<code>WantedBy=</code>在设计上是“几乎没有任何合理性或错误检查的无条件启动传播”，因为它们忽略了“单元未找到”、“单元被屏蔽”和“作业类型不适用”等错误。其次，目标单元在设计上没有失败状态，以便它们总能到达。因此，你得到的就是你所期望的，因为 systemd 的作业引擎只是相信你为这种依赖关系提供了合理的输入。作业传播既不是累加的，也不是原子的（“当所有约束满足时提交”），因此目标的<code>Wants=</code>会阻止更严格的要求。这种情况在<code>Requires=</code>一个不可用的挂载单元时会格外令人惊讶。</p>
+<p>据我所知，这里发生了以下几件事情。首先，回想一下，<code>Wants=</code>和<code>WantedBy=</code>在设计上是“几乎没有任何合理性或错误检查的无条件启动作业传播”，因为它们忽略了“单元未找到”、“单元被屏蔽”和“作业类型不适用”等错误。其次，目标单元在设计上没有失败状态，以便它们总能到达。因此，你得到的就是你所期望的，因为 systemd 的作业引擎只是相信你为这种依赖关系提供了合理的输入。作业传播既不是累加的，也不是原子的（“当所有约束都满足时才提交”），因此目标的<code>Wants=</code>会阻止更严格的要求。这种情况在<code>Requires=</code>一个不可用的挂载单元时会格外令人惊讶。</p>
 <p>一个相关的有趣问题是：<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/12587">由于垃圾回收逻辑中的某些不明确缺陷</a>，systemd 在启动服务时会根据服务启动顺序，不一致地传播嵌套的<code>Wants=</code>和<code>Requires=</code>依赖关系。</p>
-<h2 id="包含互斥的作业类型的事务"><a href="#包含互斥的作业类型的事务" class="headerlink" title="包含互斥的作业类型的事务"></a>包含互斥的作业类型的事务</h2><p>基于 <a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/11440">issue #11440</a>，假设我们有<code>one.service</code>：</p>
+<h3 id="包含互斥的作业类型的事务"><a href="#包含互斥的作业类型的事务" class="headerlink" title="包含互斥的作业类型的事务"></a>包含互斥的作业类型的事务</h3><p>基于 <a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/11440">issue #11440</a>，假设我们有<code>one.service</code>：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=one</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">ExecStart=/bin/sleep infinity</span><br></pre></td></tr></table></figure>
 <p><code>two.service</code>：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=two</span><br><span class="line">Conflicts=one.service</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">ExecStart=/bin/sleep infinity</span><br></pre></td></tr></table></figure>
 <p><code>three.service</code>：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=three</span><br><span class="line">After=one.service two.service</span><br><span class="line">PartOf=one.service two.service</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">ExecStart=/bin/sleep infinity</span><br></pre></td></tr></table></figure>
 <p>我们有一个服务<code>one</code>，一个与之冲突的服务<code>two</code>，以及顺序上位于<code>one</code>和<code>two</code>之后的服务<code>three</code>。服务<code>three</code>还会将重启和停止作业传播给<code>one</code>和<code>two</code>，但不会触发它们的启动，这正是<code>PartOf=</code>的语义。</p>
-<p>执行<code>systemctl start one two three</code>时一切正常，因为<code>two</code>和 <code>three</code>已经启动，而<code>one</code>在被<code>two</code>传播的停止作业停止后处于 inactive 状态。</p>
-<p>现在执行<code>systemctl restart two</code>。它会报错：“无法重启<code>two.service</code>：事务包含对<code>three.service</code>的冲突作业 ‘restart’ 和 ‘stop’。可能配置了相互矛盾的需求依赖。”</p>
-<p>这里有两点需要注意：再次强调，作业传播不是原子的，而且要记住，事务是在不考虑单元的活动状态的情况下生成的。或者更具体地说，单元状态是在作业被调度时检查的，而不是在作业最初在事务中开始排队时检查的。</p>
-<p>由于<code>three</code>有<code>PartOf=one.service two.service</code>，<code>one</code>和<code>two</code>现在都有<code>ConsistsOf=three.service</code>。现在，我们请求在<code>two</code>上执行重启作业。这个重启作业就成为我们的锚点。我们遵循<code>Conflicts=one.service</code>，为<code>one</code>排队一个停止作业。注意，<code>one</code>已经处于 inactive 状态，所以我们是在一个已经停止的单元上传播停止作业。由于<code>one</code>包含<code>ConsistsOf=three</code>，所以<code>three</code>也会被停止。然后我们再次回到<code>two</code>，<code>two</code>也包含<code>ConsistsOf=three</code>，并向<code>three</code>传播 <code>JOB_TRY_RESTART</code>。</p>
+<p>执行<code>systemctl start one two three</code>时一切正常，因为<code>two</code>和 <code>three</code>已经启动，而<code>one</code>在被<code>two</code>传播的停止作业停止后处于<code>inactive</code>状态。</p>
+<p>现在执行<code>systemctl restart two</code>。它会报错：“无法重启<code>two.service</code>：事务包含对<code>three.service</code>的冲突作业<code>restart</code>和<code>stop</code>。可能配置了相互矛盾的需求依赖。”</p>
+<p>这里有两点需要注意：再次强调，作业传播不是原子的，而且要记住，事务是在不考虑单元的活动状态的情况下生成的。或者更具体地说，单元状态是在作业被调度时检查的，而不是在作业最初在事务中开始入队时检查的。</p>
+<p>由于<code>three</code>有<code>PartOf=one.service two.service</code>，<code>one</code>和<code>two</code>现在都有<code>ConsistsOf=three.service</code>。现在，我们请求在<code>two</code>上执行重启作业。这个重启作业就成为了我们的锚点。systemd 遵循<code>Conflicts=one.service</code>，为<code>one</code>入队一个停止作业。注意，<code>one</code>已经处于<code>inactive</code>状态，所以我们是在一个已经停止的单元上传播停止作业。由于<code>one</code>包含<code>ConsistsOf=three</code>，所以<code>three</code>也会被停止。然后我们再次回到<code>two</code>，<code>two</code>也包含<code>ConsistsOf=three</code>，并向<code>three</code>传播 <code>JOB_TRY_RESTART</code>。</p>
 <p>在同一单元中，停止作业在<code>try-restart</code>作业之前被传播，这违反了可合并性规则，导致事务出错。</p>
-<p>这可能看起来像是一个人为制造的特殊情况，但实际上，同样的场景是<code>fail2ban</code>和<code>firewalld</code>服务单元文件中长期存在的一个 Bug 的根源。它<a target="_blank" rel="noopener" href="https://bugzilla.redhat.com/show_bug.cgi?id=1379141">在 2016 年被 Fedora 报告</a>，<a target="_blank" rel="noopener" href="https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=871993">在 2017 年被 Debian 报告</a>，又在 2019 年被 openSUSE 报告。<code>fail2ban.service</code>中有<code>PartOf=iptables.service firewalld.service</code>，而<code>firewalld.service</code>中有<code>Conflicts=iptables.service</code>。这样的逻辑推理<a target="_blank" rel="noopener" href="https://lists.freedesktop.org/archives/systemd-devel/2016-March/036014.html">是有效的</a>：<code>fail2ban</code>可以与<code>firewalld</code>或<code>iptables</code>一起工作，但同时只能有一个处于运行状态。此外，如果重启<code>firewalld</code>或<code>iptables</code>，<code>fail2ban</code>也应该被重启。直观上，这似乎应该正常工作，但这是建立在 systemd 依赖关系作为不变量的错误基础之上设计的。</p>
-<h2 id="依赖传播覆盖显式的重启策略"><a href="#依赖传播覆盖显式的重启策略" class="headerlink" title="依赖传播覆盖显式的重启策略"></a>依赖传播覆盖显式的重启策略</h2><p>假设我们有一个专门用于特定服务的 <code>foo.target</code> 单元文件，它绑定了 <code>foo.service</code>：</p>
+<p>这可能看起来像是一个人为制造的特殊情况，但实际上，同样的场景是<code>fail2ban</code>和<code>firewalld</code>服务单元文件中长期存在的一个 Bug 的根源。它<a target="_blank" rel="noopener" href="https://bugzilla.redhat.com/show_bug.cgi?id=1379141">在 2016 年被 Fedora 报告</a>，<a target="_blank" rel="noopener" href="https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=871993">在 2017 年被 Debian 报告</a>，又在 2019 年被 openSUSE 报告。<code>fail2ban.service</code>中有<code>PartOf=iptables.service firewalld.service</code>，而<code>firewalld.service</code>中有<code>Conflicts=iptables.service</code>。这样的逻辑推理<a target="_blank" rel="noopener" href="https://lists.freedesktop.org/archives/systemd-devel/2016-March/036014.html">是有效的</a>：<code>fail2ban</code>可以与<code>firewalld</code>或<code>iptables</code>一起工作，但同时只能有一个处于运行（Active）状态。此外，如果重启<code>firewalld</code>或<code>iptables</code>，<code>fail2ban</code>也应该被重启。直观上，这似乎应该正常工作，但这是建立在 systemd 依赖关系作为不变量的错误假设之上设计的。</p>
+<h3 id="依赖传播覆盖显式的重启策略"><a href="#依赖传播覆盖显式的重启策略" class="headerlink" title="依赖传播覆盖显式的重启策略"></a>依赖传播覆盖显式的重启策略</h3><p>假设我们有一个专门用于特定服务的 <code>foo.target</code> 单元文件，它绑定了 <code>foo.service</code>：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=foo target</span><br><span class="line">BindsTo=foo.service</span><br></pre></td></tr></table></figure>
 <p><code>foo.service</code>：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=foo service</span><br><span class="line">PartOf=foo.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">ExecStart=/bin/sleep 999</span><br><span class="line">ExecStopPost=/bin/false</span><br><span class="line">Restart=always</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=foo service</span><br><span class="line">PartOf=foo.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">ExecStart=/bin/sleep infinity</span><br><span class="line">ExecStopPost=/bin/false</span><br><span class="line">Restart=always</span><br></pre></td></tr></table></figure>
 <p>然后我们执行<code>systemctl start foo.target</code>命令，<code>foo.service</code>服务就会启动并运行。</p>
-<p>现在手动使用<code>-KILL</code>、<code>-TERM</code>、<code>-SEGV</code>或其他信号杀死<code>foo.service</code>的主进程。由于这是一个触发低层单元状态变化的 kill 信号，与明确由 Manager 触发的作业不同，我们可能期望<code>Restart=always</code>触发重启。然而，实际上并没有，服务会保持关闭状态。</p>
-<p>我们遇到了一个意想不到的依赖传播，它与服务单元状态机的行为发生了奇特的相互作用。当<code>foo.service</code>停止运行时，与其<code>BoundBy=</code>的目标单元会排队一个停止作业，并且也会被停止。而<code>foo.service</code>中的<code>PartOf=</code>捕获到了这一点，并通过<code>foo.target</code>中的<code>ConsistsOf=</code>排队一个对<code>foo.service</code>本身的停止作业。由于这是一个由 Manager 触发的作业，它抑制了重启计时器的触发。因为<code>ExecStopPost=</code>指令（可以是任何内容）将服务保持在停用状态，从而导致最终过渡到 inactive&#x2F;failed 状态的原因归结为一个明确由 systemd 排队的作业，而不是外部状态变化。</p>
+<p>现在手动使用<code>-KILL</code>、<code>-TERM</code>、<code>-SEGV</code>或其他信号杀死<code>foo.service</code>的主进程。由于这是一个直接触发单元状态变化的低层<code>kill</code>信号，与明确由 Manager 触发的作业不同，我们可能期望<code>Restart=always</code>触发重启。然而，实际上并没有，服务会保持<code>inactive</code>状态。</p>
+<p>我们遇到了一个意想不到的依赖传播，它与服务单元状态机的行为发生了奇特的相互作用。当<code>foo.service</code>停止运行时，与其<code>BoundBy=</code>的目标单元会入队一个停止作业，并且也会被停止。而<code>foo.service</code>中的<code>PartOf=</code>捕获到了这一点，并通过<code>foo.target</code>中的<code>ConsistsOf=</code>入队一个对<code>foo.service</code>本身的停止作业。由于这是一个由 Manager 触发的作业，它抑制了重启计时器的触发。因为<code>ExecStopPost=</code>指令（可以是任何内容）将服务保持在停用状态，从而导致最终过渡到<code>inactive/failed</code>状态的直接原因被归结为一个明确由 systemd 入队的作业，而不是外部状态变化。</p>
 <p>这一问题在 <a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/11456">issue #11456</a> 中有所讨论。</p>
 <p>Kowalski 还澄清道：</p>
 <blockquote>
 <p>单元只有在进程退出、被信号杀死或达到为其设置的超时时才会重启。然而，如果用户明确要求停止一个单元，或者通过<code>BindsTo=</code>触发其停止（即两者都是由 Manager 操作的结果），那么该单元就不会重启。这是因为<code>Restart=</code>只对隐式状态变化起作用，而不对导致状态变化的显式作业起作用（所有的传播依赖都是明确的，即由 systemd 强制执行的作业）。</p>
 </blockquote>
 <p>从用户的角度来看，显式的<code>systemctl stop</code>命令和通过<code>BindsTo=</code>传播的停止请求似乎是不同的，一个是显式的，另一个是隐式的。但从内部来看，两者都是显式的。因此，对于缺乏<code>OnDependencyFailure=</code>选项，又无法选择性地覆盖重启策略以包括由 Manager 触发的作业的情况，需要采取一些变通措施。</p>
+<h3 id="不起作用的Conflicts"><a href="#不起作用的Conflicts" class="headerlink" title="不起作用的Conflicts="></a>不起作用的<code>Conflicts=</code></h3><p>Oracle Virtual Box的<code>virtualbox-guest-utils.service</code>单元文件是这样的：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=Virtualbox guest utils</span><br><span class="line">Conflicts=systemd-timesyncd.service</span><br><span class="line">ConditionVirtualization=oracle</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=forking</span><br><span class="line">Restart=no</span><br><span class="line">TimeoutSec=5min</span><br><span class="line">IgnoreSIGPIPE=no</span><br><span class="line">KillMode=process</span><br><span class="line">GuessMainPID=no</span><br><span class="line">RemainAfterExit=yes</span><br><span class="line">ExecStart=/etc/init.d/virtualbox-guest-utils start</span><br><span class="line">ExecStop=/etc/init.d/virtualbox-guest-utils stop</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+<p>根据其内容，它显然与<code>systemd-timesyncd.service</code>冲突，理应在启动时传播<code>JOB_STOP</code>使<code>systemd-timesyncd.service</code>停止。但是，在系统启动后，我们会发现<code>systemd-timesyncd.service</code>和<code>virtualbox-guest-utils.service</code>都是<code>active</code>状态。但是，如果我们这时手动执行<code>systemctl start virtualbox-guest-utils.service</code>，<code>systemd-timesyncd.service</code>又会被停止。</p>
+<p>这是因为，<code>systemd-timesyncd.service</code>被很多系统早期服务依赖，这些服务中，很多是被通过<code>Wants=</code>依赖它们的其他单元的“意外”单元状态变化（非作业导致的，例如，<code>.device</code>和<code>.scope</code>单元的启动）触发启动作业的，这样的启动作业会以<code>JOB_FAIL</code>模式被入队，<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/blob/main/src/core/transaction.c#L562">这样的锚点作业产生的事务会被“最小化”，删除事务中会停止正在运行的服务，或是会改变已存在作业的非必要作业</a>。而<code>Conflicts=</code>的作用是，在当前单元启动时，为所有列出的单元排队停止作业。于是，<code>systemd-timesyncd.service</code>的启动作业触发的<code>virtualbox-guest-utils.service</code>的停止作业，在这个<code>JOB_FAIL</code>模式的锚点作业产生的事务中，会被删除：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">systemd[1]: virtualbox-guest-utils.service: virtualbox-guest-utils.service/stop would change existing job.</span><br><span class="line">systemd[1]: virtualbox-guest-utils.service: Deleting virtualbox-guest-utils.service/stop to minimize impact.</span><br><span class="line">......</span><br><span class="line">systemd[1]: virtualbox-guest-utils.service: virtualbox-guest-utils.service/stop would stop a running service.</span><br><span class="line">systemd[1]: virtualbox-guest-utils.service: Deleting virtualbox-guest-utils.service/stop to minimize impact.</span><br></pre></td></tr></table></figure>
+
+<p>归根结底，<code>Conflicts=</code>是用于<code>shutdown.target</code>内部的指令，开发者在原则上不应该使用它来停止用户的系统服务。</p>
 <h2 id="Bug即特性：破坏性事务、隐式-wants和PartOf-的非传递性"><a href="#Bug即特性：破坏性事务、隐式-wants和PartOf-的非传递性" class="headerlink" title="Bug即特性：破坏性事务、隐式.wants和PartOf=的非传递性"></a>Bug即特性：破坏性事务、隐式<code>.wants</code>和<code>PartOf=</code>的非传递性</h2><p>多年来，人们已经习惯于，或找到了一些有趣的方法，利用 systemd 的故障条件、漏洞和怪癖来实现功能。这意味着尝试将其语义“修复”为更一致的，实际上可能会破坏许多依赖这些不一致性的用例。</p>
 <p>例如，RHEL7 的 Red Hat 客户门户<a target="_blank" rel="noopener" href="https://access.redhat.com/solutions/1580343">官方建议</a>故意在 systemd 中创建一个破坏性事务，作为“重启保护”功能，以防止 root 用户在某些操作完成之前重启系统。如果 systemd 的作业合并规则被调整，或多单元原子事务成为现实，这个方案可能就无法工作了。</p>
-<p>在 systemd-242 之前，设备单元会隐式地获得与其对应的挂载单元的<code>.wants</code>依赖，因此每当出现一个新设备时，它就会立即被挂载。这导致挂载单元在被用户明确停止后，由于设备单元状态变化（如 “changed” 事件），而再次被触发启动。在移除这一“特性”后，人们发现<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/pull/11373#issuecomment-593474361">许多人将其作为廉价的热插拔解决方案来使用</a>。</p>
+<p>在 systemd-242 之前，设备单元会隐式地获得与其对应的挂载单元的<code>.wants</code>依赖，因此每当出现一个新设备时，它就会立即被挂载。这导致挂载单元在被用户明确停止后，由于设备单元状态变化（如<code>changed</code>事件），而再次被触发启动。在移除这一“特性”后，人们发现<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/pull/11373#issuecomment-593474361">许多人将其作为廉价的热插拔解决方案来使用</a>。</p>
 <p>就在我撰写本文时，从 systemd-245 开始，一个<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/pull/14086">修改作业 GC 逻辑的补丁</a>被合并。这个补丁旨在解决 <a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/13850">PartOf&#x3D; 依赖关系不传递的问题</a>：以前如果存在 A→B→C 的依赖关系，当 B 处于 inactive 状态时停止 C，这种操作不会传播到 A，但会传播到处于 inactive 的 B。</p>
 <p>该补丁引发了一系列大规模的回归 Bug，目前这一问题仍在持续中。截至本文撰写时，Debian 的 systemd 包中已包含了<a target="_blank" rel="noopener" href="https://sources.debian.org/patches/systemd/245.5-2/debian/Revert-job-Don-t-mark-as-redundant-if-deps-are-relevant.patch/">一个撤销此更改的补丁</a>。该补丁的一些奇怪副作用包括<a target="_blank" rel="noopener" href="https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=953670">在图形会话期间重启 Plymouth 启动画面</a>，为此，Debian systemd 维护者 Michael Biebl 向 systemd 开发组<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/15091">大发雷霆</a>。此外，具有失败条件检查的<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/15401">服务单元会不断重启</a>（<a target="_blank" rel="noopener" href="https://unix.stackexchange.com/questions/578331/systemd-timer-unit-starts-several-other-services">此处</a>也有报告），导致日志文件被填满。</p>
 <p>这场灾难表明，对 systemd 状态机的微小改进可能会对整个用户生态系统产生不成比例的影响，核心开发者在实际部署更改并观察结果之前无法预见这些影响。这引发了人们对 systemd 能否通过重大变更来进行改革的严重疑虑。</p>
@@ -751,7 +841,7 @@
 <p>systemd 以 11 种不同的单元类型为基础，这些单元类型具有各种独特的属性和相互作用。因此，systemd 通常会将全局系统状态与服务及其他许多由 systemd 维护的、实际上是虚构的对象的状态交织在一起，以便在其模型中强制执行顺序依赖关系。其架构使得依赖图成为完全暂时且不可复现的构件，取决于来自 “周围” 系统环境中隐式传播的状态变化。</p>
 <p>大多数 systemd 的依赖类型将主体传播的作业类型、传播到客体的作业类型以及返回给调用者的作业结果结合在一起。这些操作是非原子的，并且根据单元类型特定的状态，可能产生不同的结果。因此，无法通过其显式配置的清单来预测或复制系统状态。你的依赖图并不等同于你的参考图。</p>
 <p>这种粗粒度的临时性指令并不仅限于单元依赖项，还适用于所有修改执行状态的选项（可与<a target="_blank" rel="noopener" href="https://jdebp.eu/FGA/run-scripts-and-service-units-side-by-side.html">链式加载的方法</a>进行比较）。用户对自定义 systemd 动词&#x2F;操作的请求一直很频繁，但一直被开发组拒绝，例如 <a target="_blank" rel="noopener" href="https://lists.freedesktop.org/archives/systemd-devel/2011-April/001951.html">1</a>、<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/3656">2</a>、<a target="_blank" rel="noopener" href="https://github.com/systemd/systemd/issues/6690">3</a>。</p>
-<h1 id="以后会怎样？"><a href="#以后会怎样？" class="headerlink" title="以后会怎样？"></a>以后会怎样？</h1><h2 id="被放逐的乌托邦：HAL、DeviceKit-和那个未曾实现的愿景"><a href="#被放逐的乌托邦：HAL、DeviceKit-和那个未曾实现的愿景" class="headerlink" title="被放逐的乌托邦：HAL、DeviceKit 和那个未曾实现的愿景"></a>被放逐的乌托邦：HAL、DeviceKit 和那个未曾实现的愿景</h2><p>开源开发的历史有一种自我重复的趋势——每次都是一场闹剧。</p>
+<h1 id="以后会怎样？"><a href="#以后会怎样？" class="headerlink" title="以后会怎样？"></a>以后会怎样？</h1><h2 id="被放逐的乌托邦：HAL、DeviceKit-和那个未曾实现的愿景"><a href="#被放逐的乌托邦：HAL、DeviceKit-和那个未曾实现的愿景" class="headerlink" title="被放逐的乌托邦：HAL、DeviceKit 和那个未曾实现的愿景"></a>被放逐的乌托邦：HAL、DeviceKit 和那个未曾实现的愿景</h2><p>开源开发的历史总会重演——每次都是一场闹剧。</p>
 <p>大约在 2004 年，一个名为 “Project Utopia”（乌托邦计划） 的倡议出现了。它的目标是彻底重塑当时 Linux 上的热插拔和硬件自动检测的现状——这在当时是一个<a target="_blank" rel="noopener" href="https://lwn.net/Articles/123932/">相当棘手的难题</a>，涉及到<code>/sbin/hotplug</code>程序、大量的 Shell 脚本、特定于发行版的工具（如 RHEL 和 Fedora Core 上的 Kudzu），以及像 <a target="_blank" rel="noopener" href="http://supermount-ng.sourceforge.net/">“supermount”</a> 这样的内核模块。</p>
 <p>正如其两位主要开发者之一、Novell 的 Robert Love（另一位是 Joe Shaw）<a target="_blank" rel="noopener" href="https://linuxjournal.rubdos.be/ljarchive/LJ/138/7745.html">所描述的</a>：</p>
 <blockquote>
@@ -800,17 +890,17 @@
 <blockquote>
 <p>（systemd 具备的功能有）用户会话、套接字激活、sysusers（自动化用户创建）、动态用户、homed、tmpfiles（临时目录生成）、临时单元、与 slice 单元（或称为 cgroup API）通信的任何工具、容器化、firstboot（首次启动初始化）、系统范围的预设配置和策略机制，以便管理员实现 “哪些服务在安装时就被启用，哪些服务在明确进行手动配置前必须处于停止状态”、“无状态系统” 能力等，我可能还忘记了其他很多功能。</p>
 </blockquote>
-<p>基于这些影响，即使作为 init 系统的 systemd 让人觉得不那么出色，也不会对这个项目的广泛影响范围产生太大改变。仅仅拥有一个“更好的 init 系统”本身也并没有多大意义。当发行版决定使用 systemd 时，他们不是在采用一个“更好的 init 系统”，而是在 <strong>采用一个平台</strong>。像 Flatpak 和 Snappy 这样的项目现在已经与 systemd 有了深入的集成，这是一个既定的事实。</p>
+<p>基于这些影响，即使作为 init 系统的 systemd 让人觉得不那么出色，也不会对这个项目的广泛影响范围产生太大改变。仅仅拥有一个“更好的 init 系统”本身也并没有多大意义。当发行版决定使用 systemd 时，他们不是在采用一个“更好的 init 系统”，而是在<strong>采用一个平台</strong>。像 Flatpak 和 Snappy 这样的项目现在已经与 systemd 有了深入的集成，这是一个既定的事实。</p>
 <p>Upstart 被许多<a target="_blank" rel="noopener" href="https://lwn.net/Articles/582585/">令人讨厌的 Bug</a> 困扰，从本质上说，这些 Bug 可以归结为其 Ad-hoc 作业和事件引擎与底层内核进程模型不同步，从而产生了荒谬的系统状态。systemd 也面临着同样的问题。</p>
 <p>另一方面，我们也必须问自己：init 系统真的那么重要吗？</p>
 <p>我认为并不是那么重要。</p>
-<p>首先，我们讨论一个小难题：我们知道主流发行版多年来一直使用脆弱的 init 脚本——远远超过了它们的有效期——因此在需要进行重大重新设计时不得不进行低效的增量更改。那么，为什么这么长时间以来一直在做错误决定的人们，会突然在同一时间点都选择做了另一件正确的决定（切换到 systemd）呢？我们又凭什么相信这是正确的呢？我认为唯一诚实的答案是，发行版只是响应上游打包者对 systemd 的热情姿态，因此我们无法从他们的决定中得出技术进步的结论。</p>
-<p>但是，让我们看看，比如说，ChromeOS。直到今天，它仍然在<a target="_blank" rel="noopener" href="https://www.chromium.org/chromium-os/chromiumos-design-docs/boot-design">广泛地使用 Upstart</a>，尽管 Upstart 已经被原始开发者抛弃了很长时间。使用这样一个漏洞百出的、脆弱的 init 系统是否阻碍了 Chromebook 在公共教育领域以及日益扩大的笔记本电脑市场的霸主地位？Chromebook 是不是完全无法使用呢？显然不是。</p>
+<p>首先，我们讨论一个小难题：我们知道主流发行版多年来一直使用脆弱的 init 脚本——远远超过了它们的有效期——因此在需要进行重大重新设计时不得不进行低效的增量更改。那么，为什么这么长时间以来一直在做错误决定的人们，会突然在<strong>同一时间点</strong>突然都选择做了一件“正确的决定”（切换到 systemd）呢？我们又凭什么相信这是“正确”的呢？我认为唯一诚实的答案是，发行版只是在响应上游打包者对 systemd 的热情姿态，因此我们无法从他们的决定中得出“技术进步”的结论。</p>
+<p>但是，让我们转过头看看，比如说，ChromeOS。直到今天，它仍然在<a target="_blank" rel="noopener" href="https://www.chromium.org/chromium-os/chromiumos-design-docs/boot-design">广泛地使用 Upstart</a>，尽管 Upstart 已经被原始开发者抛弃了很长时间。使用这样一个漏洞百出的、脆弱的 init 系统是否阻碍了 Chromebook 在公共教育领域以及日益扩大的笔记本电脑市场的霸主地位？Chromebook 是不是完全无法使用呢？显然不是。</p>
 <p>Android 仍然<a target="_blank" rel="noopener" href="https://android.googlesource.com/platform/system/core/+/master/init/README.md">使用单个 init.rc 文件进行初始化</a>。Rob Landley 曾经贴切地将其描述（转述）为 “看起来像是一个 Shell 脚本，但实际上不是”。它还有一个基于 actions、events 和 triggers 的反向依赖模型，与 Upstart 非常相似。除了有强迫症的偏执狂，谁会关心他们移动设备上的 init 系统呢？</p>
 <p>是的，init 系统真的不那么重要。但是，systemd 的独特之处恰恰在于它确实很重要。这很奇怪——为什么会这样？它凭什么这么重要呢？</p>
-<p>也许随着 BPF 将 Linux 整合为一个带有受控运行时的混合内核，一个子系统越来越组件化（在提案中，已经出现了将 BPF 程序挂钩到 LSM 的<a target="_blank" rel="noopener" href="https://lwn.net/Articles/798918/">早期迹象</a>）。随着 pidfd&#x2F;进程描述符使得可靠的进程监视能够在自包含的进程之间传递，随着 Linux 原生挂载 API 本身变得<a target="_blank" rel="noopener" href="https://lwn.net/ml/linux-fsdevel/29128.1531356361@warthog.procyon.org.uk/">更加事件驱动</a>，以及一群狂热的 Rust 信徒在永不熄灭的宗教热情驱使下坚持认为所有人都有义务为借用检查器献上祭品，一个新的转变可能会再次出现，届时，init 系统将再次变得无关紧要。</p>
-<p>有一件事我可以肯定，这种转变不可能来自业余爱好者、外行人和所谓的 “地下黑客”。要想推翻一个平台，就必须先成为生态系统中最大的节点上的决策者，决定哪些功能可以在哪里集成。</p>
-<p>正如 Poettering 等人如雄狮般崛起，推翻了那些自满的狐狸，现在，他们也终将被自己培养出的新一代狮子所推翻。这些新一代的狮子会是谁？会从哪里来？会做什么？我们现在都不得而知，只能拭目以待，静观其变。</p>
+<p>也许随着 BPF 将 Linux 整合为一个带有受控运行时的混合内核，一个子系统越来越组件化（在提案中，已经出现了将 BPF 程序挂钩到 LSM 的<a target="_blank" rel="noopener" href="https://lwn.net/Articles/798918/">早期迹象</a>）。随着 pidfd&#x2F;进程描述符使得可靠的进程监视能够在自包含的进程之间传递，随着 Linux 原生挂载 API 本身变得<a target="_blank" rel="noopener" href="https://lwn.net/ml/linux-fsdevel/29128.1531356361@warthog.procyon.org.uk/">更加事件驱动</a>，以及一群狂热的 Rust 信徒在永不熄灭的宗教热情的驱使下坚持认为所有人都有义务为 Borrow Checker 顶礼膜拜，一个新的转变可能会再次出现，届时，init 系统将再次变得无关紧要。</p>
+<p>有一件事我可以肯定，这种转变不可能来自业余爱好者、外行人和所谓的“地下黑客”。要想推翻一个平台，就必须先成为生态系统中最大的节点上的决策者，决定哪些功能可以在哪里集成。</p>
+<p>正如 Poettering 等人如雄狮般崛起，推翻了那些自满的狐狸，现在，他们也终将被自己培养出的新一代狮子推翻。这些新一代的狮子会是谁？会从哪里来？会做什么？我们现在都不得而知，只能拭目以待，静观其变。</p>
 
     </div>
 
@@ -819,6 +909,11 @@
     
 
     <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/systemd/" rel="tag"># systemd</a>
+              <a href="/tags/%E8%AF%91%E6%96%87/" rel="tag"># 译文</a>
+              <a href="/tags/%E7%B3%BB%E7%BB%9F%E5%90%AF%E5%8A%A8/" rel="tag"># 系统启动</a>
+          </div>
 
         
 

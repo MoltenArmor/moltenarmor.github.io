@@ -19,22 +19,21 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"blog.icku.eu.org","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="第一章：介绍1.1. 目的该标准可以使：  软件预测已安装文件和目录的位置，以及 用户预测已安装文件和目录的位置。  我们通过以下工作来实现上面的目标：">
-<meta property="og:type" content="article">
+    <meta property="og:type" content="article">
 <meta property="og:title" content="FHS 3 个人翻译">
 <meta property="og:url" content="https://blog.icku.eu.org/2022/11/03/FHS3/index.html">
-<meta property="og:site_name" content="Void of the Real">
-<meta property="og:description" content="第一章：介绍1.1. 目的该标准可以使：  软件预测已安装文件和目录的位置，以及 用户预测已安装文件和目录的位置。  我们通过以下工作来实现上面的目标：">
+<meta property="og:site_name" content="Mokumesei Manor">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.icku.eu.org/images/FHS3-2.jpg">
+<meta property="og:image" content="https://blog.icku.eu.org/images/FHS3-1.jpg">
 <meta property="article:published_time" content="2022-11-03T15:13:50.000Z">
-<meta property="article:modified_time" content="2025-10-01T14:12:53.622Z">
+<meta property="article:modified_time" content="2026-06-11T14:15:42.919Z">
 <meta property="article:author" content="Kwok &quot;Molten_Armor&quot; Guy">
-<meta property="article:tag" content="linux">
-<meta property="article:tag" content="systemd">
-<meta property="article:tag" content="operating_system">
-<meta property="article:tag" content="system">
-<meta property="article:tag" content="computer">
+<meta property="article:tag" content="译文">
+<meta property="article:tag" content="FHS">
+<meta property="article:tag" content="文件系统">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.icku.eu.org/images/FHS3-2.jpg">
 
 
 <link rel="canonical" href="https://blog.icku.eu.org/2022/11/03/FHS3/">
@@ -44,7 +43,7 @@
 <script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.icku.eu.org/2022/11/03/FHS3/","path":"2022/11/03/FHS3/","title":"FHS 3 个人翻译"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>FHS 3 个人翻译 | Void of the Real</title>
+<title>FHS 3 个人翻译 | Mokumesei Manor</title>
   
 
 
@@ -74,7 +73,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <p class="site-title">Void of the Real</p>
+      <p class="site-title">Mokumesei Manor</p>
       <i class="logo-line"></i>
     </a>
   </div>
@@ -122,12 +121,16 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">40</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">52</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
@@ -170,12 +173,12 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Void of the Real">
+      <meta itemprop="name" content="Mokumesei Manor">
       <meta itemprop="description" content="Just another blog about Linux, systemd, and something more.">
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="FHS 3 个人翻译 | Void of the Real">
+      <meta itemprop="name" content="FHS 3 个人翻译 | Mokumesei Manor">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
@@ -198,7 +201,16 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-10-01 22:12:53" itemprop="dateModified" datetime="2025-10-01T22:12:53+08:00">2025-10-01</time>
+      <time title="修改时间：2026-06-11 22:15:42" itemprop="dateModified" datetime="2026-06-11T22:15:42+08:00">2026-06-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%B3%BB%E7%BB%9F%E6%A0%87%E5%87%86/" itemprop="url" rel="index"><span itemprop="name">系统标准</span></a>
+        </span>
     </span>
 
   
@@ -210,13 +222,16 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="第一章：介绍"><a href="#第一章：介绍" class="headerlink" title="第一章：介绍"></a>第一章：介绍</h1><h2 id="1-1-目的"><a href="#1-1-目的" class="headerlink" title="1.1. 目的"></a>1.1. 目的</h2><p>该标准可以使：</p>
+    <div class="post-body" itemprop="articleBody"><p><img src="/images/FHS3-2.jpg" alt="FHS3-2.jpg"></p>
+<p><img src="/images/FHS3-1.jpg" alt="FHS3-1.jpg"></p>
+<span id="more"></span>
+
+<h1 id="第一章：介绍"><a href="#第一章：介绍" class="headerlink" title="第一章：介绍"></a>第一章：介绍</h1><h2 id="1-1-目的"><a href="#1-1-目的" class="headerlink" title="1.1. 目的"></a>1.1. 目的</h2><p>该标准可以使：</p>
 <ul>
 <li>软件预测已安装文件和目录的位置，以及</li>
 <li>用户预测已安装文件和目录的位置。</li>
 </ul>
 <p>我们通过以下工作来实现上面的目标：</p>
-<span id="more"></span>
 <ul>
 <li>为文件系统的每个区域制定指导原则，</li>
 <li>指定最少的必备文件和目录，</li>
@@ -232,13 +247,13 @@
 <p>FHS 文档的作用范围有限：</p>
 <ul>
 <li>本地文件的存放是本地范围内的事情，因此 FHS 不会试图篡夺系统管理员的工作。</li>
-<li>FHS 解决了需要在多处（例如本地工作站、发行版、应用程序、文档等）之间协调文件存放位置的问题。</li>
+<li>FHS 解决了需要在多处（例如本地主机、发行版、应用程序、文档等）之间协调文件存放位置的问题。</li>
 </ul>
 <h2 id="1-2-约定"><a href="#1-2-约定" class="headerlink" title="1.2. 约定"></a>1.2. 约定</h2><p>我们建议您阅读本文档的排版版本，而不是纯文本版本。在排版版本中，文件和目录的名称以等宽字体显示。</p>
 <p>不同的文件名组件在用“_<code>&lt;</code><em>”和“</em><code>&gt;</code>_”字符括起来的内容描述，如 _<code>&lt;thus&gt;</code>_。电子邮件地址也被括在“&lt;”和“&gt;”中，但以通常的字体显示。</p>
 <p>文件名的可选组成部分括在“_<code>[</code><em>”和“</em><code>]</code><em>”字符中，并且可以与“</em><code>&lt;</code><em>”和“</em><code>&gt;</code>_”结合使用。例如，如果允许文件名带有或不带有扩展名，则它可能由 _<code>&lt;filename&gt;[.&lt;extension&gt;]</code>_构成。</p>
 <p>目录名和文件名的可变子串用“_<code>\*</code>_”表示。</p>
-<p>文本中标记为 _Rationale（基本原理）_的部分是解释性的，不是规范性的。</p>
+<p>文本中标记为 _Rationale_（基本原理）的部分是解释性的，不是规范性的。</p>
 <h1 id="第二章：文件系统"><a href="#第二章：文件系统" class="headerlink" title="第二章：文件系统"></a>第二章：文件系统</h1><p>该标准假设 FHS 兼容文件系统的操作系统支持与大多数 UNIX 文件系统相同的基本安全功能。</p>
 <p>可以在文件之间定义两个独立的区别：<strong>可共享的</strong>与<strong>不可共享的</strong>，以及<strong>可变的</strong>与<strong>静态的</strong>。通常，在这些方面不同的文件应该位于不同的目录中。这使得在不同的文件系统上存储具有不同使用特征的文件变得容易。</p>
 <p>可共享文件是那些可以存储在一台主机上并供其他主机使用的文件。不可共享文件则相反。例如，用户主目录中的文件是可共享的，而设备锁文件则不是。</p>
@@ -246,7 +261,7 @@
 <h3 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h3><p>可共享文件可以存储在一台主机上并在其他多台主机上使用。然而，通常情况下，并非文件系统结构中的所有文件都是可共享的，因此每个系统都至少要有能容纳其不可共享文件的本地存储设备。如果一个系统所需的所有外部主机文件都能只通过挂载一两个目录就能获取，那就方便多了。</p>
 <p>静态文件与可变文件应该分开，因为与可变文件不同，静态文件可以存储在只读介质中，不需要按照与可变文件相同的时间安排进行备份。</p>
 <p>老旧的类 UNIX 文件系统结构在 <code>/usr</code> 和 <code>/etc</code> 目录下同时含有静态文件和可变文件。为了实现上面所述的优点就出现了 <code>/var</code>，且 <code>/usr</code> 中的所有可变文件都被转移到了 <code>/var</code> 中。因此，<code>/usr</code> 现在可以以只读方式挂载（如果它是一个独立的文件系统）。后来在技术的允许下，<code>/etc</code> 中的可变文件到也都已经被转移到了 <code>/var</code> 中。</p>
-<p>以下是一个兼容 FHS 的系统示例。（也可以是其他符合 FHS 的布局。）</p>
+<p>以下是一个兼容 FHS 的系统示例。（也可以是其他符合 FHS 的布局）</p>
 <table>
 <thead>
 <tr>
@@ -272,21 +287,21 @@
 <li>为了能够还原（recovery）和&#x2F;或修复系统，根文件系统中必须存在那些可供运维人员进行诊断和重建损坏系统的实用工具。</li>
 <li>要恢复（restore）系统，根文件系统中必须存在那些用于从系统备份（软盘、磁带等）中恢复的实用工具。</li>
 </ul>
-<p>根文件系统的最低（容量）要求应该尽可能小，小到不能更小。尽管很多用户可能并不希望让系统的分区变得更加复杂，但出于以下几个原因，根文件系统应该保持最小化：</p>
+<p>根文件系统的最低（空间）要求应该尽可能小，小到不能更小。尽管很多用户可能并不希望让系统的分区变得更加复杂，但出于以下几个原因，根文件系统应该保持最小化：</p>
 <ul>
 <li>根文件系统往往会挂载在相对来说很小的介质上。</li>
-<li>根文件系统中包含了大量系统相关的配置文件。比如，系统的内核、特定的主机名等等。这意味着根文件系统并不总是可以在网络上的系统之间共享。在服务器上保持较小的根文件系统可以最大限度地减少留给不可共享文件的空间消耗。也能让工作站用得上更小的硬盘。</li>
-<li>虽然你可以将根文件系统放在一个大分区里，这样就可以随心所欲的往里面写入内容了，但总有一些人的分区很小。如果你在根文件系统中安装了很多文件，可能会跟其他根文件系统分区较小的系统不兼容。如果你是开发人员，那么可以把这个假设类推到大量客户的情形。</li>
+<li>根文件系统中包含了大量系统相关的配置文件。比如，系统的内核、特定的主机名等等。这意味着根文件系统并不总是可以在网络上的系统之间共享。在服务器上保持较小的根文件系统可以最大限度地减少留给不可共享文件的空间消耗。也能让主机用得上更小的硬盘。</li>
+<li>虽然你可以把根文件系统安装在一个较大的分区里，这样就可以随心所欲地往里面写入内容了，但总有一些人的根分区很小。如果你在根文件系统中保存了很多文件，可能会跟其他根文件系统分区较小的系统不兼容。如果你是开发人员，那么可以把这个假设类推到大量客户的情形。</li>
 <li>导致根文件系统上的数据损坏的磁盘故障比任何其他分区上的故障都要严重。较小的根文件系统不太容易因系统崩溃而损坏。</li>
 </ul>
 <p>为了能够启动以及从故障中恢复，上述考量必须与保持操作环境的最低限度的实用性相平衡。</p>
 <p><strong>应用程序不得在根目录中创建或使用任何特定的文件或子目录。FHS 结构中的其他位置为应用程序提供了足够的灵活性</strong>。</p>
 <h3 id="基本原理-1"><a href="#基本原理-1" class="headerlink" title="基本原理"></a>基本原理</h3><p>禁止在根文件系统中创建子目录，有以下几个原因：</p>
 <ul>
-<li>这样会占用根文件系统所在分区的空间，出于性能或安全原因，系统管理员可能希望该空间尽可能小而简单。</li>
+<li>这样会占用根文件系统所在分区的空间，出于性能或安全原因，系统管理员很有可能希望该空间尽可能小而简单。</li>
 <li>这样会破坏系统管理员为在可挂载卷之间分发标准文件结构而设定的任何要求。</li>
 </ul>
-<p>如果没有非常谨慎地考虑后果（包括应用程序可移植性），（操作系统的）发行版不应该在根目录结构中创建新目录。</p>
+<p>如果没有非常谨慎地考虑后果（包括应用程序的可移植性），（操作系统的）发行版不应该在根目录结构中创建新目录。</p>
 <h2 id="3-2-必要目录"><a href="#3-2-必要目录" class="headerlink" title="3.2. 必要目录"></a>3.2. 必要目录</h2><p>下列目录或指向目录的符号链接是 <code>/</code> 中必须的。</p>
 <table>
 <thead>
@@ -366,7 +381,7 @@
 <td>用户主目录（可选）</td>
 </tr>
 <tr>
-<td><code>lib_&lt;qual&gt;_</code></td>
+<td><code>lib&lt;qual&gt;</code></td>
 <td>替代格式的重要共享库（Alternate format essential shared libraries）（可选）</td>
 </tr>
 <tr>
@@ -376,7 +391,7 @@
 </tbody></table>
 <p>上面列出的每个目录都将在下面的单独小节中详细说明。</p>
 <h2 id="3-4-重要二进制用户命令库（供所有用户使用）"><a href="#3-4-重要二进制用户命令库（供所有用户使用）" class="headerlink" title="3.4. 重要二进制用户命令库（供所有用户使用）"></a>3.4. 重要二进制用户命令库（供所有用户使用）</h2><h3 id="3-4-1-目的"><a href="#3-4-1-目的" class="headerlink" title="3.4.1 目的"></a>3.4.1 目的</h3><p><code>/bin</code> 包含系统管理员和用户都可以使用的命令，但是在没有挂载其他文件系统时（例如在单用户模式下），这些命令是必需的。它还可能包含脚本间接使用的命令。（次重要二进制命令必须放在<code>/usr/bin</code>中。非 root 用户需要的项目，如 X Window 系统，chsh 等等，大体来说都是次重要的，不需要放进根目录分区）</p>
-<h3 id="3-4-2-必要内容"><a href="#3-4-2-必要内容" class="headerlink" title="3.4.2. 必要内容"></a>3.4.2. 必要内容</h3><p><code>/bin</code> 中决不能有子目录。<code>/bin</code> 目录中必须存在以下命令、或命令的符号链接。</p>
+<h3 id="3-4-2-必要内容"><a href="#3-4-2-必要内容" class="headerlink" title="3.4.2. 必要内容"></a>3.4.2. 必要内容</h3><p><code>/bin</code> 中绝不能存在子目录。<code>/bin</code> 目录中必须存在以下命令、或命令的符号链接：</p>
 <table>
 <thead>
 <tr>
@@ -509,9 +524,10 @@
 <td>打印系统信息的功能</td>
 </tr>
 </tbody></table>
-<p>如果<code>/bin/sh</code>本身不是POSIX兼容的壳程序，那它就必须是一个指向真正的壳程序的符号链接或硬链接。</p>
+<p><code>/bin/sh</code>要么是一个 POSIX 兼容的壳程序，要么是一个指向真正的壳程序的符号链接或硬链接。</p>
 <p><code>[</code> 和 <code>test</code> 命令必须一起放在 <code>/bin</code> 或 <code>/usr/bin</code> 中。</p>
-<h4 id="基本原理-2"><a href="#基本原理-2" class="headerlink" title="基本原理"></a>基本原理</h4><p>被称为 <code>sh</code> 的各种 shell 的行为各不相同，这是为了在保留 POSIX 兼容性的同时允许对 POSIX 进行需要的更改或扩展。<br>对需要包含的 <code>[</code> 和 <code>test</code> 命令（即使在 Shell 内部已经实现了）的要求与 POSIX.1-2008 标准一致。</p>
+<h4 id="基本原理-2"><a href="#基本原理-2" class="headerlink" title="基本原理"></a>基本原理</h4><p>被称为 <code>sh</code> 的各种 Shell 的行为各不相同，这是为了在保留 POSIX 兼容性的同时，允许对 POSIX 进行需要的更改或扩展。  </p>
+<p>对需要包含的 <code>[</code> 和 <code>test</code> 命令（即使在 Shell 内部已经实现了）的要求与 POSIX.1-2008 标准一致。</p>
 <h3 id="3-4-3-特定选项"><a href="#3-4-3-特定选项" class="headerlink" title="3.4.3. 特定选项"></a>3.4.3. 特定选项</h3><p>如果安装了相应的子系统，则 <code>/bin</code> 中必须包含以下程序或程序的符号链接：</p>
 <table>
 <thead>
@@ -560,14 +576,14 @@
 <p><code>/bin/csh</code> 可能是一个指向到 <code>/bin/tcsh</code> 或 <code>/usr/bin/tcsh</code> 的符号链接。</p>
 <h4 id="基本原理-3"><a href="#基本原理-3" class="headerlink" title="基本原理"></a>基本原理</h4><p>添加了 <code>tar</code>、<code>gzip</code> 和 <code>cpio</code> 命令，以保证可以进行系统恢复（restoration）（前提是 <code>/</code> 完好无损）。</p>
 <p>相反，如果不需要对根分区进行恢复，那么这些二进制文件可能会被忽略（例如，ROM 芯片的根文件系统，或者通过 NFS 挂载 <code>/usr</code>）。如果计划通过网络恢复系统，那么 <code>ftp</code> 或 <code>tftp</code>（以及通过 <code>ftp</code> 进行连接所需的一切）必须在根分区上可用。</p>
-<h2 id="3-5-boot：启动加载程序的静态文件"><a href="#3-5-boot：启动加载程序的静态文件" class="headerlink" title="3.5. &#x2F;boot：启动加载程序的静态文件"></a>3.5. &#x2F;boot：启动加载程序的静态文件</h2><h3 id="3-5-1-目的"><a href="#3-5-1-目的" class="headerlink" title="3.5.1. 目的"></a>3.5.1. 目的</h3><p>除了启动时不需要的配置文件和映射安装程序（在 <code>/etc</code> 中）以外，<code>/boot</code> 目录包含了启动过程所需的所有内容。因此，<code>/boot</code> 存储在内核开始执行用户模式程序之前使用的数据。这可能包括保存的主引导扇区和扇区映射文件。</p>
+<h2 id="3-5-boot：启动加载程序的静态文件"><a href="#3-5-boot：启动加载程序的静态文件" class="headerlink" title="3.5. /boot：启动加载程序的静态文件"></a>3.5. <code>/boot</code>：启动加载程序的静态文件</h2><h3 id="3-5-1-目的"><a href="#3-5-1-目的" class="headerlink" title="3.5.1. 目的"></a>3.5.1. 目的</h3><p>除了启动时不需要的配置文件和映射安装程序（在 <code>/etc</code> 中）以外，<code>/boot</code> 目录包含了启动过程所需的所有内容。因此，<code>/boot</code> 存储在内核开始执行用户模式程序之前使用的数据。这可能包括保存的主引导扇区和扇区映射文件。</p>
 <p>使引导加载程序能够引导文件的程序必须放在 <code>/sbin</code> 目录中。启动时不需要的启动加载程序的配置文件必须放在 <code>/etc</code> 中。</p>
 <h3 id="3-5-2-特定选项"><a href="#3-5-2-特定选项" class="headerlink" title="3.5.2. 特定选项"></a>3.5.2. 特定选项</h3><p>操作系统内核必须位于 <code>/</code> 中或 <code>/boot</code> 中。</p>
 <p>某些架构可能对 <code>/boot</code> 有其他要求，这些要求与这些架构中特定的限制或期望相关，在此处不一一列举；允许发行版根据需要添加此类要求以在这些架构上可以启动系统。</p>
-<h2 id="3-6-dev：设备文件"><a href="#3-6-dev：设备文件" class="headerlink" title="3.6. &#x2F;dev：设备文件"></a>3.6. &#x2F;dev：设备文件</h2><h3 id="3-6-1-目的"><a href="#3-6-1-目的" class="headerlink" title="3.6.1. 目的"></a>3.6.1. 目的</h3><p>该 <code>/dev</code> 目录是特殊文件或设备文件的存放位置。</p>
+<h2 id="3-6-dev：设备文件"><a href="#3-6-dev：设备文件" class="headerlink" title="3.6. /dev：设备文件"></a>3.6. <code>/dev</code>：设备文件</h2><h3 id="3-6-1-目的"><a href="#3-6-1-目的" class="headerlink" title="3.6.1. 目的"></a>3.6.1. 目的</h3><p>该 <code>/dev</code> 目录是特殊文件或设备文件的存放位置。</p>
 <h3 id="3-6-2-特定选项"><a href="#3-6-2-特定选项" class="headerlink" title="3.6.2. 特定选项"></a>3.6.2. 特定选项</h3><p>如果 <code>/dev</code> 中的设备可能需要手动创建，则 <code>/dev</code> 中必须包含一个名为 <code>MAKEDEV</code> 的命令，该命令可以根据需要创建设备。还可能会包含一个 <code>MAKEDEV.local</code> 文件，用于任何本地设备。</p>
 <p>如果有需要，<code>MAKEDEV</code> 必须做好创建可以在系统上找到的任何设备的准备，而不仅仅是特定发行版的设备。</p>
-<h2 id="3-7-etc：主机特定的系统配置"><a href="#3-7-etc：主机特定的系统配置" class="headerlink" title="3.7. /etc：主机特定的系统配置"></a>3.7. <code>/etc</code>：主机特定的系统配置</h2><h3 id="3-7-1-目的"><a href="#3-7-1-目的" class="headerlink" title="3.7.1. 目的"></a>3.7.1. 目的</h3><p><code>/etc</code> 目录结构中含有配置文件。<strong>配置文件</strong>是用于控制程序运行的本地文件；它必须是静态的，不能是可执行的二进制文件。（讲的再清楚点，<code>/etc</code> 可能会包含脚本，比如往往是被 <code>init</code> 调用的系统启动时加载的脚本。”可执行二进制文件“在这里特指直接通过机器码或伪码这些不能用人类语言阅读的语言执行的文件。比如 ELF 可执行文件。）</p>
+<h2 id="3-7-etc：主机特定的系统配置"><a href="#3-7-etc：主机特定的系统配置" class="headerlink" title="3.7. /etc：主机特定的系统配置"></a>3.7. <code>/etc</code>：主机特定的系统配置</h2><h3 id="3-7-1-目的"><a href="#3-7-1-目的" class="headerlink" title="3.7.1. 目的"></a>3.7.1. 目的</h3><p><code>/etc</code> 目录结构中含有配置文件。<strong>配置文件</strong>是用于控制程序运行的本地文件；它必须是静态的，不能是可执行的二进制文件。（讲的再清楚点，<code>/etc</code> 可能会包含脚本，比如往往是被 <code>init</code> 调用的系统启动时加载的脚本。”可执行二进制文件“在这里特指直接通过机器码或伪码这些不能用人类语言阅读的语言执行的文件。比如 ELF 可执行文件）</p>
 <p>建议将文件存储在 <code>/etc</code> 中的子目录中，而不是直接存储在 <code>/etc</code> 目录中。</p>
 <h3 id="3-7-2-必要内容"><a href="#3-7-2-必要内容" class="headerlink" title="3.7.2. 必要内容"></a>3.7.2. 必要内容</h3><p><code>/etc</code> 中不能含有二进制文件。</p>
 <p><code>/etc</code> 中需要包含下列目录或指向目录的符号链接：</p>
@@ -593,7 +609,7 @@
 </thead>
 <tbody><tr>
 <td><code>X11</code></td>
-<td>X Windows 系统的配置（可选）</td>
+<td>X Window 系统的配置（可选）</td>
 </tr>
 <tr>
 <td><code>sgml</code></td>
@@ -650,11 +666,11 @@
 </tr>
 <tr>
 <td><code>hosts.allow</code></td>
-<td>TCP 包装器的主机访问文件（可选）</td>
+<td>tcp_wrapper 的主机访问文件（可选）</td>
 </tr>
 <tr>
 <td><code>hosts.deny</code></td>
-<td>TCP 包装器的主机访问文件（可选）</td>
+<td>tcp_wrapper 的主机访问文件（可选）</td>
 </tr>
 <tr>
 <td><code>hosts.equiv</code></td>
@@ -736,12 +752,9 @@
 <td><code>syslog.conf</code></td>
 <td><code>syslogd</code> 的配置文件（可选）</td>
 </tr>
-<tr>
-<td><code>mtab</code> 不符合 <code>/etc</code> 的静态性质：由于历史原因，它被排除在外。（在某些系统里，它可能是指向 <code>/proc/moounts</code> 的软链接，这种情况下不必排除）</td>
-<td></td>
-</tr>
 </tbody></table>
-<h3 id="3-7-4-etc-opt：-opt-的配置文件"><a href="#3-7-4-etc-opt：-opt-的配置文件" class="headerlink" title="3.7.4. /etc/opt：&#x2F;opt 的配置文件"></a>3.7.4. <code>/etc/opt</code>：&#x2F;opt 的配置文件</h3><h4 id="3-7-4-1-目的"><a href="#3-7-4-1-目的" class="headerlink" title="3.7.4.1. 目的"></a>3.7.4.1. 目的</h4><p>用于附加软件包的特定配置文件必须安装在 <code>/etc/opt/&lt;subdir&gt;</code> 目录中，其中 <code>&lt;subdir&gt;</code> 是 <code>/opt</code> 中的子树的名称，该子树中存储了对应软件包的静态数据。</p>
+<p><code>mtab</code> 不符合 <code>/etc</code> 的静态性质：由于历史原因，它被排除在外。（在某些系统里，它可能是指向 <code>/proc/mounts</code> 的软链接，这种情况下不必排除）</p>
+<h3 id="3-7-4-etc-opt：-opt-的配置文件"><a href="#3-7-4-etc-opt：-opt-的配置文件" class="headerlink" title="3.7.4. /etc/opt：/opt 的配置文件"></a>3.7.4. <code>/etc/opt</code>：<code>/opt</code> 的配置文件</h3><h4 id="3-7-4-1-目的"><a href="#3-7-4-1-目的" class="headerlink" title="3.7.4.1. 目的"></a>3.7.4.1. 目的</h4><p>用于附加软件包的特定配置文件必须安装在 <code>/etc/opt/&lt;subdir&gt;</code> 目录中，其中 <code>&lt;subdir&gt;</code> 是 <code>/opt</code> 中的子树的名称，该子树中存储了对应软件包的静态数据。</p>
 <h4 id="3-7-4-2-必要内容"><a href="#3-7-4-2-必要内容" class="headerlink" title="3.7.4.2. 必要内容"></a>3.7.4.2. 必要内容</h4><p><code>/etc/opt/&lt;subdir&gt;</code> 的内部安排没有任何强制结构。如果配置文件必须驻留在不同的位置才能使包或系统正常运行，则可以将其放置在 <code>/etc/opt/&lt;subdir&gt;</code> 以外的位置。</p>
 <h4 id="基本原理-4"><a href="#基本原理-4" class="headerlink" title="基本原理"></a>基本原理</h4><p>请参考 <code>/opt</code> 的基本原理。</p>
 <h3 id="3-7-5-etc-X11：用于-X-Window-的配置（可选）"><a href="#3-7-5-etc-X11：用于-X-Window-的配置（可选）" class="headerlink" title="3.7.5. /etc/X11：用于 X Window 的配置（可选）"></a>3.7.5. <code>/etc/X11</code>：用于 X Window 的配置（可选）</h3><h4 id="3-7-5-1-目的"><a href="#3-7-5-1-目的" class="headerlink" title="3.7.5.1. 目的"></a>3.7.5.1. 目的</h4><p><code>/etc/X11</code> 是所有 X11 主机特定的配置所在的位置，如果 <code>/usr</code> 目录挂载为只读，则此目录是进行本地控制所必需的。</p>
@@ -768,8 +781,8 @@
 </tbody></table>
 <h3 id="3-7-6-etc-sgml：用于-SGML-的配置文件（可选）"><a href="#3-7-6-etc-sgml：用于-SGML-的配置文件（可选）" class="headerlink" title="3.7.6. /etc/sgml：用于 SGML 的配置文件（可选）"></a>3.7.6. <code>/etc/sgml</code>：用于 SGML 的配置文件（可选）</h3><h4 id="3-7-6-1-目的"><a href="#3-7-6-1-目的" class="headerlink" title="3.7.6.1. 目的"></a>3.7.6.1. 目的</h4><p>定义 SGML 系统高级参数的通用配置文件安装在这里。带有 <code>*.conf</code> 名称的文件表示通用配置文件。带有 <code>*.cat</code> 名称的文件是特定于 DTD 的集中目录（catalog），包含对给定 DTD 所需的所有其他目录（catalog）的引用。超级目录文件 <code>catalog</code> 引用所有集中目录（catalog）。</p>
 <h3 id="3-7-7-etc-xml：用于-XML-的配置文件（可选）"><a href="#3-7-7-etc-xml：用于-XML-的配置文件（可选）" class="headerlink" title="3.7.7. /etc/xml：用于 XML 的配置文件（可选）"></a>3.7.7. <code>/etc/xml</code>：用于 XML 的配置文件（可选）</h3><h4 id="3-7-7-1-目的"><a href="#3-7-7-1-目的" class="headerlink" title="3.7.7.1. 目的"></a>3.7.7.1. 目的</h4><p>定义 XML 系统高级参数的通用配置文件安装在此处。带有 <code>*.conf</code> 名称的文件表示通用配置文件。超级目录（catalog）文件 <code>catalog</code> 引用所有集中目录（catalog）。</p>
-<h2 id="3-8-home：用户主目录（可选）"><a href="#3-8-home：用户主目录（可选）" class="headerlink" title="3.8. /home：用户主目录（可选）"></a>3.8. <code>/home</code>：用户主目录（可选）</h2><h3 id="3-8-1-目的"><a href="#3-8-1-目的" class="headerlink" title="3.8.1. 目的"></a>3.8.1. 目的</h3><p><code>/home</code> 是一个相当标准的概念，但它显然是一个因人而异的文件系统。（不同人倾向于把用户账户保存在不同位置。这一部分只描述推荐的用户家目录存储位置；我们还是推荐任何遵循 FHS 标准的发行版把 <code>/home</code> 作为用户家目录。为管理目的创建的不可登录账户往往会在别的地方有它们自己的家目录。）（在较小型的系统中，每个用户的家目录往往绘制及金额存储在 <code>/home</code> 的同名子目录中，例如 <code>/home/smith</code> 等等。在大型系统中，尤其是在 <code>/home</code> 目录会通过 NFS 共享的系统中，划分用户家目录相当有用，可以通过创建角色子目录的方式达到划分目的，比如 <code>/home/staff</code> 和 <code>/home/guests</code> 等等。）不同主机的设置各不相同。因此，任何程序都不应该假定主目录在任何特定位置，而总应该查找它。 （要查找用户的家目录，建议使用类似于 <code>fgetpwent</code> 中的 <code>getpwent, getpwent_r</code> 这样的库函数，而不是依赖 <code>/etc/passwd</code> 中的记录。因为用户信息往往会使用远程存储技术进行存储，比如 NIS 。）</p>
-<h3 id="3-8-2-必要内容"><a href="#3-8-2-必要内容" class="headerlink" title="3.8.2. 必要内容"></a>3.8.2. 必要内容</h3><p>应用程序的用户特定配置文件存储在用户主目录中以“.”开头的文件（隐藏文件）中。如果应用程序需要创建多个隐藏文件，则应将它们放在名称以“.”开头的子目录（隐藏目录）中。在这种情况下，配置文件不应以“.”开头。（建议，除了自动保存和锁文件以外，程序尽量不要在没有用户同意的情况下在家目录中创建非隐藏文件。）</p>
+<h2 id="3-8-home：用户主目录（可选）"><a href="#3-8-home：用户主目录（可选）" class="headerlink" title="3.8. /home：用户主目录（可选）"></a>3.8. <code>/home</code>：用户主目录（可选）</h2><h3 id="3-8-1-目的"><a href="#3-8-1-目的" class="headerlink" title="3.8.1. 目的"></a>3.8.1. 目的</h3><p><code>/home</code> 是一个相当标准的概念，但它显然是一个因人而异的文件系统。（不同人倾向于把用户账户保存在不同位置。这一部分只描述推荐的用户家目录存储位置；我们还是推荐任何遵循 FHS 标准的发行版把 <code>/home</code> 作为用户家目录。为管理目的创建的不可登录账户往往会在别的地方有它们自己的家目录）（在较小型的系统中，每个用户的家目录往往绘制及金额存储在 <code>/home</code> 的同名子目录中，例如 <code>/home/smith</code> 等等。在大型系统中，尤其是在 <code>/home</code> 目录会通过 NFS 共享的系统中，划分用户家目录相当有用，可以通过创建角色子目录的方式达到划分目的，比如 <code>/home/staff</code> 和 <code>/home/guests</code> 等等）不同主机的设置各不相同。因此，任何程序都不应该假定主目录在任何特定位置，而总应该查找它。 （要查找用户的家目录，建议使用类似于 <code>fgetpwent</code> 中的 <code>getpwent, getpwent_r</code> 这样的库函数，而不是依赖 <code>/etc/passwd</code> 中的记录。因为用户信息往往会使用远程存储技术进行存储，比如 NIS）</p>
+<h3 id="3-8-2-必要内容"><a href="#3-8-2-必要内容" class="headerlink" title="3.8.2. 必要内容"></a>3.8.2. 必要内容</h3><p>应用程序的用户特定配置文件存储在用户主目录中以“.”开头的文件（隐藏文件）中。如果应用程序需要创建多个隐藏文件，则应将它们放在名称以“.”开头的子目录（隐藏目录）中。在这种情况下，配置文件不应以“.”开头。（建议，除了自动保存和锁文件以外，程序尽量不要在没有用户同意的情况下在家目录中创建非隐藏文件）</p>
 <h3 id="3-8-3-主目录的规范和约定"><a href="#3-8-3-主目录的规范和约定" class="headerlink" title="3.8.3. 主目录的规范和约定"></a>3.8.3. 主目录的规范和约定</h3><p>过去有很多标准化主目录的布局的努力，包括 XDG Base 目录规范（<a target="_blank" rel="noopener" href="http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html%EF%BC%89%E5%92%8C">http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html）和</a> Glib 用户目录（<a target="_blank" rel="noopener" href="http://developer.gnome.org/glib/unstable/glib-">http://developer.gnome.org/glib/unstable/glib-</a><br>Miscellaneous-Utility-Functions.html#GUserDirectory）未来我们可能会在这方面做出更多努力。为了适应使用这些规范和约定的软件，发行版可以创建遵循规范和约定的目录层次结构。这些目录层次结构可能位于主目录下。</p>
 <h2 id="3-9-lib：重要的（Essential）共享库和内核模块"><a href="#3-9-lib：重要的（Essential）共享库和内核模块" class="headerlink" title="3.9. /lib：重要的（Essential）共享库和内核模块"></a>3.9. <code>/lib</code>：重要的（Essential）共享库和内核模块</h2><h3 id="3-9-1-目的"><a href="#3-9-1-目的" class="headerlink" title="3.9.1. 目的"></a>3.9.1. 目的</h3><p><code>/lib</code> 目录包含引导系统和运行根文件系统中的命令所需的那些共享库镜像，即，通过 <code>/bin</code> 和 <code>/sbin</code> 中的二进制文件。（只对 <code>/usr</code> 中的二进制文件来说必要的共享库，比如 X Window 系统的共享库，禁止出现在这里。只有 <code>/bin</code> 和 <code>/sbin</code> 中的二进制程序必要的共享库应该在这儿。尤其是 <code>libm.so.**</code>也应该存放在 <code>/usr/lib</code> ，如果 <code>/bin</code> 和 <code>/sbin</code> 中没有程序需要它们时）</p>
 <h3 id="3-9-2-必要内容"><a href="#3-9-2-必要内容" class="headerlink" title="3.9.2. 必要内容"></a>3.9.2. 必要内容</h3><p>至少需要以下每种文件名模式之一（它们可能是文件或符号链接）：</p>
@@ -803,9 +816,9 @@
 <td>可加载的内核模块（可选）</td>
 </tr>
 </tbody></table>
-<h2 id="3-10-lib：替代格式基本共享库（可选）"><a href="#3-10-lib：替代格式基本共享库（可选）" class="headerlink" title="3.10. &#x2F;lib&lt;qual&gt;：替代格式基本共享库（可选）"></a>3.10. &#x2F;lib<code>&lt;qual&gt;</code>：替代格式基本共享库（可选）</h2><h3 id="3-10-1-目的"><a href="#3-10-1-目的" class="headerlink" title="3.10.1. 目的"></a>3.10.1. 目的</h3><p>在支持不止一种二进制格式的系统上，<code>/lib</code> 目录可能有一个或多个变体，需要单独的库。 （这往往用于支持多种二进制文件格式，但是需要的库重名的 32 或 64 位系统，在这种情况下，<code>/lib32</code> 和 <code>/lib64</code> 可能是库目录，而 <code>/lib</code> 是指向它们其中一个的软链接）</p>
+<h2 id="3-10-lib：替代格式基本共享库（可选）"><a href="#3-10-lib：替代格式基本共享库（可选）" class="headerlink" title="3.10. /lib&lt;qual&gt;：替代格式基本共享库（可选）"></a>3.10. <code>/lib&lt;qual&gt;</code>：替代格式基本共享库（可选）</h2><h3 id="3-10-1-目的"><a href="#3-10-1-目的" class="headerlink" title="3.10.1. 目的"></a>3.10.1. 目的</h3><p>在支持不止一种二进制格式的系统上，<code>/lib</code> 目录可能有一个或多个变体，需要单独的库。 （这往往用于支持多种二进制文件格式，但是需要的库重名的 32 或 64 位系统，在这种情况下，<code>/lib32</code> 和 <code>/lib64</code> 可能是库目录，而 <code>/lib</code> 是指向它们其中一个的软链接）</p>
 <p>如果存在这些目录中的一个或多个，则对其内容的要求与正常的 <code>/lib</code> 目录相同，只是不需要 <code>/lib&lt;qual&gt;/cpp</code>。 （ <code>/lib&lt;qual&gt;/cpp</code> 仍然允许：允许 <code>/lib</code> 和 <code>/lib&lt;qual&gt;</code> 相同或者互为符号链接的情况发生）</p>
-<h2 id="3-11-media：可移动媒体的挂载点"><a href="#3-11-media：可移动媒体的挂载点" class="headerlink" title="3.11. &#x2F;media：可移动媒体的挂载点"></a>3.11. &#x2F;media：可移动媒体的挂载点</h2><h3 id="3-11-1-目的"><a href="#3-11-1-目的" class="headerlink" title="3.11.1. 目的"></a>3.11.1. 目的</h3><p>此目录包含用作可移动媒体（如软盘、<code>cdrom</code> 和 <code>zip</code> 磁盘）的挂载点的子目录。</p>
+<h2 id="3-11-media：可移动媒体的挂载点"><a href="#3-11-media：可移动媒体的挂载点" class="headerlink" title="3.11. /media：可移动媒体的挂载点"></a>3.11. <code>/media</code>：可移动媒体的挂载点</h2><h3 id="3-11-1-目的"><a href="#3-11-1-目的" class="headerlink" title="3.11.1. 目的"></a>3.11.1. 目的</h3><p>此目录包含用作可移动媒体（如软盘、<code>cdrom</code> 和 <code>zip</code> 磁盘）的挂载点的子目录。</p>
 <h3 id="基本原理-5"><a href="#基本原理-5" class="headerlink" title="基本原理"></a>基本原理</h3><p>历史上有许多其他不同的地方被用于挂载可移动媒体，例如 <code>/cdrom</code>、<code>/mnt</code> 或 <code>/mnt/cdrom</code>。将所有可移动媒体的挂载点直接放在根目录中可能会导致在 <code>/</code> 目录中出现大量额外目录。尽管最近使用 <code>/mnt</code> 中的子目录作为挂载点很常见，但它与直接使用 <code>/mnt</code> 作为临时挂载点的古老传统相冲突。</p>
 <h3 id="3-11-2-特定选项"><a href="#3-11-2-特定选项" class="headerlink" title="3.11.2. 特定选项"></a>3.11.2. 特定选项</h3><p>如果安装了相应的子系统，以下目录或目录的符号链接必须在 <code>/media</code> 中：</p>
 <table>
@@ -834,7 +847,7 @@
 </tbody></table>
 <p>在存在多个设备用于挂载某种类型的媒体的系统上，挂载目录可以通过在上面可用的名称后附加一个数字来创建，以“0”开头，但非限定名称也必须存在。（带有两个镜像的复杂发行版可能会同时有 <code>/media/cdrom0</code> 和 <code>/media/cdrom1</code> ，而 <code>/media/cdrom</code> 指向它们中的任何一个）</p>
 <h2 id="3-12-mnt：临时挂载的文件系统的挂载点"><a href="#3-12-mnt：临时挂载的文件系统的挂载点" class="headerlink" title="3.12. /mnt：临时挂载的文件系统的挂载点"></a>3.12. <code>/mnt</code>：临时挂载的文件系统的挂载点</h2><h3 id="3-12-1-目的"><a href="#3-12-1-目的" class="headerlink" title="3.12.1. 目的"></a>3.12.1. 目的</h3><p>提供此目录是为了系统管理员可以根据需要临时挂载文件系统。此目录的内容是本地问题，不应影响任何程序的运行方式。安装程序不得使用此目录：必须改用系统未使用的合适临时目录。</p>
-<h2 id="3-13-opt-附加软件包"><a href="#3-13-opt-附加软件包" class="headerlink" title="3.13. &#x2F;opt : 附加软件包"></a>3.13. &#x2F;opt : 附加软件包</h2><h3 id="3-13-1-目的"><a href="#3-13-1-目的" class="headerlink" title="3.13.1. 目的"></a>3.13.1. 目的</h3><p><code>/opt</code> 保留用于安装附加软件包。</p>
+<h2 id="3-13-opt-附加软件包"><a href="#3-13-opt-附加软件包" class="headerlink" title="3.13. /opt : 附加软件包"></a>3.13. <code>/opt</code> : 附加软件包</h2><h3 id="3-13-1-目的"><a href="#3-13-1-目的" class="headerlink" title="3.13.1. 目的"></a>3.13.1. 目的</h3><p><code>/opt</code> 保留用于安装附加软件包。</p>
 <p>要安装在 <code>/opt</code> 中的软件包必须在单独的 <code>/opt/&lt;package&gt;</code> 或 <code>/opt/&lt;provider&gt;</code> 目录树中存储其静态文件，其中 <code>&lt;package&gt;</code> 是描述软件包的名称，<code>&lt;provider&gt;</code> 是提供商的 LANANA 注册名称。</p>
 <h3 id="3-13-2-必要内容"><a href="#3-13-2-必要内容" class="headerlink" title="3.13.2. 必要内容"></a>3.13.2. 必要内容</h3><table>
 <thead>
@@ -858,23 +871,22 @@
 <p>特定于主机的配置文件必须安装在 <code>/etc/opt</code> 中。有关更多信息，请参阅有关 <code>/etc</code> 的部分。</p>
 <p>除了那些必须存储在文件系统树中特定位置才能正常运行的软件包文件之外，在 <code>/opt</code>、<code>/var/opt</code> 和 <code>/etc/opt</code> 层次结构之外不得存在其他软件包文件。例如，设备锁文件必须放在 <code>/var/lock</code> 中，设备必须位于 <code>/dev</code> 中。</p>
 <p>发行版可以在 <code>/opt</code> 中正确注册的子目录下安装和以其他方式管理软件。</p>
-<h4 id="基本原理-6"><a href="#基本原理-6" class="headerlink" title="基本原理"></a>基本原理</h4><p>将 <code>/opt</code> 用于附加软件是 UNIX 社区中一种成熟的做法。基于 System V 接口定义（第三版）的 System V 应用程序二进制接口 [AT&amp;T 1990] ，提供了一个与此处定义的非常相似的 <code>/opt</code> 结构。</p>
+<h4 id="基本原理-6"><a href="#基本原理-6" class="headerlink" title="基本原理"></a>基本原理</h4><p>将 <code>/opt</code> 用于附加软件是 UNIX 社区中一种成熟的做法。基于 System V 接口定义（第三版）的 System V 应用程序二进制接口<code>[AT&amp;T 1990]</code> ，它提供了一个与此处定义的非常相似的 <code>/opt</code> 结构。</p>
 <p>Intel Binary Compatibility Standard v. 2（iBCS2）也为 <code>/opt</code> 提供了类似的结构。</p>
-<p>通常，支持系统上的软件包所需的所有数据都必须存在于 <code>/opt/&lt;package&gt;</code> 中，包括旨在复制到 <code>/etc/opt/&lt;package&gt;</code> 和 <code>/var/opt/&lt;package&gt;</code> 中的文件以及 <code>/opt</code> 中的保留目录。</p>
+<p>通常，支撑系统上的软件包所需的所有数据必须都存在于 <code>/opt/&lt;package&gt;</code> 中，包括旨在复制到 <code>/etc/opt/&lt;package&gt;</code> 和 <code>/var/opt/&lt;package&gt;</code> 中的文件以及 <code>/opt</code> 中的保留目录。</p>
 <p>对使用 <code>/opt</code> 的发行版进行一些小限制是必要的，因为发行版安装的软件和本地安装的软件之间可能会发生冲突，特别是在某些二进制软件中找到固定路径名的情况下。</p>
-<p><code>/opt/&lt;provider&gt;</code> 下级的目录结构由软件打包者决定，尽管我们建议将软件包安装在 <code>/opt/&lt;provider&gt;/&lt;package&gt;</code> 中，并遵循与 <code>/opt/&lt;package&gt;</code> 指南类似的结构 。与此结构不同的一个合理原因是支持包可能在 <code>/opt/&lt;provider&gt;/lib</code> 或 <code>/opt/&lt;provider&gt;/bin</code> 中安装了文件。</p>
+<p><code>/opt/&lt;provider&gt;</code> 下级的目录结构由软件打包者决定，尽管如此，我们还是建议将软件包安装在 <code>/opt/&lt;provider&gt;/&lt;package&gt;</code> 中，并遵循与 <code>/opt/&lt;package&gt;</code> 指南类似的结构。与此结构不同的一个合理原因是支持包可能在 <code>/opt/&lt;provider&gt;/lib</code> 或 <code>/opt/&lt;provider&gt;/bin</code> 中安装了文件。</p>
 <h2 id="3-14-root：root-用户的主目录（可选）"><a href="#3-14-root：root-用户的主目录（可选）" class="headerlink" title="3.14. /root：root 用户的主目录（可选）"></a>3.14. <code>/root</code>：root 用户的主目录（可选）</h2><h3 id="3-14-1-目的"><a href="#3-14-1-目的" class="headerlink" title="3.14.1. 目的"></a>3.14.1. 目的</h3><p>root 帐户的主目录可能由开发人员或本地偏好决定，但这是推荐的默认位置。（如果 root 用户的家目录并没有存储在 root 专用分区中，那你就必须清楚它会默认存储在根目录下，如果系统找不到的话。我们并不建议使用 root 账号进行普通权限账户的工作，或者只用 root 账号进行系统管理。因此，我们<strong>建议 mail 和其他程序的子目录不应该出现在 root 用户的家目录中</strong>，发送给管理用户，比如 root , postmaster, webmaster 等的邮件应该被<strong>转发到合适的用户</strong>）</p>
-<h2 id="3-15-run：运行时可变数据"><a href="#3-15-run：运行时可变数据" class="headerlink" title="3.15. &#x2F;run：运行时可变数据"></a>3.15. &#x2F;run：运行时可变数据</h2><h3 id="3-15-1-目的"><a href="#3-15-1-目的" class="headerlink" title="3.15.1. 目的"></a>3.15.1. 目的</h3><p>此目录包含描述系统自启动以来的系统信息数据。该目录下的文件必须在引导过程开始时清除（根据需要删除或截断）。</p>
+<h2 id="3-15-run：运行时可变数据"><a href="#3-15-run：运行时可变数据" class="headerlink" title="3.15. /run：运行时可变数据"></a>3.15. <code>/run</code>：运行时可变数据</h2><h3 id="3-15-1-目的"><a href="#3-15-1-目的" class="headerlink" title="3.15.1. 目的"></a>3.15.1. 目的</h3><p>此目录包含描述系统自启动以来的系统信息数据。该目录下的文件必须在引导过程开始时清除（根据需要删除或截断）。</p>
 <p>该目录的用途曾经由 <code>/var/run</code> 提供。通常，为了向后兼容，程序可能会继续使用 <code>/var/run</code> 来满足为 <code>/run</code> 设定的要求。已迁移到使用 <code>/run</code> 的程序应停止使用 <code>/var/run</code>，除非在 <code>/var/run</code> 部分中有所说明。</p>
 <p>在一些发行版中，<code>/var/run</code> 是一个执行 <code>/run</code> 的符号链接。</p>
 <p>应用程序可能在 <code>/run</code> 中有一个子目录。对于使用多个运行时文件的程序，鼓励这样做。用户也可能有 <code>/run</code> 的子目录，但必须注意适当限制访问权限以防止未经授权使用 <code>/run</code> 本身和其他子目录。（ <code>/run</code> 对普通权限用户应该是只读的；如果任何用户都可以写入这个目录，那就是一个严重的安全问题，特定用户的子目录也只能由其所有者写入）</p>
-<h3 id="3-15-2-必要内容"><a href="#3-15-2-必要内容" class="headerlink" title="3.15.2. 必要内容"></a>3.15.2. 必要内容</h3><p>进程标识符（PID）文件最初放在 <code>/etc</code> 中，现在必须放在 <code>/run</code> 中。 PID 文件的命名约定是 <code>&lt;program-name&gt;.pid</code>。例如，<code>crond</code> PID 文件名为 <code>/run/crond.pid</code>。</p>
-<p>PID 文件的内部格式保持不变。该文件必须包含 ASCII 编码的十进制进程标识符，后跟一个换行符。例如，如果 <code>crond</code> 是进程号 25，则 <code>/run/crond.pid</code> 将包含三个字符：二、五和换行符。</p>
-<p>读取 PID 文件的程序在接受的内容方面应该有些灵活；即，它们应该忽略额外的空格、前导零、缺少尾随换行符或 PID 文件中的其他行。创建 PID 文件的程序应使用上一段中的简单规范。</p>
+<h3 id="3-15-2-必要内容"><a href="#3-15-2-必要内容" class="headerlink" title="3.15.2. 必要内容"></a>3.15.2. 必要内容</h3><p>进程标识符（PID）文件最初放在 <code>/etc</code> 中，现在必须放在 <code>/run</code> 中。 PID 文件的命名约定是 <code>&lt;program-name&gt;.pid</code>。例如，<code>crond</code> 的 PID 文件名为 <code>/run/crond.pid</code>。</p>
+<p>PID 文件的内部格式保持不变。该文件必须包含 ASCII 编码的十进制进程标识符，后跟一个换行符。例如，如果 <code>crond</code> 是进程号 25，则 <code>/run/crond.pid</code> 中将包含三个字符：2、5 和换行符。</p>
+<p>读取 PID 文件的程序在接受的内容方面应该有一定的灵活性；即，它们应该忽略额外的空格、前导的零、丢失尾随换行符的情况和 PID 文件中的其他行。创建 PID 文件的程序应使用上一段中的简单规范。</p>
 <p>维护瞬态 UNIX 域套接字的系统程序必须将它们放在这个目录或上述适当的子目录中。</p>
-<h2 id="3-16-sbin：系统二进制文件"><a href="#3-16-sbin：系统二进制文件" class="headerlink" title="3.16. &#x2F;sbin：系统二进制文件"></a>3.16. &#x2F;sbin：系统二进制文件</h2><h3 id="3-16-1-目的"><a href="#3-16-1-目的" class="headerlink" title="3.16.1. 目的"></a>3.16.1. 目的</h3><p>用于系统管理（和其他仅限 root 的命令）的实用程序存储在 <code>/sbin</code>、<code>/usr/sbin</code> 和 <code>/usr/local/sbin</code> 中。除了 <code>/bin</code> 中的二进制文件之外，<code>/sbin</code> 还包含启动、恢复（restoring）、恢复（recovering）和&#x2F;或修复系统所必需的二进制文件。 （其实最初， <code>/sbin</code> 目录保存在 <code>/etc</code> 内）得知 <code>/usr</code> 挂载之后而执行的程序（当没有问题时）一般放在 <code>/usr/sbin</code> 中。本地安装的系统管理程序应该放在 <code>/usr/local/sbin</code> 中。（决定哪些程序应该放在” sbin “目录的方法很简单：如果一个普通用户，而不是系统管理员，存在直接运行它的可能性，那它就必须放在”<br>bin “目录中。普通用户的 PATH 环境变量中不应该有任何包含 <code>sbin</code> 的目录。比如， chfn 这种用户很少会使用的程序也必须放在 <code>/usr/bin</code> 里，ping，尽管它对 root 来说是绝对必要的，用来进行网络恢复和分析，但是它也经常被用户使用，因此也必须放在 <code>/bin</code> 。我们建议用户对 <code>/sbin</code> 中的任何程序都有读和执行的权限，除了某些需要 setuid 和 setgid 的程序。<code>/bin</code> 和 <code>/sbin</code> 之间的划分<strong>并不是为了安全性或者阻止用户执行某些程序</strong>，而是为了把用户日常使用的程序和主要用于系统管理的程序分开。给 <code>/sbin</code> 设限并不会带来任何安全优势）</p>
-<h3 id="3-16-2-必要内容"><a href="#3-16-2-必要内容" class="headerlink" title="3.16.2. 必要内容"></a>3.16.2. 必要内容</h3><p><code>/sbin</code> 中不能有子目录。</p>
-<p><code>/sbin</code> 中需要以下命令或命令的符号链接：</p>
+<h2 id="3-16-sbin：系统二进制文件"><a href="#3-16-sbin：系统二进制文件" class="headerlink" title="3.16. /sbin：系统二进制文件"></a>3.16. <code>/sbin</code>：系统二进制文件</h2><h3 id="3-16-1-目的"><a href="#3-16-1-目的" class="headerlink" title="3.16.1. 目的"></a>3.16.1. 目的</h3><p>用于系统管理（和其他仅限 root 的命令）的实用程序存储在 <code>/sbin</code>、<code>/usr/sbin</code> 和 <code>/usr/local/sbin</code> 中。除了 <code>/bin</code> 中的二进制文件之外，<code>/sbin</code> 还包含启动、恢复（restoring）、恢复（recovering）和&#x2F;或修复系统所必需的二进制文件。 （其实最初， <code>/sbin</code> 目录保存在 <code>/etc</code> 内）得知 <code>/usr</code> 挂载之后而执行的程序（当没有问题时）一般放在 <code>/usr/sbin</code> 中。本地安装的系统管理程序应该放在 <code>/usr/local/sbin</code> 中。（决定哪些程序应该放在” sbin “目录的方法很简单：如果一个普通用户，而不是系统管理员，存在直接运行它的可能性，那它就必须放在” bin “目录中。普通用户的 PATH 环境变量中不应该有任何包含 <code>sbin</code> 的目录。比如， chfn 这种用户很少会使用的程序也必须放在 <code>/usr/bin</code> 里，ping，尽管它对 root 来说是绝对必要的，用来进行网络恢复和分析，但是它也经常被用户使用，因此也必须放在 <code>/bin</code> 。我们建议用户对 <code>/sbin</code> 中的任何程序都有读和执行的权限，除了某些需要 setuid 和 setgid 的程序。<code>/bin</code> 和 <code>/sbin</code> 之间的划分<strong>并不是为了安全性或者阻止用户执行某些程序</strong>，而仅仅是为了把用户日常使用的程序和主要用于系统管理的程序分开。<strong>给 <code>/sbin</code> 设限并不会带来任何安全优势</strong>）</p>
+<h3 id="3-16-2-必要内容"><a href="#3-16-2-必要内容" class="headerlink" title="3.16.2. 必要内容"></a>3.16.2. 必要内容</h3><p><code>/sbin</code> 中绝不能有子目录。<code>/sbin</code> 中需要包含以下命令或命令的符号链接：</p>
 <table>
 <thead>
 <tr>
@@ -964,16 +976,16 @@
 <td>守护进程定期刷新文件系统缓冲区（可选）</td>
 </tr>
 </tbody></table>
-<h2 id="3-17-srv：本系统提供的服务数据"><a href="#3-17-srv：本系统提供的服务数据" class="headerlink" title="3.17. &#x2F;srv：本系统提供的服务数据"></a>3.17. &#x2F;srv：本系统提供的服务数据</h2><h3 id="3-17-1-目的"><a href="#3-17-1-目的" class="headerlink" title="3.17.1. 目的"></a>3.17.1. 目的</h3><p><code>/srv</code> 包含此系统提供的特定于站点的数据。</p>
+<h2 id="3-17-srv：本系统提供的服务数据"><a href="#3-17-srv：本系统提供的服务数据" class="headerlink" title="3.17. /srv：本系统提供的服务数据"></a>3.17. <code>/srv</code>：本系统提供的服务数据</h2><h3 id="3-17-1-目的"><a href="#3-17-1-目的" class="headerlink" title="3.17.1. 目的"></a>3.17.1. 目的</h3><p><code>/srv</code> 包含此系统提供的特定于站点的数据。</p>
 <h4 id="基本原理-7"><a href="#基本原理-7" class="headerlink" title="基本原理"></a>基本原理</h4><p>指定此项的主要目的是为了让用户可以找到特定服务的数据文件的位置，并且可以合理放置需要单个树的只读数据、可写数据和脚本（例如 <code>cgi</code> 脚本）的服务。仅特定用户感兴趣的数据应该放在该用户的主目录中。如果数据的目录和文件结构不想暴露给客户，那它应该放在 <code>/var/lib</code> 中。</p>
 <p>用于命名 <code>/srv</code> 的子目录的方法未指定，因为目前尚未就如何完成此操作达成共识。在 <code>/srv</code> 下构造数据的一种方法是通过协议，例如，<code>ftp</code>、<code>rsync</code>、<code>www</code> 和 <code>cvs</code>。在大型系统上，通过方便管理的上下文来构建 <code>/srv</code> 目录会很有用，例如 <code>/srv/physics/www</code>、<code>/srv/compsci/cvs</code> 等。此设置将因主机而异。因此，任何程序都不应该依赖 <code>/srv</code> 现有的特定子目录结构或者说必须把数据存储在 <code>/srv</code> 中。但是，<code>/srv</code> 应始终存在于 FHS 兼容的系统上，并且应该用作此类数据的默认位置。</p>
 <p>发行版必须注意不要在没有管理员许可的情况下删除这些目录中本地放置的文件。（这点尤其重要，因为这些区域经常会同时包含发行版预装的文件和被管理员添加的文件）</p>
-<h2 id="3-18-tmp：临时文件"><a href="#3-18-tmp：临时文件" class="headerlink" title="3.18. &#x2F;tmp：临时文件"></a>3.18. &#x2F;tmp：临时文件</h2><h3 id="3-18-1-目的"><a href="#3-18-1-目的" class="headerlink" title="3.18.1. 目的"></a>3.18.1. 目的</h3><p><code>/tmp</code> 目录必须存在，以供需要临时文件的程序使用。</p>
+<h2 id="3-18-tmp：临时文件"><a href="#3-18-tmp：临时文件" class="headerlink" title="3.18. /tmp：临时文件"></a>3.18. <code>/tmp</code>：临时文件</h2><h3 id="3-18-1-目的"><a href="#3-18-1-目的" class="headerlink" title="3.18.1. 目的"></a>3.18.1. 目的</h3><p><code>/tmp</code> 目录必须存在，以供需要临时文件的程序使用。</p>
 <p>程序不得假定 <code>/tmp</code> 中的任何文件或目录在程序调用之间会被保留。</p>
 <h4 id="基本原理-8"><a href="#基本原理-8" class="headerlink" title="基本原理"></a>基本原理</h4><p>IEEE 标准 POSIX.1-2008 列出了与上述部分类似的要求。</p>
 <p>尽管存储在 <code>/tmp</code> 中的数据可能会以特定于设备的方式被删除，但建议在系统每次启动时删除位于 <code>/tmp</code> 中的文件和目录。</p>
 <p>FHS 根据历史先例和惯例添加了此建议，但并未将其作为一项要求，因为系统管理不在本标准的范围内。</p>
-<h1 id="第四章：-usr-层级结构"><a href="#第四章：-usr-层级结构" class="headerlink" title="第四章：&#x2F;usr 层级结构"></a>第四章：&#x2F;usr 层级结构</h1><h2 id="4-1-目的"><a href="#4-1-目的" class="headerlink" title="4.1. 目的"></a>4.1. 目的</h2><p><code>/usr</code> 是文件系统的第二个主要部分。<code>/usr</code> 是可共享的只读数据。这意味着 <code>/usr</code> 应当可以在各种符合 FHS 的主机之间共享，并且不得被写入。任何特定于主机或会随时间变化的信息都存储在别处。</p>
+<h1 id="第四章：-usr-层级结构"><a href="#第四章：-usr-层级结构" class="headerlink" title="第四章：/usr 层级结构"></a>第四章：<code>/usr</code> 层级结构</h1><h2 id="4-1-目的"><a href="#4-1-目的" class="headerlink" title="4.1. 目的"></a>4.1. 目的</h2><p><code>/usr</code> 是文件系统的第二个主要部分。<code>/usr</code> 是可共享的只读数据。这意味着 <code>/usr</code> 应当可以在各种符合 FHS 的主机之间共享，并且不得被写入。任何特定于主机或会随时间变化的信息都存储在别处。</p>
 <p>大型软件包不得使用 <code>/usr</code> 层次结构下的直接子目录。</p>
 <h2 id="4-2-必要内容"><a href="#4-2-必要内容" class="headerlink" title="4.2. 必要内容"></a>4.2. 必要内容</h2><p><code>/usr</code> 中需要以下目录或目录的符号链接。</p>
 <table>
@@ -1037,7 +1049,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/usr/spool -&gt; /var/spool</span><br><span class="line">/usr/tmp -&gt; /var/tmp</span><br><span class="line">/usr/spool/locks -&gt; /var/lock</span><br></pre></td></tr></table></figure>
 
 <p>一旦系统不再需要上述任何一种符号链接，如果需要的话，可以删除该链接。</p>
-<h2 id="4-4-usr-bin：大多数的用户命令"><a href="#4-4-usr-bin：大多数的用户命令" class="headerlink" title="4.4. &#x2F;usr&#x2F;bin：大多数的用户命令"></a>4.4. &#x2F;usr&#x2F;bin：大多数的用户命令</h2><h3 id="4-4-1-目的"><a href="#4-4-1-目的" class="headerlink" title="4.4.1. 目的"></a>4.4.1. 目的</h3><p>这是系统上可执行命令的主目录。</p>
+<h2 id="4-4-usr-bin：大多数的用户命令"><a href="#4-4-usr-bin：大多数的用户命令" class="headerlink" title="4.4. /usr/bin：大多数的用户命令"></a>4.4. <code>/usr/bin</code>：大多数的用户命令</h2><h3 id="4-4-1-目的"><a href="#4-4-1-目的" class="headerlink" title="4.4.1. 目的"></a>4.4.1. 目的</h3><p>这是系统上可执行命令的主目录。</p>
 <h3 id="4-4-2-必要内容"><a href="#4-4-2-必要内容" class="headerlink" title="4.4.2. 必要内容"></a>4.4.2. 必要内容</h3><p><code>/usr/bin</code> 中不能有子目录。</p>
 <h3 id="4-4-3-特定选项"><a href="#4-4-3-特定选项" class="headerlink" title="4.4.3. 特定选项"></a>4.4.3. 特定选项</h3><p>如果安装了相应的子系统，则以下文件或文件的符号链接必须在 <code>/usr/bin</code> 中：</p>
 <table>
@@ -1068,8 +1080,8 @@
 <td>交互式对话程序（可选）</td>
 </tr>
 </tbody></table>
-<h3 id="基本原理-9"><a href="#基本原理-9" class="headerlink" title="基本原理"></a>基本原理</h3><p>在许多可执行脚本中，要调用以执行脚本的解释器是在脚本的第一行使用 <code>#!path_to_interpreter</code> 指定的。为了使这些脚本在不同系统之间可移植，标准化解释器位置是有利的。shell 解释器已经被这个规范固定在 <code>/bin</code> 中，但是 Perl、Python、Tcl 和 expect 的解释器可能被安装在不同的地方。<strong>此处指定的位置可以实现为指向解释器实际位置的符号链接</strong>。</p>
-<h2 id="4-5-usr-include：标准包含文件的目录"><a href="#4-5-usr-include：标准包含文件的目录" class="headerlink" title="4.5. &#x2F;usr&#x2F;include：标准包含文件的目录"></a>4.5. &#x2F;usr&#x2F;include：标准包含文件的目录</h2><h3 id="4-5-1-目的"><a href="#4-5-1-目的" class="headerlink" title="4.5.1. 目的"></a>4.5.1. 目的</h3><p>这是所有系统通用的 C 语言的包含文件应该放置的地方。</p>
+<h3 id="基本原理-9"><a href="#基本原理-9" class="headerlink" title="基本原理"></a>基本原理</h3><p>在许多可执行脚本中，要调用以执行脚本的解释器是在脚本的第一行使用 <code>#!path_to_interpreter</code> 指定的。为了使这些脚本在不同系统之间可移植，标准化解释器位置是有利的。Shell 解释器已经被这个规范固定在 <code>/bin</code> 中，但是 Perl、Python、Tcl 和 expect 的解释器可能被安装在不同的地方。<strong>此处指定的位置可以实现为指向解释器实际位置的符号链接</strong>。</p>
+<h2 id="4-5-usr-include：标准包含文件的目录"><a href="#4-5-usr-include：标准包含文件的目录" class="headerlink" title="4.5. /usr/include：标准包含文件的目录"></a>4.5. <code>/usr/include</code>：标准包含文件的目录</h2><h3 id="4-5-1-目的"><a href="#4-5-1-目的" class="headerlink" title="4.5.1. 目的"></a>4.5.1. 目的</h3><p>这是所有系统通用的 C 语言的包含文件应该放置的地方。</p>
 <h3 id="4-5-2-特定选项"><a href="#4-5-2-特定选项" class="headerlink" title="4.5.2. 特定选项"></a>4.5.2. 特定选项</h3><p>如果安装了相应的子系统，以下目录或目录的符号链接必须在 <code>/usr/include</code> 中：</p>
 <table>
 <thead>
@@ -1083,15 +1095,15 @@
 <td>BSD 兼容性包含文件（可选）</td>
 </tr>
 </tbody></table>
-<h2 id="4-6-usr-lib：用于编程和程序包的库"><a href="#4-6-usr-lib：用于编程和程序包的库" class="headerlink" title="4.6. &#x2F;usr&#x2F;lib：用于编程和程序包的库"></a>4.6. &#x2F;usr&#x2F;lib：用于编程和程序包的库</h2><h3 id="4-6-1-目的"><a href="#4-6-1-目的" class="headerlink" title="4.6.1. 目的"></a>4.6.1. 目的</h3><p><code>/usr/lib</code> 包括目标文件和库。（与系统架构无关的特定于应用程序的静态文件和子目录必须放在 <code>/usr/share</code> 中）在某些系统上，它还可能包含不打算由用户或 shell 脚本直接执行的内部二进制文件。（参阅下面的 <code>/usr/libexec</code> 部分，了解 <code>/usr/lib</code> 与 <code>/usr/libexec</code> 对可执行二进制文件的讨论。）</p>
-<p>应用程序可以使用 <code>/usr/lib</code> 下的单个子目录。如果应用程序使用子目录，则该应用程序专门使用的所有与体系结构相关的数据都必须放置在该子目录中。（例如， perl5 子目录存放 Perl 5 的模块和库。）</p>
-<h3 id="4-6-2-特定选项"><a href="#4-6-2-特定选项" class="headerlink" title="4.6.2. 特定选项"></a>4.6.2. 特定选项</h3><p>由于历史原因，<code>/usr/lib/sendmail</code> 必须是一个符号链接，它解析为系统邮件传输代理提供的与 <code>sendmail</code> 兼容的命令，如果后者存在的话。（一些可执行命令，例如 <code>makewhatis</code> 和 <code>sendmail</code> 传统上也被放在 <code>/usr/lib</code> 中。 <code>makewhatis</code> 是内部二进制文件，必须放在二进制目录中；用户只能使用 <code>catman</code>。较新的 <code>sendmail</code> 二进制文件现在默认放在 <code>/usr/sbin</code> 中。此外，使用与 <code>sendmail</code> 兼容的邮件传送代理的系统必须提供 <code>/usr/sbin/sendmail</code> 作为 <code>sendmail</code> 命令，要么是可执行文件本身，要么是正确的可执行文件的符号链接。）（X Window 系统的主机特定数据不得存储在 <code>/usr/lib/X11</code> 中。特定于主机的配置文件，例如 <code>xorg.conf</code>，必须存储在 <code>/etc/X11</code> 中。这包括诸如 <code>system.twmrc</code> 之类的配置数据，即使它只是一个指向更全局配置文件，可能在 <code>/usr/lib/X11</code> 中，的符号链接。）</p>
-<h2 id="4-7-usr-libexec：其他程序所运行的二进制文件（可选）"><a href="#4-7-usr-libexec：其他程序所运行的二进制文件（可选）" class="headerlink" title="4.7. &#x2F;usr&#x2F;libexec：其他程序所运行的二进制文件（可选）"></a>4.7. &#x2F;usr&#x2F;libexec：其他程序所运行的二进制文件（可选）</h2><h3 id="4-7-1-目的"><a href="#4-7-1-目的" class="headerlink" title="4.7.1. 目的"></a>4.7.1. 目的</h3><p><code>/usr/libexec</code> 包含不打算由用户或 shell 脚本直接执行的内部二进制文件。应用程序可以使用 <code>/usr/libexec</code> 下的单个子目录。</p>
+<h2 id="4-6-usr-lib：用于编程和程序包的库"><a href="#4-6-usr-lib：用于编程和程序包的库" class="headerlink" title="4.6. /usr/lib：用于编程和程序包的库"></a>4.6. <code>/usr/lib</code>：用于编程和程序包的库</h2><h3 id="4-6-1-目的"><a href="#4-6-1-目的" class="headerlink" title="4.6.1. 目的"></a>4.6.1. 目的</h3><p><code>/usr/lib</code> 包括目标文件和库。（与系统架构无关的特定于应用程序的静态文件和子目录必须放在 <code>/usr/share</code> 中）在某些系统上，它还可能包含不打算由用户或 Shell 脚本直接执行的内部二进制文件。（参阅下面的 <code>/usr/libexec</code> 部分，了解 <code>/usr/lib</code> 与 <code>/usr/libexec</code> 对可执行二进制文件的讨论）</p>
+<p>应用程序可以使用 <code>/usr/lib</code> 下的单个子目录。如果应用程序使用子目录，则该应用程序专门使用的所有与体系结构相关的数据都必须放置在该子目录中。（例如， perl5 子目录存放 Perl 5 的模块和库）</p>
+<h3 id="4-6-2-特定选项"><a href="#4-6-2-特定选项" class="headerlink" title="4.6.2. 特定选项"></a>4.6.2. 特定选项</h3><p>由于历史原因，<code>/usr/lib/sendmail</code> 必须是一个符号链接，它解析为系统邮件传输代理提供的与 <code>sendmail</code> 兼容的命令，如果后者存在的话。（一些可执行命令，例如 <code>makewhatis</code> 和 <code>sendmail</code> 传统上也被放在 <code>/usr/lib</code> 中。 <code>makewhatis</code> 是内部二进制文件，必须放在二进制目录中；用户只能使用 <code>catman</code>。较新的 <code>sendmail</code> 二进制文件现在默认放在 <code>/usr/sbin</code> 中。此外，使用与 <code>sendmail</code> 兼容的邮件传送代理的系统必须提供 <code>/usr/sbin/sendmail</code> 作为 <code>sendmail</code> 命令，要么是可执行文件本身，要么是正确的可执行文件的符号链接）（X Window 系统的主机特定数据不得存储在 <code>/usr/lib/X11</code> 中。特定于主机的配置文件，例如 <code>xorg.conf</code>，必须存储在 <code>/etc/X11</code> 中。这包括诸如 <code>system.twmrc</code> 之类的配置数据，即使它只是一个指向更全局配置文件，可能在 <code>/usr/lib/X11</code> 中，的符号链接）</p>
+<h2 id="4-7-usr-libexec：其他程序所运行的二进制文件（可选）"><a href="#4-7-usr-libexec：其他程序所运行的二进制文件（可选）" class="headerlink" title="4.7. /usr/libexec：其他程序所运行的二进制文件（可选）"></a>4.7. <code>/usr/libexec</code>：其他程序所运行的二进制文件（可选）</h2><h3 id="4-7-1-目的"><a href="#4-7-1-目的" class="headerlink" title="4.7.1. 目的"></a>4.7.1. 目的</h3><p><code>/usr/libexec</code> 包含不打算由用户或 Shell 脚本直接执行的内部二进制文件。应用程序可以使用 <code>/usr/libexec</code> 下的单个子目录。</p>
 <p>以这种方式使用 <code>/usr/libexec</code> 的应用程序不得同时使用 <code>/usr/lib</code> 来存储内部二进制文件，尽管它们完全可以将 <code>/usr/lib</code> 用于此处记录的这些目的。</p>
-<h3 id="基本原理-10"><a href="#基本原理-10" class="headerlink" title="基本原理"></a>基本原理</h3><p>本文档先前的一些版本不支持 <code>/usr/libexec</code>，尽管它是许多环境中的标准做法。（例如，参见自由软件基金会的“GNU 编码标准”。）为了适应这个限制，使用 <code>/usr/lib</code> 代替成为普遍的做法。<strong>两种做法现在都可以接受，但每个应用程序都必须选择一种方式来组织自己</strong>。</p>
-<h2 id="4-8-usr-lib：替代（alternate）格式的二进制文件（可选）"><a href="#4-8-usr-lib：替代（alternate）格式的二进制文件（可选）" class="headerlink" title="4.8. &#x2F;usr&#x2F;lib&lt;qual&gt;：替代（alternate）格式的二进制文件（可选）"></a>4.8. &#x2F;usr&#x2F;lib<code>&lt;qual&gt;</code>：替代（alternate）格式的二进制文件（可选）</h2><h3 id="4-8-1-目的"><a href="#4-8-1-目的" class="headerlink" title="4.8.1. 目的"></a>4.8.1. 目的</h3><p>对于可替代格式的二进制文件，除了不需要符号链接 <code>/usr/lib&lt;qual&gt;/sendmail</code> 和 <code>/usr/lib&lt;qual&gt;/X11</code> 之外，<code>/usr/lib&lt;qual&gt;</code> 执行与 <code>/usr/lib</code> 相同的角色。（如果 <code>/usr/lib</code> 和 <code>/usr/lib&lt;qual&gt;</code> 相同，一个是指向另一个的符号链接，这些文件和每个应用程序的子目录将同时在两个目录中存在。）</p>
-<h2 id="4-9-usr-local：本地层级结构"><a href="#4-9-usr-local：本地层级结构" class="headerlink" title="4.9. &#x2F;usr&#x2F;local：本地层级结构"></a>4.9. &#x2F;usr&#x2F;local：本地层级结构</h2><h3 id="4-9-1-目的"><a href="#4-9-1-目的" class="headerlink" title="4.9.1. 目的"></a>4.9.1. 目的</h3><p><code>/usr/local</code> 层次结构供系统管理员在本地安装软件时使用。它需要在系统软件更新时不会被覆盖。它可用于可在一组主机之间共享但在 <code>/usr</code> 中找不到的程序和数据。</p>
-<p>本地安装的软件必须放在 <code>/usr/local</code> 而不是 <code>/usr</code> 中，除非安装它是为了替换或升级 <code>/usr</code> 中的软件。（放置在 <code>/</code> 或 <code>/usr</code> 中的软件可能会被系统升级覆盖，尽管我们建议在这些情况下发行版不要覆盖 <code>/etc</code> 中的数据。出于这个原因，本地软件不得在没有充分理由的情况下放置在 <code>/usr/local</code> 之外。）</p>
+<h3 id="基本原理-10"><a href="#基本原理-10" class="headerlink" title="基本原理"></a>基本原理</h3><p>本文档先前的一些版本不支持 <code>/usr/libexec</code>，尽管它是许多环境中的标准做法。（例如，参见自由软件基金会的“GNU 编码标准”）为了适应这个限制，使用 <code>/usr/lib</code> 代替成为普遍的做法。<strong>两种做法现在都可以接受，但每个应用程序都必须选择一种方式来组织自己</strong>。</p>
+<h2 id="4-8-usr-lib：替代（alternate）格式的二进制文件（可选）"><a href="#4-8-usr-lib：替代（alternate）格式的二进制文件（可选）" class="headerlink" title="4.8. /usr/lib&lt;qual&gt;：替代（alternate）格式的二进制文件（可选）"></a>4.8. <code>/usr/lib&lt;qual&gt;</code>：替代（alternate）格式的二进制文件（可选）</h2><h3 id="4-8-1-目的"><a href="#4-8-1-目的" class="headerlink" title="4.8.1. 目的"></a>4.8.1. 目的</h3><p>对于可替代格式的二进制文件，除了不需要符号链接 <code>/usr/lib&lt;qual&gt;/sendmail</code> 和 <code>/usr/lib&lt;qual&gt;/X11</code> 之外，<code>/usr/lib&lt;qual&gt;</code> 执行与 <code>/usr/lib</code> 相同的角色。（如果 <code>/usr/lib</code> 和 <code>/usr/lib&lt;qual&gt;</code> 相同，一个是指向另一个的符号链接，这些文件和每个应用程序的子目录将同时在两个目录中存在）</p>
+<h2 id="4-9-usr-local：本地层级结构"><a href="#4-9-usr-local：本地层级结构" class="headerlink" title="4.9. /usr/local：本地层级结构"></a>4.9. <code>/usr/local</code>：本地层级结构</h2><h3 id="4-9-1-目的"><a href="#4-9-1-目的" class="headerlink" title="4.9.1. 目的"></a>4.9.1. 目的</h3><p><code>/usr/local</code> 层次结构供系统管理员在本地安装软件时使用。它需要在系统软件更新时不会被覆盖。它可用于可在一组主机之间共享但在 <code>/usr</code> 中找不到的程序和数据。</p>
+<p>本地安装的软件必须放在 <code>/usr/local</code> 而不是 <code>/usr</code> 中，除非安装它是为了替换或升级 <code>/usr</code> 中的软件。（放置在 <code>/</code> 或 <code>/usr</code> 中的软件可能会被系统升级覆盖，尽管我们建议在这些情况下发行版不要覆盖 <code>/etc</code> 中的数据。出于这个原因，本地软件不得在没有充分理由的情况下放置在 <code>/usr/local</code> 之外）</p>
 <h3 id="4-9-2-必要内容"><a href="#4-9-2-必要内容" class="headerlink" title="4.9.2. 必要内容"></a>4.9.2. 必要内容</h3><p>以下目录或目录的符号链接必须在 <code>/usr/local</code> 中。</p>
 <table>
 <thead>
@@ -1144,12 +1156,12 @@
 <p>注意 <code>/usr/etc</code> 仍然是不被允许的：<code>/usr</code> 中的程序应该将配置文件放在 <code>/etc</code> 中。</p>
 <p>如果本文档中指定的目录 <code>/usr/share/color</code> 存在，则目录 <code>/usr/local/share/color</code> 也必须存在，其管理规则与 <code>/usr/share/color</code> 相同。</p>
 <h3 id="基本原理-12"><a href="#基本原理-12" class="headerlink" title="基本原理"></a>基本原理</h3><p>这种用法允许系统管理员在必要时手动安装颜色配置文件。</p>
-<h3 id="4-9-4-usr-local-share：本地与体系结构无关的层级结构"><a href="#4-9-4-usr-local-share：本地与体系结构无关的层级结构" class="headerlink" title="4.9.4. &#x2F;usr&#x2F;local&#x2F;share：本地与体系结构无关的层级结构"></a>4.9.4. &#x2F;usr&#x2F;local&#x2F;share：本地与体系结构无关的层级结构</h3><p>该目录内容的要求与 <code>/usr/share</code> 的要求相同。</p>
-<h2 id="4-10-usr-sbin：非关键的标准系统二进制文件"><a href="#4-10-usr-sbin：非关键的标准系统二进制文件" class="headerlink" title="4.10. &#x2F;usr&#x2F;sbin：非关键的标准系统二进制文件"></a>4.10. &#x2F;usr&#x2F;sbin：非关键的标准系统二进制文件</h2><h3 id="4-10-1-目的"><a href="#4-10-1-目的" class="headerlink" title="4.10.1. 目的"></a>4.10.1. 目的</h3><p>此目录包含系统管理员专门使用的任何非必要二进制文件。系统修复、系统恢复、挂载 <code>/usr</code> 或其他基本功能所需的系统管理程序必须放在 <code>/sbin</code> 中。（本地安装的系统管理程序应该放在 <code>/usr/local/sbin</code> 中）</p>
+<h3 id="4-9-4-usr-local-share：本地与体系结构无关的层级结构"><a href="#4-9-4-usr-local-share：本地与体系结构无关的层级结构" class="headerlink" title="4.9.4. /usr/local/share：本地与体系结构无关的层级结构"></a>4.9.4. <code>/usr/local/share</code>：本地与体系结构无关的层级结构</h3><p>该目录内容的要求与 <code>/usr/share</code> 的要求相同。</p>
+<h2 id="4-10-usr-sbin：非关键的标准系统二进制文件"><a href="#4-10-usr-sbin：非关键的标准系统二进制文件" class="headerlink" title="4.10. /usr/sbin：非关键的标准系统二进制文件"></a>4.10. <code>/usr/sbin</code>：非关键的标准系统二进制文件</h2><h3 id="4-10-1-目的"><a href="#4-10-1-目的" class="headerlink" title="4.10.1. 目的"></a>4.10.1. 目的</h3><p>此目录包含系统管理员专门使用的任何非必要二进制文件。系统修复、系统恢复、挂载 <code>/usr</code> 或其他基本功能所需的系统管理程序必须放在 <code>/sbin</code> 中。（本地安装的系统管理程序应该放在 <code>/usr/local/sbin</code> 中）</p>
 <h3 id="4-10-2-必要内容"><a href="#4-10-2-必要内容" class="headerlink" title="4.10.2. 必要内容"></a>4.10.2. 必要内容</h3><p><code>/usr/sbin</code> 中不能有子目录。</p>
-<h2 id="4-11-usr-share：与系统架构无关的层级结构"><a href="#4-11-usr-share：与系统架构无关的层级结构" class="headerlink" title="4.11. &#x2F;usr&#x2F;share：与系统架构无关的层级结构"></a>4.11. &#x2F;usr&#x2F;share：与系统架构无关的层级结构</h2><h3 id="4-11-1-目的"><a href="#4-11-1-目的" class="headerlink" title="4.11.1. 目的"></a>4.11.1. 目的</h3><p><code>/usr/share</code> 层次结构适用于所有与只读体系结构无关的数据文件。（这些数据的大部分最初位于 <code>/usr</code>&#x2F;<code>man</code>, <code>doc</code> 或 <code>/usr/lib</code>&#x2F;<code>dict</code>, <code>terminfo</code>, <code>zoneinfo</code>）中）</p>
+<h2 id="4-11-usr-share：与系统架构无关的层级结构"><a href="#4-11-usr-share：与系统架构无关的层级结构" class="headerlink" title="4.11. /usr/share：与系统架构无关的层级结构"></a>4.11. <code>/usr/share</code>：与系统架构无关的层级结构</h2><h3 id="4-11-1-目的"><a href="#4-11-1-目的" class="headerlink" title="4.11.1. 目的"></a>4.11.1. 目的</h3><p><code>/usr/share</code> 层次结构适用于所有与只读体系结构无关的数据文件。（这些数据的大部分最初位于 <code>/usr</code>&#x2F;<code>man</code>, <code>doc</code> 或 <code>/usr/lib</code>&#x2F;<code>dict</code>, <code>terminfo</code>, <code>zoneinfo</code> 中）</p>
 <p>此层次结构旨在在给定的操作系统的所有架构平台之间共享；因此，例如，具有 i386、Alpha 和 PPC 平台的站点可能会维护一个集中安装的单个 <code>/usr/share</code> 目录。但是请注意，<code>/usr/share</code> 通常不应该被<strong>不同的操作系统</strong>或<strong>同一操作系统的不同版本</strong>共享。</p>
-<p>任何包含或需要不需要修改的数据的程序或包都应将该数据存储在 <code>/usr/share</code>（或 <code>/usr/local/share</code>，如果本地安装的话）。为此，建议在 <code>/usr/share</code> 中创建一个子目录。使用单个文件的应用程序可以使用 <code>/usr/share/misc</code>。</p>
+<p>任何包含需要或不需要修改的数据的程序或包都应将该数据存储在 <code>/usr/share</code>（或 <code>/usr/local/share</code>，如果本地安装的话）。为此，建议在 <code>/usr/share</code> 中创建一个子目录。使用单个文件的应用程序可以使用 <code>/usr/share/misc</code>。</p>
 <p><code>/usr/share/games</code> 中存储的游戏数据必须是纯静态数据。任何可修改的文件，例如分数文件、游戏日志等，都应该放在 <code>/var/games</code>。</p>
 <h3 id="4-11-2-必要内容"><a href="#4-11-2-必要内容" class="headerlink" title="4.11.2. 必要内容"></a>4.11.2. 必要内容</h3><p>以下目录或目录的符号链接必须在 <code>/usr/share</code> 中。</p>
 <table>
@@ -1230,7 +1242,7 @@
 </tr>
 </tbody></table>
 <p>建议将特定于应用程序的、与体系结构无关的目录放在此处。此类目录包括 <code>groff</code>、<code>perl</code>、<code>ghostscript</code>、<code>texmf</code> 和 <code>kbd</code>（Linux） 或 <code>syscons</code>（BSD）。但是，它们也可以放在 <code>/usr/lib</code> 中以便向后兼容，由发布者决定。类似地，如果发布者希望在别的地方放一些游戏数据，除了 <code>/usr/share/games</code> 目录之外，还可以使用 <code>/usr/lib/games</code> 层次结构。</p>
-<h3 id="4-11-4-usr-share-color：颜色管理信息（可选）"><a href="#4-11-4-usr-share-color：颜色管理信息（可选）" class="headerlink" title="4.11.4. &#x2F;usr&#x2F;share&#x2F;color：颜色管理信息（可选）"></a>4.11.4. &#x2F;usr&#x2F;share&#x2F;color：颜色管理信息（可选）</h3><h4 id="4-11-4-1-目的"><a href="#4-11-4-1-目的" class="headerlink" title="4.11.4.1. 目的"></a>4.11.4.1. 目的</h4><p>此目录是系统安装的 ICC 颜色管理文件的主目录。</p>
+<h3 id="4-11-4-usr-share-color：颜色管理信息（可选）"><a href="#4-11-4-usr-share-color：颜色管理信息（可选）" class="headerlink" title="4.11.4. /usr/share/color：颜色管理信息（可选）"></a>4.11.4. <code>/usr/share/color</code>：颜色管理信息（可选）</h3><h4 id="4-11-4-1-目的"><a href="#4-11-4-1-目的" class="headerlink" title="4.11.4.1. 目的"></a>4.11.4.1. 目的</h4><p>此目录是系统安装的 ICC 颜色管理文件的主目录。</p>
 <h4 id="4-11-4-2-特定选项"><a href="#4-11-4-2-特定选项" class="headerlink" title="4.11.4.2. 特定选项"></a>4.11.4.2. 特定选项</h4><p>如果安装了相应的子系统，以下目录必须在 <code>/usr/share/color</code> 中：</p>
 <table>
 <thead>
@@ -1245,7 +1257,7 @@
 </tr>
 </tbody></table>
 <p>顶级目录 <code>/usr/share/color</code> 中不得包含任何文件；所有文件都应该在 <code>/usr/share/color</code> 的子目录中。</p>
-<h3 id="4-11-5-usr-share-dict：单词列表（可选）"><a href="#4-11-5-usr-share-dict：单词列表（可选）" class="headerlink" title="4.11.5. &#x2F;usr&#x2F;share&#x2F;dict：单词列表（可选）"></a>4.11.5. &#x2F;usr&#x2F;share&#x2F;dict：单词列表（可选）</h3><h4 id="4-11-5-1-目的"><a href="#4-11-5-1-目的" class="headerlink" title="4.11.5.1. 目的"></a>4.11.5.1. 目的</h4><p>这个目录是系统上单词列表的主目录；传统上，该目录仅包含由 <code>look(1)</code> 和各种拼写程序使用的英文单词文件。单词可以使用美式或英式拼写。</p>
+<h3 id="4-11-5-usr-share-dict：单词列表（可选）"><a href="#4-11-5-usr-share-dict：单词列表（可选）" class="headerlink" title="4.11.5. /usr/share/dict：单词列表（可选）"></a>4.11.5. <code>/usr/share/dict</code>：单词列表（可选）</h3><h4 id="4-11-5-1-目的"><a href="#4-11-5-1-目的" class="headerlink" title="4.11.5.1. 目的"></a>4.11.5.1. 目的</h4><p>这个目录是系统上单词列表的主目录；传统上，该目录仅包含由 <code>look(1)</code> 和各种拼写程序使用的英文单词文件。单词可以使用美式或英式拼写。</p>
 <h3 id="基本原理-13"><a href="#基本原理-13" class="headerlink" title="基本原理"></a>基本原理</h3><p>仅单词列表位于此处的原因是它们是所有拼写检查器通用的唯一文件。</p>
 <h4 id="4-11-5-2-特定选项"><a href="#4-11-5-2-特定选项" class="headerlink" title="4.11.5.2. 特定选项"></a>4.11.5.2. 特定选项</h4><p>如果安装了相应的子系统，以下文件或文件的符号链接必须在 <code>/usr/share/dict</code> 中：</p>
 <table>
@@ -1263,8 +1275,8 @@
 <p>需要美式和英式拼写的系统可能会将 <code>words</code> 链接到 <code>/usr/share/dict/american-english</code> 或 <code>/usr/share/dict/british-english</code>。</p>
 <p>可以使用语言的英文名称添加其他语言的单词列表，例如 <code>/usr/share/dict/french</code>、<code>/usr/share/dict/danish</code> 等。如果可能，这些列表应该使用基于Unicode的编码，UTF-8 字符集是首选选项。</p>
 <p>其他单词列表必须包含在此处（如果存在）。</p>
-<h3 id="4-11-6-usr-share-man：手册页"><a href="#4-11-6-usr-share-man：手册页" class="headerlink" title="4.11.6. &#x2F;usr&#x2F;share&#x2F;man：手册页"></a>4.11.6. &#x2F;usr&#x2F;share&#x2F;man：手册页</h3><h4 id="4-11-6-1-目的"><a href="#4-11-6-1-目的" class="headerlink" title="4.11.6.1. 目的"></a>4.11.6.1. 目的</h4><p>本节详细介绍了整个系统中手册页的组织，包括<code>/usr/share/man</code>。另请参阅有关的部分 <code>/var/cache/man</code>。</p>
-<p>该 <code>&lt;mandir&gt;</code> 系统的主要内容是 <code>/usr/share/man</code>。<code>/usr/share/man</code> 包含 <code>/</code> 和 <code>/usr</code> 文件系统下的命令和数据的手册信息。（显然， <code>/</code> 中没有手册页，因为在启动时不需要它们，在紧急情况下也不需要。真的。）</p>
+<h3 id="4-11-6-usr-share-man：手册页"><a href="#4-11-6-usr-share-man：手册页" class="headerlink" title="4.11.6. /usr/share/man：手册页"></a>4.11.6. <code>/usr/share/man</code>：手册页</h3><h4 id="4-11-6-1-目的"><a href="#4-11-6-1-目的" class="headerlink" title="4.11.6.1. 目的"></a>4.11.6.1. 目的</h4><p>本节详细介绍了整个系统中手册页的组织，包括<code>/usr/share/man</code>。另请参阅有关的部分 <code>/var/cache/man</code>。</p>
+<p>该 <code>&lt;mandir&gt;</code> 系统的主要内容是 <code>/usr/share/man</code>。<code>/usr/share/man</code> 包含 <code>/</code> 和 <code>/usr</code> 文件系统下的命令和数据的手册信息。（显然， <code>/</code> 中没有手册页，因为在启动时不需要它们，在紧急情况下也不需要，真的不需要）</p>
 <p>手册页存储在 <code>&lt;mandir&gt;/&lt;locale&gt;/man&lt;section&gt;/&lt;arch&gt;</code> ，对 <code>&lt;mandir&gt;</code>， <code>&lt;locale&gt;</code>， <code>&lt;section&gt;</code>，和 <code>&lt;arch&gt;</code> 的解释在下面给出。</p>
 <p>每个部分的描述如下：</p>
 <ul>
@@ -1277,7 +1289,7 @@
 <li><code>man7</code>：其他用户手册。难以分类的被指定为第 7 节。<code>troff</code> 和其他文本处理宏包可以在这里找到。</li>
 <li><code>man8</code>：系统管理系统管理员用于系统操作和维护的程序记录在此。其中一些程序偶尔也对普通用户有用。</li>
 </ul>
-<h4 id="4-11-6-2-特定选项"><a href="#4-11-6-2-特定选项" class="headerlink" title="4.11.6.2. 特定选项"></a>4.11.6.2. 特定选项</h4><p>以下目录或目录的符号链接必须在中 <code>/usr/share/&lt;mandir&gt;/&lt;locale&gt;</code>，除非它们为空：（例如，如果 <code>/usr/share/man</code> 在第 4 节（设备）中没有手册页，则可以省略 <code>/usr/share/man/man4</code>。）</p>
+<h4 id="4-11-6-2-特定选项"><a href="#4-11-6-2-特定选项" class="headerlink" title="4.11.6.2. 特定选项"></a>4.11.6.2. 特定选项</h4><p>以下目录或目录的符号链接必须在中 <code>/usr/share/&lt;mandir&gt;/&lt;locale&gt;</code>，除非它们为空：（例如，如果 <code>/usr/share/man</code> 在第 4 节（设备）中没有手册页，则可以省略 <code>/usr/share/man/man4</code>）</p>
 <table>
 <thead>
 <tr>
@@ -1324,10 +1336,10 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;language&gt;[_&lt;territory&gt;][.&lt;character-set&gt;][,&lt;version&gt;]</span><br></pre></td></tr></table></figure>
 
 <p>该 <code>&lt;language&gt;</code> 字段必须取自 ISO 639（一种表示语言名称的代码）。它必须是两个字符宽，并且只能用小写字母指定。</p>
-<p><code>&lt;territory&gt;</code> 如果可能，该字段必须是 ISO 3166（国家表示规范）的两个字母代码。（大多数人都熟悉用于电子邮件地址中的国家&#x2F;地区代码的两个字母代码。）它必须是两个字符宽，并且只能用大写字母指定。（此规则的一个主要例外是英国，在 ISO 3166 中为“GB”，但在大多数电子邮件地址中为“UK”。）</p>
+<p><code>&lt;territory&gt;</code> 如果可能，该字段必须是 ISO 3166（国家表示规范）的两个字母代码。（大多数人都熟悉用于电子邮件地址中的国家&#x2F;地区代码的两个字母代码）它必须是两个字符宽，并且只能用大写字母指定。（此规则的一个主要例外是英国，在 ISO 3166 中为“GB”，但在大多数电子邮件地址中为“UK”）</p>
 <p>该 <code>&lt;character-set&gt;</code> 字段必须代表描述字符集的标准。如果 <code>&lt;character-set&gt;</code> 字段只是一个数字规范，则数字代表描述字符集的国际标准编号。如果可能，建议使用数字表示（尤其是 ISO 标准），不包括额外的标点符号，并且任何字母都为小写。</p>
 <p>指定 <code>&lt;version&gt;</code> 配置文件的参数可以放在 <code>&lt;character-set&gt;</code> 字段之后，用逗号分隔。这可用于区分不同的文化需求；例如，字典顺序与更面向系统的整理顺序。本标准建议不要使用该 <code>&lt;version&gt;</code> 字段，除非有必要。</p>
-<p>对所有手册页使用唯一语言和代码集的系统可能会省略 <code>&lt;locale&gt;</code> 子字符串并将所有手册页存储在 <code>&lt;mandir&gt;</code>。例如，只有用 ASCII 编码的英文手册页的系统可以将手册页（ <code>man&lt;section&gt;</code> 目录）直接存储在 <code>/usr/share/man</code>。（事实上，这是传统的情况和安排。）</p>
+<p>对所有手册页使用唯一语言和代码集的系统可能会省略 <code>&lt;locale&gt;</code> 子字符串并将所有手册页存储在 <code>&lt;mandir&gt;</code>。例如，只有用 ASCII 编码的英文手册页的系统可以将手册页（ <code>man&lt;section&gt;</code> 目录）直接存储在 <code>/usr/share/man</code>。（事实上，这是传统的情况和安排）</p>
 <p>具有广为接受的标准字符集的国家&#x2F;地区可能会省略该 <code>&lt;character-set&gt;</code> 字段，但我们强烈建议将其包括在内，尤其是对于具有多个相互竞争的标准的国家和地区。</p>
 <p>各种例子如下：</p>
 <table>
@@ -1419,12 +1431,12 @@
 </tr>
 </tbody></table>
 <p>同样，必须为依赖于体系结构的手册页做出规定，例如关于设备驱动程序或低级系统管理命令的文档。这些必须放在适当的 <code>man&lt;section&gt;</code> 目录中的 <code>&lt;arch&gt;</code> 目录下；例如，i386 ctrlaltdel(8) 命令的手册页可能放在 <code>/usr/share/man/&lt;locale&gt;/man8/i386/ctrlaltdel.8</code> 中。</p>
-<p><code>/usr/local</code> 下的命令和数据的手册页存储在 <code>/usr/local/man</code> 或 <code>/usr/local/share/man</code> 中。系统中的所有手册页层次结构都必须具有与 <code>/usr/share/man</code> 相同的结构，因为使用手册页内容的命令需要这种结构。（<code>/usr/local/man</code> 已弃用，可能会在本规范的未来版本中删除。）</p>
+<p><code>/usr/local</code> 下的命令和数据的手册页存储在 <code>/usr/local/man</code> 或 <code>/usr/local/share/man</code> 中。系统中的所有手册页层次结构都必须具有与 <code>/usr/share/man</code> 相同的结构，因为使用手册页内容的命令需要这种结构。（<code>/usr/local/man</code> 已弃用，可能会在本规范的未来版本中删除）</p>
 <p>包含格式化手册页条目的 <code>cat</code> 页面部分（<code>cat&lt;section&gt;</code>）也可以在 <code>&lt;mandir&gt;/&lt;locale&gt;</code> 的子目录中找到，但不是必需的，也不能代替 <code>nroff</code> 手册页分发的标准。</p>
 <p>编号部分“1”到“8”是传统定义的。通常，位于特定部分中的手册页的文件名以 <code>.&lt;section&gt;</code> 结尾。</p>
 <p>此外，一些大型的特定于应用程序的手册页在手册页文件名后附加了一个附加后缀。例如，MH 邮件处理系统手册页必须将 <code>mh</code> 附加到所有 MH 手册。所有 X Window System 手册页都必须在文件名后附加一个 x。</p>
-<p>将各种语言手册页放在 <code>/usr/share/man</code> 的适当子目录中的做法也适用于其他手册页层次结构，例如 <code>/usr/local/man</code>。（标准的这一部分也适用于后面关于可选的 <code>/var/cache/man</code> 结构的部分。）</p>
-<h3 id="4-11-7-usr-share-misc：与架构无关的杂项数据"><a href="#4-11-7-usr-share-misc：与架构无关的杂项数据" class="headerlink" title="4.11.7. &#x2F;usr&#x2F;share&#x2F;misc：与架构无关的杂项数据"></a>4.11.7. &#x2F;usr&#x2F;share&#x2F;misc：与架构无关的杂项数据</h3><p>此目录包含各种与体系结构无关的文件，这些文件不需要 <code>/usr/share</code> 下的单独子目录。</p>
+<p>将各种语言手册页放在 <code>/usr/share/man</code> 的适当子目录中的做法也适用于其他手册页层次结构，例如 <code>/usr/local/man</code>。（标准的这一部分也适用于后面关于可选的 <code>/var/cache/man</code> 结构的部分）</p>
+<h3 id="4-11-7-usr-share-misc：与架构无关的杂项数据"><a href="#4-11-7-usr-share-misc：与架构无关的杂项数据" class="headerlink" title="4.11.7. /usr/share/misc：与架构无关的杂项数据"></a>4.11.7. <code>/usr/share/misc</code>：与架构无关的杂项数据</h3><p>此目录包含各种与体系结构无关的文件，这些文件不需要 <code>/usr/share</code> 下的单独子目录。</p>
 <h4 id="4-11-7-1-特定选项"><a href="#4-11-7-1-特定选项" class="headerlink" title="4.11.7.1. 特定选项"></a>4.11.7.1. 特定选项</h4><p>如果安装了相应的子系统，则以下文件或文件的符号链接必须位于 <code>/usr/share/misc</code> 中：</p>
 <table>
 <thead>
@@ -1446,9 +1458,9 @@
 <td>终端能力数据库（可选）</td>
 </tr>
 </tbody></table>
-<p>其他（特定于应用程序的）文件可能会出现在这里，但分发者可以自行决定将它们放在 <code>/usr/lib</code> 中。（一些此类文件包括：<code>airport</code>、<code>birthtoken</code>、<code>eqnchar</code>、<code>getopt</code>、<code>gprof.callg</code>、<code>gprof.flat</code>、<code>inter.phone</code>、<code>ipfw.samp.filters</code>、<code>ipfw.samp.scripts</code>、<code>keycap.pcvt</code>、<code>mail.help</code>、<code>mail.tildehelp</code>、<code>man.template</code>、<code>map3270</code>、<code>mdoc.template</code>、<code>more.help</code>、<code>na.phone</code>、<code>nslookup.help</code>、<code>operator</code>、<code>scsi_modes</code>、<code>sendmail.hf</code>、<code>style</code>、<code>units.lib</code>、<code>vgrindefs</code>、<code>vgrindefs.db</code>、<code>zipcodes</code>。）（过去，<code>magic</code> 文件被放在 <code>/usr/share/misc</code> 中，但是 <code>file</code> 命令的现代变体使用多个文件并将它们放在 <code>/usr/share/file</code> 中。为了兼容性，发行版可能会在 <code>/usr/share/misc/magic</code> 处创建一个符号链接，指向 <code>/usr/share/file/magic</code>。）</p>
-<h3 id="4-11-8-usr-share-ppd：打印机定义（可选）"><a href="#4-11-8-usr-share-ppd：打印机定义（可选）" class="headerlink" title="4.11.8. &#x2F;usr&#x2F;share&#x2F;ppd：打印机定义（可选）"></a>4.11.8. &#x2F;usr&#x2F;share&#x2F;ppd：打印机定义（可选）</h3><h4 id="4-11-8-1-目的"><a href="#4-11-8-1-目的" class="headerlink" title="4.11.8.1. 目的"></a>4.11.8.1. 目的</h4><p><code>/usr/share/ppd</code> 包含 PostScript 打印机定义 (PPD) 文件，许多打印系统将这些文件用作打印机驱动程序的描述。 PPD 文件可以放在此目录中，也可以放在子目录中。</p>
-<h3 id="4-11-9-usr-share-sgml：SGML-数据（可选）"><a href="#4-11-9-usr-share-sgml：SGML-数据（可选）" class="headerlink" title="4.11.9. &#x2F;usr&#x2F;share&#x2F;sgml：SGML 数据（可选）"></a>4.11.9. &#x2F;usr&#x2F;share&#x2F;sgml：SGML 数据（可选）</h3><h4 id="4-11-9-1-目的"><a href="#4-11-9-1-目的" class="headerlink" title="4.11.9.1. 目的"></a>4.11.9.1. 目的</h4><p><code>/usr/share/sgml</code> 包含 SGML 应用程序使用的与系统架构无关的文件，例如普通目录（不是集中目录，请参阅 <code>/etc/sgml</code>）、DTD、实体或样式表。</p>
+<p>其他（特定于应用程序的）文件可能会出现在这里，但分发者可以自行决定将它们放在 <code>/usr/lib</code> 中。（一些此类文件包括：<code>airport</code>、<code>birthtoken</code>、<code>eqnchar</code>、<code>getopt</code>、<code>gprof.callg</code>、<code>gprof.flat</code>、<code>inter.phone</code>、<code>ipfw.samp.filters</code>、<code>ipfw.samp.scripts</code>、<code>keycap.pcvt</code>、<code>mail.help</code>、<code>mail.tildehelp</code>、<code>man.template</code>、<code>map3270</code>、<code>mdoc.template</code>、<code>more.help</code>、<code>na.phone</code>、<code>nslookup.help</code>、<code>operator</code>、<code>scsi_modes</code>、<code>sendmail.hf</code>、<code>style</code>、<code>units.lib</code>、<code>vgrindefs</code>、<code>vgrindefs.db</code>、<code>zipcodes</code>）（过去，<code>magic</code> 文件被放在 <code>/usr/share/misc</code> 中，但是 <code>file</code> 命令的现代变体使用多个文件并将它们放在 <code>/usr/share/file</code> 中。为了兼容性，发行版可能会在 <code>/usr/share/misc/magic</code> 处创建一个符号链接，指向 <code>/usr/share/file/magic</code>）</p>
+<h3 id="4-11-8-usr-share-ppd：打印机定义（可选）"><a href="#4-11-8-usr-share-ppd：打印机定义（可选）" class="headerlink" title="4.11.8. /usr/share/ppd：打印机定义（可选）"></a>4.11.8. <code>/usr/share/ppd</code>：打印机定义（可选）</h3><h4 id="4-11-8-1-目的"><a href="#4-11-8-1-目的" class="headerlink" title="4.11.8.1. 目的"></a>4.11.8.1. 目的</h4><p><code>/usr/share/ppd</code> 包含 PostScript 打印机定义 (PPD) 文件，许多打印系统将这些文件用作打印机驱动程序的描述。 PPD 文件可以放在此目录中，也可以放在子目录中。</p>
+<h3 id="4-11-9-usr-share-sgml：SGML-数据（可选）"><a href="#4-11-9-usr-share-sgml：SGML-数据（可选）" class="headerlink" title="4.11.9. /usr/share/sgml：SGML 数据（可选）"></a>4.11.9. <code>/usr/share/sgml</code>：SGML 数据（可选）</h3><h4 id="4-11-9-1-目的"><a href="#4-11-9-1-目的" class="headerlink" title="4.11.9.1. 目的"></a>4.11.9.1. 目的</h4><p><code>/usr/share/sgml</code> 包含 SGML 应用程序使用的与系统架构无关的文件，例如普通目录（不是集中目录，请参阅 <code>/etc/sgml</code>）、DTD、实体或样式表。</p>
 <h4 id="4-11-9-2-特定选项"><a href="#4-11-9-2-特定选项" class="headerlink" title="4.11.9.2. 特定选项"></a>4.11.9.2. 特定选项</h4><p>如果安装了相应的子系统，以下目录或目录的符号链接必须在 <code>/usr/share/sgml</code> 中：</p>
 <table>
 <thead>
@@ -1475,7 +1487,7 @@
 </tr>
 </tbody></table>
 <p>不特定于给定 DTD 的其他文件可能驻留在它们自己的子目录中。</p>
-<h3 id="4-11-10-usr-share-xml：XML-数据（可选）"><a href="#4-11-10-usr-share-xml：XML-数据（可选）" class="headerlink" title="4.11.10. &#x2F;usr&#x2F;share&#x2F;xml：XML 数据（可选）"></a>4.11.10. &#x2F;usr&#x2F;share&#x2F;xml：XML 数据（可选）</h3><h4 id="4-11-10-1-目的"><a href="#4-11-10-1-目的" class="headerlink" title="4.11.10.1. 目的"></a>4.11.10.1. 目的</h4><p><code>/usr/share/xml</code> 包含 XML 应用程序使用的与系统架构无关的文件，例如普通目录（不是集中目录，请参阅 <code>/etc/sgml</code>）、DTD、实体或样式表。</p>
+<h3 id="4-11-10-usr-share-xml：XML-数据（可选）"><a href="#4-11-10-usr-share-xml：XML-数据（可选）" class="headerlink" title="4.11.10. /usr/share/xml：XML 数据（可选）"></a>4.11.10. <code>/usr/share/xml</code>：XML 数据（可选）</h3><h4 id="4-11-10-1-目的"><a href="#4-11-10-1-目的" class="headerlink" title="4.11.10.1. 目的"></a>4.11.10.1. 目的</h4><p><code>/usr/share/xml</code> 包含 XML 应用程序使用的与系统架构无关的文件，例如普通目录（不是集中目录，请参阅 <code>/etc/sgml</code>）、DTD、实体或样式表。</p>
 <h4 id="4-11-10-2-特定选项"><a href="#4-11-10-2-特定选项" class="headerlink" title="4.11.10.2. 特定选项"></a>4.11.10.2. 特定选项</h4><p>如果安装了相应的子系统，则以下目录或目录的符号链接必须位于 <code>/usr/share/xml</code> 中：</p>
 <table>
 <thead>
@@ -1497,11 +1509,11 @@
 <td>MathML DTD（可选）</td>
 </tr>
 </tbody></table>
-<h2 id="4-12-usr-src：源代码（可选）"><a href="#4-12-usr-src：源代码（可选）" class="headerlink" title="4.12. &#x2F;usr&#x2F;src：源代码（可选）"></a>4.12. &#x2F;usr&#x2F;src：源代码（可选）</h2><h3 id="4-12-1-目的"><a href="#4-12-1-目的" class="headerlink" title="4.12.1. 目的"></a>4.12.1. 目的</h3><p>源码可能放在这个子目录下，仅供参考。（通常，不应在此目录结构中构建代码。）</p>
-<h1 id="第五章：-var-目录结构"><a href="#第五章：-var-目录结构" class="headerlink" title="第五章：&#x2F;var 目录结构"></a>第五章：&#x2F;var 目录结构</h1><h2 id="5-1-目的"><a href="#5-1-目的" class="headerlink" title="5.1. 目的"></a>5.1. 目的</h2><p><strong><code>/var</code> 包含可变数据文件。这包括 spool 目录和文件、管理和日志数据以及瞬态文件和临时文件</strong>。</p>
+<h2 id="4-12-usr-src：源代码（可选）"><a href="#4-12-usr-src：源代码（可选）" class="headerlink" title="4.12. /usr/src：源代码（可选）"></a>4.12. <code>/usr/src</code>：源代码（可选）</h2><h3 id="4-12-1-目的"><a href="#4-12-1-目的" class="headerlink" title="4.12.1. 目的"></a>4.12.1. 目的</h3><p>源码可能放在这个子目录下，仅供参考。（通常，不应在此目录结构中构建代码）</p>
+<h1 id="第五章：-var-目录结构"><a href="#第五章：-var-目录结构" class="headerlink" title="第五章：/var 目录结构"></a>第五章：<code>/var</code> 目录结构</h1><h2 id="5-1-目的"><a href="#5-1-目的" class="headerlink" title="5.1. 目的"></a>5.1. 目的</h2><p><strong><code>/var</code> 包含可变数据文件。这包括 spool 目录和文件、管理和日志数据以及瞬态文件和临时文件</strong>。</p>
 <p>**<code>/var</code> 的某些部分不能在不同系统之间共享。例如，<code>/var/log</code>、<code>/var/lock</code> 和 <code>/var/run</code>。其他部分可以共享，特别是 <code>/var/mail</code>、<code>/var/cache/man</code>、<code>/var/cache/fonts</code> 和 <code>/var/spool/news</code>**。</p>
 <p>此处指定 <code>/var</code> 是为了可以将 <code>/usr</code> 挂载为只读。过去存储在 <code>/usr</code> 目录下的在系统操作（与安装和软件维护相对）期间写入的所有内容现在必须放在 <code>/var</code> 中。</p>
-<p><strong>如果不能为 <code>/var</code> 划分一个单独的分区，通常最好将 <code>/var</code> 从根分区转移到 <code>/usr</code> 分区中</strong>。（有时这样做是为了减小根分区的大小，或者在根分区中的空间不足时进行挽救。）但是，<code>/var</code> 不能链接到 <code>/usr</code>，因为这样会使 <code>/usr</code> 和 <code>/var</code> 的分离更加困难，而且很可能造成命名冲突。相反，应该将 <code>/var</code> 链接到 <code>/usr/var</code>。</p>
+<p><strong>如果不能为 <code>/var</code> 划分一个单独的分区，通常最好将 <code>/var</code> 从根分区转移到 <code>/usr</code> 分区中</strong>。（有时这样做是为了减小根分区的大小，或者在根分区中的空间不足时进行挽救）但是，<code>/var</code> 不能链接到 <code>/usr</code>，因为这样会使 <code>/usr</code> 和 <code>/var</code> 的分离更加困难，而且很可能造成命名冲突。相反，应该将 <code>/var</code> 链接到 <code>/usr/var</code>。</p>
 <p><strong>应用程序通常不能将目录添加到 <code>/var</code> 的顶层。仅当此类目录具有某些系统范围的影响时才能添加，并与 FHS 邮件列表协商</strong>。</p>
 <h2 id="5-2-必要内容"><a href="#5-2-必要内容" class="headerlink" title="5.2. 必要内容"></a>5.2. 必要内容</h2><p><code>/var</code> 中需要以下目录或目录的符号链接：</p>
 <table>
@@ -1548,7 +1560,7 @@
 <td>在系统重新启动之间保留的临时文件</td>
 </tr>
 </tbody></table>
-<p>一些目录需要被保留（reserved），因为它们不能被某些新应用随意使用，这样会与某些历史和&#x2F;或本地实践相冲突。分别是：</p>
+<p>一些目录需要被保留，因为它们不能被某些新应用随意使用，这样会与某些历史和&#x2F;或本地实践相冲突。分别是：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/var/backups</span><br><span class="line">/var/cron</span><br><span class="line">/var/msgs</span><br><span class="line">/var/preserve</span><br></pre></td></tr></table></figure>
 
 <h2 id="5-3-特定选项"><a href="#5-3-特定选项" class="headerlink" title="5.3. 特定选项"></a>5.3. 特定选项</h2><p>如果安装了相应的子系统，以下目录或目录的符号链接必须在 <code>/var</code> 中：</p>
@@ -1580,8 +1592,8 @@
 <td>网络信息服务 (NIS) 数据库文件（可选）</td>
 </tr>
 </tbody></table>
-<h2 id="5-4-var-account：进程统计日志（可选）"><a href="#5-4-var-account：进程统计日志（可选）" class="headerlink" title="5.4. &#x2F;var&#x2F;account：进程统计日志（可选）"></a>5.4. &#x2F;var&#x2F;account：进程统计日志（可选）</h2><h3 id="5-4-1-目的"><a href="#5-4-1-目的" class="headerlink" title="5.4.1. 目的"></a>5.4.1. 目的</h3><p>此目录保存当前活动进程统计日志（process accounting log）和用于复合进程的数据（如在某些类 UNIX 系统中 <code>lastcomm</code> 和 <code>sa</code> 会使用）。</p>
-<h2 id="5-5-var-cache：应用缓存数据"><a href="#5-5-var-cache：应用缓存数据" class="headerlink" title="5.5. &#x2F;var&#x2F;cache：应用缓存数据"></a>5.5. &#x2F;var&#x2F;cache：应用缓存数据</h2><h3 id="5-5-1-目的"><a href="#5-5-1-目的" class="headerlink" title="5.5.1. 目的"></a>5.5.1. 目的</h3><p><code>/var/cache</code> 用于缓存来自应用程序的数据。此类数据通常是在本地为耗时的 I&#x2F;O 或计算生成的。应用程序必须能够重新生成或恢复数据。与 <code>/var/spool</code> 不同，缓存文件可以被删除，而不会丢失数据。数据必须在应用程序调用和重新启动系统之间保持有效。</p>
+<h2 id="5-4-var-account：进程统计日志（可选）"><a href="#5-4-var-account：进程统计日志（可选）" class="headerlink" title="5.4. /var/account：进程统计日志（可选）"></a>5.4. <code>/var/account</code>：进程统计日志（可选）</h2><h3 id="5-4-1-目的"><a href="#5-4-1-目的" class="headerlink" title="5.4.1. 目的"></a>5.4.1. 目的</h3><p>此目录保存当前活动进程统计日志（process accounting log）和用于复合进程的数据（如在某些类 UNIX 系统中 <code>lastcomm</code> 和 <code>sa</code> 会使用）。</p>
+<h2 id="5-5-var-cache：应用缓存数据"><a href="#5-5-var-cache：应用缓存数据" class="headerlink" title="5.5. /var/cache：应用缓存数据"></a>5.5. <code>/var/cache</code>：应用缓存数据</h2><h3 id="5-5-1-目的"><a href="#5-5-1-目的" class="headerlink" title="5.5.1. 目的"></a>5.5.1. 目的</h3><p><code>/var/cache</code> 用于缓存来自应用程序的数据。此类数据通常是在本地为耗时的 I&#x2F;O 或计算生成的。应用程序必须能够重新生成或恢复数据。与 <code>/var/spool</code> 不同，缓存文件可以被删除，而不会丢失数据。数据必须在应用程序调用和重新启动系统之间保持有效。</p>
 <p>位于 <code>/var/cache</code> 下的文件可能在应用程序，或者系统管理员，或者两者共同的控制下的方式失去时效。应用程序必须始终能够在手动删除这些文件后恢复（通常是由于磁盘空间不足）。对缓存目录的数据格式没有其他要求。</p>
 <h4 id="基本原理-14"><a href="#基本原理-14" class="headerlink" title="基本原理"></a>基本原理</h4><p>缓存数据存放在单独的目录里允许系统管理员设置与 <code>/var</code> 中其他目录不同的磁盘和备份策略。</p>
 <h3 id="5-5-2-特定选项"><a href="#5-5-2-特定选项" class="headerlink" title="5.5.2. 特定选项"></a>5.5.2. 特定选项</h3><table>
@@ -1608,9 +1620,9 @@
 <td>打包特定缓存数据（可选）</td>
 </tr>
 </tbody></table>
-<h3 id="5-5-3-var-cache-fonts：本地生成的字体（可选）"><a href="#5-5-3-var-cache-fonts：本地生成的字体（可选）" class="headerlink" title="5.5.3. &#x2F;var&#x2F;cache&#x2F;fonts：本地生成的字体（可选）"></a>5.5.3. &#x2F;var&#x2F;cache&#x2F;fonts：本地生成的字体（可选）</h3><h4 id="5-5-3-1-目的"><a href="#5-5-3-1-目的" class="headerlink" title="5.5.3.1. 目的"></a>5.5.3.1. 目的</h4><p><code>/var/cache/fonts</code> 目录应当用于存放任何动态生成的字体。尤其是用 <strong>mktexpk</strong> 命令自动生成的所有字体必须放在 <code>var/cache/fonts</code> 中正确命名的子目录中。（该标准目前没有包含 <code>TeX</code> ，一个描述 <code>TeX</code> 文件和目录布局的文档，的目录结构，但了解一下这个会很有用，它位于 <code>ftp://ctan.tug.org/tex/</code>）</p>
+<h3 id="5-5-3-var-cache-fonts：本地生成的字体（可选）"><a href="#5-5-3-var-cache-fonts：本地生成的字体（可选）" class="headerlink" title="5.5.3. /var/cache/fonts：本地生成的字体（可选）"></a>5.5.3. <code>/var/cache/fonts</code>：本地生成的字体（可选）</h3><h4 id="5-5-3-1-目的"><a href="#5-5-3-1-目的" class="headerlink" title="5.5.3.1. 目的"></a>5.5.3.1. 目的</h4><p><code>/var/cache/fonts</code> 目录应当用于存放任何动态生成的字体。尤其是用 <strong>mktexpk</strong> 命令自动生成的所有字体必须放在 <code>var/cache/fonts</code> 中正确命名的子目录中。（该标准目前没有包含 <code>TeX</code> ，一个描述 <code>TeX</code> 文件和目录布局的文档，的目录结构，但了解一下这个会很有用，它位于 <code>ftp://ctan.tug.org/tex/</code>）</p>
 <h4 id="5-5-3-2-特定选项"><a href="#5-5-3-2-特定选项" class="headerlink" title="5.5.3.2. 特定选项"></a>5.5.3.2. 特定选项</h4><p>其他动态生成的字体也可以放在 <code>/var/cache/fonts</code> 目录树中正确命名的子目录下。</p>
-<h3 id="5-5-4-var-cache-man：本地格式的手册页（可选）"><a href="#5-5-4-var-cache-man：本地格式的手册页（可选）" class="headerlink" title="5.5.4. &#x2F;var&#x2F;cache&#x2F;man：本地格式的手册页（可选）"></a>5.5.4. &#x2F;var&#x2F;cache&#x2F;man：本地格式的手册页（可选）</h3><h4 id="5-5-4-1-目的"><a href="#5-5-4-1-目的" class="headerlink" title="5.5.4.1. 目的"></a>5.5.4.1. 目的</h4><p>此目录为提供只读 <code>/usr</code> 分区但希望允许缓存本地格式手册页的工作站提供标准位置。将 <code>/usr</code> 挂载为可写的工作站（例如，单用户安装的）也可以选择不使用 <code>/var/cache/man</code> 并将格式化的手册页直接写入 <code>/usr/share/man</code> 中的 <code>cat&lt;section&gt;</code> 目录。我们建议大多数网站改用以下选项之一：</p>
+<h3 id="5-5-4-var-cache-man：本地格式的手册页（可选）"><a href="#5-5-4-var-cache-man：本地格式的手册页（可选）" class="headerlink" title="5.5.4. /var/cache/man：本地格式的手册页（可选）"></a>5.5.4. <code>/var/cache/man</code>：本地格式的手册页（可选）</h3><h4 id="5-5-4-1-目的"><a href="#5-5-4-1-目的" class="headerlink" title="5.5.4.1. 目的"></a>5.5.4.1. 目的</h4><p>此目录为提供只读 <code>/usr</code> 分区但希望允许缓存本地格式手册页的主机提供标准位置。将 <code>/usr</code> 挂载为可写的主机（例如，单用户安装的）上也可以选择不使用 <code>/var/cache/man</code> 并将格式化的手册页直接写入 <code>/usr/share/man</code> 中的 <code>cat&lt;section&gt;</code> 目录。我们建议大多数网站改用以下选项之一：</p>
 <ul>
 <li>预先格式化所有未格式化的手册页。</li>
 <li>不允许缓存格式化的手册页，并要求在每次打开手册页时进行格式化。</li>
@@ -1620,10 +1632,10 @@
 <p>写入 <code>/var/cache/man</code> 的手册页最终可能会转移到源 man 层次结构中适当的预先格式化的目录中或过期；如果在一段时间内未访问，源 man 层次结构中的类似格式的手册页可能会过期。</p>
 <p>如果预格式化的手册页与只读介质（例如 CD-ROM）上的系统一起提供，则它们必须安装在源 man 层次结构中（例如 <code>/usr/share/man/cat&lt;section&gt;</code>）。 <code>/var/cache/man</code> 保留作为格式化手册页的可写缓存。</p>
 <h5 id="基本原理-15"><a href="#基本原理-15" class="headerlink" title="基本原理"></a>基本原理</h5><p>此标准的 1.2 版为此层次结构指定了 <code>/var/catman</code>。该路径已移至 <code>/var/cache</code> 下，以更好地反映格式化手册页的动态特性。目录名称已更改为 man 以允许增强层次结构以包含除“cat”之外的后处理格式，例如 PostScript、HTML 或 DVI。</p>
-<h2 id="5-6-var-crash：系统崩溃转储（可选）"><a href="#5-6-var-crash：系统崩溃转储（可选）" class="headerlink" title="5.6. &#x2F;var&#x2F;crash：系统崩溃转储（可选）"></a>5.6. &#x2F;var&#x2F;crash：系统崩溃转储（可选）</h2><h3 id="5-6-1-目的"><a href="#5-6-1-目的" class="headerlink" title="5.6.1. 目的"></a>5.6.1. 目的</h3><p>此目录保存系统故障转储。截至本标准发布之日，Linux 不支持系统故障转储，但其他符合 FHS 的系统可能会支持。</p>
-<h2 id="5-7-var-games：可变游戏数据（可选）"><a href="#5-7-var-games：可变游戏数据（可选）" class="headerlink" title="5.7. &#x2F;var&#x2F;games：可变游戏数据（可选）"></a>5.7. &#x2F;var&#x2F;games：可变游戏数据（可选）</h2><h3 id="5-7-1-目的"><a href="#5-7-1-目的" class="headerlink" title="5.7.1. 目的"></a>5.7.1. 目的</h3><p>任何与 <code>/usr</code> 中的游戏相关的变量数据都应该放在这里。 <code>/var/games</code> 应该保存过去保存在在 <code>/usr</code> 中的变量数据；静态数据，例如帮助文本、关卡描述等，必须保存在其他地方，例如 <code>/usr/share/games</code>。</p>
+<h2 id="5-6-var-crash：系统崩溃转储（可选）"><a href="#5-6-var-crash：系统崩溃转储（可选）" class="headerlink" title="5.6. /var/crash：系统崩溃转储（可选）"></a>5.6. <code>/var/crash</code>：系统崩溃转储（可选）</h2><h3 id="5-6-1-目的"><a href="#5-6-1-目的" class="headerlink" title="5.6.1. 目的"></a>5.6.1. 目的</h3><p>此目录保存系统故障转储。截至本标准发布之日，Linux 不支持系统故障转储，但其他符合 FHS 的系统可能会支持。</p>
+<h2 id="5-7-var-games：可变游戏数据（可选）"><a href="#5-7-var-games：可变游戏数据（可选）" class="headerlink" title="5.7. /var/games：可变游戏数据（可选）"></a>5.7. <code>/var/games</code>：可变游戏数据（可选）</h2><h3 id="5-7-1-目的"><a href="#5-7-1-目的" class="headerlink" title="5.7.1. 目的"></a>5.7.1. 目的</h3><p>任何与 <code>/usr</code> 中的游戏相关的变量数据都应该放在这里。 <code>/var/games</code> 应该保存过去保存在在 <code>/usr</code> 中的变量数据；静态数据，例如帮助文本、关卡描述等，必须保存在其他地方，例如 <code>/usr/share/games</code>。</p>
 <h4 id="基本原理-16"><a href="#基本原理-16" class="headerlink" title="基本原理"></a>基本原理</h4><p><code>/var/games</code> 已经被赋予了自己的目录结构，而不是像本标准的 1.2 版那样将它留在 <code>/var/lib</code> 之下。这种分离实现了在本地控制备份策略、权限和磁盘使用，以及主机间共享和减少 <code>/var/lib</code> 中的混乱。此外，<code>/var/games</code> 是 BSD 传统上使用的路径。</p>
-<h2 id="5-8-var-lib：可变状态信息"><a href="#5-8-var-lib：可变状态信息" class="headerlink" title="5.8. &#x2F;var&#x2F;lib：可变状态信息"></a>5.8. &#x2F;var&#x2F;lib：可变状态信息</h2><h3 id="5-8-1-目的"><a href="#5-8-1-目的" class="headerlink" title="5.8.1. 目的"></a>5.8.1. 目的</h3><p>此目录结构保存与应用程序或系统有关的状态信息。状态信息是程序在运行时修改的数据，它与一个主机有关。用户永远不能修改 <code>/var/lib</code> 中的文件来配置包的操作，并且用于存储数据的特定文件层次结构不能暴露给普通用户。（公开结构的数据应存储在 <code>/srv</code> 中。）</p>
+<h2 id="5-8-var-lib：可变状态信息"><a href="#5-8-var-lib：可变状态信息" class="headerlink" title="5.8. /var/lib：可变状态信息"></a>5.8. <code>/var/lib</code>：可变状态信息</h2><h3 id="5-8-1-目的"><a href="#5-8-1-目的" class="headerlink" title="5.8.1. 目的"></a>5.8.1. 目的</h3><p>此目录结构保存与应用程序或系统有关的状态信息。状态信息是程序在运行时修改的数据，它与一个主机有关。用户永远不能修改 <code>/var/lib</code> 中的文件来配置包的操作，并且用于存储数据的特定文件层次结构不能暴露给普通用户。（公开结构的数据应存储在 <code>/srv</code> 中）</p>
 <p>状态信息通常用于在调用之间和同一应用程序的不同实例之间保存应用程序（或一组相互关联的应用程序）的环境。状态信息通常应在重新启动后保持有效，不应记录输出，也不应是 spool 数据。</p>
 <p>一个应用程序（或一组相互关联的应用程序）必须使用 <code>/var/lib</code> 的子目录来保存其数据。有一个必需的子目录，<code>/var/lib/misc</code>，用于不需要子目录的状态文件；其他子目录仅应在相关应用程序包含在发行版中时才存在。（本标准的这个版本与以前的版本之间的一个重要区别是，现在要求应用程序使用 <code>/var/lib</code> 的子目录）</p>
 <p><code>/var/lib/&lt;name&gt;</code> 是必须用于所有分发打包支持的位置。当然，不同的发行版可能使用不同的名称。</p>
@@ -1678,14 +1690,14 @@
 <p>未来的编辑器可能需要除了崩溃恢复文件和锁定文件之外的其他状态信息——这些信息也应该放在 <code>/var/lib/&lt;editor&gt;</code> 下。</p>
 <h5 id="基本原理-17"><a href="#基本原理-17" class="headerlink" title="基本原理"></a>基本原理</h5><p>以前的 Linux 发行版以及所有商业供应商都将 <code>/var/preserve</code> 用于 <code>vi</code> 或其克隆版本。但是，每个编辑器对崩溃恢复文件都会使用自己的格式，因此每个编辑器都需要一个单独的目录。</p>
 <p>特定于编辑器的锁定文件通常与存储在 <code>/var/lock</code> 中的设备或资源锁定文件大不相同，因此存储在 <code>/var/lib</code> 下。</p>
-<h3 id="5-8-5-var-lib-color：色彩管理信息（可选）"><a href="#5-8-5-var-lib-color：色彩管理信息（可选）" class="headerlink" title="5.8.5. &#x2F;var&#x2F;lib&#x2F;color：色彩管理信息（可选）"></a>5.8.5. &#x2F;var&#x2F;lib&#x2F;color：色彩管理信息（可选）</h3><h4 id="5-8-5-1-目的"><a href="#5-8-5-1-目的" class="headerlink" title="5.8.5.1. 目的"></a>5.8.5.1. 目的</h4><p>此目录是动态安装的 ICC 颜色管理文件的主目录。该目录应使用与 <code>/usr/share/color</code> 目录相同的规则进行布局。</p>
-<h3 id="5-8-6-var-lib-hwclock：hwclock-的状态目录（可选）"><a href="#5-8-6-var-lib-hwclock：hwclock-的状态目录（可选）" class="headerlink" title="5.8.6. &#x2F;var&#x2F;lib&#x2F;hwclock：hwclock 的状态目录（可选）"></a>5.8.6. &#x2F;var&#x2F;lib&#x2F;hwclock：<code>hwclock</code> 的状态目录（可选）</h3><h4 id="5-8-6-1-目的"><a href="#5-8-6-1-目的" class="headerlink" title="5.8.6.1. 目的"></a>5.8.6.1. 目的</h4><p>该目录包含文件 <code>/var/lib/hwclock/adjtime</code>。</p>
+<h3 id="5-8-5-var-lib-color：色彩管理信息（可选）"><a href="#5-8-5-var-lib-color：色彩管理信息（可选）" class="headerlink" title="5.8.5. /var/lib/color：色彩管理信息（可选）"></a>5.8.5. <code>/var/lib/color</code>：色彩管理信息（可选）</h3><h4 id="5-8-5-1-目的"><a href="#5-8-5-1-目的" class="headerlink" title="5.8.5.1. 目的"></a>5.8.5.1. 目的</h4><p>此目录是动态安装的 ICC 颜色管理文件的主目录。该目录应使用与 <code>/usr/share/color</code> 目录相同的规则进行布局。</p>
+<h3 id="5-8-6-var-lib-hwclock：hwclock-的状态目录（可选）"><a href="#5-8-6-var-lib-hwclock：hwclock-的状态目录（可选）" class="headerlink" title="5.8.6. /var/lib/hwclock：hwclock 的状态目录（可选）"></a>5.8.6. <code>/var/lib/hwclock</code>：<code>hwclock</code> 的状态目录（可选）</h3><h4 id="5-8-6-1-目的"><a href="#5-8-6-1-目的" class="headerlink" title="5.8.6.1. 目的"></a>5.8.6.1. 目的</h4><p>该目录包含文件 <code>/var/lib/hwclock/adjtime</code>。</p>
 <h5 id="基本原理-18"><a href="#基本原理-18" class="headerlink" title="基本原理"></a>基本原理</h5><p>在 FHS 2.1 中，这个文件是 <code>/etc/adjtime</code>，但是 <code>hwclock</code> 会更新它，这显然是不正确的。</p>
-<h3 id="5-8-7-var-lib-misc：杂项变量数据"><a href="#5-8-7-var-lib-misc：杂项变量数据" class="headerlink" title="5.8.7. &#x2F;var&#x2F;lib&#x2F;misc：杂项变量数据"></a>5.8.7. &#x2F;var&#x2F;lib&#x2F;misc：杂项变量数据</h3><h4 id="5-8-7-1-目的"><a href="#5-8-7-1-目的" class="headerlink" title="5.8.7.1. 目的"></a>5.8.7.1. 目的</h4><p>此目录包含未放置在 <code>/var/lib</code> 子目录中的变量数据。应尝试在此目录中使用相对唯一的名称以避免命名空间冲突。（此目录结构应包含存储在当前 BSD 版本中的 <code>/var/db</code> 中的文件。其中包括 <code>locate.database</code> 和 <code>mountdtab</code>，以及内核符号数据库）</p>
-<h2 id="5-9-var-lock：锁文件"><a href="#5-9-var-lock：锁文件" class="headerlink" title="5.9. &#x2F;var&#x2F;lock：锁文件"></a>5.9. &#x2F;var&#x2F;lock：锁文件</h2><h3 id="5-9-1-目的"><a href="#5-9-1-目的" class="headerlink" title="5.9.1. 目的"></a>5.9.1. 目的</h3><p>锁定文件应存储在 <code>/var/lock</code> 目录结构中。</p>
+<h3 id="5-8-7-var-lib-misc：杂项变量数据"><a href="#5-8-7-var-lib-misc：杂项变量数据" class="headerlink" title="5.8.7. /var/lib/misc：杂项变量数据"></a>5.8.7. <code>/var/lib/misc</code>：杂项变量数据</h3><h4 id="5-8-7-1-目的"><a href="#5-8-7-1-目的" class="headerlink" title="5.8.7.1. 目的"></a>5.8.7.1. 目的</h4><p>此目录包含未放置在 <code>/var/lib</code> 子目录中的变量数据。应尝试在此目录中使用相对唯一的名称以避免命名空间冲突。（此目录结构应包含存储在当前 BSD 版本中的 <code>/var/db</code> 中的文件。其中包括 <code>locate.database</code> 和 <code>mountdtab</code>，以及内核符号数据库）</p>
+<h2 id="5-9-var-lock：锁文件"><a href="#5-9-var-lock：锁文件" class="headerlink" title="5.9. /var/lock：锁文件"></a>5.9. <code>/var/lock</code>：锁文件</h2><h3 id="5-9-1-目的"><a href="#5-9-1-目的" class="headerlink" title="5.9.1. 目的"></a>5.9.1. 目的</h3><p>锁定文件应存储在 <code>/var/lock</code> 目录结构中。</p>
 <p>由多个应用程序共享的设备和其他资源的锁定文件，例如最初应该在 <code>/usr/spool/locks</code> 或 <code>/usr/spool/uucp</code> 中找到的串行设备锁定文件，现在必须都存储在 <code>/var/lock</code> 中。必须使用的命名约定是“LCK..”后跟设备的基本名称。例如，要锁定 <code>/dev/ttyS0</code>，将创建文件“LCK..ttyS0”。（然后，任何希望使用 <code>/dev/ttyS0</code> 的东西都可以读取锁文件并采取相应的行动（<code>/var/lock</code> 中的所有锁都应该是全局可读的））</p>
 <p>用于此类锁定文件内容的格式必须是 HDB UUCP 锁定文件格式。 HDB 格式是将进程标识符 (PID) 存储为十字节 ASCII 十进制数，并带有一个尾随换行符。例如，如果进程 1230 持有一个锁定文件，它将包含十一个字符：空格、空格、空格、空格、空格、空格、一、二、三、零和换行符。</p>
-<h2 id="5-10-var-log：日志文件和目录"><a href="#5-10-var-log：日志文件和目录" class="headerlink" title="5.10. &#x2F;var&#x2F;log：日志文件和目录"></a>5.10. &#x2F;var&#x2F;log：日志文件和目录</h2><h3 id="5-10-1-目的"><a href="#5-10-1-目的" class="headerlink" title="5.10.1. 目的"></a>5.10.1. 目的</h3><p>此目录包含各种日志文件。大多数日志必须写入此目录或适当的子目录。</p>
+<h2 id="5-10-var-log：日志文件和目录"><a href="#5-10-var-log：日志文件和目录" class="headerlink" title="5.10. /var/log：日志文件和目录"></a>5.10. <code>/var/log</code>：日志文件和目录</h2><h3 id="5-10-1-目的"><a href="#5-10-1-目的" class="headerlink" title="5.10.1. 目的"></a>5.10.1. 目的</h3><p>此目录包含各种日志文件。大多数日志必须写入此目录或适当的子目录。</p>
 <h3 id="5-10-2-特定选项"><a href="#5-10-2-特定选项" class="headerlink" title="5.10.2. 特定选项"></a>5.10.2. 特定选项</h3><p>如果安装了相应的子系统，则以下文件或文件的符号链接必须位于 <code>/var/log</code> 中：</p>
 <table>
 <thead>
@@ -1707,17 +1719,17 @@
 <td>所有登录和注销的记录</td>
 </tr>
 </tbody></table>
-<h2 id="5-11-var-mail：用户邮箱文件（可选）"><a href="#5-11-var-mail：用户邮箱文件（可选）" class="headerlink" title="5.11. &#x2F;var&#x2F;mail：用户邮箱文件（可选）"></a>5.11. &#x2F;var&#x2F;mail：用户邮箱文件（可选）</h2><h3 id="5-11-1-目的"><a href="#5-11-1-目的" class="headerlink" title="5.11.1. 目的"></a>5.11.1. 目的</h3><p>邮件假脱机文件必须能通过 <code>/var/mail</code> 访问，并且邮件假脱机文件必须采用 <code>&lt;username&gt;</code> 形式。（请注意， <code>/var/mail</code> 可能是指向另一个目录的符号链接。）</p>
+<h2 id="5-11-var-mail：用户邮箱文件（可选）"><a href="#5-11-var-mail：用户邮箱文件（可选）" class="headerlink" title="5.11. /var/mail：用户邮箱文件（可选）"></a>5.11. <code>/var/mail</code>：用户邮箱文件（可选）</h2><h3 id="5-11-1-目的"><a href="#5-11-1-目的" class="headerlink" title="5.11.1. 目的"></a>5.11.1. 目的</h3><p>邮件假脱机文件必须能通过 <code>/var/mail</code> 访问，并且邮件假脱机文件必须采用 <code>&lt;username&gt;</code> 形式。（请注意， <code>/var/mail</code> 可能是指向另一个目录的符号链接）</p>
 <p>此位置中的用户邮箱文件必须以标准 UNIX 邮箱格式存储。</p>
 <h4 id="基本原理-19"><a href="#基本原理-19" class="headerlink" title="基本原理"></a>基本原理</h4><p>该目录的逻辑位置已从 <code>/var/spool/mail</code> 被更改，以使 FHS 能与几乎所有 UNIX 发行版一致。此更改对于互操作性很重要，因为单个 <code>/var/mail</code> 通常在多个主机和多个 UNIX 发行版之间共享（尽管存在 NFS 锁定问题）。</p>
 <p>请务必注意，不需要将邮件假脱机文件物理移动到此位置。但是，必须将程序和头文件中的路径更改为使用 <code>/var/mail</code>。</p>
-<h2 id="5-12-var-opt：-opt-的可变数据"><a href="#5-12-var-opt：-opt-的可变数据" class="headerlink" title="5.12. &#x2F;var&#x2F;opt：/opt 的可变数据"></a>5.12. &#x2F;var&#x2F;opt：<code>/opt</code> 的可变数据</h2><h3 id="5-12-1-目的"><a href="#5-12-1-目的" class="headerlink" title="5.12.1. 目的"></a>5.12.1. 目的</h3><p><code>/opt</code> 中软件包的变量数据必须安装在 <code>/var/opt/&lt;subdir&gt;</code> 中，其中 <code>&lt;subdir&gt;</code> 是来自 <code>/opt</code> 中存储的附加软件包的静态数据的子树的名称，除非被 <code>/etc</code> 中的另一个文件取代。 <code>/var/opt/&lt;subdir&gt;</code> 的内部安排没有任何结构要求。</p>
+<h2 id="5-12-var-opt：-opt-的可变数据"><a href="#5-12-var-opt：-opt-的可变数据" class="headerlink" title="5.12. /var/opt：/opt 的可变数据"></a>5.12. <code>/var/opt</code>：<code>/opt</code> 的可变数据</h2><h3 id="5-12-1-目的"><a href="#5-12-1-目的" class="headerlink" title="5.12.1. 目的"></a>5.12.1. 目的</h3><p><code>/opt</code> 中软件包的变量数据必须安装在 <code>/var/opt/&lt;subdir&gt;</code> 中，其中 <code>&lt;subdir&gt;</code> 是来自 <code>/opt</code> 中存储的附加软件包的静态数据的子树的名称，除非被 <code>/etc</code> 中的另一个文件取代。 <code>/var/opt/&lt;subdir&gt;</code> 的内部安排没有任何结构要求。</p>
 <h4 id="基本原理-20"><a href="#基本原理-20" class="headerlink" title="基本原理"></a>基本原理</h4><p>请参阅 <code>/opt</code> 的基本原理。</p>
-<h2 id="5-13-var-run：运行时可变数据"><a href="#5-13-var-run：运行时可变数据" class="headerlink" title="5.13. &#x2F;var&#x2F;run：运行时可变数据"></a>5.13. &#x2F;var&#x2F;run：运行时可变数据</h2><h3 id="5-13-1-目的"><a href="#5-13-1-目的" class="headerlink" title="5.13.1. 目的"></a>5.13.1. 目的</h3><p>该目录曾经用于描述系统启动后的系统信息数据。这些功能已经移至 <code>/run</code>；该目录的存在是为了确保与使用本规范旧版本的系统和软件兼容。</p>
+<h2 id="5-13-var-run：运行时可变数据"><a href="#5-13-var-run：运行时可变数据" class="headerlink" title="5.13. /var/run：运行时可变数据"></a>5.13. <code>/var/run</code>：运行时可变数据</h2><h3 id="5-13-1-目的"><a href="#5-13-1-目的" class="headerlink" title="5.13.1. 目的"></a>5.13.1. 目的</h3><p>该目录曾经用于描述系统启动后的系统信息数据。这些功能已经移至 <code>/run</code>；该目录的存在是为了确保与使用本规范旧版本的系统和软件兼容。</p>
 <h3 id="5-13-2-必要内容"><a href="#5-13-2-必要内容" class="headerlink" title="5.13.2. 必要内容"></a>5.13.2. 必要内容</h3><p>通常，<code>/run</code> 的要求也适用于 <code>/var/run</code>。将 <code>/var/run</code> 实现为 <code>/run</code> 的符号链接是有效的。</p>
 <p><code>utmp</code> 文件位于此目录中，该文件存储有关当前正在使用系统的人员的信息。</p>
 <p>程序不应该同时访问 <code>/var/run</code> 和 <code>/run</code>，除非访问 <code>/var/run/utmp</code>。（这是为了防止混淆临时文件的位置。通常，程序应该使用 <code>/var/run</code> 或 <code>/run</code> 其中之一来访问这些文件，而不是两者都使用）</p>
-<h2 id="5-14-var-spool：应用-spool-数据"><a href="#5-14-var-spool：应用-spool-数据" class="headerlink" title="5.14. &#x2F;var&#x2F;spool：应用 spool 数据"></a>5.14. &#x2F;var&#x2F;spool：应用 spool 数据</h2><h3 id="5-14-1-目的"><a href="#5-14-1-目的" class="headerlink" title="5.14.1. 目的"></a>5.14.1. 目的</h3><p><code>/var/spool</code> 包含等待某种稍后处理的数据。 <code>/var/spool</code> 中的数据代表将来要完成的工作（由程序、用户或管理员）；数据通常在处理后被删除。（UUCP 锁文件必须放在 <code>/var/lock</code> 中。请参阅以上关于 <code>/var/lock</code> 的部分）</p>
+<h2 id="5-14-var-spool：应用-spool-数据"><a href="#5-14-var-spool：应用-spool-数据" class="headerlink" title="5.14. /var/spool：应用 spool 数据"></a>5.14. <code>/var/spool</code>：应用 spool 数据</h2><h3 id="5-14-1-目的"><a href="#5-14-1-目的" class="headerlink" title="5.14.1. 目的"></a>5.14.1. 目的</h3><p><code>/var/spool</code> 包含等待某种稍后处理的数据。 <code>/var/spool</code> 中的数据代表将来要完成的工作（由程序、用户或管理员）；数据通常在处理后被删除。（UUCP 锁文件必须放在 <code>/var/lock</code> 中。请参阅以上关于 <code>/var/lock</code> 的部分）</p>
 <h3 id="5-14-2-特定选项"><a href="#5-14-2-特定选项" class="headerlink" title="5.14.2. 特定选项"></a>5.14.2. 特定选项</h3><p>如果安装了相应的子系统，则以下目录或目录的符号链接必须位于 <code>/var/spool</code> 中：</p>
 <table>
 <thead>
@@ -1747,7 +1759,7 @@
 <td>UUCP 的 spool 目录（可选）</td>
 </tr>
 </tbody></table>
-<h3 id="5-14-3-var-spool-lpd：行式打印机守护进程打印队列（可选）"><a href="#5-14-3-var-spool-lpd：行式打印机守护进程打印队列（可选）" class="headerlink" title="5.14.3. &#x2F;var&#x2F;spool&#x2F;lpd：行式打印机守护进程打印队列（可选）"></a>5.14.3. &#x2F;var&#x2F;spool&#x2F;lpd：行式打印机守护进程打印队列（可选）</h3><h4 id="5-14-3-1-目的"><a href="#5-14-3-1-目的" class="headerlink" title="5.14.3.1. 目的"></a>5.14.3.1. 目的</h4><p><code>lpd</code> 的锁文件 <code>lpd.lock</code> 必须放在 <code>/var/spool/lpd</code> 中。建议将每台打印机的锁文件存放在该打印机特定的 spool 目录中，并命名为 <code>lock</code>。</p>
+<h3 id="5-14-3-var-spool-lpd：行式打印机守护进程打印队列（可选）"><a href="#5-14-3-var-spool-lpd：行式打印机守护进程打印队列（可选）" class="headerlink" title="5.14.3. /var/spool/lpd：行式打印机守护进程打印队列（可选）"></a>5.14.3. <code>/var/spool/lpd</code>：行式打印机守护进程打印队列（可选）</h3><h4 id="5-14-3-1-目的"><a href="#5-14-3-1-目的" class="headerlink" title="5.14.3.1. 目的"></a>5.14.3.1. 目的</h4><p><code>lpd</code> 的锁文件 <code>lpd.lock</code> 必须放在 <code>/var/spool/lpd</code> 中。建议将每台打印机的锁文件存放在该打印机特定的 spool 目录中，并命名为 <code>lock</code>。</p>
 <h4 id="5-14-3-2-特定选项"><a href="#5-14-3-2-特定选项" class="headerlink" title="5.14.3.2. 特定选项"></a>5.14.3.2. 特定选项</h4><table>
 <thead>
 <tr>
@@ -1760,76 +1772,72 @@
 <td>特定打印机的 spool（可选）</td>
 </tr>
 </tbody></table>
-<h3 id="5-14-4-var-spool-rwho：Rwhod-文件（可选）"><a href="#5-14-4-var-spool-rwho：Rwhod-文件（可选）" class="headerlink" title="5.14.4. &#x2F;var&#x2F;spool&#x2F;rwho：Rwhod 文件（可选）"></a>5.14.4. &#x2F;var&#x2F;spool&#x2F;rwho：<code>Rwhod</code> 文件（可选）</h3><h4 id="5-14-4-1-目的"><a href="#5-14-4-1-目的" class="headerlink" title="5.14.4.1. 目的"></a>5.14.4.1. 目的</h4><p>此目录保存本地网络上其他系统的 <code>rwhod</code> 信息。</p>
+<h3 id="5-14-4-var-spool-rwho：Rwhod-文件（可选）"><a href="#5-14-4-var-spool-rwho：Rwhod-文件（可选）" class="headerlink" title="5.14.4. /var/spool/rwho：Rwhod 文件（可选）"></a>5.14.4. <code>/var/spool/rwho</code>：<code>Rwhod</code> 文件（可选）</h3><h4 id="5-14-4-1-目的"><a href="#5-14-4-1-目的" class="headerlink" title="5.14.4.1. 目的"></a>5.14.4.1. 目的</h4><p>此目录保存本地网络上其他系统的 <code>rwhod</code> 信息。</p>
 <h5 id="基本原理-21"><a href="#基本原理-21" class="headerlink" title="基本原理"></a>基本原理</h5><p>一些 BSD 发行版使用 <code>/var/rwho</code> 来存储这些数据；但是鉴于它在其他系统上在 <code>/var/spool</code> 中的历史位置以及它与 <code>spooled</code> 数据的定义大致相符，这个位置被认为更合适。</p>
-<h2 id="5-15-var-tmp：在系统重新启动之间保留的临时文件"><a href="#5-15-var-tmp：在系统重新启动之间保留的临时文件" class="headerlink" title="5.15. &#x2F;var&#x2F;tmp：在系统重新启动之间保留的临时文件"></a>5.15. &#x2F;var&#x2F;tmp：在系统重新启动之间保留的临时文件</h2><h3 id="5-15-1-目的"><a href="#5-15-1-目的" class="headerlink" title="5.15.1. 目的"></a>5.15.1. 目的</h3><p><code>/var/tmp</code> 目录可用于需要在系统重新引导之间保留的临时文件或目录的程序。因此，存储在 <code>/var/tmp</code> 中的数据比 <code>/tmp</code> 中的数据更持久。</p>
+<h2 id="5-15-var-tmp：在系统重新启动之间保留的临时文件"><a href="#5-15-var-tmp：在系统重新启动之间保留的临时文件" class="headerlink" title="5.15. /var/tmp：在系统重新启动之间保留的临时文件"></a>5.15. <code>/var/tmp</code>：在系统重新启动之间保留的临时文件</h2><h3 id="5-15-1-目的"><a href="#5-15-1-目的" class="headerlink" title="5.15.1. 目的"></a>5.15.1. 目的</h3><p><code>/var/tmp</code> 目录可用于需要在系统重新引导之间保留的临时文件或目录的程序。因此，存储在 <code>/var/tmp</code> 中的数据比 <code>/tmp</code> 中的数据更持久。</p>
 <p>系统启动时不得删除位于 <code>/var/tmp</code> 中的文件和目录。尽管存储在 <code>/var/tmp</code> 中的数据通常以特定于主机的方式删除，但建议删除的频率低于 <code>/tmp</code>。</p>
-<h2 id="5-16-var-yp：网络信息服务-NIS-数据库文件（可选）"><a href="#5-16-var-yp：网络信息服务-NIS-数据库文件（可选）" class="headerlink" title="5.16. &#x2F;var&#x2F;yp：网络信息服务 (NIS) 数据库文件（可选）"></a>5.16. &#x2F;var&#x2F;yp：网络信息服务 (NIS) 数据库文件（可选）</h2><h3 id="5-16-1-目的"><a href="#5-16-1-目的" class="headerlink" title="5.16.1. 目的"></a>5.16.1. 目的</h3><p>网络信息服务 (NIS) 的变量数据（以前称为 Sun 黄页（YP））必须放在此目录中。</p>
+<h2 id="5-16-var-yp：网络信息服务-NIS-数据库文件（可选）"><a href="#5-16-var-yp：网络信息服务-NIS-数据库文件（可选）" class="headerlink" title="5.16. /var/yp：网络信息服务 (NIS) 数据库文件（可选）"></a>5.16. <code>/var/yp</code>：网络信息服务 (NIS) 数据库文件（可选）</h2><h3 id="5-16-1-目的"><a href="#5-16-1-目的" class="headerlink" title="5.16.1. 目的"></a>5.16.1. 目的</h3><p>网络信息服务 (NIS) 的变量数据（以前称为 Sun 黄页（YP））必须放在此目录中。</p>
 <h4 id="基本原理-22"><a href="#基本原理-22" class="headerlink" title="基本原理"></a>基本原理</h4><p><code>/var/yp</code> 是 NIS（YP）数据的标准目录，几乎专门用于 NIS 文档和系统。（NIS 不能与 Sun NIS+ 混淆，后者使用不同的目录 <code>/var/nis</code>）</p>
 <h1 id="第六章：操作系统特定附录"><a href="#第六章：操作系统特定附录" class="headerlink" title="第六章：操作系统特定附录"></a>第六章：操作系统特定附录</h1><p>本节是针对仅适用于特定操作系统的附加要求和建议。本节中的材料不应该与基本标准发生冲突。</p>
 <h2 id="6-1-Linux"><a href="#6-1-Linux" class="headerlink" title="6.1. Linux"></a>6.1. Linux</h2><p>这是 Linux 操作系统的附件。</p>
-<h3 id="6-1-1-：根目录"><a href="#6-1-1-：根目录" class="headerlink" title="6.1.1. &#x2F;：根目录"></a>6.1.1. &#x2F;：根目录</h3><p>在 Linux 系统上，如果内核位于 <code>/</code> 中，我们建议使用名称 <code>vmlinux</code> 或 <code>vmlinuz</code>，这些名称已在最近的 Linux 内核源代码包中使用。</p>
-<h3 id="6-1-2-bin：重要的用户二进制命令文件（供所有用户使用）"><a href="#6-1-2-bin：重要的用户二进制命令文件（供所有用户使用）" class="headerlink" title="6.1.2. &#x2F;bin：重要的用户二进制命令文件（供所有用户使用）"></a>6.1.2. &#x2F;bin：重要的用户二进制命令文件（供所有用户使用）</h3><p>需要它们的 Linux 系统将这些附加文件放入 <code>/bin</code>：</p>
+<h3 id="6-1-1-：根目录"><a href="#6-1-1-：根目录" class="headerlink" title="6.1.1. /：根目录"></a>6.1.1. <code>/</code>：根目录</h3><p>在 Linux 系统上，如果内核位于 <code>/</code> 中，我们建议使用名称 <code>vmlinux</code> 或 <code>vmlinuz</code>，这些名称已在最近的 Linux 内核源代码包中使用。</p>
+<h3 id="6-1-2-bin：重要的用户二进制命令文件（供所有用户使用）"><a href="#6-1-2-bin：重要的用户二进制命令文件（供所有用户使用）" class="headerlink" title="6.1.2. /bin：重要的用户二进制命令文件（供所有用户使用）"></a>6.1.2. <code>/bin</code>：重要的用户二进制命令文件（供所有用户使用）</h3><p>需要 Linux 系统将这些附加文件放入 <code>/bin</code>：</p>
 <ul>
 <li><code>setserial</code></li>
 </ul>
-<h3 id="6-1-3-dev：设备和特殊文件"><a href="#6-1-3-dev：设备和特殊文件" class="headerlink" title="6.1.3. &#x2F;dev：设备和特殊文件"></a>6.1.3. &#x2F;dev：设备和特殊文件</h3><p><code>/dev</code> 下必须存在以下设备。</p>
-<p>The following devices must exist under <code>/dev</code>.</p>
+<h3 id="6-1-3-dev：设备和特殊文件"><a href="#6-1-3-dev：设备和特殊文件" class="headerlink" title="6.1.3. /dev：设备和特殊文件"></a>6.1.3. <code>/dev</code>：设备和特殊文件</h3><p><code>/dev</code> 下必须存在以下设备。</p>
 <ul>
-<li><p><code>/dev/null</code></p>
-<p>  写入此设备的所有数据都将被抛弃。从该设备读取将返回 EOF 。</p>
+<li><p><code>/dev/null</code><br>写入此设备的所有数据都将被抛弃。从该设备读取将返回 EOF 。</p>
 </li>
-<li><p><code>/dev/zero</code></p>
-<p>  该设备是零输出的来源。写入此设备的所有数据都将被丢弃。从该设备读取将返回与请求的数目一样多的包含零值的字节。</p>
+<li><p><code>/dev/zero</code><br>该设备是零输出的来源。写入此设备的所有数据都将被丢弃。从该设备读取将返回与请求的数目一样多的包含零值的字节。</p>
 </li>
-<li><p><code>/dev/tty</code></p>
-<p>  该设备是进程控制终端的同义词。这个设备被打开以后，所有的读和写操作都会和实际的控制终端设备被打开一样。</p>
+<li><p><code>/dev/tty</code><br>该设备是进程控制终端的同义词。这个设备被打开以后，所有的读和写操作都会和实际的控制终端设备被打开一样。</p>
 </li>
 </ul>
 <h4 id="基本原理-23"><a href="#基本原理-23" class="headerlink" title="基本原理"></a>基本原理</h4><p>以前版本的 FHS 对 <code>/dev</code> 有更严格的要求。 <code>/dev</code> 中也可能存在其他设备。设备名称可以作为指向位于 <code>/dev</code> 或 <code>/dev</code> 子目录中的其他设备节点的符号链接存在。对主要&#x2F;次要数值没有要求。</p>
-<h3 id="6-1-4-etc：主机特定的系统配置"><a href="#6-1-4-etc：主机特定的系统配置" class="headerlink" title="6.1.4. &#x2F;etc：主机特定的系统配置"></a>6.1.4. &#x2F;etc：主机特定的系统配置</h3><p>Linux 系统需要将这些附加文件放入 <code>/etc</code> 中。</p>
+<h3 id="6-1-4-etc：主机特定的系统配置"><a href="#6-1-4-etc：主机特定的系统配置" class="headerlink" title="6.1.4. /etc：主机特定的系统配置"></a>6.1.4. <code>/etc</code>：主机特定的系统配置</h3><p>Linux 系统需要将这些附加文件放入 <code>/etc</code> 中。</p>
 <ul>
 <li><code>lilo.conf</code></li>
 </ul>
-<h3 id="6-1-5-proc：内核和进程信息虚拟文件系统"><a href="#6-1-5-proc：内核和进程信息虚拟文件系统" class="headerlink" title="6.1.5. &#x2F;proc：内核和进程信息虚拟文件系统"></a>6.1.5. &#x2F;proc：内核和进程信息虚拟文件系统</h3><p><code>proc</code> 文件系统是 Linux 处理进程和系统信息的事实上的标准方法，而不是 <code>/dev/kmem</code> 和其他类似的方法。我们强烈鼓励将其用于进程信息以及其他内核和内存信息的存储和检索。</p>
-<h3 id="6-1-6-sbin：重要的系统二进制文件"><a href="#6-1-6-sbin：重要的系统二进制文件" class="headerlink" title="6.1.6. &#x2F;sbin：重要的系统二进制文件"></a>6.1.6. &#x2F;sbin：重要的系统二进制文件</h3><p>Linux 系统将与文件系统维护和引导加载程序管理相关的命令放入 <code>/sbin</code>。</p>
+<h3 id="6-1-5-proc：内核和进程信息虚拟文件系统"><a href="#6-1-5-proc：内核和进程信息虚拟文件系统" class="headerlink" title="6.1.5. /proc：内核和进程信息虚拟文件系统"></a>6.1.5. <code>/proc</code>：内核和进程信息虚拟文件系统</h3><p><code>proc</code> 文件系统是 Linux 处理进程和系统信息的事实上的标准方法，而不是 <code>/dev/kmem</code> 或其他类似的方法。我们强烈鼓励将其用于进程信息以及其他内核和内存信息的存储和检索。</p>
+<h3 id="6-1-6-sbin：重要的系统二进制文件"><a href="#6-1-6-sbin：重要的系统二进制文件" class="headerlink" title="6.1.6. /sbin：重要的系统二进制文件"></a>6.1.6. <code>/sbin</code>：重要的系统二进制文件</h3><p>Linux 系统将与文件系统维护和引导加载程序管理相关的命令放入 <code>/sbin</code>。</p>
 <p><code>/sbin</code> 的可选文件：</p>
 <ul>
-<li><p>静态二进制文件：</p>
-<ul>
+<li>静态二进制文件：<ul>
 <li><code>ldconfig</code></li>
 <li><code>sln</code></li>
 <li><code>ssync</code></li>
 </ul>
-<p>  当出现问题时，静态 <code>ln(sln)</code> 和静态 <code>sync(ssync)</code> 很有用。由于 <code>ldconfig</code> 程序（通常位于 <code>/usr/sbin</code> 中）存在并且可以作为升级动态链接库的指导帮手，因此 <code>sln</code> 的主要用途（在粗劣的升级后修复 <code>/lib</code> 中错误的符号链接）现在不再是主要的了。静态 <code>sync</code> 在某些紧急情况下很有用。请注意，这些命令并不必须是标准 <code>ln</code> 和 <code>sync</code> 的静态链接版本，但也可能是。</p>
-<p>  <code>ldconfig</code> 二进制文件对于 <code>/sbin</code> 来说是可选的，因为工作站可能会选择在启动时运行 <code>ldconfig</code>，而不仅仅是在升级共享库时。（每次启动时运行 <code>ldconfig</code> 是否有利目前还有待商榷）虽说如此，一些人还是喜欢把 <code>ldconfig</code> 用于以下（非常常见的）情况的：</p>
+</li>
+</ul>
+<p>当出现问题时，静态 <code>ln(sln)</code> 和静态 <code>sync(ssync)</code> 很有用。由于 <code>ldconfig</code> 程序（通常位于 <code>/usr/sbin</code> 中）存在并且可以作为升级动态链接库的指导帮手，因此 <code>sln</code> 的主要用途（在粗劣的升级后修复 <code>/lib</code> 中错误的符号链接）现在反倒不再是主要的了。静态 <code>sync</code> 在某些紧急情况下很有用。请注意，这些命令并不必须是标准 <code>ln</code> 和 <code>sync</code> 的静态链接版本，但也可能是。</p>
+<p><code>ldconfig</code> 二进制文件对于 <code>/sbin</code> 来说是可选的，因为主机可能会选择在启动时运行 <code>ldconfig</code>，而不仅仅是在升级共享库时。（每次启动时运行 <code>ldconfig</code> 是否有好处目前还有待商榷）虽说如此，一些人还是喜欢把 <code>ldconfig</code> 用于以下（非常常见的）情况的：</p>
 <ol>
 <li>我刚刚删除了 <code>/lib/&lt;file&gt;</code>。</li>
-<li>我找不到库的名称，因为 <code>ls</code> 是动态链接的，我使用的是没有内置 <code>ls</code> 的 shell，而且我不知道使用 <code>echo *</code> 作为替代。</li>
-<li>我有一个静态 <code>sln</code>，但我不知道如何称呼链接。</li>
+<li>我找不到库的名称，因为 <code>ls</code> 是动态链接的，我使用的是没有内置 <code>ls</code> 的 Shell，而且我不知道使用 <code>echo *</code> 作为替代。</li>
+<li>我有一个静态 <code>sln</code>，但我不知道如何称呼它的链接。</li>
 </ol>
-</li>
-<li><p>其他：</p>
 <ul>
+<li>其他：<ul>
 <li><code>ctrlaltdel</code></li>
 <li><code>kbdrate</code></li>
 </ul>
-<p>  为了应对某些键盘的重复输入速度太快而无法使用的情况，某些系统可能会在 <code>/sbin</code> 中安装 <code>kbdrate</code>。</p>
-<p>  由于内核中 Ctrl-Alt-Del 组合键的默认操作是即时硬重启，因此通常建议在以读写模式挂载根文件系统之前禁用该行为。一些 <code>init</code> 套件能够禁用 Ctrl-Alt-Del，但其他套件则可能需要 <code>ctrlaltdel</code> 程序，该程序可能安装在这些系统的 <code>/sbin</code> 中。</p>
 </li>
 </ul>
-<h3 id="6-1-7-sys：内核和系统信息虚拟文件系统"><a href="#6-1-7-sys：内核和系统信息虚拟文件系统" class="headerlink" title="6.1.7. &#x2F;sys：内核和系统信息虚拟文件系统"></a>6.1.7. &#x2F;sys：内核和系统信息虚拟文件系统</h3><p><code>sys</code> 文件系统是公开有关设备、驱动程序和某些内核功能的信息的位置。它的下层结构由当前使用的特定 Linux 内核决定，否则无指定。</p>
-<h3 id="6-1-8-usr-include：C-程序所要包含的头文件"><a href="#6-1-8-usr-include：C-程序所要包含的头文件" class="headerlink" title="6.1.8. &#x2F;usr&#x2F;include：C 程序所要包含的头文件"></a>6.1.8. &#x2F;usr&#x2F;include：C 程序所要包含的头文件</h3><p>如果安装了 C 或 C++ 编译器，并且仅用于不基于 <code>glibc</code> 的系统，则需要这些符号链接。</p>
+<p>为了应对某些键盘的重复输入速度太快而无法使用的情况，某些系统可能会在 <code>/sbin</code> 中安装 <code>kbdrate</code>。</p>
+<p>由于内核中 Ctrl-Alt-Del 组合键的默认操作是即时硬重启，因此通常建议在以读写模式挂载根文件系统之前禁用该行为。一些 <code>init</code> 套件能够禁用 Ctrl-Alt-Del，但其他套件则可能需要 <code>ctrlaltdel</code> 程序，该程序可能安装在这些系统的 <code>/sbin</code> 中。</p>
+<h3 id="6-1-7-sys：内核和系统信息虚拟文件系统"><a href="#6-1-7-sys：内核和系统信息虚拟文件系统" class="headerlink" title="6.1.7. /sys：内核和系统信息虚拟文件系统"></a>6.1.7. <code>/sys</code>：内核和系统信息虚拟文件系统</h3><p><code>sys</code> 文件系统是公开有关设备、驱动程序和某些内核功能的信息的位置。它的下层结构由当前使用的特定 Linux 内核决定，否则无指定。</p>
+<h3 id="6-1-8-usr-include：C-程序所要包含的头文件"><a href="#6-1-8-usr-include：C-程序所要包含的头文件" class="headerlink" title="6.1.8. /usr/include：C 程序所要包含的头文件"></a>6.1.8. <code>/usr/include</code>：C 程序所要包含的头文件</h3><p>如果安装了 C 或 C++ 编译器，并且仅用于不基于 <code>glibc</code> 的系统，则需要这些符号链接。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/usr/include/asm -&gt; /usr/src/linux/include/asm-&lt;arch&gt;</span><br><span class="line">/usr/include/linux -&gt; /usr/src/linux/include/linux</span><br></pre></td></tr></table></figure>
 
-<h3 id="6-1-9-usr-src：源代码"><a href="#6-1-9-usr-src：源代码" class="headerlink" title="6.1.9. &#x2F;usr&#x2F;src：源代码"></a>6.1.9. &#x2F;usr&#x2F;src：源代码</h3><p>对于基于 <code>glibc</code> 的系统，此目录没有特定的指南。对于基于 <code>glibc</code> 之前的 Linux <code>libc</code> 修订版的系统，以下准则和基本原理适用：应该放在特定位置的唯一源代码是 Linux 内核源代码。它位于 <code>/usr/src/linux</code> 中。</p>
+<h3 id="6-1-9-usr-src：源代码"><a href="#6-1-9-usr-src：源代码" class="headerlink" title="6.1.9. /usr/src：源代码"></a>6.1.9. <code>/usr/src</code>：源代码</h3><p>对于基于 <code>glibc</code> 的系统，此目录没有特定的指南。对于基于 <code>glibc</code> 之前的 Linux <code>libc</code> 修订版的系统，以下准则和基本原理适用：应该放在特定位置的唯一源代码是 Linux 内核源代码。它位于 <code>/usr/src/linux</code> 中。</p>
 <p>如果安装了 C 或 C++ 编译器，但未安装完整的 Linux 内核源代码，则内核源代码中的包含文件必须位于以下目录中：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/usr/src/linux/include/asm-&lt;arch&gt;</span><br><span class="line">/usr/src/linux/include/linux</span><br></pre></td></tr></table></figure>
 
 <p><code>&lt;arch&gt;</code> 是系统架构的名称。</p>
 <h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h4><p><code>/usr/src/linux</code> 可能是指向内核源代码树的符号链接。</p>
 <h4 id="基本原理-24"><a href="#基本原理-24" class="headerlink" title="基本原理"></a>基本原理</h4><p>让内核包含文件位于 <code>/usr/src/linux</code> 而不是 <code>/usr/include</code> 中很重要，这样系统管理员第一次升级内核版本时不会出现问题。</p>
-<h3 id="6-1-10-var-spool-cron：cron-和-at"><a href="#6-1-10-var-spool-cron：cron-和-at" class="headerlink" title="6.1.10. &#x2F;var&#x2F;spool&#x2F;cron：cron 和 at"></a>6.1.10. &#x2F;var&#x2F;spool&#x2F;cron：<code>cron</code> 和 <code>at</code></h3><p>该目录包含 <code>cron</code> 和 <code>at</code> 程序的变量数据。</p>
+<h3 id="6-1-10-var-spool-cron：cron-和-at"><a href="#6-1-10-var-spool-cron：cron-和-at" class="headerlink" title="6.1.10. /var/spool/cron：cron 和 at"></a>6.1.10. <code>/var/spool/cron</code>：<code>cron</code> 和 <code>at</code></h3><p>该目录包含 <code>cron</code> 和 <code>at</code> 程序的变量数据。</p>
 
     </div>
 
@@ -1838,13 +1846,18 @@
     
 
     <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AF%91%E6%96%87/" rel="tag"># 译文</a>
+              <a href="/tags/FHS/" rel="tag"># FHS</a>
+              <a href="/tags/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" rel="tag"># 文件系统</a>
+          </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2022/10/26/ssh%E9%98%B2%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3/" rel="prev" title="使用SSHGuard实现SSH防暴力破解">
-                  <i class="fa fa-angle-left"></i> 使用SSHGuard实现SSH防暴力破解
+                <a href="/2022/10/16/sh%E5%BA%93%E7%BF%BB%E8%AF%91/" rel="prev" title="Python sh库完整翻译">
+                  <i class="fa fa-angle-left"></i> Python sh库完整翻译
                 </a>
             </div>
             <div class="post-nav-item">

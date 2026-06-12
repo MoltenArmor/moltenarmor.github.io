@@ -23,17 +23,14 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="我的Linux学习之路">
 <meta property="og:url" content="https://blog.icku.eu.org/2023/03/09/%E6%88%91%E7%9A%84Linux%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/index.html">
-<meta property="og:site_name" content="Void of the Real">
+<meta property="og:site_name" content="Mokumesei Manor">
 <meta property="og:description" content="我的Linux学习之路我的Linux学习路途不同于其他人，也不同于一般的教材。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-03-09T07:43:31.000Z">
-<meta property="article:modified_time" content="2025-10-01T14:12:53.629Z">
+<meta property="article:modified_time" content="2026-06-12T01:57:48.421Z">
 <meta property="article:author" content="Kwok &quot;Molten_Armor&quot; Guy">
-<meta property="article:tag" content="linux">
-<meta property="article:tag" content="systemd">
-<meta property="article:tag" content="operating_system">
-<meta property="article:tag" content="system">
-<meta property="article:tag" content="computer">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="随笔">
 <meta name="twitter:card" content="summary">
 
 
@@ -44,7 +41,7 @@
 <script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.icku.eu.org/2023/03/09/%E6%88%91%E7%9A%84Linux%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/","path":"2023/03/09/我的Linux学习之路/","title":"我的Linux学习之路"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>我的Linux学习之路 | Void of the Real</title>
+<title>我的Linux学习之路 | Mokumesei Manor</title>
   
 
 
@@ -74,7 +71,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <p class="site-title">Void of the Real</p>
+      <p class="site-title">Mokumesei Manor</p>
       <i class="logo-line"></i>
     </a>
   </div>
@@ -122,12 +119,16 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">40</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">52</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
@@ -170,12 +171,12 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Void of the Real">
+      <meta itemprop="name" content="Mokumesei Manor">
       <meta itemprop="description" content="Just another blog about Linux, systemd, and something more.">
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="我的Linux学习之路 | Void of the Real">
+      <meta itemprop="name" content="我的Linux学习之路 | Mokumesei Manor">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
@@ -198,7 +199,16 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-10-01 22:12:53" itemprop="dateModified" datetime="2025-10-01T22:12:53+08:00">2025-10-01</time>
+      <time title="修改时间：2026-06-12 09:57:48" itemprop="dateModified" datetime="2026-06-12T09:57:48+08:00">2026-06-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9D%82%E8%B0%88/" itemprop="url" rel="index"><span itemprop="name">杂谈</span></a>
+        </span>
     </span>
 
   
@@ -220,7 +230,7 @@
 <li>systemd套件完整全面，涵盖了系统管理的各个方面，顺着systemd的脉络就可以学习到全面的系统管理知识。</li>
 </ol>
 <p>我们开始吧。按顺序对每一个问题进行回答，这或许不能让你成为一个在学术上精通Linux的人，但是至少会让你谈论起来头头是道。</p>
-<p>当然，最重要的是，坚持使用Linux内核的操作系统，经验总是在日常使用中积累的。</p>
+<p>当然，最重要的是，坚持使用Linux发行版，经验总是在日常使用中积累的。</p>
 <p>所有的问题几乎都可以在网上找到答案，耐下性子一点一点搜集，拼凑起来，你会发现这整个过程充满了乐趣。如果你不确定从哪里开始找的话，可以去看看<a target="_blank" rel="noopener" href="https://wiki.debian.org/zh_CN/DebianWiki">Debian wiki</a>和<a target="_blank" rel="noopener" href="https://wiki.archlinuxcn.org/wiki/%E9%A6%96%E9%A1%B5">Arch wiki</a>。</p>
 <p>注意，这些问题仅限于这种场景：个人。本地。单机。一些较为先进的应用不会写在这里，那是以后需要你自己琢磨的事情了。</p>
 <p>建议使用的发行版为目前最新版本的Debian，stable或testing都可以。</p>
@@ -330,6 +340,10 @@
     
 
     <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/tags/%E9%9A%8F%E7%AC%94/" rel="tag"># 随笔</a>
+          </div>
 
         
 

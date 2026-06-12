@@ -23,7 +23,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="CGroup v1 &amp;&amp; v2全解">
 <meta property="og:url" content="https://blog.icku.eu.org/2024/03/31/CGroup-v1-v2%E5%85%A8%E8%A7%A3/index.html">
-<meta property="og:site_name" content="Void of the Real">
+<meta property="og:site_name" content="Mokumesei Manor">
 <meta property="og:description" content="概念解析CGroup，全称Control Group，是Linux内核提供的一种可以限制，记录，隔离进程组所使用资源的机制。它最初由Google提出，后被整合进Linux内核。它的功能包括：">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://blog.icku.eu.org/images/legacy-cgroup.png">
@@ -31,13 +31,11 @@
 <meta property="og:image" content="https://blog.icku.eu.org/images/legacy-cgroup-inherit.png">
 <meta property="og:image" content="https://blog.icku.eu.org/images/podman-user-slice.png">
 <meta property="article:published_time" content="2024-03-31T04:08:39.000Z">
-<meta property="article:modified_time" content="2025-10-01T14:12:53.621Z">
+<meta property="article:modified_time" content="2026-06-11T14:15:42.917Z">
 <meta property="article:author" content="Kwok &quot;Molten_Armor&quot; Guy">
-<meta property="article:tag" content="linux">
-<meta property="article:tag" content="systemd">
-<meta property="article:tag" content="operating_system">
-<meta property="article:tag" content="system">
-<meta property="article:tag" content="computer">
+<meta property="article:tag" content="cgroup">
+<meta property="article:tag" content="内核">
+<meta property="article:tag" content="资源管理">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://blog.icku.eu.org/images/legacy-cgroup.png">
 
@@ -49,7 +47,7 @@
 <script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.icku.eu.org/2024/03/31/CGroup-v1-v2%E5%85%A8%E8%A7%A3/","path":"2024/03/31/CGroup-v1-v2全解/","title":"CGroup v1 && v2全解"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>CGroup v1 && v2全解 | Void of the Real</title>
+<title>CGroup v1 && v2全解 | Mokumesei Manor</title>
   
 
 
@@ -79,7 +77,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <p class="site-title">Void of the Real</p>
+      <p class="site-title">Mokumesei Manor</p>
       <i class="logo-line"></i>
     </a>
   </div>
@@ -127,12 +125,16 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">40</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">52</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
@@ -175,12 +177,12 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Void of the Real">
+      <meta itemprop="name" content="Mokumesei Manor">
       <meta itemprop="description" content="Just another blog about Linux, systemd, and something more.">
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="CGroup v1 && v2全解 | Void of the Real">
+      <meta itemprop="name" content="CGroup v1 && v2全解 | Mokumesei Manor">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
@@ -203,7 +205,16 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-10-01 22:12:53" itemprop="dateModified" datetime="2025-10-01T22:12:53+08:00">2025-10-01</time>
+      <time title="修改时间：2026-06-11 22:15:42" itemprop="dateModified" datetime="2026-06-11T22:15:42+08:00">2026-06-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/systemd/" itemprop="url" rel="index"><span itemprop="name">systemd</span></a>
+        </span>
     </span>
 
   
@@ -608,6 +619,11 @@
     
 
     <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/cgroup/" rel="tag"># cgroup</a>
+              <a href="/tags/%E5%86%85%E6%A0%B8/" rel="tag"># 内核</a>
+              <a href="/tags/%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86/" rel="tag"># 资源管理</a>
+          </div>
 
         
 
